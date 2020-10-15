@@ -25,6 +25,10 @@
                 headheight=12pt,%
                 headsep=36pt,%
                 a4paper, includefoot, heightrounded]{geometry}%
+               
+\RequirePackage[leftmargin=4cm,rightmargin=0cm,vskip=1ex]{quoting}
+%\renewcommand*{\quotingfont}{\setstretch{1}\fontsize{10}{10}\usefont{T1}{lmss}{m}{n}}
+\renewcommand*{\quotingfont}{\setstretch{1}\fontsize{10}{10}\fontfamily{lmss}\selectfont}
 
 %% Settings for the author block
 %\RequirePackage[blocks]{authblk}
