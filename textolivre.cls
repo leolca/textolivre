@@ -30,6 +30,9 @@
 %\renewcommand*{\quotingfont}{\setstretch{1}\fontsize{10}{10}\usefont{T1}{lmss}{m}{n}}
 \renewcommand*{\quotingfont}{\setstretch{1}\fontsize{10}{10}\fontfamily{lmss}\selectfont}
 
+\RequirePackage{indentfirst}
+\setlength{\parindent}{12mm}
+
 %% Settings for the author block
 %\RequirePackage[blocks]{authblk}
 %\renewcommand\Authfont{\fontsize{12}{12}\usefont{T1}{lmss}{sb}{n}}
@@ -120,12 +123,70 @@
     {0.5cm plus .2ex}% spacing after section title
     {\sffamily\bfseries\boldmath}%style
 }
+
+\renewcommand{\subsection}{%
+    \@startsection
+    {subsection}{1}
+    {0pt}% indent
+    {1cm plus -1ex minus -.2ex}% spacing before section title
+    {0.5cm plus .2ex}% spacing after section title
+    {\sffamily\bfseries\boldmath}%style
+}
+
+\renewcommand{\subsubsection}{%
+    \@startsection
+    {subsubsection}{1}
+    {0pt}% indent
+    {1cm plus -1ex minus -.2ex}% spacing before section title
+    {0.5cm plus .2ex}% spacing after section title
+    {\sffamily\bfseries\boldmath}%style
+}
+
 % spacing between section number and title
 \renewcommand*{\@seccntformat}[1]{\csname the#1\endcsname\hspace{0.1cm}} 
  
 \renewcommand{\normalsize}{\fontsize{12}{13}\fontfamily{lmss}\selectfont}
 \setlength{\parskip}{1mm}
 
+\RequirePackage{setspace} % for \onehalfspacing and \singlespacing macros
+\singlespacing  
+
+% itemize
+\let\OLDitemize\itemize
+\let\OLDenditemize\enditemize
+\renewenvironment{itemize}{\OLDitemize\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}{\OLDenditemize}
+
+% enumerate
+\let\OLDenumerate\enumerate
+\let\OLDendenumerate\endenumerate
+\renewenvironment{enumerate}{\OLDenumerate\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}{\OLDendenumerate}
+
+% set sourceVspace for table or not-table (figure)
+\makeatletter
+\newcommand{\sourceVspace}{%
+  \ifx\@currenvir\@table
+    0pt
+  \else
+    -10pt
+  \fi}
+\newcommand*\@table{table}
+\makeatother
+
+\RequirePackage{caption}
+\newcommand{\textSource}{\iflanguage{english}{Source:}{Fonte:}}
+\newcommand{\source}[1]{
+  \vspace{\sourceVspace}\caption*{\textit{\textSource} {#1}}
+}
+%\newcommand{\source}[1]{
+%    \iflanguage{english}{
+%       \vspace{-10pt}\caption*{\textit{Source:} {#1}}
+%    }
+%    { 
+%       \vspace{-10pt}\caption*{\textit{Fonte:} {#1}}
+%    }
+%}
+\captionsetup[figure]{labelfont={it},labelsep=colon}
+\captionsetup[table]{labelfont={it},labelsep=colon}
 
 \newcommand{\JournalDataAndLogo}{%
   \leavevmode\smash{%
