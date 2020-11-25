@@ -8,10 +8,17 @@
 \RequirePackage{lmodern} 
 \pagenumbering{arabic} 
  
+\RequirePackage{libertinus}
+\RequirePackage[T1]{fontenc}
+\renewcommand*\familydefault{\sfdefault}
+
 \DeclareOption{twocolumn}{\OptionNotUsed}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
 \ProcessOptions\relax
 
+% fonts
+%\RequirePackage[default]{sourcesanspro}
+%\renewcommand{\seriesdefault}{\bfdefault}
 
 \RequirePackage[hidelinks]{hyperref}
 \newcommand{\hrefemail}[1]{\href{mailto:#1}{\color{blue}{#1}}}%
@@ -80,10 +87,13 @@
     		\DTLforeach{tlauthors}{%
 		\name=name,\affil=affiliation,\email=email}{%
 		{
-		\flushright \setstretch{1}
-		{\fontsize{12}{12}\usefont{T1}{lmss}{sb}{n}\name}\par
-		{\fontsize{10}{10}\usefont{T1}{lmss}{m}{n}\affil}\par
-		{\fontsize{10}{10}\usefont{T1}{lmss}{m}{n}\hrefemail{\email}}\par
+		\flushright %\setstretch{1}
+		%{\fontsize{12}{12}\usefont{T1}{lmss}{sb}{n}\name}\\
+		%{\fontsize{10}{10}\usefont{T1}{lmss}{m}{n}\affil}\\
+		%{\fontsize{10}{10}\usefont{T1}{lmss}{m}{n}\hrefemail{\email}}\par
+		{\name}\\
+		{\small\affil}\\
+		{\small\hrefemail{\email}}\\
 		\normalsize\vspace{\baselineskip}
 		}
       }
@@ -92,22 +102,26 @@
   \vskip18pt%
     {%
     \noindent
-    {\parbox{\dimexpr\linewidth-2\fboxsep\relax}{\sffamily\textbf\\\theresumo}}
+    %{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{\sffamily\textbf\\\theresumo}}
+    {\parbox{\linewidth}{\sffamily\textbf\\\theresumo}}
     }
   \vskip5pt%
    {%
     \noindent
-    {\parbox{\dimexpr\linewidth-2\fboxsep\relax}{\sffamily\textbf{PALAVRAS-CHAVE: }\@palavraschave.}}
+    %{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{\sffamily\textbf{PALAVRAS-CHAVE: }\@palavraschave.}}
+    {\parbox{\linewidth}{\sffamily\textbf{PALAVRAS-CHAVE: }\@palavraschave.}}
    }
   \vskip11mm%
     {%
     \noindent
-    {\parbox{\dimexpr\linewidth-2\fboxsep\relax}{\sffamily\textbf\\\theabstract}}
+    %{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{\sffamily\textbf\\\theabstract}}
+    {\parbox{\linewidth}{\sffamily\textbf\\\theabstract}}
     }
   \vskip5pt%
   {%
     \noindent
-    {\parbox{\dimexpr\linewidth-2\fboxsep\relax}{\sffamily\textbf{KEYWORDS: }\@keywords.}}
+    %{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{\sffamily\textbf{KEYWORDS: }\@keywords.}}
+    {\parbox{\linewidth}{\sffamily\textbf{KEYWORDS: }\@keywords.}}
   }
   \vskip18pt%
 }
@@ -217,5 +231,7 @@
     \fancyfoot[R]{\thepage}
 }
 \pagestyle{txtlivre}
+
+
 
 

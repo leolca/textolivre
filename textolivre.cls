@@ -88,15 +88,15 @@
     \iflanguage{french}{\hspace{-2.25pt}Auteur correspondant}{
     \iflanguage{german}{\hspace{-2.5pt}Entsprechender Autor}{
     \iflanguage{spanish}{\hspace{-2.5pt}Autor correspondiente}{
-    \iflanguage{portuguese}{\hspace{-5pt}Autor Correspondente}{Corresponding author}
+    \iflanguage{portuguese}{\hspace{-7pt}Autor Correspondente}{Corresponding author}
     }}}}}
 \def\@corrauthorname{\@keycorrauthorname}
 \def\@keyeditorname{
     \iflanguage{english}{Edited by}{
     \iflanguage{french}{\hspace{-2.25pt}Édité par}{
     \iflanguage{german}{\hspace{-2.5pt}Bearbeitet von}{
-    \iflanguage{spanish}{\hspace{-2.5pt}Editado por}{
-    \iflanguage{portuguese}{\hspace{-5.5pt}Editado por}{Edited by}
+    \iflanguage{spanish}{\hspace{-3.5pt}Editado por}{
+    \iflanguage{portuguese}{\hspace{-7pt}Editado por}{Edited by}
     }}}}}
 \def\@editorname{\@keyeditorname}
 \def\@runningauthor{}
@@ -123,7 +123,7 @@
 \setstretch{1.15}
 
 \RequirePackage{geometry}
-\geometry{paperwidth=8.25in,paperheight=11in,
+\geometry{a4paper, 
   left=4.75cm,top=1.75cm,bottom=2.4cm,right=2.1cm,
   footskip=1.5\baselineskip,footnotesep=\baselineskip,headheight=21\p@,headsep=\baselineskip}
 
@@ -188,21 +188,21 @@
     \iflanguage{french}{\hspace{-2.25pt}Reçu en}{
     \iflanguage{german}{\hspace{-2.5pt}Empfangsdatum}{
     \iflanguage{spanish}{\hspace{-2.5pt}Recibido el}{
-    \iflanguage{portuguese}{\hspace{-5.5pt}Recebido em}{Received on}
+    \iflanguage{portuguese}{\hspace{-7pt}Recebido em}{Received on}
     }}}}}
 \def\@keyacceptedtext{
     \iflanguage{english}{Accepted on}{
     \iflanguage{french}{\hspace{-2.25pt}Acceptée en}{
     \iflanguage{german}{\hspace{-2.5pt}Akzeptiertes Datum}{
     \iflanguage{spanish}{\hspace{-2.5pt}Aceptado el}{
-    \iflanguage{portuguese}{\hspace{-5.5pt}Aceito em}{Accepted on}
+    \iflanguage{portuguese}{\hspace{-6.5pt}Aceito em}{Accepted on}
     }}}}}
 \def\@keypublishedtext{
     \iflanguage{english}{Published on}{
     \iflanguage{french}{\hspace{-2.25pt}Publication en}{
     \iflanguage{german}{\hspace{-2.5pt}Veröffentlichungsdatum}{
     \iflanguage{spanish}{\hspace{-2.5pt}Publicado el}{
-    \iflanguage{portuguese}{\hspace{-5.5pt}Publicado em}{Published on}
+    \iflanguage{portuguese}{\hspace{-7pt}Publicado em}{Published on}
     }}}}}
 %\def\othertitle#1{\gdef\@othertitle{#1}}
 %\def\@othertitle{\@latex@error{No \noexpand\othertitle given}\@ehc}
@@ -267,7 +267,26 @@
   \vskip-\parskip%
   \noindent\ignorespaces%
 }
+
+% add source to lising
+\makeatletter
+\lst@Key{source}{}{\def\lst@source{#1}}
+
+\let\orig@lst@MakeCaption=\lst@MakeCaption
+\def\lst@MakeCaption#1{%
+    \orig@lst@MakeCaption#1%
+    \ifx b#1%
+        \ifx\lst@source\@empty\else
+            \noindent
+            \hspace{-13pt}\normalfont\textcolor{TLDarkGreen}{\textit{\textSource}}\lst@source\expandafter%
+            \vskip\belowcaptionskip
+        \fi
+    \fi
 }
+\makeatother
+
+
+} % end AtBeginDocument
 
 \newenvironment{poliabstract}
 {\noindent\textcolor{TLLightGreen}{\rule{\linewidth}{1.0pt}}\par}
@@ -341,6 +360,35 @@
 %\RequirePackage{cleveref}
 \RequirePackage[english,french,spanish,brazilian]{cleveref}
 
+% used to provide source code environment
+\crefname{lstlisting}{lista}{listas}
+\Crefname{lstlisting}{Lista}{Listas}
+\RequirePackage{listings}
+\renewcommand\lstlistingname{Lista}
+\lstset{language=bash,
+        breaklines=true,
+        basicstyle=\linespread{1}\small\ttfamily,
+        numbers=none,xleftmargin=0.5cm,
+        frame=none,
+        framexleftmargin=0.5em,
+        framexrightmargin=0.5em,
+        showstringspaces=false,
+        upquote=true,
+        commentstyle=\color{gray},
+        literate=%
+           {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1 
+           {à}{{\`a}}1 {è}{{\`e}}1 {ì}{{\`i}}1 {ò}{{\`o}}1 {ù}{{\`u}}1
+           {ã}{{\~a}}1 {ẽ}{{\~e}}1 {ĩ}{{\~i}}1 {õ}{{\~o}}1 {ũ}{{\~u}}1
+           {â}{{\^a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1
+           {ä}{{\"a}}1 {ë}{{\"e}}1 {ï}{{\"i}}1 {ö}{{\"o}}1 {ü}{{\"u}}1
+           {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+           {À}{{\`A}}1 {È}{{\`E}}1 {Ì}{{\`I}}1 {Ò}{{\`O}}1 {Ù}{{\`U}}1
+           {Ã}{{\~A}}1 {Ẽ}{{\~E}}1 {Ũ}{{\~u}}1 {Õ}{{\~O}}1 {Ũ}{{\~U}}1
+           {Â}{{\^A}}1 {Ê}{{\^E}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1
+           {Ä}{{\"A}}1 {Ë}{{\"E}}1 {Ï}{{\"I}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1
+           {ç}{{\c{c}}}1 {Ç}{{\c{C}}}1
+}
+
 
 %%%% source START 
 %%%% define source for table and figures
@@ -373,7 +421,7 @@
 %}
 \newcommand{\source}[1]{
  \captionsetup{skip=0ex,position=b}%
- \caption*{\textcolor{TLDarkGreen}{\textit{Source:}} {#1}}
+ \caption*{\textcolor{TLDarkGreen}{\textit{\textSource}} {#1}}
 }
 %%%% source END
 
@@ -387,3 +435,10 @@
 %  {\small\list{}{\rightmargin=0em \leftmargin=6em}%
 %   \item\relax}
 %  {\endlist}
+
+
+\RequirePackage{academicons}
+% ORCID
+\newcommand{\orcid}[1]{\href{https://orcid.org/#1}{\textcolor[HTML]{B8C624}{\aiOrcid}}}
+% A6CE39
+
