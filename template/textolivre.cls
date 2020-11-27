@@ -17,7 +17,7 @@
 \RequirePackage[style]{abstract}
 \RequirePackage[marginal]{footmisc}
 \RequirePackage{caption,subcaption}
-\RequirePackage{enumitem}
+\RequirePackage[inline]{enumitem}
 \RequirePackage{authblk}
 \RequirePackage{relsize}
 \RequirePackage[right]{lineno}
@@ -80,14 +80,15 @@
     \iflanguage{english}{Keywords}{
     \iflanguage{french}{Mots-cl\'{e}s}{
     \iflanguage{german}{Schl\"{u}sselw\"{o}rter}{
+    \iflanguage{spanish}{Palabras clave}{
     \iflanguage{portuguese}{\hspace{-1ex}Palavras-chave}{Keywords}
-    }}}}
+    }}}}}
 \def\@authornotename{Author's notes}
 \def\@keycorrauthorname{
     \iflanguage{english}{Corresponding author}{
     \iflanguage{french}{\hspace{-2.25pt}Auteur correspondant}{
     \iflanguage{german}{\hspace{-2.5pt}Entsprechender Autor}{
-    \iflanguage{spanish}{\hspace{-2.5pt}Autor correspondiente}{
+    \iflanguage{spanish}{\hspace{-5.5pt}Autor correspondiente}{
     \iflanguage{portuguese}{\hspace{-7pt}Autor Correspondente}{Corresponding author}
     }}}}}
 \def\@corrauthorname{\@keycorrauthorname}
@@ -95,7 +96,7 @@
     \iflanguage{english}{Edited by}{
     \iflanguage{french}{\hspace{-2.25pt}Édité par}{
     \iflanguage{german}{\hspace{-2.5pt}Bearbeitet von}{
-    \iflanguage{spanish}{\hspace{-3.5pt}Editado por}{
+    \iflanguage{spanish}{\hspace{-5.5pt}Editado por}{
     \iflanguage{portuguese}{\hspace{-7pt}Editado por}{Edited by}
     }}}}}
 \def\@editorname{\@keyeditorname}
@@ -187,21 +188,21 @@
     \iflanguage{english}{Received on}{
     \iflanguage{french}{\hspace{-2.25pt}Reçu en}{
     \iflanguage{german}{\hspace{-2.5pt}Empfangsdatum}{
-    \iflanguage{spanish}{\hspace{-2.5pt}Recibido el}{
+    \iflanguage{spanish}{\hspace{-6pt}Recibido el}{
     \iflanguage{portuguese}{\hspace{-7pt}Recebido em}{Received on}
     }}}}}
 \def\@keyacceptedtext{
     \iflanguage{english}{Accepted on}{
     \iflanguage{french}{\hspace{-2.25pt}Acceptée en}{
     \iflanguage{german}{\hspace{-2.5pt}Akzeptiertes Datum}{
-    \iflanguage{spanish}{\hspace{-2.5pt}Aceptado el}{
+    \iflanguage{spanish}{\hspace{-6pt}Aceptado el}{
     \iflanguage{portuguese}{\hspace{-6.5pt}Aceito em}{Accepted on}
     }}}}}
 \def\@keypublishedtext{
     \iflanguage{english}{Published on}{
     \iflanguage{french}{\hspace{-2.25pt}Publication en}{
     \iflanguage{german}{\hspace{-2.5pt}Veröffentlichungsdatum}{
-    \iflanguage{spanish}{\hspace{-2.5pt}Publicado el}{
+    \iflanguage{spanish}{\hspace{-6pt}Publicado el}{
     \iflanguage{portuguese}{\hspace{-7pt}Publicado em}{Published on}
     }}}}}
 %\def\othertitle#1{\gdef\@othertitle{#1}}
