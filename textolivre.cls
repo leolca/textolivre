@@ -1,4 +1,4 @@
-\ProvidesClass{testlivre}[2020/11/24 Texto Livre class]
+\ProvidesClass{textolivre}[2020/11/24 Texto Livre class]
 \newif\if@suppmat\@suppmattrue
 \DeclareOption{nosupp}{\@suppmatfalse}
 \ProcessOptions\relax
