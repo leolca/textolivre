@@ -72,6 +72,7 @@
 \newcommand{\tlprintlicense}{
     \iflanguage{english}{\makeatletter\input{doclicense-english.ldf}\makeatother\doclicenseText\\\doclicenseIcon}{
     \iflanguage{french}{\makeatletter\input{doclicense-french.ldf}\makeatother\doclicenseText\\\doclicenseIcon}{
+G16L0000169D 29 22/09/2020 32.053,60 24/08/2020 33.842,00 1,47 1,01 
     \iflanguage{german}{\makeatletter\input{doclicense-german.ldf}\makeatother\doclicenseText\\\doclicenseIcon}{
     \iflanguage{spanish}{\makeatletter\input{doclicense-spanish.ldf}\makeatother\doclicenseText\\\doclicenseIcon}{
     \iflanguage{portuguese}{\makeatletter\input{doclicense-brazilian.ldf}\makeatother\doclicenseText\\\doclicenseIcon}{\doclicenseText\par\doclicenseIcon}
@@ -80,8 +81,8 @@
     \iflanguage{english}{Keywords}{
     \iflanguage{french}{Mots-cl\'{e}s}{
     \iflanguage{german}{Schl\"{u}sselw\"{o}rter}{
-    \iflanguage{spanish}{Palabras clave}{
-    \iflanguage{portuguese}{\hspace{-1ex}Palavras-chave}{Keywords}
+    \iflanguage{spanish}{\hspace{-1ex}Palabras clave}{
+    \iflanguage{portuguese}{\hspace{-2ex}Palavras-chave}{Keywords}
     }}}}}
 \def\@authornotename{Author's notes}
 \def\@keycorrauthorname{
