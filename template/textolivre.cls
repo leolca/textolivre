@@ -49,7 +49,7 @@
 \RequirePackage{amsmath,amsfonts,amssymb,amsthm}
 \RequirePackage{adjustbox}
 \RequirePackage{titlecaps}
-\RequirePackage{longtable,booktabs}
+\RequirePackage{longtable,booktabs,tabularx}
 
 \newcommand{\tlprintlicense}{
     \iflanguage{english}{\makeatletter\input{doclicense-english.ldf}\makeatother\doclicenseText\\\doclicenseIcon}{
@@ -110,11 +110,15 @@
   left=4.75cm,top=1.75cm,bottom=2.4cm,right=2.1cm,
   footskip=1.5\baselineskip,footnotesep=\baselineskip,headheight=21\p@,headsep=\baselineskip}
 
+\RequirePackage{xstring}
+
 \newcommand{\runningauthor}[1]{\def\@runningauthor{#1}}
 \newcommand{\journalname}[1]{\def\@journalname{#1}}
 \newcommand{\authornote}[1]{\def\@authornote{#1}}
 \newcommand{\corrauthor}[1]{\def\@corrauthor{#1}}
 \newcommand{\articledoi}[1]{\def\@articledoi{#1}}
+\newcommand{\articleenumber}{e\StrRight{\@articledoi}{5}}
+
 
 \renewcommand{\Authfont}{\large\bfseries}
 \renewcommand{\Affilfont}{\small\itshape\mdseries}
@@ -179,8 +183,10 @@
   \setcounter{ititle}{0}%
   \whileboolexpr
     { test {\ifnumcomp{\value{ititle}}{<}{#1}} }%
-    {\stepcounter{ititle}\Large\smaller[\the\numexpr\value{ititle}-1\relax]\getothertitle{\theititle}\par}
+    {\stepcounter{ititle}\Large\smaller[\the\numexpr\value{ititle}-1\relax]\makefirstuc{\MakeLowercase{\getothertitle{\theititle}}}\par}
   }
+
+\RequirePackage{mfirstuc}
 
 \newcommand{\@insert@metadata}{%
   \begin{textblock*}{3.3cm}[0,1](1cm,\dimexpr\paperheight-\Gm@bmargin\relax)
@@ -195,7 +201,7 @@
   \@insert@metadata%
   \noindent\begin{minipage}{0.9\linewidth}
   \raggedright\setstretch{1.0}
-  {\LARGE\bfseries\@title\par}
+  {\LARGE\bfseries{\makefirstuc{\MakeLowercase{\@title}}}\par}
   {\printothertitles{\thecntothertitle}}
   \vskip\baselineskip
   \@author\par
@@ -272,7 +278,7 @@
 \preto{\footrule}{\begingroup\color{TLLightGreen}}
 \appto{\footrule}{\endgroup}
 \fancyfoot[R]{\small\thepage/\pageref*{LastPage}}
-\fancyfoot[L]{\small\emph{\@runningauthor}\enskip|\enskip\@journalname\quad{v.\@thevolume\enskip n.\@thenumber\enskip (\@theyear)}}
+\fancyfoot[L]{\small\emph{\@runningauthor}\enskip|\enskip\@journalname\quad{v.\@thevolume\enskip n.\@thenumber\enskip (\@theyear) \enskip\articleenumber}}
 \pagestyle{fancy}
 \fancypagestyle{plain}{%
   \fancyhf{}
