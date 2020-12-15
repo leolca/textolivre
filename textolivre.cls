@@ -10,7 +10,6 @@
 \RequirePackage{setspace}
 \RequirePackage[table]{xcolor}
 \RequirePackage{graphicx}
-\RequirePackage{geometry}
 \RequirePackage{rotating}
 \RequirePackage{titlesec}
 \RequirePackage{fancyhdr}
@@ -107,7 +106,7 @@
 
 \RequirePackage{geometry}
 \geometry{a4paper, 
-  left=4.75cm,top=1.75cm,bottom=2.4cm,right=2.1cm,
+  left=4.75cm,top=1.75cm,bottom=2.4cm,right=1.5cm,
   footskip=1.5\baselineskip,footnotesep=\baselineskip,headheight=21\p@,headsep=\baselineskip}
 
 \RequirePackage{xstring}
@@ -277,8 +276,10 @@
 \renewcommand{\headrule}{}
 \preto{\footrule}{\begingroup\color{TLLightGreen}}
 \appto{\footrule}{\endgroup}
+%\fancyfootoffset[LE,RO]{\marginparsep+\marginparwidth}
+\fancyfootoffset[L]{3.25cm}
 \fancyfoot[R]{\small\thepage/\pageref*{LastPage}}
-\fancyfoot[L]{\small\emph{\@runningauthor}\enskip|\enskip\@journalname\quad{v.\@thevolume\enskip n.\@thenumber\enskip (\@theyear) \enskip\articleenumber}}
+\fancyfoot[L]{\small\emph{\@runningauthor}\enskip|\enskip\@journalname\enskip|\enskip{Belo Horizonte}\enskip|\enskip{v.\@thevolume}\enskip|\enskip{n.\@thenumber}\enskip|\enskip\articleenumber\enskip|\enskip\@theyear}
 \pagestyle{fancy}
 \fancypagestyle{plain}{%
   \fancyhf{}
