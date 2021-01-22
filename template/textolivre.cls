@@ -297,8 +297,9 @@
 
 \RequirePackage[backend=biber,style=abnt, ittitles]{biblatex}
 \DeclareLanguageMapping{brazil}{brazil-apa}
-
 \renewcommand{\bibfont}{\small}
+\newcommand{\setbibligraphyfile}[1]{\addbibresource{#1}}
+\newcommand{\tlprintbibliography}{\printbibliography}
 
 \PassOptionsToPackage{hyphens}{url}
 \RequirePackage[breaklinks=true,pdfa=true]{hyperref}
@@ -337,7 +338,6 @@
            {ç}{{\c{c}}}1 {Ç}{{\c{C}}}1
 }
 
-
 %%%% source START 
 %%%% define source for table and figures
 % set sourceVspace for table or not-table (figure)
@@ -374,4 +374,12 @@
 % ORCID
 \newcommand{\orcid}[1]{\href{https://orcid.org/#1}{\textcolor[HTML]{B8C624}{\aiOrcid}}}
 % A6CE39
+
+% PDF/A
+\RequirePackage[a-1b]{pdfx}
+\hypersetup{pdfpagelabels}
+\RequirePackage{inputenc}
+\hypersetup{pdfencoding=unicode}
+\inputencoding{utf8}
+\makeatother
 
