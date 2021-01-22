@@ -1,10 +1,20 @@
 % !TEX TS-program = XeLaTeX
-% use the following command: $ xelatex -shell-escape -output-driver="xdvipdfmx -z 0" article.tex
+% use the following command: 
+% $ xelatex -shell-escape -output-driver="xdvipdfmx -z 0" article.tex
 % this "-z 0" must be used to suppress compression in XMP Metadata packet 
 % all document files must be coded in UTF-8
 \documentclass{textolivre}
 % for anonymous submission
 %\documentclass[anonymous]{textolivre}
+% to create HTML use 
+%\documentclass{textolivre-html}
+% HTML compile using make4ht
+% $ make4ht -c textolivre-html.cfg -u -x article "fn-in"
+% $ bibtex article
+% clean and prettify HTML 
+% $ tidy -o article-tidy.html --output-xhtml --break-before-br --wrap 0 article.html 2> errs.txt
+% https://www.html-tidy.org/documentation/
+
 
 % Metadata
 \begin{filecontents*}{article.xmpdata}
@@ -27,12 +37,6 @@
 \end{filecontents*}
 
 % PDF/A
-\usepackage[a-1b]{pdfx}
-\hypersetup{pdfpagelabels}
-\usepackage{inputenc}
-\hypersetup{pdfencoding=unicode}
-\inputencoding{utf8}
-\makeatother
 % it is necessary to convert all image files to PDF/A
 % use ghostscript as shown below:
 % gs -dPDFA -dBATCH -dNOPAUSE -sColorConversionStrategy=UseDeviceIndependentColor -dCompatibilityLevel=1.4 -sDEVICE=pdfwrite -sProcessColorModel=DeviceCMYK -dPDFACompatibilityPolicy=2 -sOutputFile=image-a.pdf image.pdf
@@ -50,29 +54,7 @@
 %\Crefname{lstlisting}{Lista}{Listas}
 %\usepackage{listings}
 %\renewcommand\lstlistingname{Lista}
-%\lstset{language=bash,
-%	breaklines=true,
-%	basicstyle=\linespread{1}\small\ttfamily,
-%	numbers=none,xleftmargin=0.5cm,
-%	frame=none,
-%	framexleftmargin=0.5em,
-%	framexrightmargin=0.5em,
-%	showstringspaces=false,
-%	upquote=true,
-%	commentstyle=\color{gray},
-%	literate=%
-%           {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1 
-%	   {à}{{\`a}}1 {è}{{\`e}}1 {ì}{{\`i}}1 {ò}{{\`o}}1 {ù}{{\`u}}1
-%           {ã}{{\~a}}1 {ẽ}{{\~e}}1 {ĩ}{{\~i}}1 {õ}{{\~o}}1 {ũ}{{\~u}}1
-%           {â}{{\^a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1
-%	   {ä}{{\"a}}1 {ë}{{\"e}}1 {ï}{{\"i}}1 {ö}{{\"o}}1 {ü}{{\"u}}1
-%	   {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
-%	   {À}{{\`A}}1 {È}{{\`E}}1 {Ì}{{\`I}}1 {Ò}{{\`O}}1 {Ù}{{\`U}}1
-%	   {Ã}{{\~A}}1 {Ẽ}{{\~E}}1 {Ũ}{{\~u}}1 {Õ}{{\~O}}1 {Ũ}{{\~U}}1
-%	   {Â}{{\^A}}1 {Ê}{{\^E}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1
-%	   {Ä}{{\"A}}1 {Ë}{{\"E}}1 {Ï}{{\"I}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1
-%           {ç}{{\c{c}}}1 {Ç}{{\c{C}}}1
-%}
+%\input{listingconfig.tex}
 
 \journalname{Texto Livre: Linguagem e Tecnologia}
 \thevolume{14}
@@ -81,6 +63,12 @@
 \receiveddate{\DTMdisplaydate{2020}{10}{22}{-1}} % YYYY MM DD
 \accepteddate{\DTMdisplaydate{2020}{9}{3}{-1}}
 \publisheddate{\today}
+% Corresponding author
+\corrauthor{Leonardo Araújo}
+% DOI
+\articledoi{10.35699/1983-3652.yyyy.nnnnn}
+% Abbreviated author list for the running footer
+\runningauthor{Araújo et al.}
 
 \title{Modelo de artigo para submissão à revista Texto Livre}
 \othertitle{Article template for submitting to the Texto Livre Journal}
@@ -94,18 +82,10 @@
 \affil[1]{Universidade Federal de São João del Rei, Brasil.}
 \affil[2]{Universidade Federal de Minas Gerais, Brasil.}
 
-% Corresponding author
-\corrauthor{Leonardo Araújo}
-
-% DOI
-\articledoi{10.35699/1983-3652.yyyy.nnnnn}
-
-% Abbreviated author list for the running footer
-\runningauthor{Araújo et al.}
-
 %\usepackage[backend=biber,style=abnt, ittitles]{biblatex}
 %\DeclareLanguageMapping{brazil}{brazil-apa}
-\addbibresource{tl-article-template.bib}     
+\setbibligraphyfile{tl-article-template.bib} % has different behaviour compiling PDF and HTML
+%\addbibresource{tl-article-template.bib}
 % use biber instead of bibtex
 % $ biber tl-article-template
 % $ pdflatex tl-article-template.tex
@@ -666,12 +646,16 @@ disponível no sítio da revista.
 \lipsum[17-19]
 
 
-
-\printbibliography\label{sec-bib}
+\tlprintbibliography\label{sec-bib} % print bibliography has different behaviour for PDF and HTML
+%\printbibliography\label{sec-bib}
 % if the text is not in Portuguese, it might be necessary to use the code below instead to print the correct ABNT abbreviations [s.n.], [s.l.] 
 %\begin{portuguese}
 %\printbibliography[title={Bibliography}]
 %\end{portuguese}
+
+% for HTML use instead
+%\bibliographystyle{abnt-alf}
+%\bibliography{tl-article-template.bib}
 
 \appendix 
 \section{Tabela longa}\label{apx-longtable}
