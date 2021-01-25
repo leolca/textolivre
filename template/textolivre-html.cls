@@ -4,12 +4,16 @@
 \ProcessOptions\relax
 \ExecuteOptions{}
 \PassOptionsToPackage{inline}{enumitem}
-\LoadClass[brazil,article]{abntex2}
+\LoadClass[brazil]{article}
 
 \RequirePackage[utf8]{inputenc}
 \RequirePackage[brazil]{babel}
 
-\newcommand{\othertitle}[1]{\tituloestrangeiro{#1}}
+\makeatletter
+\newcommand\othertitle[1]{ 
+  \expandafter\def\expandafter\@title\expandafter{\@title {\\}#1}
+}
+\makeatother
 \newcommand{\orcid}[1]{}
 \newcommand{\journalname}[1]{}
 \newcommand{\thevolume}[1]{}
@@ -22,22 +26,31 @@
 \newcommand{\articledoi}[1]{}
 \newcommand{\runningauthor}[1]{}
 \newenvironment{poliabstract}{}{}
-%\newenvironment{english}{}{}
-%\newenvironment{portuguese}{}{}
-%\newcommand{\setdefaultlanguage}[2][1]{}
-%\newcommand{\setotherlanguage}[2][1]{}
 \def\sep{\unskip. }%
 \newcommand{\keywords}[1]{\textbf{Palavras-chave}: #1}
-%\newcommand{\source}[1]{\textbf{Fonte}: \legend{#1}}
-\newcommand{\source}[1]{}
+% add source 
+\newcommand{\textSource}{%
+  \iflanguage{english}{Source:}{% 
+  \iflanguage{french}{Source:}{% 
+  \iflanguage{german}{Quelle:}{% 
+  \iflanguage{spanish}{Fuente:}{% 
+  \iflanguage{portuguese}{Fonte:}{Source:} 
+  }}}}} 
+\newcommand{\source}[1]{ 
+ \caption*{\textbf{\textSource} {#1}} 
+} 
+% end source
+
 \RequirePackage{authblk}
 \RequirePackage{hyperref}
 
-\RequirePackage[alf]{abntex2cite}
-\newcommand{\textcite}[1]{\citeauthoronline{#1}}
-\newcommand{\parencite}[1]{(\cite{#1})}
+\RequirePackage{polyglossia} 
+\setmainlanguage{english}
+
+\RequirePackage[backend=biber,style=abnt,ittitles]{biblatex}
+\DeclareLanguageMapping{brazil}{brazil-apa}
+
 \RequirePackage[inline]{enumitem}
-%\renewenvironment{enumerate}{\begin{alineas}}{\end{alineas}}
 \RequirePackage[table]{xcolor}
 \RequirePackage{graphicx}
 \RequirePackage{rotating}
@@ -57,13 +70,8 @@
 \RequirePackage{listings}
 \renewcommand\lstlistingname{Lista}
 \input{listingconfig.tex}
+% add source to lising
+\makeatletter
+\lst@Key{source}{}{\def\lst@source{#1}}
+\makeatother
 
-\RequirePackage{polyglossia} 
-\setmainlanguage{english}
-
-% defining how to set bibliography file and print
-\def\@bibfilesource{}
-\newcommand{\setbibligraphyfile}[1]{\def\@bibfilesource{#1}}
-%\newcommand{\tlprintbibliography}{\bibliographystyle{abnt-alf}\bibliography{\@bibfilesource}}
-\newcommand{\tlprintbibliography}{\bibliography{\@bibfilesource}}
-\newcommand{\citefield}[3][]{#1 {\citeonline{#2}}}
