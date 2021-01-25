@@ -295,11 +295,9 @@
 \newcommand{\thead}[1]{\bfseries #1\rule[-1.2ex]{0pt}{2em}}
 \renewcommand{\arraystretch}{1.2}
 
-\RequirePackage[backend=biber,style=abnt, ittitles]{biblatex}
+\RequirePackage[backend=biber,style=abnt,ittitles]{biblatex}
 \DeclareLanguageMapping{brazil}{brazil-apa}
 \renewcommand{\bibfont}{\small}
-\newcommand{\setbibligraphyfile}[1]{\addbibresource{#1}}
-\newcommand{\tlprintbibliography}{\printbibliography}
 
 \PassOptionsToPackage{hyphens}{url}
 \RequirePackage[breaklinks=true,pdfa=true]{hyperref}
