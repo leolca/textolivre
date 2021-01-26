@@ -27,7 +27,15 @@
 \newcommand{\runningauthor}[1]{}
 \newenvironment{poliabstract}{}{}
 \def\sep{\unskip. }%
-\newcommand{\keywords}[1]{\textbf{Palavras-chave}: #1}
+% keywords
+\newcommand{\keywordsname}{%
+    \iflanguage{english}{Keywords}{%
+    \iflanguage{french}{Mots-cl\'{e}s}{%
+    \iflanguage{german}{Schl\"{u}sselw\"{o}rter}{%
+    \iflanguage{spanish}{Palabras clave}{%
+    \iflanguage{portuguese}{Palavras-chave}{Keywords}
+    }}}}}
+\newcommand{\keywords}[1]{\textbf{\keywordsname}: {#1}}
 % add source 
 \newcommand{\textSource}{%
   \iflanguage{english}{Source:}{% 

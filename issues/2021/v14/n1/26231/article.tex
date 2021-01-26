@@ -1,7 +1,54 @@
 % !TEX TS-program = XeLaTeX
+% use the following command: 
+% $ xelatex -shell-escape -output-driver="xdvipdfmx -z 0" article.tex
+% this "-z 0" must be used to suppress compression in XMP Metadata packet 
 % all document files must be coded in UTF-8
 \documentclass{textolivre}
-\usepackage{multirow}
+% for anonymous submission
+%\documentclass[anonymous]{textolivre}
+% to create HTML use 
+%\documentclass{textolivre-html}
+% remove all auxiliary files
+% find . -name 'article.*' ! -name '*.tex' ! -name '*.pdf' ! -name '*.bib' ! -name '*.html' -type f -exec rm {} \;
+% HTML compile using make4ht
+% $ make4ht -c textolivre-html.cfg -u -x article "fn-in,svg,pic-align"   
+% $ make4ht -c textolivre-html.cfg -u -x article "fn-in,mathml,mathjax"   # use `mathjax' instead of `svg' to get LaTeX equation that will be handled by MathJax
+% $ bibtex article
+% clean and prettify HTML 
+% $ tidy -o article-tidy.html --output-xhtml --break-before-br --wrap 0 article.html 2> errs.txt
+% https://www.html-tidy.org/documentation/
+
+% Metadata
+\begin{filecontents*}{article.xmpdata}
+    \Title{Crisos socioecológica y comunicación durante la Marea Roja de Chiloé (2016)}
+    \Author{Jorge Valdebenito Allendes}
+    \Language{es}
+    \Keywords{Crisis \sep Comunicación \sep Socioecología \sep Interdisciplina \sep Sistemas \sep Marxismo}
+    \Journaltitle{Texto Livre}
+    \Journalnumber{1983-3652}
+    \Volume{14}
+    \Issue{1}
+    \Firstpage{1}
+    \Lastpage{18}
+    \Doi{10.35699/1983-3652.2021.26231}
+
+    \setRGBcolorprofile{sRGB_IEC61966-2-1_black_scaled.icc}
+            {sRGB_IEC61966-2-1_black_scaled}
+            {sRGB IEC61966 v2.1 with black scaling}
+            {http://www.color.org}
+\end{filecontents*}
+
+% PDF/A
+% - install package icc-profiles
+% - it is necessary to convert all image files to PDF/A
+%   use ghostscript as shown below:
+%   PDF images:
+%   $ gs -dPDFA -dBATCH -dNOPAUSE -sColorConversionStrategy=UseDeviceIndependentColor -dCompatibilityLevel=1.4 -sDEVICE=pdfwrite -sProcessColorModel=DeviceCMYK -dPDFACompatibilityPolicy=2 -sOutputFile=figure-a.pdf figure.pdf
+%   Other images:
+%   $ convert figure.png figure.eps
+%   $ gs -dPDFA -dBATCH -dNOPAUSE -sColorConversionStrategy=UseDeviceIndependentColor -dCompatibilityLevel=1.4 -sDEVICE=pdfwrite -sProcessColorModel=DeviceCMYK -dPDFACompatibilityPolicy=2 -dEPSCrop -sOutputFile=figure.pdf figure.eps
+%   # script to convert all files:
+%   $ for img in $( ls figure*.png ); do convert $img ${img%png}eps; gs -dPDFA -dBATCH -dNOPAUSE -sColorConversionStrategy=UseDeviceIndependentColor -dCompatibilityLevel=1.4 -sDEVICE=pdfwrite -sProcessColorModel=DeviceCMYK -dPDFACompatibilityPolicy=2 -dEPSCrop -sOutputFile=${img%png}pdf ${img%png}eps; done
 
 \journalname{Texto Livre: Linguagem e Tecnologia}
 \thevolume{14}
@@ -10,6 +57,12 @@
 \receiveddate{\DTMdisplaydate{2020}{05}{21}{-1}} % YYYY MM DD
 \accepteddate{\DTMdisplaydate{2020}{08}{31}{-1}}
 \publisheddate{\today}
+% Corresponding author
+\corrauthor{Jorge V. Allendes}
+% DOI
+\articledoi{10.35699/1983-3652.2021.26231}
+% Abbreviated author list for the running footer
+\runningauthor{Allendes, J. V.}
 
 \title{Crisos socioecológica y comunicación durante la Marea Roja de Chiloé (2016)}
 \othertitle{Crise sócio-ecológica e comunicação durante a Maré Vermelha de Chiloé (2016)}
@@ -17,16 +70,6 @@
 
 \author[1]{Jorge Valdebenito Allendes \orcid{0000-0003-3249-1855} \thanks{Email: \url{jorge.valdebenito@postgrado.uv.cl}}}
 \affil[1]{Universidad de Valparaíso, Chile.}
-
-% Corresponding author
-\corrauthor{Jorge V. Allendes}
-
-% DOI
-\articledoi{10.35699/1983-3652.2021.26231}
-
-% Abbreviated author list for the running footer
-%\runningauthor{\authors}
-\runningauthor{Allendes, J. V.}
 
 %\usepackage[backend=biber,style=abnt, ittitles]{biblatex}
 %\DeclareLanguageMapping{brazil}{brazil-apa}
@@ -39,6 +82,8 @@
 \setdefaultlanguage{spanish}
 \setotherlanguage[variant=brazilian]{portuguese}
 \setotherlanguage{english}
+
+\usepackage{multirow}
 
 \begin{document}
 \maketitle
@@ -131,7 +176,7 @@ la pesca artesanal.
 
 \begin{figure}[htbp]
  \centering
- \includegraphics[width=0.5\textwidth]{figure001.png}
+ \includegraphics[width=0.5\textwidth]{figure001.pdf}
  \caption{Zona afectada y ubicación geográfica de la Isla de Chiloé.}
  \label{fig01}
  \source{Instituto Geográfico Militar de Chile.}

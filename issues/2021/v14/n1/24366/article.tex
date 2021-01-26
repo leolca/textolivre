@@ -1,6 +1,46 @@
 % !TEX TS-program = XeLaTeX
+% use the following command: 
+% $ xelatex -shell-escape -output-driver="xdvipdfmx -z 0" article.tex
+% this "-z 0" must be used to suppress compression in XMP Metadata packet 
 % all document files must be coded in UTF-8
 \documentclass{textolivre}
+% for anonymous submission
+%\documentclass[anonymous]{textolivre}
+% to create HTML use 
+%\documentclass{textolivre-html}
+% remove all auxiliary files
+% find . -name 'tl-article-template.*' ! -name '*.tex' ! -name '*.pdf' ! -name '*.bib' -type f -exec rm {} \;
+% HTML compile using make4ht
+% $ make4ht -c textolivre-html.cfg -u -x article "fn-in,svg"   # or use `mathjax' instead of `svg' to get LaTeX equation that will be handled by MathJax
+% $ bibtex article
+% clean and prettify HTML 
+% $ tidy -o article-tidy.html --output-xhtml --break-before-br --wrap 0 article.html 2> errs.txt
+% https://www.html-tidy.org/documentation/
+
+% Metadata
+\begin{filecontents*}{article.xmpdata}
+    \Title{Modelo de artigo para submissão à revista Texto Livre}
+    \Author{Leonardo Araújo \sep Daniervelin Pereira \sep Ana Cristina Fricke Matte}
+    \Language{pt-BR}
+    \Keywords{palavra1 \sep palavra dois \sep palavra-três \sep palavra4}
+    \Journaltitle{Texto Livre}
+    \Journalnumber{1983-3652}
+    \Volume{0}
+    \Issue{0}
+    \Firstpage{1}
+    \Lastpage{16}
+    \Doi{10.35699/1983-3652.yyyy.nnnnn}
+
+    \setRGBcolorprofile{sRGB_IEC61966-2-1_black_scaled.icc}
+            {sRGB_IEC61966-2-1_black_scaled}
+            {sRGB IEC61966 v2.1 with black scaling}
+            {http://www.color.org}
+\end{filecontents*}
+
+% PDF/A
+% it is necessary to convert all image files to PDF/A
+% use ghostscript as shown below:
+% gs -dPDFA -dBATCH -dNOPAUSE -sColorConversionStrategy=UseDeviceIndependentColor -dCompatibilityLevel=1.4 -sDEVICE=pdfwrite -sProcessColorModel=DeviceCMYK -dPDFACompatibilityPolicy=2 -sOutputFile=image-a.pdf image.pdf
 
 \journalname{Texto Livre: Linguagem e Tecnologia}
 \thevolume{14}
@@ -9,6 +49,12 @@
 \receiveddate{\DTMdisplaydate{2020}{07}{29}{-1}} % YYYY MM DD
 \accepteddate{\DTMdisplaydate{2020}{09}{11}{-1}}
 \publisheddate{\today}
+% Corresponding author
+\corrauthor{Márcia Vergna}
+% DOI
+\articledoi{10.35699/1983-3652.2021.24366}
+% Abbreviated author list for the running footer
+\runningauthor{Vergna, M.}
 
 \title{Modelo de artigo para submissão à revista Texto Livre}
 \othertitle{Article template for submitting to the Texto Livre Journal}
@@ -17,15 +63,6 @@
 
 \author[1]{Márcia Aparecida Vergna \thanks{Email: \url{marciavergna@yahoo.com.br}}}
 \affil[1]{Universidade Estácio de Sá, Brasil.}
-
-% Corresponding author
-\corrauthor{Márcia Vergna}
-
-% DOI
-\articledoi{10.35699/1983-3652.2021.24366}
-
-% Abbreviated author list for the running footer
-\runningauthor{Vergna, M.}
 
 %\usepackage[backend=biber,style=abnt, ittitles]{biblatex}
 %\DeclareLanguageMapping{brazil}{brazil-apa}
@@ -37,7 +74,6 @@
 % set language of the article
 \setdefaultlanguage[variant=brazilian]{portuguese}
 \setotherlanguage{english}
-
 
 \usepackage{mfirstuc}
 %\citeauthor prints only the last name. This command prints first and last name.
@@ -456,7 +492,7 @@ transformações \cite{rojo2012}. O diagrama abaixo evidencia esses princípios.
 
 \begin{figure}[htbp]
  \centering
- \includegraphics[width=0.5\textwidth]{figure01.png}
+ \includegraphics[width=0.5\textwidth]{figure01.pdf}
  \caption{Prática na Pedagogia dos Multiletramentos.}
  \label{fig01}
  \source{adaptado de \textcite{cope2009}.}
@@ -606,7 +642,7 @@ cria-se um novo design, uma expressão da voz do aluno. O \emph{redesigned} refe
 
 \begin{figure}[htbp]
  \centering
- \includegraphics[width=0.75\textwidth]{figure02.png}
+ \includegraphics[width=0.75\textwidth]{figure02.pdf}
  \caption{Modos de significação dos designs disponíveis.}
  \label{fig02}
  \source{\apud[p. 26]{novalondres}[p. 24]{rojo2013}.}

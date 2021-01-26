@@ -1,8 +1,51 @@
 % !TEX TS-program = XeLaTeX
+% use the following command: 
+% $ xelatex -shell-escape -output-driver="xdvipdfmx -z 0" article.tex
+% this "-z 0" must be used to suppress compression in XMP Metadata packet 
 % all document files must be coded in UTF-8
 \documentclass{textolivre}
 % for anonymous submission
 %\documentclass[anonymous]{textolivre}
+% to create HTML use 
+%\documentclass{textolivre-html}
+% remove all auxiliary files
+% find . -name 'tl-article-template.*' ! -name '*.tex' ! -name '*.pdf' ! -name '*.bib' -type f -exec rm {} \;
+% HTML compile using make4ht
+% $ make4ht -c textolivre-html.cfg -u -x article "fn-in,svg"   # or use `mathjax' instead of `svg' to get LaTeX equation that will be handled by MathJax
+% $ bibtex article
+% clean and prettify HTML 
+% $ tidy -o article-tidy.html --output-xhtml --break-before-br --wrap 0 article.html 2> errs.txt
+% https://www.html-tidy.org/documentation/
+
+% Metadata
+\begin{filecontents*}{article.xmpdata}
+    \Title{EXPLORANDO A MATEMÁTICA E A FÍSICA COM O ROBÔ SEGUIDOR DE LINHA NA PERSPECTIVA DA ROBÓTICA LIVRE}
+    \Author{Daniel da Silveira Guimarães \sep Élida Alves da Silva \sep Fernando da Costa Barbosa}
+    \Language{pt-BR}
+    \Keywords{Robótica livre \sep Matemática \sep Seguidor de linha}
+    \Journaltitle{Texto Livre}
+    \Journalnumber{1983-3652}
+    \Volume{14}
+    \Issue{1}
+    \Firstpage{1}
+    \Lastpage{24}
+    \Doi{10.35699/1983-3652.2021.24895}
+
+    \setRGBcolorprofile{sRGB_IEC61966-2-1_black_scaled.icc}
+            {sRGB_IEC61966-2-1_black_scaled}
+            {sRGB IEC61966 v2.1 with black scaling}
+            {http://www.color.org}
+\end{filecontents*}
+
+% PDF/A
+% - install package icc-profiles
+% - it is necessary to convert all image files to PDF/A
+%   use ghostscript as shown below:
+%   PDF images:
+%   $ gs -dPDFA -dBATCH -dNOPAUSE -sColorConversionStrategy=UseDeviceIndependentColor -dCompatibilityLevel=1.4 -sDEVICE=pdfwrite -sProcessColorModel=DeviceCMYK -dPDFACompatibilityPolicy=2 -sOutputFile=figure-a.pdf figure.pdf
+%   Other images:
+%   $ convert figure.png figure.eps
+%   $ gs -dPDFA -dBATCH -dNOPAUSE -sColorConversionStrategy=UseDeviceIndependentColor -dCompatibilityLevel=1.4 -sDEVICE=pdfwrite -sProcessColorModel=DeviceCMYK -dPDFACompatibilityPolicy=2 -dEPSCrop -sOutputFile=figure.pdf figure.eps
 
 \journalname{Texto Livre: Linguagem e Tecnologia}
 \thevolume{14}
@@ -11,6 +54,12 @@
 \receiveddate{\DTMdisplaydate{2020}{08}{23}{-1}} % YYYY MM DD
 \accepteddate{\DTMdisplaydate{2020}{9}{22}{-1}}
 \publisheddate{\today}
+% Corresponding author
+\corrauthor{Fernando Barbosa}
+% DOI
+\articledoi{10.35699/1983-3652.2021.24895}
+% Abbreviated author list for the running footer
+\runningauthor{Guimarães et al.}
 
 \title{EXPLORANDO A {MATEMÁTICA} E A FÍSICA COM O ROBÔ SEGUIDOR DE LINHA NA PERSPECTIVA DA ROBÓTICA LIVRE}
 \othertitle{EXPLORING MATHEMATICS AND PHYSICAL WITH LINE FOLLOWER ROBOT FROM THE PERSPECTIVE OF FREE ROBOTICS}
@@ -20,17 +69,7 @@
 \author[1]{Daniel da Silveira Guimarães \orcid{0000-0003-1973-9609} \thanks{Email: \url{danielguimaraes@ufg.br}}}
 \author[1]{Élida Alves da Silva \orcid{0000-0001-5417-9083} \thanks{Email: \url{elida_alves@ufg.br}}}
 \author[1]{Fernando da Costa Barbosa \orcid{0000-0001-8558-3521} \thanks{Email: \url{fcbarbosa@ufg.br}}}
-
 \affil[1]{Universidade Federal de Goiás, Brasil.}
-
-% Corresponding author
-\corrauthor{Fernando Barbosa}
-
-% DOI
-\articledoi{10.35699/1983-3652.2021.24895}
-
-% Abbreviated author list for the running footer
-\runningauthor{Guimarães et al.}
 
 %\usepackage[backend=biber,style=abnt, ittitles]{biblatex}
 %\DeclareLanguageMapping{brazil}{brazil-apa}
@@ -335,12 +374,12 @@ eficácia do robô, propiciando maior leque de componentes:
 
     \begin{figure}[h!]
     \begin{minipage}{0.47\textwidth}
-    \includegraphics[width=\linewidth]{figure-01.png}
+    \includegraphics[width=\linewidth]{figure-01.pdf}
     \subcaption{}
     \end{minipage}
     \hfill
     \begin{minipage}{0.47\textwidth}
-    \includegraphics[width=\linewidth]{figure-02.png}
+    \includegraphics[width=\linewidth]{figure-02.pdf}
     \subcaption{}
     \end{minipage}
     \caption{Chassi.}
@@ -356,12 +395,12 @@ eficácia do robô, propiciando maior leque de componentes:
 
     \begin{figure}[h!]
     \begin{minipage}{0.47\textwidth}
-    \includegraphics[width=\linewidth]{figure-03.png}
+    \includegraphics[width=\linewidth]{figure-03.pdf}
     \subcaption{}
     \end{minipage}
     \hfill
     \begin{minipage}{0.47\textwidth} 
-    \includegraphics[width=\linewidth]{figure-04.png}
+    \includegraphics[width=\linewidth]{figure-04.pdf}
     \subcaption{}
     \end{minipage}
     \caption{Engrenagens e motores.}
@@ -379,17 +418,17 @@ eficácia do robô, propiciando maior leque de componentes:
 
     \begin{figure}[h!]
     \begin{minipage}{0.31\textwidth}
-    \includegraphics[width=\linewidth]{figure-05.png}
+    \includegraphics[width=\linewidth]{figure-05.pdf}
     \subcaption{}
     \end{minipage}
     \hfill
     \begin{minipage}{0.31\textwidth} 
-    \includegraphics[width=\linewidth]{figure-06.png}
+    \includegraphics[width=\linewidth]{figure-06.pdf}
     \subcaption{}
     \end{minipage}
     \hfill
     \begin{minipage}{0.31\textwidth} 
-    \includegraphics[width=\linewidth]{figure-07.png}
+    \includegraphics[width=\linewidth]{figure-07.pdf}
     \subcaption{}
     \end{minipage}
     \caption{Fixação das rodas.}
@@ -412,12 +451,12 @@ eficácia do robô, propiciando maior leque de componentes:
 
     \begin{figure}[h!]
     \begin{minipage}{0.47\textwidth}
-    \includegraphics[width=\linewidth]{figure-08.png}
+    \includegraphics[width=\linewidth]{figure-08.pdf}
     \subcaption{}
     \end{minipage}
     \hfill
     \begin{minipage}{0.47\textwidth} 
-    \includegraphics[width=\linewidth]{figure-09.png}
+    \includegraphics[width=\linewidth]{figure-09.pdf}
     \subcaption{}
     \end{minipage}
     \caption{Estrutura do AGV.}
@@ -466,12 +505,12 @@ pesquisa foram utilizados os LED retratados da \Cref{fig05a}.
 
 \begin{figure}[h!]
 \begin{minipage}{0.27\textwidth}
-\includegraphics[width=\linewidth]{figure-10.png}
+\includegraphics[width=\linewidth]{figure-10.pdf}
 \subcaption{}\label{fig05a}
 \end{minipage}
 \hfill
 \begin{minipage}{0.47\textwidth} 
-\includegraphics[width=\linewidth]{figure-11.png}
+\includegraphics[width=\linewidth]{figure-11.pdf}
 \subcaption{}\label{fig05b}
 \end{minipage}
 \caption{LED.}
@@ -486,7 +525,7 @@ positivo e negativo.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.25\textwidth]{figure-12.png}
+\includegraphics[width=0.25\textwidth]{figure-12.pdf}
 \caption{Resistores.}
 \label{fig06}
 \source{Acervo dos autores.}
@@ -498,7 +537,7 @@ conforme \Cref{fig07}.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.25\textwidth]{figure-13.png}
+\includegraphics[width=0.25\textwidth]{figure-13.pdf}
 \caption{Primeiro Circuito.}
 \label{fig07}
 \source{Acervo dos autores.}
@@ -517,7 +556,7 @@ ao final do código).
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.25\textwidth]{figure-14.png}
+\includegraphics[width=0.25\textwidth]{figure-14.pdf}
 \caption{Potenciômetro.}
 \label{fig08}
 \source{Acervo dos autores.}
@@ -530,7 +569,7 @@ LDR de 5mm.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.25\textwidth]{figure-15.png}
+\includegraphics[width=0.25\textwidth]{figure-15.pdf}
 \caption{LDR.}
 \label{fig09}
 \source{Acervo dos autores.}
@@ -541,7 +580,7 @@ liga/desliga, (e) potenciômetro e (f) LDR, conforme \Cref{fig10}.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.5\textwidth]{figure-16.png}
+\includegraphics[width=0.5\textwidth]{figure-16.pdf}
 \caption{Segundo Circuito.}
 \label{fig10}
 \source{Acervo dos autores.}
@@ -567,7 +606,7 @@ datasheet do componente.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.25\textwidth]{figure-17.png}
+\includegraphics[width=0.25\textwidth]{figure-17.pdf}
 \caption{Transistor.}
 \label{fig11}
 \source{Acervo dos autores.}
@@ -581,7 +620,7 @@ dos transistores NPN e PNP.
 
 \begin{figure}[h!]
 \centering
-\includegraphics[width=0.75\textwidth]{figure-18.png}
+\includegraphics[width=0.75\textwidth]{figure-18.pdf}
 \caption{Esquema de transistores NPN e PNP.}
 \label{fig12}
 \source{Aprender sobre eletrônicos \url{http://www.learningaboutelectronics.com/Artigos/Diferenca-entre-transistores-NPN-e-PNP.php}.}
@@ -611,7 +650,7 @@ deve-se inverter a polarização do circuito, o que pode inferir da \Cref{fig13}
 
 \begin{figure}[h!]
 \centering
-\includegraphics[width=0.5\textwidth]{figure-19.png}
+\includegraphics[width=0.5\textwidth]{figure-19.pdf}
 \caption{Terceiro Circuito.}
 \label{fig13}
 \source{Acervo dos autores.}
@@ -633,7 +672,7 @@ o AGV possa seguir uma trajetória formada por fita isolante dupla de cor preta
 
 \begin{figure}[h!]
 \centering
-\includegraphics[width=0.5\textwidth]{figure-20.png}
+\includegraphics[width=0.5\textwidth]{figure-20.pdf}
 \caption{Parte inferior do AGV.}
 \label{fig14}
 \source{Acervo dos autores.}
@@ -647,7 +686,7 @@ placa no chassi, conforme \Cref{fig15}.
 
 \begin{figure}[h!]
 \centering
-\includegraphics[width=0.5\textwidth]{figure-21.png}
+\includegraphics[width=0.5\textwidth]{figure-21.pdf}
 \caption{Parte superior do AGV.}
 \label{fig15}
 \source{Acervo dos autores.}
@@ -659,12 +698,12 @@ aos componentes eletrônicos.
 
 \begin{figure}[h!]
 \begin{minipage}{0.47\textwidth}
-\includegraphics[width=\linewidth]{figure-22.png}
+\includegraphics[width=\linewidth]{figure-22.pdf}
 \subcaption{}
 \end{minipage}
 \hfill
 \begin{minipage}{0.47\textwidth} 
-\includegraphics[width=\linewidth]{figure-23.png}
+\includegraphics[width=\linewidth]{figure-23.pdf}
 \subcaption{}
 \end{minipage}
 \caption{Circuitos no AGV.}
@@ -824,22 +863,22 @@ de voltas da $P_1$ e vice-versa.
 
     \begin{figure}[h!]
     \begin{minipage}{0.2\textwidth}
-    \includegraphics[width=\linewidth]{figure-24.png}
+    \includegraphics[width=\linewidth]{figure-24.pdf}
     \subcaption{Motor/$P_1$.}\label{fig17a}
     \end{minipage}
     \hfill
     \begin{minipage}{0.2\textwidth} 
-    \includegraphics[width=\linewidth]{figure-25.png}
+    \includegraphics[width=\linewidth]{figure-25.pdf}
     \subcaption{$P_2/E_2$.}\label{fig17b}
     \end{minipage}
     \hfill
     \begin{minipage}{0.2\textwidth} 
-    \includegraphics[width=\linewidth]{figure-26.png}
+    \includegraphics[width=\linewidth]{figure-26.pdf}
     \subcaption{$E_1$ e engrenagem onde será conectada a roda.}\label{fig17c}
     \end{minipage}
     \hfill
     \begin{minipage}{0.33\textwidth} 
-    \includegraphics[width=\linewidth]{figure-27.png}
+    \includegraphics[width=\linewidth]{figure-27.pdf}
     \subcaption{$P_1$ e $P_2$ conectadas por correia $E_1$ e $E_2$ em contato.}\label{fig17d}
     \end{minipage}
     \caption{Polias e engrenagens.}
@@ -960,7 +999,7 @@ ganhos na velocidade.
 
 \begin{figure}[h!]
 \centering
-\includegraphics[width=0.5\textwidth]{figure-28.png}
+\includegraphics[width=0.5\textwidth]{figure-28.pdf}
 \caption{Pista com fita dupla de 3.21m.}
 \label{fig18}
 \source{Acervo dos autores.}
@@ -1056,7 +1095,7 @@ componentes eletrônicos no circuito.
 
 \begin{figure}[h!]
 \centering
-\includegraphics[width=0.5\textwidth]{figure-29.png}
+\includegraphics[width=0.5\textwidth]{figure-29.pdf}
 \caption{Circuito associado em série.}
 \label{fig19}
 \source{Acervo dos autores.}
@@ -1099,7 +1138,7 @@ continuarão valendo as conclusões.
 
 \begin{figure}[h!]
 \centering
-\includegraphics[width=0.6\textwidth]{figure-30.png}
+\includegraphics[width=0.6\textwidth]{figure-30.pdf}
 \caption{Circuito associado em paralelo.}
 \label{fig20}
 \source{Acervo dos autores.}
@@ -1128,7 +1167,7 @@ calcular a resistência máxima do resistor para não queimar o LED.
 \item Esquematize o primeiro circuito, LED-resistor, conforme \Cref{fig21}, ressaltando a simbologia utilizada
 \begin{figure}[h!]
 \centering
-\includegraphics[width=0.3\textwidth]{figure-31.png}
+\includegraphics[width=0.3\textwidth]{figure-31.pdf}
 \caption{Esquema do primeiro circuito.}
 \label{fig21}
 \source{Acervo dos autores.}
@@ -1160,7 +1199,7 @@ nominal e a última, a porcentagem que a resistência pode variar.
 
 \begin{figure}[h!]
 \centering
-\includegraphics[width=0.2\textwidth]{figure-32.png}
+\includegraphics[width=0.2\textwidth]{figure-32.pdf}
 \caption{Resistor de 4 cores.}
 \label{fig22}
 \source{Acervo dos autores.}
@@ -1213,7 +1252,7 @@ de nó e qual o objetivo.
 
 \begin{figure}[h!]
 \centering
-\includegraphics[width=0.6\textwidth]{figure-33.png}
+\includegraphics[width=0.6\textwidth]{figure-33.pdf}
 \caption{Esquema do circuito do AGV.}
 \label{fig23}
 \source{Acervo dos autores.}
@@ -1226,7 +1265,7 @@ potenciômetro.
 
 \begin{figure}[h!]
 \centering
-\includegraphics[width=0.3\textwidth]{figure-34.png}
+\includegraphics[width=0.3\textwidth]{figure-34.pdf}
 \caption{Esquema do segundo circuito do AGV.}
 \label{fig24}
 \source{Acervo dos autores.}
@@ -1264,7 +1303,7 @@ posicionamento do LDR sobre a trajetória, conforme a \Cref{fig25}.
 
 \begin{figure}[h!]
 \centering
-\includegraphics[width=0.8\textwidth]{figure-35.png}
+\includegraphics[width=0.8\textwidth]{figure-35.pdf}
 \caption{Posicionamento do LDR sobre a trajetória.}
 \label{fig25}
 \source{Acervo dos autores.}
@@ -1299,12 +1338,12 @@ com alguns componentes diferentes.
 
 \begin{figure}[h!]
 \begin{minipage}{0.47\textwidth}
-\includegraphics[width=\linewidth]{figure-36.png}
+\includegraphics[width=\linewidth]{figure-36.pdf}
 \subcaption{}
 \end{minipage}
 \hfill
 \begin{minipage}{0.47\textwidth}
-\includegraphics[width=\linewidth]{figure-37.png}
+\includegraphics[width=\linewidth]{figure-37.pdf}
 \subcaption{}
 \end{minipage}
 \caption{Primeiro exemplar (AGV).}
