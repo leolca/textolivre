@@ -3,16 +3,15 @@
 % $ xelatex -shell-escape -output-driver="xdvipdfmx -z 0" article.tex
 % this "-z 0" must be used to suppress compression in XMP Metadata packet 
 % all document files must be coded in UTF-8
-\documentclass{textolivre}
+%\documentclass{textolivre}
 % for anonymous submission
 %\documentclass[anonymous]{textolivre}
 % to create HTML use 
-%\documentclass{textolivre-html}
+\documentclass{textolivre-html}
 % remove all auxiliary files
 % find . -name 'tl-article-template.*' ! -name '*.tex' ! -name '*.pdf' ! -name '*.bib' -type f -exec rm {} \;
 % HTML compile using make4ht
 % $ make4ht -c textolivre-html.cfg -u -x article "fn-in,svg"   # or use `mathjax' instead of `svg' to get LaTeX equation that will be handled by MathJax
-% $ bibtex article
 % clean and prettify HTML 
 % $ tidy -o article-tidy.html --output-xhtml --break-before-br --wrap 0 article.html 2> errs.txt
 % https://www.html-tidy.org/documentation/
@@ -60,6 +59,9 @@
 \articledoi{10.35699/1983-3652.2021.24895}
 % Abbreviated author list for the running footer
 \runningauthor{Guimarães et al.}
+
+\usepackage{placeins}
+\usepackage{float}
 
 \title{EXPLORANDO A {MATEMÁTICA} E A FÍSICA COM O ROBÔ SEGUIDOR DE LINHA NA PERSPECTIVA DA ROBÓTICA LIVRE}
 \othertitle{EXPLORING MATHEMATICS AND PHYSICAL WITH LINE FOLLOWER ROBOT FROM THE PERSPECTIVE OF FREE ROBOTICS}
@@ -346,7 +348,7 @@ segurança e pesquisar sobre o correto manuseio da sucata eletrônica, de modo a
 não sofrer acidentes e não danificar os componentes. Recomenda-se o
 acompanhamento de vídeos instrutivos disponíveis na internet que abordam estes
 temas. Os materiais necessários e as possíveis sucatas de onde alguns deles
-podem ser retirados/reutilizados estão listados no \Cref{tab01}.
+podem ser retirados/reutilizados estão listados na \Cref{tab01}.
 
 \input{table01.tex}
 
@@ -360,7 +362,7 @@ estrutura do AGV.
 O objetivo do AGV é percorrer uma trajetória, construída com linha preta em uma
 superfície clara, com velocidade e tempo gasto otimizados. Serão descritas duas
 experiências de montagem, cujos materiais podem ser substituídos por
-equivalentes que constam ou não no \Cref{tab01}. As medidas também podem ser
+equivalentes que constam ou não na \Cref{tab01}. As medidas também podem ser
 alteradas. Entretanto, para efetivar as alterações é necessário fazer análises
 matemáticas que serão discutidas em outro momento. O objetivo do artigo
 supracitado é possibilitar a troca de componentes, mantendo a eficiência e
@@ -369,8 +371,8 @@ eficácia do robô, propiciando maior leque de componentes:
 \begin{enumerate}
 \item O primeiro item a ser confeccionado é o chassi, suporte para os componentes.
     \begin{enumerate}
-    \item Em um ACM desenhe a \Cref{fig01}, onde triângulo de referência é isósceles, cujo centro de massa foi encontrado.
-    \item Recorte o chassi.
+    \item[1.1] Em um ACM desenhe a \Cref{fig01}, onde triângulo de referência é isósceles, cujo centro de massa foi encontrado.
+    \item[1.2] Recorte o chassi.
 
     \begin{figure}[h!]
     \begin{minipage}{0.47\textwidth}
@@ -391,7 +393,7 @@ eficácia do robô, propiciando maior leque de componentes:
 
     \item Quanto aos motores, retire dois conjuntos de engrenagens, polias e motores presentes em leitoras de DVD de computadores.
     \begin{enumerate}
-    \item Com uma lâmina para arco de serra, retire os componentes como indicado na \Cref{fig02}.
+    \item[2.1] Com uma lâmina para arco de serra, retire os componentes como indicado na \Cref{fig02}.
 
     \begin{figure}[h!]
     \begin{minipage}{0.47\textwidth}
@@ -408,7 +410,7 @@ eficácia do robô, propiciando maior leque de componentes:
     \source{Acervo dos autores.}
     \end{figure}
     
-    \item Desenhe dois círculos de raio 2,5cm em um chinelo. Recorte-os para
+    \item[2.2] Desenhe dois círculos de raio 2,5cm em um chinelo. Recorte-os para
     confeccionar as rodas traseiras. Prenda cada círculo em um parafuso com
     rosca, fixe-o na furadeira e, a partir de autorrotação, faça o acabamento
     com uma lixa. Com prego, faça sulcos nas rodas para garantir maior atrito.
@@ -416,7 +418,7 @@ eficácia do robô, propiciando maior leque de componentes:
     necessário, as rodas podem ser fixadas com uma estrutura de eixo,
     utilizando rebites e conectores de chuveiros.
 
-    \begin{figure}[h!]
+    \begin{figure}[H]
     \begin{minipage}{0.31\textwidth}
     \includegraphics[width=\linewidth]{figure-05.pdf}
     \subcaption{}
@@ -436,7 +438,7 @@ eficácia do robô, propiciando maior leque de componentes:
     \source{Acervo dos autores.}
     \end{figure}
 
-    \item Fixe as duas estruturas de motor/polias/engrenagens/rodas no chassi
+    \item[2.3] Fixe as duas estruturas de motor/polias/engrenagens/rodas no chassi
     com supercola ou parafusos e porcas. Cada uma delas deve ser fixada próxima à
     uma das bordas do chassi, de forma que o eixo da roda esteja alinhado ao
     vértice da base do triângulo referência, conforme \Cref{fig04}. 
@@ -492,14 +494,12 @@ causa a baixa de velocidade do motor e a correção da trajetória.
 O circuito motor-potenciômetro-transistor é o responsável por promover a
 locomoção do robô. O transistor regula a quantidade de tensão no motor. O
 potenciômetro permite correções nas altas tensões que passariam para o motor,
-evitando velocidades muito altas e imprecisão do AGV. Se a tensão no motor for
-menor ou igual a 2,8V ele permanece em repouso, se for maior entrará em
-movimento. A velocidade de rotação do motor depende da tensão nele.
+evitando velocidades muito altas e imprecisão do AGV. A velocidade de rotação do motor depende da tensão nele.
 
 
 \subsubsection{Primeiro circuito do AGV: LED-resistor}\label{sec-prim-circ}
 O LED é um diodo que converte energia elétrica em luz. Só permite que a
-corrente flua em uma direção, do lado positivo – ânodo - para o lado negativo –
+corrente flua em uma direção, do lado positivo - ânodo - para o lado negativo -
 cátodo (atenção ao design interno das colunas do LED na \Cref{fig05b}). Nesta
 pesquisa foram utilizados os LED retratados da \Cref{fig05a}.
 
@@ -544,7 +544,7 @@ conforme \Cref{fig07}.
 \end{figure}
 
 Os LED são de 3V e corrente máxima de $20mA = 0,02A$. O valor nominal do
-resistor, que será calculado na \Cref{sec-escolha-resistor}, deve ser $300\Omega$, o qual pode ser
+resistor, que será calculado na \Cref{sec-escolha-R}, deve ser $300\Omega$, o qual pode ser
 substituído por um resistor de $220\Omega$ e um de $100\Omega$ colocados em série.
 
 
@@ -590,7 +590,7 @@ Os potenciômetros desse circuito devem ser ajustados de acordo com os
 transistores (\Cref{sec-terceiro-circ}) utilizados no AGV, conforme as seguintes faixas
 
 \input{table02.tex}
-
+\FloatBarrier 
 
 \subsubsection{Terceiro circuito do AGV: motor-potenciômetro-transistor}\label{sec-terceiro-circ}
 O terceiro circuito é o programador do AGV. Existem vários tipos de
@@ -684,7 +684,7 @@ centro de massa do triângulo, conforme \Cref{fig01}. Fixe a chave liga/desliga,
 transistores e potenciômetros em uma placa de plástico rígido e depois cole a
 placa no chassi, conforme \Cref{fig15}.
 
-\begin{figure}[h!]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.5\textwidth]{figure-21.pdf}
 \caption{Parte superior do AGV.}
@@ -696,7 +696,7 @@ Segue na \Cref{fig16} um esquema para orientar a montagem do circuito no AGV, co
 indicação dos furos para passagem dos fios. Todos os fios devem ser soldados
 aos componentes eletrônicos.
 
-\begin{figure}[h!]
+\begin{figure}[H]
 \begin{minipage}{0.47\textwidth}
 \includegraphics[width=\linewidth]{figure-22.pdf}
 \subcaption{}
@@ -725,7 +725,7 @@ eficiência e a eficácia, e estabelecer uma SD envolvendo conteúdos de
 Matemática e Física neste processo?”. Esta investigação foi conduzida baseada
 na experimentação de componentes de sucatas que pudessem substituir as peças
 compradas, bem como na exploração da Matemática e Física subjacente. Neste
-processo, foram encontrados os componentes citados na quarta coluna do \Cref{tab01}.
+processo, foram encontrados os componentes citados na quarta coluna da \Cref{tab01}.
 Alguns problemas ocorreram neste processo e foram feitas adaptações para
 obter melhores resultados na performance do robô.
 
@@ -745,13 +745,13 @@ Matemática e Física na SD.
 
 A montagem da parte eletrônica foi feita, inicialmente, sem separações. A
 partir das experimentações, concluiu-se que a divisão em 3 partes facilitaria o
-entendimento, bem como a elaboração da SD. Foi elaborado um esquema, Figura 16,
+entendimento, bem como a elaboração da SD. Foi elaborado um esquema, \Cref{fig16},
 para montagem das partes do circuito. No segundo circuito foram testados tanto
-potenciômetros quanto transistores para estabelecer uma resistência elétrica.
+potenciômetros quanto resistores para estabelecer uma resistência elétrica.
 Apesar de serem opções funcionais, a descrição do circuito foi feita com base
 no potenciômetro. O terceiro circuito era composto por motor-transistor. Foram
 testados e validados diversos tipos de transistores NPN e PNP, os quais estão
-elencados no \Cref{tab02}, a fim de facilitar a procura do componente em sucatas.
+elencados na \Cref{tbl-tabela-01}, a fim de facilitar a procura do componente em sucatas.
 Foram utilizados motores de 5.9V, por serem mais fáceis de serem encontrados em
 sucatas. Após os testes, optou-se pela inserção de potenciômetros entre os
 transistores e motores para proporcionar maior precisão ao movimento do robô.
@@ -887,11 +887,11 @@ de voltas da $P_1$ e vice-versa.
     \end{figure}
 
     \begin{enumerate}
-    \item Calcule o raio de $P_1$ (0,27cm) e seu comprimento ($\approx$ 1,69cm).
-    \item Calcule o raio de $P_2$ (0,9cm) e seu comprimento ($\approx$ 5,65cm).
-    \item Relembre/introduza o que são grandezas diretamente proporcionais
+    \item[2.1] Calcule o raio de $P_1$ (0,27cm) e seu comprimento ($\approx$ 1,69cm).
+    \item[2.2] Calcule o raio de $P_2$ (0,9cm) e seu comprimento ($\approx$ 5,65cm).
+    \item[2.3] Relembre/introduza o que são grandezas diretamente proporcionais
     utilizando como exemplo o raio e o comprimento da circunferência.
-    \item Induza os estudantes a perceberem que uma volta completa da $P_2$
+    \item[2.4] Induza os estudantes a perceberem que uma volta completa da $P_2$
     (maior) implica 3,343 rotações da $P_1$, ou equivalentemente, cada rotação
     da $P_1$ implica que $P_2$ gira a fração 1,69/5,65 ($\approx$ 0,299).
     \end{enumerate}
@@ -901,10 +901,10 @@ de voltas da $P_1$ e vice-versa.
     número de voltas da $P_1$ e outra para determinar o número de voltas da
     $P_1$ em relação ao número de voltas da $P_2$.
 
-    \begin{align}
-    f_1: \mathcal{R}^{+} \rightarrow \mathcal{R}^{+} && f_{1}^{-1}: \mathcal{R}^{+} \rightarrow \mathcal{R}^{+} \\
-    x \rightarrow 0,299x && x \rightarrow 3,342x \nonumber
-    \end{align}
+    \begin{align*}
+    f_1: \mathbb{R}^{+} \rightarrow \mathbb{R}^{+} && f_{1}^{-1}: \mathbb{R}^{+} \rightarrow \mathbb{R}^{+} \\
+    x \rightarrow 0,299x && x \rightarrow 3,343x \nonumber
+    \end{align*}
 
 \end{enumerate}
 
@@ -920,8 +920,8 @@ número de voltas da $E_1$ com relação ao número de voltas da $P_2$ e vice-ve
 \item Chame a atenção para o fato de que a $P_2$ está acoplada a uma engrenagem de
 14 dentes (\Cref{fig17b}) e estão centradas no mesmo eixo. Como consequência, a
 cada giro da $P_2$ corresponde um giro da $E_2$
-\item Enfatize que o giro de E2 movimenta uma engrenagem de 60 dentes
-($E_1$ - \Cref{17c}), pois as duas estão em contato, conforme \Cref{17d}. Nessa
+\item Enfatize que o giro de $E_2$ movimenta uma engrenagem de 60 dentes
+($E_1$ - \Cref{fig17c}), pois as duas estão em contato, conforme \Cref{fig17d}. Nessa
 Figura não é possível ver a $E_2$, acoplada à $P_2$. É importante relembrar que a $E_1$
 será presa à roda.
 \item Induza os estudantes a concluírem que para $E_1$ dar um giro completo a $P_2$
@@ -932,10 +932,10 @@ Introduza uma função para determinar o número de voltas da $E_1$ com relaçã
 número de voltas da $P_2$ e outra para determinar o número de voltas da $P_2$
 com relação ao número de voltas da $E_1$.
 
-    \begin{align}
-    f_2: \mathcal{R}^{+} &\rightarrow \mathcal{R}^{+} & f_{2}^{-1}: \mathcal{R}^{+} &\rightarrow \mathcal{R}^{+} \\
+    \begin{align*}
+    f_2: \mathbb{R}^{+} &\rightarrow \mathbb{R}^{+} & f_{2}^{-1}: \mathbb{R}^{+} &\rightarrow \mathbb{R}^{+} \\
     x &\rightarrow 0,233x & x &\rightarrow 4,285x \nonumber
-    \end{align}
+    \end{align*}
 
 \end{enumerate}
 
@@ -950,10 +950,10 @@ que o AGV vai atingir.
 
 \begin{enumerate}
 \item\label{itm1sec423} Faça um apanhado sobre composição de funções e introduza a função $f_2 \circ f_1$
-    \begin{align}
-    f_2 \circ f_1: \mathcal{R}^{+} &\rightarrow \mathcal{R}^{+}  \\
+    \begin{align*}
+    f_2 \circ f_1: \mathbb{R}^{+} &\rightarrow \mathbb{R}^{+}  \\
     x &\rightarrow 0,0696x \nonumber
-    \end{align}
+    \end{align*}
 
 \item Induza os estudantes a concluírem que, a partir da composição das funções
 $f_1$ e $f_2$, é possível relacionar a quantidade de giros da roda (giros da
@@ -1012,14 +1012,17 @@ ganhos na velocidade.
 que calculem quantos giros da roda serão necessários para percorrer o trajeto
 (321cm e 20,44 giros).
 \item\label{itm6} Relembre a velocidade média do robô em cm/min e faça-os calcular quantas
-RPM a roda fará $\left( \frac{3000}{15,7} \approx 191 \textmd{RPM}\right)$.
+RPM a roda fará 
+$$ 
+\frac{3000}{15,7} \approx 191 \textmd{RPM}.
+$$
 Enfatize que esse foi o número de RPM da roda no teste.
-\item Retome o item 3) da seção 4.2.3 (245 RPM da roda). Ressalte a grande
+\item Retome o item 3) da \Cref{sec-terceira} (245 RPM da roda). Ressalte a grande
 perda de giro e levante as possíveis causas relatadas na mesma seção.
 \item Faça uma abordagem sobre função inversa e coloque como desafio que os
 estudantes calculem o número médio de RPM do motor a partir da distância
 percorrida pelo AGV e do número de rotações da roda (191 RPM). Para resolver o
-desafio deverão utilizar a função inversa de $f_1 \circ f_2$ (aplicada a 191
+desafio deverão utilizar a função inversa de $f_2 \circ f_1$ (aplicada a 191
 RPM, obtendo 2744 RPM).
 \end{enumerate}
 
@@ -1037,28 +1040,28 @@ da discussão deve ser feita de forma a concluir que, com o uso de
 engrenagens/polias, ganha-se potência/força para movimentar o AGV.
 
 \item Relembre que para $E_1$ dar um giro completo a $P_2$ precisa girar 4,285 voltas e conclua que
-\begin{equation}
-2\pi R_{E1} = 4,285 (2\pi R_{p2}) \Rightarrow R_{E1} = 4,285 R_{p2}
-\end{equation}
+\begin{equation*}
+2\pi R_{E1} = 4,285 (2\pi R_{P2}) \Rightarrow R_{E1} = 4,285 R_{P2}
+\end{equation*}
 
 \item Fale sobre velocidade angular ($\omega$ - grandeza que mede a rapidez com que é feito um percurso em sentido circular), velocidade tangencial ($V=R\omega$, onde $R$ é o raio da polia) e que em polias/engrenagens acopladas por correia as velocidades tangenciais são iguais.
-\begin{equation}
-V_{p2} = V_{E1} \Leftrightarrow R_{p2} \omega_{p2} = R_{E1} \omega_{E1} \Leftrightarrow R_{p2} \omega_{p2} = 4,285 R_{p2} \omega_{E1} \Leftrightarrow \frac{\omega_{p2}}{\omega_{E_1}} = 4,285
-\end{equation}
+\begin{equation*}
+V_{P2} = V_{E1} \Leftrightarrow R_{P2} \omega_{P2} = R_{E1} \omega_{E1} \Leftrightarrow R_{P2} \omega_{P2} = 4,285 R_{P2} \omega_{E1} \Leftrightarrow \frac{\omega_{P2}}{\omega_{E_1}} = 4,285
+\end{equation*}
 
 \item Fale sobre torque, introduzindo a equação $P= T \omega$  ($P$ -- potência, $T$ -- torque e $\omega$ -- velocidade angular).
 
 \item Explique que na transmissão da potência entre engrenagens há uma perda no deslizamento entre os dentes, que pode ser desconsiderada.
 
 \item Assumindo a potência igual para $P_2$ e $E_1$, conclua que houve um ganho de $4,285$ de torque na $E_1$ com respeito ao torque da $P_2$.
-\begin{equation}
-P_{E_1} = P_{p_2} \Leftrightarrow T_{E_1} = \frac{\omega_{p_2}}{\omega_{E_1}} T_{p_2} \Leftrightarrow T_{E_1} = 4,285 T_{p_2}
-\end{equation}
+\begin{equation*}
+P_{E_1} = P_{P_2} \Leftrightarrow T_{E_1} = \frac{\omega_{P_2}}{\omega_{E_1}} T_{P_2} \Leftrightarrow T_{E_1} = 4,285 T_{P_2}
+\end{equation*}
 
-\item Realizando o mesmo estudo para $P_1$ e $P_2$, onde cada volta da  corresponde a $3,343$ voltas da $P_1$, conclua que houve um ganho de $14,32$ de torque na roda ($E_1$) em relação ao torque do motor ($P_1$), conseguindo gerar força para deslocar o AGV no percurso.
-\begin{equation}
-T_{p_2} = \frac{\omega_{p_1}}{\omega_{p_2}} T_{p_1} \Rightarrow T_{p_2} = 3,343 T_{p_1} \Rightarrow T_{p_1} \Rightarrow T_{E_1} = 4,285 T_{p_2} = 14,32 T_{p_1}
-\end{equation}
+\item Realizando o mesmo estudo para $P_1$ e $P_2$, onde cada volta da $P_2$ corresponde a $3,343$ voltas da $P_1$, conclua que houve um ganho de $14,32$ de torque na roda ($E_1$) em relação ao torque do motor ($P_1$), conseguindo gerar força para deslocar o AGV no percurso.
+\begin{equation*}
+T_{P_2} = \frac{\omega_{P_1}}{\omega_{P_2}} T_{P_1} \Rightarrow T_{P_2} = 3,343 T_{P_1} \Rightarrow T_{P_1} \Rightarrow T_{E_1} = 4,285 T_{P_2} = 14,32 T_{P_1}
+\end{equation*}
 
 \end{enumerate}
 
@@ -1093,7 +1096,7 @@ meio de esquemas. Na \Cref{fig19} é possível visualizar um esquema de um
 circuito com 4 resistores em série. Ressalte que podem ser colocados quaisquer
 componentes eletrônicos no circuito.
 
-\begin{figure}[h!]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.5\textwidth]{figure-29.pdf}
 \caption{Circuito associado em série.}
@@ -1101,10 +1104,10 @@ componentes eletrônicos no circuito.
 \source{Acervo dos autores.}
 \end{figure}
 
-\item Discuta a 2a Lei de Kirchhoff (Lei das Malhas e suas consequências),
+\item Discuta a $2^a$ Lei de Kirchhoff (Lei das Malhas e suas consequências),
 segundo a qual a soma algébrica das diferenças de potencial (ou tensão) de uma
 malha é igual a zero e a corrente é igualmente distribuída em todos os
-componentes no circuito que continuarão valendo as conclusões.
+componentes no circuito.
 
 \item Ilustre a referida lei a partir da \Cref{fig19}, concluindo que $V=V_1 +
 V_2 + V_3 + V_4$, onde $V_i$ é a tensão no resistor $R_i$, para $i=1,2,3,4$.
@@ -1113,9 +1116,9 @@ V_2 + V_3 + V_4$, onde $V_i$ é a tensão no resistor $R_i$, para $i=1,2,3,4$.
 resistor $R_i$ , para $i=1,2,3,4$.
 
 \item Argumente que, pela Lei de Ohm,
-\begin{equation}
+\begin{equation*}
 RI = V = \sum_{i=1}^{4} V_i = \sum_{i=1}^{4} R_i I_i = \sum_{i=1}^{4} R_i I = I \sum_{i=1}^{4} R_i \Rightarrow R = \sum_{i=1}^{4} R_i
-\end{equation}
+\end{equation*}
 
 \item Generalize a fórmula para o caso n.
 
@@ -1144,16 +1147,16 @@ continuarão valendo as conclusões.
 \source{Acervo dos autores.}
 \end{figure}
 
-\item Discuta a 1a Lei de Kirchhoff (Lei dos Nós), segundo a qual, em qualquer
+\item Discuta a $1^a$ Lei de Kirchhoff (Lei dos Nós), segundo a qual, em qualquer
 nó, a soma das correntes que o deixam é igual à soma das correntes que chegam
 até ele.
 
 \item Ilustre a referida lei a partir da \Cref{fig20}, onde $I=I_1+I_2+I_3+I_4$.
 \item Conclua que, $V=V_1=V_2=V_3=V_4$, pois estão conectados aos mesmos pontos.
 \item Deduza, pela Lei de Ohm, que
-\begin{equation}
-\frac{V}{R} = I = \sum_{i=1}^{4} I_i = \sum_{i=1}^{4} \frac{V_i}{R_i} = \frac{i=1}{4} \frac{V}{R_i} = V \sum_{i=1}^{4} \frac{1}{R_i} \Rightarrow \frac{1}{R} = \sum_{i=1}^{4} \frac{1}{R_i} .
-\end{equation}
+\begin{equation*}
+\frac{V}{R} = I = \sum_{i=1}^{4} I_i = \sum_{i=1}^{4} \frac{V_i}{R_i} = \sum_{i=1}^{4} \frac{V}{R_i} = V \sum_{i=1}^{4} \frac{1}{R_i} \Rightarrow \frac{1}{R} = \sum_{i=1}^{4} \frac{1}{R_i} .
+\end{equation*}
 \item Generalize a fórmula para o caso $n$.
 \end{enumerate}
 
@@ -1178,15 +1181,15 @@ tensão do LED (3V), como escolher qual resistor utilizar de forma a evitar a
 queima do LED?  Relembre que a corrente no LED é de $0,02$A.
 
 \item Argumente que, por ser um circuito associado em série
-\begin{equation}
+\begin{equation*}
 V_{FA} = V_{LED} + V_R \quad \textmd{e} \quad I = I_{LED} = I_R
-\end{equation}
+\end{equation*}
 em que, $V_{FA}$ -- tensão na fonte, $V_{LED}$ e $I_{LED}$ -- tensão e corrente no LED e $V_R$ e $I_R$ -- tensão e corrente no resistor.
 
 \item Conclua, pela Lei de Ohm, que a resistência no resistor será
-\begin{equation}
+\begin{equation*}
 R_R = \frac{V_R}{I_R} = \frac{V_{FA}-V_{LED}}{I_{LED}} = \frac{9-3}{0,02} = 300
-\end{equation}
+\end{equation*}
 
 \item Esclareça que resistores de $300\Omega$ não são comuns e que, neste caso,
 será utilizado um resistor de $220\Omega$ e um de $100\Omega$ colocados em
@@ -1206,9 +1209,9 @@ nominal e a última, a porcentagem que a resistência pode variar.
 \end{figure}
 
 \item Exponha que a função para encontrar o valor nominal do resistor de 4 cores é
-\begin{equation}
+\begin{equation*}
 R(a,b,c) = (10a + b)10^c
-\end{equation}
+\end{equation*}
 E conclua quais cores devem ter as faixas, conforme \Cref{tab03} ($300\Omega =
 R(3,0,1)= (10 \times 3+0)10^1$, ou seja, laranja, preto, marrom, o de
 $220\Omega$ vermelho, vermelho, marrom e o de $100\Omega$ marrom, preto,
@@ -1272,25 +1275,28 @@ potenciômetro.
 \end{figure}
 
 \item Comente que o circuito LDR-potenciômetro está em série, \Cref{fig24}, e por isso tem-se
-\begin{equation}
+\begin{equation*}
 I_{LDR} = I_{pot}, \quad V = V_{LDR} + V_{pot} \quad \textmd{e} \quad R=R_{LDR} + R_{pot}
-\end{equation}
+\end{equation*}
 
 \item Utilize a lei de Ohm, para obter um sistema de equações lineares
-\begin{equation}
+\begin{equation*}
 \begin{cases}
 V_{FA} &= IR = I(R_{LDR}+R_{pot}) \\
 V_{pot} &= I R_{pot}
 \end{cases} 
 \Rightarrow V_{pot} = \frac{R_{pot}}{R_{LDR} + R_{pot}} V_{FA}
-\end{equation}
+\end{equation*}
 Assim, é possível calcular a tensão no potenciômetro em função da tensão de
 entrada e das resistências do potenciômetro e do LDR, sem conhecer a corrente
 do potenciômetro. Para aplicar ao AGV construído, relembre que a fonte de
 alimentação é de 9V e suponha que a resistência do potenciômetro deve ser
 ajustada a $220\Omega$.
 
-\item Substituindo os valores na fórmula, obtenha a tensão no potenciômetro em função da resistência do LDR $\left( V_{pot} = \frac{220}{R_{LDR} + 220} 9 \right)$.
+\item Substituindo os valores na fórmula, obtenha a tensão no potenciômetro em função da resistência do LDR 
+$$ 
+V_{pot} = \frac{220}{R_{LDR} + 220} 9 .
+$$
 
 \item Explique o resultado anterior abordando conceitos relativos a funções.
 
@@ -1316,17 +1322,17 @@ conforme regiões definidas na \Cref{fig25} com um multímetro\footnote{Veja em:
 \item Faça com que os estudantes calculem o $V_{pot}$, para $R_{pot} = 220\Omega$ (faixa do transistor NPN
 BD) e para $R_{pot} = 470 \Omega$ (faixa do transistor NPN TIP). Para direcionamento, considerando
 altura do LDR do chão igual a 1cm, a iluminação com um LED de 3V a uma altura
-de 1cm do chão e distante 1cm do LDR e $V_{FA}=9V$, serão obtidos os valores do \Cref{tab04}:
+de 1cm do chão e distante 1cm do LDR e $V_{FA}=9V$, serão obtidos os valores da \Cref{tab04}:
 
+\end{enumerate}
 
 \input{table04.tex}
+
 
 Assim, conclui-se a exposição de diversas atividades que evidenciam a
 Matemática e a Física, as quais podem ser executadas durante a construção do
 AGV. Espera-se que os leitores busquem outras abordagens e compartilhem suas
 experiências.
-
-\end{enumerate}
 
 
 
@@ -1361,17 +1367,17 @@ A mesma análise em relação ao número de RPM da roda versus o número de RPM 
 motor pode ser realizada para o primeiro AGV. Como a única alteração
 determinante ocorreu na engrenagem $E1$ (64 dentes e 60 dentes), a função
 definida no \Cref{itm1sec423} da \Cref{sec-terceira} para o primeiro AGV é 
-\begin{align}
-h: \mathcal{R}^{+} &\rightarrow \mathcal{R}^{+} \\
+\begin{align*}
+h: \mathbb{R}^{+} &\rightarrow \mathbb{R}^{+} \\
   x &\rightarrow 0,0654 x \nonumber
-\end{align}
+\end{align*}
 
 Como o número de rotações do motor é o mesmo para ambos os robôs, 3520 RPM,
 tem-se 230 RPM para as rodas do primeiro AGV. Nos testes realizados no
 percurso, o primeiro AGV percorreu a pista de 3,21m em 6,73s, ou seja, com
 velocidade média de 0,476m/s ou 2.861cm/min. Na prática, como a roda do
 primeiro AGV possui 2,37cm e seu comprimento de arco é 14,9cm, considerando as
-perdas ocorridas no percurso, obtém-se, aproximadamente, 192RPM para a roda. O
+perdas ocorridas no percurso, obtém-se, aproximadamente, 192RPM para a roda. A
 \Cref{tab06} é um comparativo entre os dois AGV, cujos valores (exceto raio e peso)
 foram obtidos pela média feita a partir de vários testes.
 
