@@ -145,7 +145,9 @@
 \def\thevolume#1{\gdef\@thevolume{#1}}
 \def\thenumber#1{\gdef\@thenumber{#1}}
 \def\theyear#1{\gdef\@theyear{#1}}
+\AtBeginDocument{
 \RequirePackage[useregional]{datetime2}
+}
 \def\receiveddate#1{\gdef\@receiveddate{#1}}
 \def\accepteddate#1{\gdef\@accepteddate{#1}}
 \def\publisheddate#1{\gdef\@publisheddate{#1}}
