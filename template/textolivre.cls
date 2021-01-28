@@ -60,7 +60,7 @@
     }}}}}
 \def\@keywordsname{
     \iflanguage{english}{Keywords}{
-    \iflanguage{french}{Mots-cl\'{e}s}{
+    \iflanguage{french}{\hspace{-2ex}Mots-cl\'{e}s}{
     \iflanguage{german}{Schl\"{u}sselw\"{o}rter}{
     \iflanguage{spanish}{\hspace{-2.7ex}Palabras clave}{
     \iflanguage{portuguese}{\hspace{-3.3ex}Palavras-chave}{Keywords}
