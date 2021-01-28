@@ -62,7 +62,7 @@
     \iflanguage{english}{Keywords}{
     \iflanguage{french}{Mots-cl\'{e}s}{
     \iflanguage{german}{Schl\"{u}sselw\"{o}rter}{
-    \iflanguage{spanish}{\hspace{-3.3ex}Palabras clave}{
+    \iflanguage{spanish}{\hspace{-2.7ex}Palabras clave}{
     \iflanguage{portuguese}{\hspace{-3.3ex}Palavras-chave}{Keywords}
     }}}}}
 \def\@authornotename{Author's notes}
