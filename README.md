@@ -58,7 +58,7 @@ xelatex -shell-escape -output-driver="xdvipdfmx -z 0" article.tex
 ```
 note that we have opted (```-z 0```) to suppress compression in XMP Metadata packet, in orther to create a PDF/A compliant.
 
-Also fill in the metadata information in your ```.tex``` file. See the example file.
+```-shell-escape``` is required by ```pdfx```. See the package documentation: https://ctan.org/pkg/pdfx. If you don't feel save using it, you need to comment the PDF/A block in the end of the template file (```textolivre.cls```).
 
 #### bibliography
 Use ```biber``` to generate a bibliography in LaTeX. Biber has full Unicode support, that means you ```.bib``` might has any unicode character.
@@ -67,7 +67,8 @@ biber article
 ```
 
 #### creating a PDF/A compliant file
-You will need to install tha package ```icc-profiles``` and convert all images to PDF/A files.
+Fill in the metadata information in your ```.tex``` file. See the example file.
+You will also need to install tha package ```icc-profiles``` and convert all images to PDF/A files.
 To convert a PDF figure into a PDF/A version, use the following command in ```gv```:
 ```
 gs -dPDFA -dBATCH -dNOPAUSE -sColorConversionStrategy=UseDeviceIndependentColor -dCompatibilityLevel=1.4 -sDEVICE=pdfwrite -sProcessColorModel=DeviceCMYK -dPDFACompatibilityPolicy=2 -sOutputFile=figure-a.pdf figure.pdf
