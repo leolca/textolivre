@@ -25,7 +25,7 @@
 \newcommand{\corrauthor}[1]{}
 \newcommand{\articledoi}[1]{}
 \newcommand{\runningauthor}[1]{}
-\newenvironment{poliabstract}{}{}
+\newenvironment{polyabstract}{}{}
 \def\sep{\unskip. }%
 % keywords
 \newcommand{\keywordsname}{%
