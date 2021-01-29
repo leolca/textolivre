@@ -56,7 +56,7 @@ Use XeLaTeX to compile you document using the commmand:
 ```
 xelatex -shell-escape -output-driver="xdvipdfmx -z 0" article.tex
 ```
-note that we selected **no compression** option in orther to create a PDF/A compliant.
+note that we have opted (```-z 0```) to suppress compression in XMP Metadata packet, in orther to create a PDF/A compliant.
 
 Also fill in the metadata information in your ```.tex``` file. See the example file.
 
