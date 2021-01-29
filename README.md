@@ -47,6 +47,7 @@ To create multiple abstracts use the environment ```polyabstracts```. For the ab
 \keywords{mot1 \sep mot2 ...}
 \end{abstract}
 \end{french}
+\end{polyabstract}
 ```
 
 The example above also shows the usage of ```keywords```. Use ```\sep``` between words.
