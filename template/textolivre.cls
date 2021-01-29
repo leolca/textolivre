@@ -377,9 +377,6 @@
 
 % PDF/A
 \RequirePackage[a-1b]{pdfx}
-\hypersetup{pdfpagelabels}
-\RequirePackage{inputenc}
-\hypersetup{pdfencoding=unicode}
-\inputencoding{utf8}
+\hypersetup{pdfpagelabels,pdfencoding=unicode}
 \makeatother
 
