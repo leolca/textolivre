@@ -1,23 +1,15 @@
 % !TEX TS-program = XeLaTeX
 % use the following command: 
-% $ xelatex -shell-escape -output-driver="xdvipdfmx -z 0" article.tex
-% this "-z 0" must be used to suppress compression in XMP Metadata packet 
 % all document files must be coded in UTF-8
 \documentclass{textolivre}
 % for anonymous submission
 %\documentclass[anonymous]{textolivre}
 % to create HTML use 
 %\documentclass{textolivre-html}
-% remove all auxiliary files
-% find . -name 'article.*' ! -name '*.tex' ! -name '*.pdf' ! -name '*.bib' ! -name '*.html' -type f -exec rm {} \;
 % HTML compile using make4ht
 % $ make4ht -c textolivre-html.cfg -u -x article "fn-in,svg,pic-align"   
-% $ make4ht -c textolivre-html.cfg -u -x article "fn-in,mathml,mathjax"   # use `mathjax' instead of `svg' to get LaTeX equation that will be handled by MathJax
-% clean and prettify HTML 
-% $ tidy -m --output-xhtml --break-before-br --wrap 0 article.html 2> errs.txt 
-% create zip file
-% $ ARTICLE=${PWD##*/} && zip ${ARTICLE}.zip article.html *.svg *.css && printf "@ article.html\n@=index.html\n" | zipnote -w ${ARTICLE}.zip
-% https://www.html-tidy.org/documentation/
+%
+% See more information on the repository: https://github.com/leolca/textolivre
 
 % Metadata
 \begin{filecontents*}{article.xmpdata}
@@ -38,18 +30,6 @@
             {sRGB IEC61966 v2.1 with black scaling}
             {http://www.color.org}
 \end{filecontents*}
-
-% PDF/A
-% - install package icc-profiles
-% - it is necessary to convert all image files to PDF/A
-%   use ghostscript as shown below:
-%   PDF images:
-%   $ gs -dPDFA -dBATCH -dNOPAUSE -sColorConversionStrategy=UseDeviceIndependentColor -dCompatibilityLevel=1.4 -sDEVICE=pdfwrite -sProcessColorModel=DeviceCMYK -dPDFACompatibilityPolicy=2 -sOutputFile=figure-a.pdf figure.pdf
-%   Other images:
-%   $ convert figure.png figure.eps
-%   $ gs -dPDFA -dBATCH -dNOPAUSE -sColorConversionStrategy=UseDeviceIndependentColor -dCompatibilityLevel=1.4 -sDEVICE=pdfwrite -sProcessColorModel=DeviceCMYK -dPDFACompatibilityPolicy=2 -dEPSCrop -sOutputFile=figure.pdf figure.eps
-%   # script to convert all files:
-%   $ for img in $( ls figure*.png ); do convert $img ${img%png}eps; gs -dPDFA -dBATCH -dNOPAUSE -sColorConversionStrategy=UseDeviceIndependentColor -dCompatibilityLevel=1.4 -sDEVICE=pdfwrite -sProcessColorModel=DeviceCMYK -dPDFACompatibilityPolicy=2 -dEPSCrop -sOutputFile=${img%png}pdf ${img%png}eps; done
 
 % used to create dummy text for the template file
 \definecolor{dark-gray}{gray}{0.35} % color used to display dummy texts
@@ -91,12 +71,9 @@
 \affil[1]{Universidade Federal de São João del Rei, Brasil.}
 \affil[2]{Universidade Federal de Minas Gerais, Brasil.}
 
-%\usepackage[backend=biber,style=abnt, ittitles]{biblatex}
-%\DeclareLanguageMapping{brazil}{brazil-apa}
 \addbibresource{tl-article-template.bib}
 % use biber instead of bibtex
 % $ biber tl-article-template
-% $ pdflatex tl-article-template.tex
 
 % set language of the article
 \setdefaultlanguage[variant=brazilian]{portuguese}
@@ -658,10 +635,6 @@ disponível no sítio da revista.
 %\begin{portuguese}
 %\printbibliography[title={Bibliography}]
 %\end{portuguese}
-
-% for HTML use instead
-%\bibliographystyle{abnt-alf}
-%\bibliography{tl-article-template.bib}
 
 \appendix 
 \section{Tabela longa}\label{apx-longtable}
