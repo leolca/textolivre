@@ -14,6 +14,7 @@ to switch for an anonymous submission, provide the parameter ```anonymous``` to 
 \documentclass[anonymous]{textolivre}
 ```
 
+#### packages 
 The provided template already uses a few LaTeX packages. You might check which are already included by running:
 ``` 
 $ cat template/textolivre.cls | sed -n -e 's/\(^\\RequirePackage\)\(\[[-,a-z0-9=]*\]\)\?{\(.*\)}/\3/p' | sort | tr '\n' ','
@@ -21,8 +22,56 @@ abstract,academicons,adjustbox,amsmath,amsfonts,amssymb,amsthm,authblk,biblatex,
 ```
 Any other additional package might be included in the heading of your ```.tex``` file.
 
+#### language support
 Multilanguage support is included through the polyglossia package. You just have to set the article default language by means of the ```\setdefaultlanguage``` command, as exemplified in the template example. Also set the second, third, ... languaged used by the command ```\setotherlanguage```. The text in language, other than the default one, should comes inside this language environment. See the example provided. For more information on this package and usage information, visit https://ctan.org/pkg/polyglossia.
 
+#### title, author, abstract, keywords
 Provided the title of the document using the standard ```\title``` command and the title in other language using the command ```\othertitle``` defined in the template. You might use ```\othertitle``` as many times as desired (usually just once and three times seldom).
 
 Authors are inserted using the ```authblk``` package. For more information on the package, visit https://www.ctan.org/pkg/authblk. You might also provide the author ORCID by the ```\orcid```  command (see the usage in the example file).
+
+To create multiple abstracts use the environment ```polyabstracts```. For the abstract using the default language, just provided it using the usual ```abstract``` environment. For an abstract in another language, use the language environment provided by polyglossia. You may use as many abstracts as you need. See the example:
+
+``` 
+\begin{polyabstract}
+\begin{abstract}
+...
+
+\keywords{word1 \sep word2 ...}
+\end{abstract}
+
+\begin{french}
+\begin{abstract}
+...
+
+\keywords{mot1 \sep mot2 ...}
+\end{abstract}
+\end{french}
+```
+
+The example above also shows the usage of ```keywords```. Use ```\sep``` between words.
+
+### compiling your document
+Use XeLaTeX to compile you document using the commmand:  
+```
+xelatex -shell-escape -output-driver="xdvipdfmx -z 0" article.tex
+```
+note that we selected a **no compression** option in orther to create a PDF/A compliant.
+
+Also fill in the metadata information in your ```.tex``` file. See the example file.
+
+#### creating a PDF/A compliant file
+You will need to install tha package ```icc-profiles``` and convert all images to PDF/A files.
+To convert a PDF figure into a PDF/A version, use the following command in ```gv```:
+```
+gs -dPDFA -dBATCH -dNOPAUSE -sColorConversionStrategy=UseDeviceIndependentColor -dCompatibilityLevel=1.4 -sDEVICE=pdfwrite -sProcessColorModel=DeviceCMYK -dPDFACompatibilityPolicy=2 -sOutputFile=figure-a.pdf figure.pdf
+```
+If you are using a raster image format, such as PNG, convert it to EPS and then to PDF/A:
+```
+convert figure.png figure.eps
+gs -dPDFA -dBATCH -dNOPAUSE -sColorConversionStrategy=UseDeviceIndependentColor -dCompatibilityLevel=1.4 -sDEVICE=pdfwrite -sProcessColorModel=DeviceCMYK -dPDFACompatibilityPolicy=2 -dEPSCrop -sOutputFile=figure.pdf figure.eps
+```
+To batch convert multiple files, use the following script:
+```
+for img in $( ls figure*.png ); do convert $img ${img%png}eps; gs -dPDFA -dBATCH -dNOPAUSE -sColorConversionStrategy=UseDeviceIndependentColor -dCompatibilityLevel=1.4 -sDEVICE=pdfwrite -sProcessColorModel=DeviceCMYK -dPDFACompatibilityPolicy=2 -dEPSCrop -sOutputFile=${img%png}pdf ${img%png}eps; done
+```
