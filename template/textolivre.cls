@@ -379,4 +379,3 @@
 \RequirePackage[a-1b]{pdfx}
 \hypersetup{pdfpagelabels,pdfencoding=unicode}
 \makeatother
-
