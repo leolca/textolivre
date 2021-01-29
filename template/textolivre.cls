@@ -253,7 +253,7 @@
 
 } % end AtBeginDocument
 
-\newenvironment{poliabstract}
+\newenvironment{polyabstract}
 {\noindent\textcolor{TLLightGreen}{\rule{\linewidth}{1.0pt}}\par}
 {\vspace{-1.5ex}\noindent\textcolor{TLLightGreen}{\rule{\linewidth}{.5pt}}\par}
 
