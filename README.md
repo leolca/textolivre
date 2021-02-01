@@ -18,9 +18,9 @@ to switch for an anonymous submission, provide the parameter ```anonymous``` to 
 The provided template already uses a few LaTeX packages. You might check which are already included by running:
 ``` 
 cat template/textolivre.cls | sed -n -e 's/\(^\\RequirePackage\)\(\[[-,a-z0-9=]*\]\)\?{\(.*\)}/\3/p' | sort | tr '\n' ','
-
-abstract,academicons,adjustbox,amsmath,amsfonts,amssymb,amsthm,authblk,biblatex,caption,subcaption,cleveref,cmbright,datetime2,enumitem,etoolbox,xpatch,fancyhdr,fontspec,footmisc,geometry,graphicx,hyperref,ifxetex,ifluatex,inputenc,lastpage,lineno,listings,longtable,booktabs,tabularx,mfirstuc,microtype,pdfx,polyglossia ,relsize,rotating,setspace,textcomp,textpos,titlecaps,titlesec,xcolor,xstring,
 ```
+As a result, we see that the packages already included are: *abstract, academicons, adjustbox, amsmath, amsfonts, amssymb, amsthm, authblk, biblatex, caption, subcaption, cleveref, cmbright, datetime2, enumitem, etoolbox, xpatch, fancyhdr, fontspec, footmisc, geometry, graphicx, hyperref, ifxetex, ifluatex, inputenc, lastpage, lineno, listings, longtable, booktabs, tabularx, mfirstuc, microtype, pdfx, polyglossia, relsize, rotating, setspace, textcomp, textpos, titlecaps, titlesec, xcolor, xstring*.
+
 Any other additional package might be included in the heading of your ```.tex``` file.
 
 #### language support
