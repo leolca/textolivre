@@ -379,3 +379,25 @@
 \RequirePackage[a-1b]{pdfx}
 \hypersetup{pdfpagelabels,pdfencoding=unicode}
 \makeatother
+
+% BEGIN \citefirstlastauthor 
+% reference: https://tex.stackexchange.com/questions/581792/how-to-write-the-authors-full-name-and-avoid-style-formatting-given-by-biblatex/581838#581838
+\DeclareCiteCommand{\citefirstlastauthor}
+  {\DeclareNameAlias{labelname}{given-family}%
+   \let\multinamedelim\multinamedelimorig
+   \let\finalnamedelim\finalnamedelimorig
+   \let\mkbibnamefamily\origmkbibnamefamily
+   \let\mkbibnamegiven\origmkbibnamegiven
+   \let\mkbibnameprefix\origmkbibnameprefix
+   \let\mkbibnamesuffix\origmkbibnamesuffix
+   \boolfalse{citetracker}%
+   \boolfalse{pagetracker}%
+   \usebibmacro{prenote}}%
+  {\ifciteindex%
+     {\indexnames{labelname}}%
+     {}%
+   \printtext[bibhyperref]{\printnames{labelname}}}%
+  {\multicitedelim}%
+  {\usebibmacro{postnote}}%
+% END \citefirstlastauthor
+
