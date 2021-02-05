@@ -20,6 +20,8 @@
 \RequirePackage{authblk}
 \RequirePackage{relsize}
 \RequirePackage[right]{lineno}
+\RequirePackage{mfirstuc}
+\RequirePackage{textcase}
 
 \RequirePackage[
     type={CC},
@@ -185,10 +187,8 @@
   \setcounter{ititle}{0}%
   \whileboolexpr
     { test {\ifnumcomp{\value{ititle}}{<}{#1}} }%
-    {\stepcounter{ititle}\Large\smaller[\the\numexpr\value{ititle}-1\relax]\makefirstuc{\MakeLowercase{\getothertitle{\theititle}}}\par}
+    {\stepcounter{ititle}\Large\smaller[\the\numexpr\value{ititle}-1\relax]\makefirstuc{\expandafter\MakeTextLowercase{\getothertitle{\theititle}}}\par}
   }
-
-\RequirePackage{mfirstuc}
 
 \newcommand{\@insert@metadata}{%
   \begin{textblock*}{3.3cm}[0,1](1cm,\dimexpr\paperheight-\Gm@bmargin\relax)
@@ -203,7 +203,7 @@
   \@insert@metadata%
   \noindent\begin{minipage}{0.9\linewidth}
   \raggedright\setstretch{1.0}
-  {\LARGE\bfseries{\makefirstuc{\MakeLowercase{\@title}}}\par}
+  {\LARGE\bfseries{\makefirstuc{\expandafter\MakeTextLowercase{\@title}}}\par}
   {\printothertitles{\thecntothertitle}}
   \vskip\baselineskip
   \@author\par
