@@ -83,9 +83,10 @@
     \iflanguage{spanish}{\hspace{-10pt}Editado por}{
     \iflanguage{portuguese}{\hspace{-13pt}Editado por}{Edited by}
     }}}}}
-\def\@editorname{\@keyeditorname}
+\def\@editortext{\@keyeditorname}
 \def\@runningauthor{}
 \def\@journalname{}
+\def\@editorname{}
 \def\@corrauthor{}
 \def\@authornote{}
 \def\@articledoi{}
@@ -118,6 +119,7 @@
 \newcommand{\journalname}[1]{\def\@journalname{#1}}
 \newcommand{\authornote}[1]{\def\@authornote{#1}}
 \newcommand{\corrauthor}[1]{\def\@corrauthor{#1}}
+\newcommand{\editorname}[1]{\def\@editorname{#1}}
 \newcommand{\articledoi}[1]{\def\@articledoi{#1}}
 \newcommand{\articleenumber}{e\StrRight{\@articledoi}{5}}
 
@@ -132,7 +134,7 @@
   \@cover@logo\par
   \textcolor{TLDarkGreen}{\bfseries DOI: }\@articledoi\par
   \textcolor{TLDarkGreen}{\bfseries\@corrauthorname}\\\@corrauthor\par
-  \textcolor{TLDarkGreen}{\bfseries\@editorname}\\Leonardo Araujo\par
+  \textcolor{TLDarkGreen}{\bfseries\@editortext}\\\@editorname\par
   \textcolor{TLDarkGreen}{\bfseries\@keyreceivedtext}\\\@receiveddate\\
   \textcolor{TLDarkGreen}{\bfseries\@keyacceptedtext}\\\@accepteddate\\
   \textcolor{TLDarkGreen}{\bfseries\@keypublishedtext}\\\@publisheddate\par
