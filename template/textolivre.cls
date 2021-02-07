@@ -187,7 +187,10 @@
   \setcounter{ititle}{0}%
   \whileboolexpr
     { test {\ifnumcomp{\value{ititle}}{<}{#1}} }%
-    {\stepcounter{ititle}\Large\smaller[\the\numexpr\value{ititle}-1\relax]\makefirstuc{\expandafter\MakeTextLowercase{\getothertitle{\theititle}}}\par}
+    {\stepcounter{ititle}\Large\smaller[\the\numexpr\value{ititle}-1\relax]%
+	%\makefirstuc{\expandafter\MakeTextLowercase{\getothertitle{\theititle}}}\par%
+	\getothertitle{\theititle}\par%
+    }
   }
 
 \newcommand{\@insert@metadata}{%
@@ -203,7 +206,8 @@
   \@insert@metadata%
   \noindent\begin{minipage}{0.9\linewidth}
   \raggedright\setstretch{1.0}
-  {\LARGE\bfseries{\makefirstuc{\expandafter\MakeTextLowercase{\@title}}}\par}
+  %{\LARGE\bfseries{\makefirstuc{\expandafter\MakeTextLowercase{\@title}}}\par}
+  {\LARGE\bfseries{\@title}\par}
   {\printothertitles{\thecntothertitle}}
   \vskip\baselineskip
   \@author\par
