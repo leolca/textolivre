@@ -65,7 +65,7 @@
     \iflanguage{french}{\hspace{-1ex}Mots-cl\'{e}s}{
     \iflanguage{german}{Schl\"{u}sselw\"{o}rter}{
     \iflanguage{spanish}{\hspace{-2.7ex}Palabras clave}{
-    \iflanguage{portuguese}{\hspace{-3.3ex}Palavras-chave}{Keywords}
+    \iflanguage{portuguese}{\hspace{-3.3ex}Palavras-chave}{\hspace{-3ex}Keywords}
     }}}}}
 \def\@authornotename{Author's notes}
 \def\@keycorrauthorname{
@@ -73,7 +73,7 @@
     \iflanguage{french}{\hspace{-5pt}Auteur correspondant}{
     \iflanguage{german}{\hspace{-2.5pt}Entsprechender Autor}{
     \iflanguage{spanish}{\hspace{-10pt}Autor correspondiente}{
-    \iflanguage{portuguese}{\hspace{-13pt}Autor Correspondente}{Corresponding author}
+    \iflanguage{portuguese}{\hspace{-13pt}Autor Correspondente}{\hspace{-13pt}Corresponding author}
     }}}}}
 \def\@corrauthorname{\@keycorrauthorname}
 \def\@keyeditorname{
@@ -81,7 +81,7 @@
     \iflanguage{french}{\hspace{-5pt}Édité par}{
     \iflanguage{german}{\hspace{-2.5pt}Bearbeitet von}{
     \iflanguage{spanish}{\hspace{-10pt}Editado por}{
-    \iflanguage{portuguese}{\hspace{-13pt}Editado por}{Edited by}
+    \iflanguage{portuguese}{\hspace{-13pt}Editado por}{\hspace{-13pt}Edited by}
     }}}}}
 \def\@editortext{\@keyeditorname}
 \def\@runningauthor{}
@@ -160,21 +160,21 @@
     \iflanguage{french}{\hspace{-5pt}Reçu en}{
     \iflanguage{german}{\hspace{-2.5pt}Empfangsdatum}{
     \iflanguage{spanish}{\hspace{-10pt}Recibido el}{
-    \iflanguage{portuguese}{\hspace{-13pt}Recebido em}{Received on}
+    \iflanguage{portuguese}{\hspace{-13pt}Recebido em}{\hspace{-13pt}Received on}
     }}}}}
 \def\@keyacceptedtext{
     \iflanguage{english}{Accepted on}{
     \iflanguage{french}{\hspace{-5pt}Acceptée en}{
     \iflanguage{german}{\hspace{-2.5pt}Akzeptiertes Datum}{
     \iflanguage{spanish}{\hspace{-10pt}Aceptado el}{
-    \iflanguage{portuguese}{\hspace{-13pt}Aceito em}{Accepted on}
+    \iflanguage{portuguese}{\hspace{-13pt}Aceito em}{\hspace{-13pt}Accepted on}
     }}}}}
 \def\@keypublishedtext{
     \iflanguage{english}{Published on}{
     \iflanguage{french}{\hspace{-5pt}Publication en}{
     \iflanguage{german}{\hspace{-2.5pt}Veröffentlichungsdatum}{
     \iflanguage{spanish}{\hspace{-10pt}Publicado el}{
-    \iflanguage{portuguese}{\hspace{-13pt}Publicado em}{Published on}
+    \iflanguage{portuguese}{\hspace{-13pt}Publicado em}{\hspace{-13pt}Published on}
     }}}}}
 
 \newcounter{cntothertitle}
