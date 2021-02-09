@@ -23,6 +23,7 @@
 \newcommand{\accepteddate}[1]{}
 \newcommand{\publisheddate}[1]{}
 \newcommand{\corrauthor}[1]{}
+\newcommand{\editorname}[1]{}
 \newcommand{\articledoi}[1]{}
 \newcommand{\runningauthor}[1]{}
 \newenvironment{polyabstract}{}{}
