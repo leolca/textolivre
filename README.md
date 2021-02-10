@@ -93,7 +93,10 @@ find . -name 'article.*' ! -name '*.tex' ! -name '*.pdf' ! -name '*.bib' ! -name
 
 ### compiling into HTML
 Change the class in your ```.tex``` file to ```textolivre-html```. And compile the document using ```make4ht```. 
-We use some hooks written in the configuration file ```textolivre-html.cfg```. To compile, use the command
+
+It might be necessary to get the updated ```.4ht``` files at: https://github.com/michal-h21/files/blob/master/tex4ht-4ht-files.zip
+
+We also use some hooks written in the configuration file ```textolivre-html.cfg```. To compile, use the command
 ```
 make4ht -c textolivre-html.cfg -u -x article "fn-in,svg,pic-align"
 ```
