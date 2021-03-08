@@ -69,7 +69,7 @@
     }}}}}
 \def\@authornotename{Author's notes}
 \def\@keycorrauthorname{
-    \iflanguage{english}{Corresponding author}{
+    \iflanguage{english}{\hspace{-3pt}Corresponding author}{
     \iflanguage{french}{\hspace{-5pt}Auteur correspondant}{
     \iflanguage{german}{\hspace{-2.5pt}Entsprechender Autor}{
     \iflanguage{spanish}{\hspace{-10pt}Autor correspondiente}{
@@ -77,7 +77,7 @@
     }}}}}
 \def\@corrauthorname{\@keycorrauthorname}
 \def\@keyeditorname{
-    \iflanguage{english}{Edited by}{
+    \iflanguage{english}{\hspace{-3pt}Edited by}{
     \iflanguage{french}{\hspace{-5pt}Édité par}{
     \iflanguage{german}{\hspace{-2.5pt}Bearbeitet von}{
     \iflanguage{spanish}{\hspace{-10pt}Editado por}{
@@ -156,21 +156,21 @@
 \def\accepteddate#1{\gdef\@accepteddate{#1}}
 \def\publisheddate#1{\gdef\@publisheddate{#1}}
 \def\@keyreceivedtext{
-    \iflanguage{english}{Received on}{
+    \iflanguage{english}{\hspace{-3pt}Received on}{
     \iflanguage{french}{\hspace{-5pt}Reçu en}{
     \iflanguage{german}{\hspace{-2.5pt}Empfangsdatum}{
     \iflanguage{spanish}{\hspace{-10pt}Recibido el}{
     \iflanguage{portuguese}{\hspace{-13pt}Recebido em}{\hspace{-13pt}Received on}
     }}}}}
 \def\@keyacceptedtext{
-    \iflanguage{english}{Accepted on}{
+    \iflanguage{english}{\hspace{-3pt}Accepted on}{
     \iflanguage{french}{\hspace{-5pt}Acceptée en}{
     \iflanguage{german}{\hspace{-2.5pt}Akzeptiertes Datum}{
     \iflanguage{spanish}{\hspace{-10pt}Aceptado el}{
     \iflanguage{portuguese}{\hspace{-13pt}Aceito em}{\hspace{-13pt}Accepted on}
     }}}}}
 \def\@keypublishedtext{
-    \iflanguage{english}{Published on}{
+    \iflanguage{english}{\hspace{-3pt}Published on}{
     \iflanguage{french}{\hspace{-5pt}Publication en}{
     \iflanguage{german}{\hspace{-2.5pt}Veröffentlichungsdatum}{
     \iflanguage{spanish}{\hspace{-10pt}Publicado el}{
