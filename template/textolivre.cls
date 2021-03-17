@@ -50,7 +50,7 @@
 \RequirePackage[absolute]{textpos}
 \RequirePackage{amsmath,amsfonts,amssymb,amsthm}
 \RequirePackage{adjustbox}
-\RequirePackage{titlecaps}
+\RequirePackage{mfirstuc}
 \RequirePackage{longtable,booktabs,tabularx}
 
 \newcommand{\tlprintlicense}{
@@ -222,14 +222,24 @@
   \endgroup}%
 }
 
+%%%%%%%%%%%
+%% keywords 
+\def\sep{\unskip. }%
+\newcommand{\capitalizekeywords}[2][\sep]{%
+  \def\dolist##1{\expandafter\@dolist##1#1\@eol}%
+  \def\@dolist##1#1##2\@eol{%
+    \begingroup\setbox0=\hbox{##1\unskip}\ifdim\wd0=0pt\endgroup\else\endgroup\ignorespaces\makefirstuc{##1}\unskip\sep\fi%
+    \ifx\@eol##2\@eol\else\@dolist##2\@eol\fi}%
+  \dolist{#2}%
+}
+
 \renewcommand{\abstitlestyle}[1]{{\large\bfseries #1\par}}
 \setlength{\absleftindent}{\z@}
 \setlength{\absrightindent}{\absleftindent}
 \preto{\abstract}{%
   \setlength{\parindent}{\z@}%
-  \def\sep{\unskip. }%
   \newcommand{\keywords}[1]{%
-  \emph{\@keywordsname : }\titlecap{#1}\par
+  \emph{\@keywordsname : }\capitalizekeywords{#1}\par
   }
 }
 \appto{\abstract}{%
