@@ -313,7 +313,7 @@
 \newcommand{\thead}[1]{\bfseries #1\rule[-1.2ex]{0pt}{2em}}
 \renewcommand{\arraystretch}{1.2}
 
-\RequirePackage[backend=biber,style=abnt,ittitles]{biblatex}
+\RequirePackage[backend=biber,style=abnt,ittitles,repeatfields]{biblatex}
 \DeclareLanguageMapping{brazil}{brazil-apa}
 \renewcommand{\bibfont}{\small}
 
