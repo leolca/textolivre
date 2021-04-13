@@ -99,6 +99,29 @@
 % in the text use:
 % {\Symbola 😥}
 
+% reference itens in a descriptive list using their labels instead of numbers
+% insert the code below in the preambule:
+%
+\makeatletter
+\let\orgdescriptionlabel\descriptionlabel
+\renewcommand*{\descriptionlabel}[1]{%
+  \let\orglabel\label
+  \let\label\@gobble
+  \phantomsection
+  \edef\@currentlabel{#1\unskip}%
+  \let\label\orglabel
+  \orgdescriptionlabel{#1}%
+}
+\makeatother
+%
+% in your document, use as illustraded here:
+%\begin{description}
+%  \item[first\label{itm1}] this is only an example;
+%  % ...  add more items
+%\end{description}
+ 
+
+
 \begin{document}
 \maketitle
 
@@ -404,6 +427,18 @@ Por sua vez, as listas numeradas são definidas no ambiente \verb|enumerate|, co
 \end{lstlisting} %stopzone
 
 \lipsum[3]
+
+Em \LaTeX{} existem 3 tipos de ambientes para criar estruturas de listas: \ref{list-itemize}, \ref{list-enumerate} e \ref{list-description}.
+Os dois primeiros foram ilustrados anteriormente nesta seção, já o último tipo é
+utilizo a seguir para descrever os três tipos.
+\begin{description}[topsep=1ex,partopsep=1ex]
+  \item[itemize\label{list-itemize}] para listas do tipo \emph{ponto lista};
+  \item[enumerate\label{list-enumerate}] para listas \emph{numeradas}; e
+  \item[description\label{list-description}] para listas descritivas.
+\end{description}
+Observe no exemplo que os itens de uma lista podem ser referenciados. Para criar uma referência para lista descritiva,
+conforme ilustrado aqui, é necessário adicionar um código ao preâmbulo do documento. Veja o código \texttt{.tex} deste documento.
+
 
 \subsubsection{Figuras e tabelas}\label{sec-figuras-tabelas}
 Nesta seção iremos descrever como inserir figuras no documento em conformidade com o padrão da revista. 
