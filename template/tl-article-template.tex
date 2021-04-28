@@ -80,6 +80,7 @@
 % for spanish, use:
 %\setdefaultlanguage{spanish}
 %\gappto\captionsspanish{\renewcommand{\tablename}{Tabla}} % use 'Tabla' instead of 'Cuadro'
+%\AfterEndPreamble{\crefname{table}{tabla}{tablas}}
 
 % for languages that use special fonts, you must provide the typeface that will be used
 % \setotherlanguage{arabic}
@@ -120,6 +121,22 @@
 %  % ...  add more items
 %\end{description}
  
+
+% custom epigraph - BEGIN 
+%%% https://tex.stackexchange.com/questions/193178/specific-epigraph-style
+\usepackage{epigraph}
+\renewcommand\textflush{flushright}
+\makeatletter
+\newlength\epitextskip
+\pretocmd{\@epitext}{\em}{}{}
+\apptocmd{\@epitext}{\em}{}{}
+\patchcmd{\epigraph}{\@epitext{#1}\\}{\@epitext{#1}\\[\epitextskip]}{}{}
+\makeatother
+\setlength\epigraphrule{0pt}
+\setlength\epitextskip{0.5ex}
+\setlength\epigraphwidth{.7\textwidth}
+% custom epigraph - END
+
 
 
 \begin{document}
@@ -643,6 +660,12 @@ English texts might need a possessive citation for a given author. For example,
 suppose we want to talk about \posscite{donaldknuth1984} book. To accomplish such citation, we have used the command \verb|\posscite{...}|
 provided in the template.
 \end{english}
+
+Se desejar referenciar o nome completo do primeiro autor, podemos utilizar o seguinte comando disponível no template da revista: \verb|\citefirstlastauthor{...}|.
+No exemplo a seguir, utilizamos uma epígrafe, seguindo o modelo do template (veja o código fonte deste documento), 
+onde citamos o nome completo do autor e o título da obra:
+
+\epigraph{Computers are good at following instructions, but not at reading your mind.}{\citefirstlastauthor{donaldknuth1984}, \emph{\citetitle{donaldknuth1984}}}
 
 
 
