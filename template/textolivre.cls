@@ -354,25 +354,8 @@
            {ç}{{\c{c}}}1 {Ç}{{\c{C}}}1
 }
 
-%%%% source START 
-%%%% define source for table and figures
-% set sourceVspace for table or not-table (figure)
-\makeatletter
-\newcommand{\sourceVspace}{%
-  \ifx\@currenvir\@table
-    0pt
-  \else
-     \ifx\@currenvir\@figure
-     -10pt
-     \else
-     -7pt
-     \fi
-  \fi}
-\newcommand*\@table{table}
-\newcommand*\@longtable{longtable}
-\newcommand*\@figure{figure}
-\makeatother
-
+%%%% source/notes START 
+%%%% define source and notes for table and figures
 \newcommand{\textSource}{%
   \iflanguage{english}{Source:}{%
   \iflanguage{french}{Source:}{%
@@ -381,10 +364,23 @@
   \iflanguage{portuguese}{Fonte:}{Source:}
   }}}}}
 \newcommand{\source}[1]{
- \captionsetup{skip=0ex,position=b}%
+ \captionsetup{skip=0.5ex,position=b}%
  \caption*{\textcolor{TLDarkGreen}{\textit{\textSource}} {#1}}
 }
-%%%% source END
+
+\newcommand{\textNotes}{%
+  \iflanguage{english}{Note:}{%
+  \iflanguage{french}{Remarque:}{%
+  \iflanguage{german}{Hinweis:}{%
+  \iflanguage{spanish}{Nota:}{%
+  \iflanguage{portuguese}{Nota:}{Note:}
+  }}}}}
+\newcommand{\notes}[1]{
+ \captionsetup{skip=0ex,position=b}%
+ \caption*{\textcolor{TLDarkGreen}{\textit{\textNotes}} {#1}}
+}
+%%%% source/notes END
+
 
 \RequirePackage{academicons}
 % ORCID
