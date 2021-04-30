@@ -239,7 +239,7 @@
 \preto{\abstract}{%
   \setlength{\parindent}{\z@}%
   \newcommand{\keywords}[1]{%
-  \emph{\@keywordsname : }\capitalizekeywords{#1}\par
+  \emph{\@keywordsname}: \capitalizekeywords{#1}\par
   }
 }
 \appto{\abstract}{%
