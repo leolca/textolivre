@@ -50,6 +50,19 @@
 } 
 % end source
 
+% add notes
+\newcommand{\textNotes}{%
+  \iflanguage{english}{Note:}{% 
+  \iflanguage{french}{Remarque:}{% 
+  \iflanguage{german}{Hinweis:}{% 
+  \iflanguage{spanish}{Nota:}{% 
+  \iflanguage{portuguese}{Nota:}{Note:} 
+  }}}}} 
+\newcommand{\notes}[1]{ 
+ \caption*{\textbf{\textNotes} {#1}} 
+} 
+%end notes
+
 \RequirePackage{authblk}
 \RequirePackage{hyperref}
 
@@ -67,6 +80,7 @@
 \RequirePackage{booktabs}
 \RequirePackage{amsmath,amsfonts,amssymb,amsthm}
 \AtBeginDocument{\renewenvironment{subequations}{}{}}
+\RequirePackage{adjustbox}
 \RequirePackage{longtable,booktabs,tabularx}
 \definecolor{Gray}{gray}{0.9}
 \newcommand{\headrow}{\rowcolor{Gray}}
@@ -105,4 +119,26 @@
   {\multicitedelim}%
   {\usebibmacro{postnote}}%
 % END \citefirstlastauthor
+
+% BEGIN \posscite
+% reference: https://tex.stackexchange.com/questions/592713/how-to-make-author-name-appear-in-small-caps-when-using-biblatex-abnt/592726#592726
+\DeclareNameWrapperFormat{textlabelname:poss}{#1's}
+\DeclareFieldFormat{shorthand:poss}{%
+  \ifnameundef{labelname}{#1's}{#1}}
+\DeclareFieldFormat{citetitle:poss}{\mkbibemph{#1}'s}
+\DeclareFieldFormat{label:poss}{#1's}
+\newrobustcmd*{\posscitealias}{%
+  \AtNextCite{%
+    \DeclareNameWrapperAlias{labelname}{textlabelname:poss}%
+    \DeclareFieldAlias{shorthand}{shorthand:poss}%
+    \DeclareFieldAlias{citetitle}{citetitle:poss}%
+    \DeclareFieldAlias{label}{label:poss}}}
+\newrobustcmd*{\posscite}{%
+  \posscitealias%
+  \textcite}
+\newrobustcmd*{\Posscite}{\bibsentence\posscite}
+\newrobustcmd*{\posscites}{%
+  \posscitealias%
+  \textcites}
+% END \posscite
 

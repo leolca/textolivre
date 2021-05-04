@@ -50,7 +50,6 @@
 \RequirePackage[absolute]{textpos}
 \RequirePackage{amsmath,amsfonts,amssymb,amsthm}
 \RequirePackage{adjustbox}
-\RequirePackage{mfirstuc}
 \RequirePackage{longtable,booktabs,tabularx}
 
 \newcommand{\tlprintlicense}{
