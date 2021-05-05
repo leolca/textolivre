@@ -129,14 +129,23 @@
 \renewcommand\AB@affilnote[1]{\textsuperscript{#1}}
 \setlength{\affilsep}{\baselineskip}
 
+\newcommand{\printifnotempty}[3]{%
+  \sbox0{#3}%
+  \ifdim\wd0=0pt
+    {}% if #2 is empty
+  \else
+    {\textcolor{TLDarkGreen}{\bfseries #1: }{#2}#3}% if #2 is not empty
+  \fi
+}
+
 \newcommand{\more@metadata}{%
   \@cover@logo\par
-  \textcolor{TLDarkGreen}{\bfseries DOI: }\@articledoi\par
-  \textcolor{TLDarkGreen}{\bfseries\@corrauthorname}\\\@corrauthor\par
-  \textcolor{TLDarkGreen}{\bfseries\@editortext}\\\@editorname\par
-  \textcolor{TLDarkGreen}{\bfseries\@keyreceivedtext}\\\@receiveddate\\
-  \textcolor{TLDarkGreen}{\bfseries\@keyacceptedtext}\\\@accepteddate\\
-  \textcolor{TLDarkGreen}{\bfseries\@keypublishedtext}\\\@publisheddate\par
+  \printifnotempty{DOI}{}{\@articledoi}\par
+  \printifnotempty{\@corrauthorname}{\\}{\@corrauthor}\par
+  \printifnotempty{\@editortext}{\\}{\@editorname}\par
+  \printifnotempty{\@keyreceivedtext}{\\}{\@receiveddate}\\
+  \printifnotempty{\@keyacceptedtext}{\\}{\@accepteddate}\\
+  \printifnotempty{\@keypublishedtext}{\\}{\@publisheddate}\par
   \tlprintlicense
 }
 
