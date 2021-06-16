@@ -455,9 +455,9 @@
   }}}}}
 
 
-\newenvironment{contributors}
+\newenvironment{contributors}[1]
 {
-\section*{\fontsize{10}{12}\selectfont \contributorssecname}
+\section*{\fontsize{10}{12}\selectfont \contributorssecname}\label{#1}
 \begin{singlespace}
 \fontsize{8}{10}\selectfont\noindent
 \begin{itemize*}[before=\unskip{\hspace{-1ex}},itemjoin={{; }},label={}]
