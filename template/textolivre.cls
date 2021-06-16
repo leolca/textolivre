@@ -445,11 +445,19 @@
 
 
 
-%\newcommand{\contributors}{\fontsize{8}{10}\selectfont\section*{\fontsize{10}{12}\selectfont Contribuições dos autores}}
+
+\newcommand{\contributorssecname}{%
+  \iflanguage{english}{Author contributions}{%
+  \iflanguage{french}{Les contributions de l'auteur}{%
+  \iflanguage{german}{Autorenbeiträge}{%
+  \iflanguage{spanish}{Contribuciones del autor}{%
+  \iflanguage{portuguese}{Contribuições dos autores}{Author Contributions}
+  }}}}}
+
 
 \newenvironment{contributors}
 {
-\section*{\fontsize{10}{12}\selectfont Contribuições dos autores}
+\section*{\fontsize{10}{12}\selectfont \contributorssecname}
 \begin{singlespace}
 \fontsize{8}{10}\selectfont\noindent
 \begin{itemize*}[before=\unskip{\hspace{-1ex}},itemjoin={{; }},label={}]
