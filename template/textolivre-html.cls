@@ -142,3 +142,152 @@
   \textcites}
 % END \posscite
 
+
+%%%% AUTHORS CONTRIBUTIONS %%% BEGIN
+\newcommand{\contributorssecname}{%
+  \iflanguage{english}{Author contributions}{%
+  \iflanguage{french}{Les contributions de l'auteur}{%
+  \iflanguage{german}{Autorenbeiträge}{%
+  \iflanguage{spanish}{Contribuciones del autor}{%
+  \iflanguage{portuguese}{Contribuições dos autores}{Author Contributions}
+  }}}}}
+
+\newenvironment{contributors}[1]
+{
+\section*{\fontsize{10}{12}\selectfont \contributorssecname}\label{#1}
+\begin{singlespace}
+\fontsize{8}{10}\selectfont\noindent
+\begin{itemize*}[before=\unskip{\hspace{-1ex}},itemjoin={{; }},label={}]
+}
+{
+\end{itemize*}
+\end{singlespace}
+\normalsize
+}
+
+\newcommand{\txcconceptualization}{%
+  \textbf{%
+  \iflanguage{english}{Conceptualization}{%
+  \iflanguage{french}{Conceptualisation}{%
+  \iflanguage{german}{Konzeptualisierung}{%
+  \iflanguage{spanish}{Conceptualización}{%
+  \iflanguage{portuguese}{Conceituação}{Conceptualization}%
+  }}}}}:}
+
+\newcommand{\txcdatacuration}{%
+  \textbf{%
+  \iflanguage{english}{Data curation}{%
+  \iflanguage{french}{Curation de données}{%
+  \iflanguage{german}{Daten-Kuration}{%
+  \iflanguage{spanish}{Curación de datos}{%
+  \iflanguage{portuguese}{Curadoria de dados}{Data curation}%
+  }}}}}:}
+
+\newcommand{\txcformalanalysis}{%
+  \textbf{%
+  \iflanguage{english}{Formal analysis}{%
+  \iflanguage{french}{Analyse formelle}{%
+  \iflanguage{german}{Formale Analyse}{%
+  \iflanguage{spanish}{Análisis formal}{%
+  \iflanguage{portuguese}{Análise Formal}{Formal analysis}%
+  }}}}}:}
+
+\newcommand{\txcfundingaquisition}{%
+  \textbf{%
+  \iflanguage{english}{Funding acquisition}{%
+  \iflanguage{french}{Acquisition de financement}{%
+  \iflanguage{german}{Förderung-Akquisition}{%
+  \iflanguage{spanish}{Adquisición de financiamiento}{%
+  \iflanguage{portuguese}{Aquisição de financiamento}{Funding acquisition}%
+  }}}}}:}
+
+\newcommand{\txcinvestigation}{%
+  \textbf{%
+  \iflanguage{english}{Investigation}{%
+  \iflanguage{french}{Investigation}{%
+  \iflanguage{german}{Untersuchung}{%
+  \iflanguage{spanish}{Investigación}{%
+  \iflanguage{portuguese}{Investigação}{Investigation}%
+  }}}}}:}
+
+\newcommand{\txcmethodology}{%
+  \textbf{%
+  \iflanguage{english}{Methodology}{%
+  \iflanguage{french}{Méthodologie}{%
+  \iflanguage{german}{Methodik}{%
+  \iflanguage{spanish}{Metodología}{%
+  \iflanguage{portuguese}{Metodologia}{Methodology}%
+  }}}}}:}
+
+\newcommand{\txcprojectadm}{%
+  \textbf{%
+  \iflanguage{english}{Project administration}{%
+  \iflanguage{french}{Administration du projet}{%
+  \iflanguage{german}{Projektverwaltung}{%
+  \iflanguage{spanish}{Administración de proyectos}{%
+  \iflanguage{portuguese}{Administração de projetos}{Project administration}%
+  }}}}}:}
+
+\newcommand{\txcresources}{%
+  \textbf{%
+  \iflanguage{english}{Resources}{%
+  \iflanguage{french}{Ressources}{%
+  \iflanguage{german}{Ressourcen}{%
+  \iflanguage{spanish}{Recursos}{%
+  \iflanguage{portuguese}{Recursos}{Resources}%
+  }}}}}:}
+
+\newcommand{\txcsoftware}{%
+  \textbf{%
+  \iflanguage{english}{Software}{%
+  \iflanguage{french}{Logiciels}{%
+  \iflanguage{german}{Software}{%
+  \iflanguage{spanish}{Software}{%
+  \iflanguage{portuguese}{Programas}{Software}%
+  }}}}}:}
+
+\newcommand{\txcsupervision}{%
+  \textbf{%
+  \iflanguage{english}{Supervision}{%
+  \iflanguage{french}{Supervision}{%
+  \iflanguage{german}{Supervision}{%
+  \iflanguage{spanish}{Supervisión}{%
+  \iflanguage{portuguese}{Supervisão}{Supervision}%
+  }}}}}:}
+
+\newcommand{\txcvalidation}{%
+  \textbf{%
+  \iflanguage{english}{Validation}{%
+  \iflanguage{french}{Validation}{%
+  \iflanguage{german}{Validierung}{%
+  \iflanguage{spanish}{Validación}{%
+  \iflanguage{portuguese}{Validação}{Validation}%
+  }}}}}:}
+
+\newcommand{\txcvisualization}{%
+  \textbf{%
+  \iflanguage{english}{Visualization}{%
+  \iflanguage{french}{Visualisation}{%
+  \iflanguage{german}{Visualisierung}{%
+  \iflanguage{spanish}{Visualización}{%
+  \iflanguage{portuguese}{}{Visualization}%
+  }}}}}:}
+
+\newcommand{\txcwritingdraft}{%
+  \textbf{%
+  \iflanguage{english}{Writing -- original draft}{%
+  \iflanguage{french}{Écrire -- Brouillon original}{%
+  \iflanguage{german}{Schreiben -- Originalentwurf}{%
+  \iflanguage{spanish}{Escribiendo -- borrador original}{%
+  \iflanguage{portuguese}{Escrita -- rascunho original}{Writing -- original draft}%
+  }}}}}:}
+
+\newcommand{\txcwritingreview}{%
+  \textbf{%
+  \iflanguage{english}{Writing -- review and editing}{%
+  \iflanguage{french}{Écrire -- Révision et édition}{%
+  \iflanguage{german}{Schreiben -- Review und Bearbeiten}{%
+  \iflanguage{spanish}{Escribiendo - Revisión y edición}{%
+  \iflanguage{portuguese}{Escrita -- revisão e edição}{Writing -- review and editing}%
+  }}}}}:}
+%%%% AUTHORS CONTRIBUTIONS %%% END
