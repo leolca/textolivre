@@ -89,6 +89,7 @@
 \def\@corrauthor{}
 \def\@authornote{}
 \def\@articledoi{}
+\def\@articleid{}
 \definecolor{TLLightGreen}{RGB}{184,198,36}
 \definecolor{TLDarkGreen}{RGB}{56,52,49}
 \definecolor{TLDarkGray}{RGB}{153,153,153}
@@ -119,8 +120,15 @@
 \newcommand{\authornote}[1]{\def\@authornote{#1}}
 \newcommand{\corrauthor}[1]{\def\@corrauthor{#1}}
 \newcommand{\editorname}[1]{\def\@editorname{#1}}
-\newcommand{\articledoi}[1]{\def\@articledoi{#1}}
-\newcommand{\articleenumber}{e\StrRight{\@articledoi}{5}}
+\newcommand{\articledoi}[1]{\def\@articledoi{#1}\articleid{\articleenumber}}
+\newcommand{\articleenumber}{\StrRight{\@articledoi}{5}}
+\newcommand{\articleid}[1]{%
+ \ifthenelse{\isempty{#1}}%
+ {\def\@articleid{e\articleenumber}}% if #1 is empty
+ {\def\@articleid{e#1}}% if #1 is not empty
+}
+%\newcommand{\articleid}[1]{\def\theaid{#1}\ifx\theaid\empty{\def\@articleid{e\articleenumber}}\else{\def\@articleid{e\theaid}}\fi}
+%\newcommand{\articleid}[1]{\def\@articleid{#1}}
 
 
 \renewcommand{\Authfont}{\large\bfseries}
@@ -306,7 +314,7 @@
 %\fancyfootoffset[LE,RO]{\marginparsep+\marginparwidth}
 \fancyfootoffset[L]{3.25cm}
 \fancyfoot[R]{\small\thepage/\pageref*{LastPage}}
-\fancyfoot[L]{\small\emph{\@runningauthor}\enskip|\enskip\@journalname\enskip|\enskip{Belo Horizonte}\enskip|\enskip{v.\@thevolume}\enskip|\enskip{n.\@thenumber}\enskip|\enskip\articleenumber\enskip|\enskip\@theyear}
+\fancyfoot[L]{\small\emph{\@runningauthor}\enskip|\enskip\@journalname\enskip|\enskip{Belo Horizonte}\enskip|\enskip{v.\@thevolume}\enskip|\enskip{n.\@thenumber}\enskip|\enskip\@articleid\enskip|\enskip\@theyear}
 \pagestyle{fancy}
 \fancypagestyle{plain}{%
   \fancyhf{}
