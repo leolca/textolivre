@@ -114,6 +114,11 @@ tidy -m --output-xhtml --break-before-br --wrap 0 article.html 2> errs.txt
 For more information on ```tidy```, visit https://www.html-tidy.org/documentation/.
 
 #### creating the ```.zip``` file for Marcalyc
+Although the HTML created by ```make4ht``` with the ```-u,--utf8``` encodes the output document in utf8 and even writes the tag ```<meta charset='utf-8' />```, Markalyc only accepts if it find the tag ```<meta content="text/html; charset=UTF-8" http-equiv="content-type" />```. Use ```sed``` to change this tag:
+```
+sed -i 's/<meta\ charset=\x27utf-8\x27\ \/>/<meta\ content="text\/html;\ charset=UTF-8"\ http-equiv="content-type"\ \/>/' article.html
+```
+
 You should have created the HTMLs as described above. Now you need to zip all files and change the ```article.html``` name into ```index.html```.
 The following command will create this intended zip using the current folder name as the name of the zip file:
 ```
