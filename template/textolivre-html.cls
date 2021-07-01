@@ -25,6 +25,7 @@
 \newcommand{\corrauthor}[1]{}
 \newcommand{\editorname}[1]{}
 \newcommand{\articledoi}[1]{}
+\newcommand{\articleid}[1]{}
 \newcommand{\runningauthor}[1]{}
 \newenvironment{polyabstract}{}{}
 \def\sep{\unskip. }%
