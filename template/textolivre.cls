@@ -168,9 +168,16 @@
 \AtBeginDocument{
 \RequirePackage[useregional]{datetime2}
 }
-\def\receiveddate#1{\gdef\@receiveddate{#1}}
-\def\accepteddate#1{\gdef\@accepteddate{#1}}
-\def\publisheddate#1{\gdef\@publisheddate{#1}}
+\def\langformatdate#1{%
+    \iflanguage{english}{#1}{%
+    \iflanguage{french}{\MakeLowercase{#1}}{%
+    \iflanguage{german}{#1}{%
+    \iflanguage{spanish}{\MakeLowercase{#1}}{%
+    \iflanguage{portuguese}{\MakeLowercase{#1}}{#1}%
+    }}}}}
+\def\receiveddate#1{\gdef\@receiveddate{\langformatdate{#1}}}
+\def\accepteddate#1{\gdef\@accepteddate{\langformatdate{#1}}}
+\def\publisheddate#1{\gdef\@publisheddate{\langformatdate{#1}}}
 \def\@keyreceivedtext{
     \iflanguage{english}{\hspace{-3pt}Received on}{
     \iflanguage{french}{\hspace{-5pt}Reçu en}{
