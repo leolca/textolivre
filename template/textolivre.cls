@@ -1,111 +1,80 @@
-\ProvidesClass{textolivre}[2020/11/24 Texto Livre class]
-\newif\if@suppmat\@suppmattrue
-\DeclareOption{nosupp}{\@suppmatfalse}
+\ProvidesClass{textolivre}[2021/09/02 Texto Livre class]
+% set default language
+\def\tl@mainlanguage{portuguese}\def\tl@mainvariant{brazilian}%
+\def\tl@secondlanguage{english}\def\tl@secondvariant{american}
+\DeclareOption{portuguese}{%
+  % do nothing - use default
+}
+\DeclareOption{english}{%
+  \def\tl@mainlanguage{english}\def\tl@mainvariant{american}%
+  \def\tl@secondlanguage{portuguese}\def\tl@secondvariant{brazilian}}
+\DeclareOption{spanish}{%
+  \def\tl@mainlanguage{spanish}\def\tl@mainvariant{spanish}%
+  \def\tl@secondlanguage{portuguese}\def\tl@secondvariant{brazilian}%
+  \def\tl@thirdlanguage{english}\def\tl@thirdvariant{american}}
+\DeclareOption{french}{%
+  \def\tl@mainlanguage{french}\def\tl@mainvariant{french}%
+  \def\tl@secondlanguage{portuguese}\def\tl@secondvariant{brazilian}%
+  \def\tl@thirdlanguage{english}\def\tl@thirdvariant{american}}
+\DeclareOption{german}{%
+  \def\tl@mainlanguage{german}\def\tl@mainvariant{german}%
+  \def\tl@secondlanguage{portuguese}\def\tl@secondvariant{brazilian}%
+  \def\tl@thirdlanguage{english}\def\tl@thirdvariant{american}}
 \ProcessOptions\relax
 \ExecuteOptions{}
 \LoadClass{article}
 
-\RequirePackage{etoolbox,xpatch}
-\RequirePackage{ifxetex,ifluatex}
-\RequirePackage{setspace}
-\RequirePackage[table]{xcolor}
-\RequirePackage{graphicx}
-\RequirePackage{rotating}
-\RequirePackage{titlesec}
-\RequirePackage{fancyhdr}
-\RequirePackage[style]{abstract}
-\RequirePackage[marginal]{footmisc}
-\RequirePackage{caption,subcaption}
-\RequirePackage[inline]{enumitem}
-\RequirePackage{authblk}
-\RequirePackage{relsize}
-\RequirePackage[right]{lineno}
-\RequirePackage{mfirstuc}
-\RequirePackage{textcase}
-
-\RequirePackage[
-    type={CC},
-    modifier={by},
-    version={4.0},
-]{doclicense}
-
 % fonts
 \RequirePackage[standard-baselineskips]{cmbright}
-\RequirePackage{fontspec}
-\RequirePackage{polyglossia} 
-\setmainlanguage{english}
-%\RequirePackage[default]{sourcesanspro}
 
-\def\@keyandsep{
-    \iflanguage{english}{ and }{
-    \iflanguage{french}{ et }{
-    \iflanguage{german}{ und }{
-    \iflanguage{spanish}{ y }{
-    \iflanguage{portuguese}{\hspace{-1.5ex} e }{ and }
-    }}}}}
-\renewcommand\Authand{\@keyandsep}
-\renewcommand\Authands{\@keyandsep}
+\RequirePackage{authblk}
 
-\RequirePackage{textcomp}
-\RequirePackage[absolute]{textpos}
-\RequirePackage{amsmath,amsfonts,amssymb,amsthm}
-\RequirePackage{adjustbox}
-\RequirePackage{longtable,booktabs,tabularx}
-
-\newcommand{\tlprintlicense}{
-    \iflanguage{english}{\makeatletter\input{doclicense-english.ldf}\makeatother\doclicenseText\\\doclicenseIcon}{
-    \iflanguage{french}{\makeatletter\input{doclicense-french.ldf}\makeatother\doclicenseText\\\doclicenseIcon}{
-    \iflanguage{german}{\makeatletter\input{doclicense-german.ldf}\makeatother\doclicenseText\\\doclicenseIcon}{
-    \iflanguage{spanish}{\makeatletter\input{doclicense-spanish.ldf}\makeatother\doclicenseText\\\doclicenseIcon}{
-    \iflanguage{portuguese}{\makeatletter\input{doclicense-brazilian.ldf}\makeatother\doclicenseText\\\doclicenseIcon}{\doclicenseText\par\doclicenseIcon}
-    }}}}}
-\def\@keywordsname{
-    \iflanguage{english}{Keywords}{
-    \iflanguage{french}{\hspace{-1ex}Mots-cl\'{e}s}{
-    \iflanguage{german}{Schl\"{u}sselw\"{o}rter}{
-    \iflanguage{spanish}{\hspace{-2.7ex}Palabras clave}{
-    \iflanguage{portuguese}{\hspace{-3.3ex}Palavras-chave}{\hspace{-3ex}Keywords}
-    }}}}}
-\def\@authornotename{Author's notes}
-\def\@keycorrauthorname{
-    \iflanguage{english}{\hspace{-3pt}Corresponding author}{
-    \iflanguage{french}{\hspace{-5pt}Auteur correspondant}{
-    \iflanguage{german}{\hspace{-2.5pt}Entsprechender Autor}{
-    \iflanguage{spanish}{\hspace{-10pt}Autor correspondiente}{
-    \iflanguage{portuguese}{\hspace{-13pt}Autor Correspondente}{\hspace{-13pt}Corresponding author}
-    }}}}}
-\def\@corrauthorname{\@keycorrauthorname}
-\def\@keyeditorname{
-    \iflanguage{english}{\hspace{-3pt}Edited by}{
-    \iflanguage{french}{\hspace{-5pt}Édité par}{
-    \iflanguage{german}{\hspace{-2.5pt}Bearbeitet von}{
-    \iflanguage{spanish}{\hspace{-10pt}Editado por}{
-    \iflanguage{portuguese}{\hspace{-13pt}Editado por}{\hspace{-13pt}Edited by}
-    }}}}}
-\def\@editortext{\@keyeditorname}
-\def\@runningauthor{}
-\def\@journalname{}
-\def\@editorname{}
-\def\@corrauthor{}
-\def\@authornote{}
-\def\@articledoi{}
-\def\@articleid{}
-\definecolor{TLLightGreen}{RGB}{184,198,36}
-\definecolor{TLDarkGreen}{RGB}{56,52,49}
-\definecolor{TLDarkGray}{RGB}{153,153,153}
-
-\RequirePackage{microtype}
-\newif\ifxetexorluatex
-\ifxetex
-  \xetexorluatextrue
-\else
-  \ifluatex
-    \xetexorluatextrue
-  \else
-    \xetexorluatexfalse
-  \fi
+\RequirePackage{polyglossia}
+\setmainlanguage[variant=\tl@mainvariant]{\tl@mainlanguage}
+\setotherlanguage[variant=\tl@secondvariant]{\tl@secondlanguage}
+\ifdefined\tl@thirdlanguage%
+  \setotherlanguage[variant=\tl@thirdvariant]{\tl@thirdlanguage}
 \fi
 
+\RequirePackage{translations}
+\input{internationalization.tex}
+
+\renewcommand\Authand{ \GetTranslation{and} }
+\renewcommand\Authands{ \GetTranslation{and} }
+
+\RequirePackage{amsmath,amsfonts,amssymb,amsthm}
+\RequirePackage{csquotes}
+\RequirePackage[backend=biber,style=abnt,ittitles,repeatfields]{biblatex}
+\DeclareLanguageMapping{brazil}{brazil-apa}
+\renewcommand{\bibfont}{\small}
+
+\PassOptionsToPackage{hyphens}{url}
+\ifdefined\HCode%
+\RequirePackage[breaklinks=true,tex4ht]{hyperref}
+\else
+\RequirePackage[breaklinks=true]{hyperref}
+\fi
+\renewcommand{\UrlBreaks}{\do\/\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z}
+\hypersetup{colorlinks,allcolors=TLDarkGreen}
+\urlstyle{same}
+
+\RequirePackage[english,french,spanish,brazilian]{cleveref}
+
+\RequirePackage[table]{xcolor}
+\RequirePackage{graphicx}
+
+\definecolor{TLLightGreen}{RGB}{184,198,36} %#B8C624
+\definecolor{TLDarkGreen}{RGB}{56,52,49}    %#383431
+\definecolor{TLDarkGray}{RGB}{153,153,153}  %#999999
+\ifdefined\HCode%
+  \newcommand{\orcid}[1]{\href{https://orcid.org/#1}{\scriptsize orcid}}
+\else % Don't execute this code with TeX4ht
+  \RequirePackage[type={CC},modifier={by},version={4.0}]{doclicense}
+  \RequirePackage{academicons}
+  \newcommand{\orcid}[1]{\href{https://orcid.org/#1}{\textcolor{TLLightGreen}{\protect\aiOrcid}}}
+\fi
+
+\RequirePackage{setspace}
 \setstretch{1.15}
 
 \RequirePackage{geometry}
@@ -114,60 +83,27 @@
   footskip=1.5\baselineskip,footnotesep=\baselineskip,headheight=21\p@,headsep=\baselineskip}
 
 \RequirePackage{xstring}
+\RequirePackage{etoolbox,xpatch}
 
-\newcommand{\runningauthor}[1]{\def\@runningauthor{#1}}
-\newcommand{\journalname}[1]{\def\@journalname{#1}}
-\newcommand{\authornote}[1]{\def\@authornote{#1}}
-\newcommand{\corrauthor}[1]{\def\@corrauthor{#1}}
-\newcommand{\editorname}[1]{\def\@editorname{#1}}
-\newcommand{\articledoi}[1]{\def\@articledoi{#1}\articleid{\articleenumber}}
+\def\runningauthor#1{\def\@runningauthor{#1}}
+\def\journalname#1{\def\@journalname{#1}}
+\def\corrauthor#1{\def\@corrauthor{#1}}
+%\def\editorname#1{\def\@editorname{#1}}
+\def\sectioneditorname#1{\def\@sectioneditorname{#1}}
+\def\layouteditorname#1{\def\@layouteditorname{#1}}
+\def\articledoi#1{\def\@articledoi{#1}\articleid{\articleenumber}}
+\def\@articleid{}
 \newcommand{\articleenumber}{\StrRight{\@articledoi}{5}}
 \newcommand{\articleid}[1]{%
- \ifthenelse{\isempty{#1}}%
+ \ifstrempty{#1}%
  {\def\@articleid{e\articleenumber}}% if #1 is empty
  {\def\@articleid{e#1}}% if #1 is not empty
 }
-%\newcommand{\articleid}[1]{\def\theaid{#1}\ifx\theaid\empty{\def\@articleid{e\articleenumber}}\else{\def\@articleid{e\theaid}}\fi}
-%\newcommand{\articleid}[1]{\def\@articleid{#1}}
+\def\thevolume#1{\def\@thevolume{#1}}
+\def\thenumber#1{\def\@thenumber{#1}}
+\def\theyear#1{\def\@theyear{#1}}
 
-
-\renewcommand{\Authfont}{\large\bfseries}
-\renewcommand{\Affilfont}{\small\itshape\mdseries}
-\renewcommand\AB@authnote[1]{\textsuperscript{#1}}
-\renewcommand\AB@affilnote[1]{\textsuperscript{#1}}
-\setlength{\affilsep}{\baselineskip}
-
-\newcommand{\printifnotempty}[3]{%
-  \sbox0{#3}%
-  \ifdim\wd0=0pt
-    {}% if #2 is empty
-  \else
-    {\textcolor{TLDarkGreen}{\bfseries #1: }{#2}#3}% if #2 is not empty
-  \fi
-}
-
-\newcommand{\more@metadata}{%
-  \@cover@logo\par
-  \printifnotempty{DOI}{}{\@articledoi}\par
-  \printifnotempty{\@corrauthorname}{\\}{\@corrauthor}\par
-  \printifnotempty{\@editortext}{\\}{\@editorname}\par
-  \printifnotempty{\@keyreceivedtext}{\\}{\@receiveddate}\\
-  \printifnotempty{\@keyacceptedtext}{\\}{\@accepteddate}\\
-  \printifnotempty{\@keypublishedtext}{\\}{\@publisheddate}\par
-  \tlprintlicense
-}
-
-\newcommand{\@cover@logo}{%
-  \includegraphics[width=0.9\textwidth]{logo.pdf}\\
-  \minsizebox{0.9\textwidth}{1ex}{Linguagem e Tecnologia} 
-}
-
-\def\thevolume#1{\gdef\@thevolume{#1}}
-\def\thenumber#1{\gdef\@thenumber{#1}}
-\def\theyear#1{\gdef\@theyear{#1}}
-\AtBeginDocument{
 \RequirePackage[useregional]{datetime2}
-}
 \def\langformatdate#1{%
     \iflanguage{english}{#1}{%
     \iflanguage{french}{\MakeLowercase{#1}}{%
@@ -175,31 +111,19 @@
     \iflanguage{spanish}{\MakeLowercase{#1}}{%
     \iflanguage{portuguese}{\MakeLowercase{#1}}{#1}%
     }}}}}
-\def\receiveddate#1{\gdef\@receiveddate{\langformatdate{#1}}}
-\def\accepteddate#1{\gdef\@accepteddate{\langformatdate{#1}}}
-\def\publisheddate#1{\gdef\@publisheddate{\langformatdate{#1}}}
-\def\@keyreceivedtext{
-    \iflanguage{english}{\hspace{-3pt}Received on}{
-    \iflanguage{french}{\hspace{-5pt}Reçu en}{
-    \iflanguage{german}{\hspace{-2.5pt}Empfangsdatum}{
-    \iflanguage{spanish}{\hspace{-10pt}Recibido el}{
-    \iflanguage{portuguese}{\hspace{-13pt}Recebido em}{\hspace{-13pt}Received on}
-    }}}}}
-\def\@keyacceptedtext{
-    \iflanguage{english}{\hspace{-3pt}Accepted on}{
-    \iflanguage{french}{\hspace{-5pt}Acceptée en}{
-    \iflanguage{german}{\hspace{-2.5pt}Akzeptiertes Datum}{
-    \iflanguage{spanish}{\hspace{-10pt}Aceptado el}{
-    \iflanguage{portuguese}{\hspace{-13pt}Aceito em}{\hspace{-13pt}Accepted on}
-    }}}}}
-\def\@keypublishedtext{
-    \iflanguage{english}{\hspace{-3pt}Published on}{
-    \iflanguage{french}{\hspace{-5pt}Publication en}{
-    \iflanguage{german}{\hspace{-2.5pt}Veröffentlichungsdatum}{
-    \iflanguage{spanish}{\hspace{-10pt}Publicado el}{
-    \iflanguage{portuguese}{\hspace{-13pt}Publicado em}{\hspace{-13pt}Published on}
-    }}}}}
+\def\receiveddate#1{\def\@receiveddate{\langformatdate{#1}}}
+\def\accepteddate#1{\def\@accepteddate{\langformatdate{#1}}}
+\def\publisheddate#1{\def\@publisheddate{\langformatdate{#1}}}
 
+\renewcommand{\Authfont}{\large\bfseries}
+\renewcommand{\Affilfont}{\small\itshape\mdseries}
+\renewcommand\AB@authnote[1]{\textsuperscript{#1}}
+\renewcommand\AB@affilnote[1]{\textsuperscript{#1}}
+\setlength{\affilsep}{\baselineskip}
+
+\RequirePackage{relsize}
+
+% polytitle BEGIN - multiple titles % requires: etoolbox, xpatch, relsize
 \newcounter{cntothertitle}
 \newcommand\othertitle[1]{%
   \stepcounter{cntothertitle}%
@@ -213,11 +137,16 @@
   \whileboolexpr
     { test {\ifnumcomp{\value{ititle}}{<}{#1}} }%
     {\stepcounter{ititle}\Large\smaller[\the\numexpr\value{ititle}-1\relax]%
-	%\makefirstuc{\expandafter\MakeTextLowercase{\getothertitle{\theititle}}}\par%
-	\getothertitle{\theititle}\par%
+        \getothertitle{\theititle}\par%
     }
   }
+% polytitle END
 
+\RequirePackage[absolute]{textpos}
+\RequirePackage{adjustbox}
+\RequirePackage{longtable,booktabs,tabularx,colortbl}
+
+% information box BEGIN % requires: textpos, adjustbox, doclicense
 \newcommand{\@insert@metadata}{%
   \begin{textblock*}{3.3cm}[0,1](1cm,\dimexpr\paperheight-\Gm@bmargin\relax)
   \scriptsize\raggedright%
@@ -226,27 +155,45 @@
   \more@metadata\par
   \end{textblock*}
 }
-\AtBeginDocument{
-\renewcommand{\@maketitle}{%
-  \@insert@metadata%
-  \noindent\begin{minipage}{0.9\linewidth}
-  \raggedright\setstretch{1.0}
-  %{\LARGE\bfseries{\makefirstuc{\expandafter\MakeTextLowercase{\@title}}}\par}
-  {\LARGE\bfseries{\@title}\par}
-  {\printothertitles{\thecntothertitle}}
-  \vskip\baselineskip
-  \@author\par
-  \end{minipage}\bigskip\normalfont\normalsize%
-}
-\appto{\maketitle}{%
-  \ifdefvoid{\@authornote}{}{\begingroup
-    \renewcommand{\thefootnote}{}
-    \footnotetext{\emph{\@authornotename:} \@authornote}%
-  \endgroup}%
+
+\newcommand{\@cover@logo}{%
+  \includegraphics[width=0.9\textwidth]{logo.pdf}\\
+  \minsizebox{0.9\textwidth}{1ex}{Linguagem e Tecnologia} 
 }
 
-%%%%%%%%%%%
-%% keywords 
+\newcommand{\printifnotempty}[3]{%
+  \sbox0{#3}%
+  \ifdim\wd0=0pt
+    {}% if #2 is empty
+  \else
+    {\textcolor{TLDarkGreen}{\bfseries #1: }{#2}#3}% if #2 is not empty
+  \fi
+}
+
+\newcommand{\more@metadata}{%
+  \@cover@logo\par
+  \printifnotempty{DOI}{}{\@articledoi}\par
+  \printifnotempty{\GetTranslation{correspondingauthor}}{\\}{\@corrauthor}\par
+  %\printifnotempty{\GetTranslation{editedby}}{\\}{\@editorname}\\
+  \printifnotempty{\GetTranslation{sectioneditor}}{\\}{\@sectioneditorname}\\
+  \printifnotempty{\GetTranslation{layouteditor}}{\\}{\@layouteditorname}\par
+  \printifnotempty{\GetTranslation{received}}{\\}{\@receiveddate}\\
+  \printifnotempty{\GetTranslation{accepted}}{\\}{\@accepteddate}\\
+  \printifnotempty{\GetTranslation{published}}{\\}{\@publisheddate}\par
+  \GetTranslation{license}
+}
+% information box END
+
+% ABSTRACT
+\RequirePackage[style]{abstract}
+% polyabstract - BEGIN
+\newenvironment{polyabstract}
+{\noindent\textcolor{TLLightGreen}{\rule{\linewidth}{1.0pt}}\par}
+{\vspace{-1.5ex}\noindent\textcolor{TLLightGreen}{\rule{\linewidth}{.5pt}}\par}
+% polyabstract - END
+
+\RequirePackage{mfirstuc}
+% KEYWORDS % requires: mfirstuc
 \def\sep{\unskip. }%
 \newcommand{\capitalizekeywords}[2][\sep]{%
   \def\dolist##1{\expandafter\@dolist##1#1\@eol}%
@@ -256,46 +203,43 @@
   \dolist{#2}%
 }
 
-\renewcommand{\abstitlestyle}[1]{{\large\bfseries #1\par}}
-\setlength{\absleftindent}{\z@}
-\setlength{\absrightindent}{\absleftindent}
-\preto{\abstract}{%
-  \setlength{\parindent}{\z@}%
-  \newcommand{\keywords}[1]{%
-  \emph{\@keywordsname}: \capitalizekeywords{#1}\par
-  }
-}
-\appto{\abstract}{%
-  \setlength{\parindent}{\z@}%
-  \setlength{\parskip}{1em}%
-  \vskip-\parskip%
-  \noindent\ignorespaces%
-}
-
-% add source to lising
-\makeatletter
-\lst@Key{source}{}{\def\lst@source{#1}}
-
-\let\orig@lst@MakeCaption=\lst@MakeCaption
-\def\lst@MakeCaption#1{%
-    \orig@lst@MakeCaption#1%
-    \ifx b#1%
-        \ifx\lst@source\@empty\else
-            \noindent
-            \hspace{-13pt}\normalfont\textcolor{TLDarkGreen}{\textit{\textSource}}\lst@source\expandafter%
-            \vskip\belowcaptionskip
-        \fi
+\AtBeginDocument{% BEGIN
+  % TITLE
+  \renewcommand{\@maketitle}{% 
+    \ifdefined\HCode\else% Don't execute this code with TeX4ht
+      \@insert@metadata
     \fi
-}
-\makeatother
+    \noindent\begin{minipage}{0.9\linewidth}
+    \raggedright\setstretch{1.0}
+    {\LARGE\bfseries{\@title}\par}
+    {\printothertitles{\thecntothertitle}}
+    \vskip\baselineskip
+    \@author\par
+    \end{minipage}\bigskip\normalfont\normalsize%
+  }
+
+  % ABSTRACT % requires: abstract, mfirstuc
+  \renewcommand{\abstitlestyle}[1]{{\large\bfseries #1\par}}
+  \setlength{\absleftindent}{\z@}
+  \setlength{\absrightindent}{\absleftindent}
+  \preto{\abstract}{%
+    \setlength{\parindent}{\z@}%
+    \newcommand{\keywords}[1]{%
+    \emph{\GetTranslation{keywords}}: \capitalizekeywords{#1}\par
+    }
+  }
+  \appto{\abstract}{%
+    \setlength{\parindent}{\z@}%
+    \setlength{\parskip}{1em}%
+    \vskip-\parskip%
+    \noindent\ignorespaces%
+  }
+
+}% END \AtBeginDocument
 
 
-} % end AtBeginDocument
-
-\newenvironment{polyabstract}
-{\noindent\textcolor{TLLightGreen}{\rule{\linewidth}{1.0pt}}\par}
-{\vspace{-1.5ex}\noindent\textcolor{TLLightGreen}{\rule{\linewidth}{.5pt}}\par}
-
+\RequirePackage{titlesec}
+% SECTION STYLE % requires: titlesec
 \titleformat{\section}{\large\bfseries}{\hspace*{-1em}\makebox[\z@][r]{\thesection}}{1em}{}
 \titleformat{\subsection}{\large}{\hspace*{-1em}\makebox[\z@][r]{\thesubsection}}{1em}{}
 \titleformat{\subsubsection}{\normalsize}{\hspace*{-1em}\makebox[\z@][r]{\thesubsubsection}}{1em}{}
@@ -304,31 +248,43 @@
 \titlespacing*{\subsubsection}{\z@}{\baselineskip}{\z@}
 \setcounter{secnumdepth}{3}
 
+\RequirePackage[inline]{enumitem}
+% LISTS % requires: enumitem
 \setlist{leftmargin=*,nosep}
 
+\RequirePackage[marginal]{footmisc}
+% FOOTNOTE % requires: footmisc
 \setlength{\footnotemargin}{-1em}
 \pretocmd{\@makefntext}{%
   \renewcommand{\@makefnmark}{\thefootnote}
 }{}{}
 
-\RequirePackage{lastpage}
-
+\RequirePackage{totpages}
+\RequirePackage{fancyhdr}
+% HEADERS and FOOTERS % requires: fancyhdr, totpages
 \fancyhf{}
 \renewcommand{\footrulewidth}{1.5\p@}
 \renewcommand{\headrule}{}
 \preto{\footrule}{\begingroup\color{TLLightGreen}}
 \appto{\footrule}{\endgroup}
-%\fancyfootoffset[LE,RO]{\marginparsep+\marginparwidth}
 \fancyfootoffset[L]{3.25cm}
-\fancyfoot[R]{\small\thepage/\pageref*{LastPage}}
+\fancyfoot[R]{\small\thepage/\pageref*{TotPages}}
 \fancyfoot[L]{\small\emph{\@runningauthor}\enskip|\enskip\@journalname\enskip|\enskip{Belo Horizonte}\enskip|\enskip{v.\@thevolume}\enskip|\enskip{n.\@thenumber}\enskip|\enskip\@articleid\enskip|\enskip\@theyear}
 \pagestyle{fancy}
 \fancypagestyle{plain}{%
   \fancyhf{}
   \renewcommand{\footrule}{}
-  \fancyfoot[R]{\small\thepage/\pageref*{LastPage}}
+  \fancyfoot[R]{\small\thepage/\pageref*{TotPages}}
 }
 
+% LISTING
+\crefname{lstlisting}{lista}{listas}
+\Crefname{lstlisting}{Lista}{Listas}
+\RequirePackage{listings}
+\renewcommand\lstlistingname{Lista}
+\input{listingconfig}
+
+\RequirePackage{caption,subcaption}
 \captionsetup*{singlelinecheck=false,font={small},labelfont={bf,color=TLDarkGreen},labelsep=period}
 \captionsetup*[table]{position=top}
 \captionsetup*[sub]{labelfont=small,justification=centering}
@@ -336,84 +292,35 @@
 \newcommand{\thead}[1]{\bfseries #1\rule[-1.2ex]{0pt}{2em}}
 \renewcommand{\arraystretch}{1.2}
 
-\RequirePackage[backend=biber,style=abnt,ittitles,repeatfields]{biblatex}
-\DeclareLanguageMapping{brazil}{brazil-apa}
-\renewcommand{\bibfont}{\small}
-
-\PassOptionsToPackage{hyphens}{url}
-\RequirePackage[breaklinks=true,pdfa=true]{hyperref}
-\renewcommand{\UrlBreaks}{\do\/\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z}
-\hypersetup{colorlinks,allcolors=TLDarkGreen}
-\urlstyle{same}
-
-\RequirePackage[english,french,spanish,brazilian]{cleveref}
-
-% used to provide source code environment
-\crefname{lstlisting}{lista}{listas}
-\Crefname{lstlisting}{Lista}{Listas}
-\RequirePackage{listings}
-\renewcommand\lstlistingname{Lista}
-\lstset{language=bash,
-        breaklines=true,
-        basicstyle=\linespread{1}\small\ttfamily,
-        numbers=none,xleftmargin=0.5cm,
-        frame=none,
-        framexleftmargin=0.5em,
-        framexrightmargin=0.5em,
-        showstringspaces=false,
-        upquote=true,
-        commentstyle=\color{gray},
-        literate=%
-           {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1 
-           {à}{{\`a}}1 {è}{{\`e}}1 {ì}{{\`i}}1 {ò}{{\`o}}1 {ù}{{\`u}}1
-           {ã}{{\~a}}1 {ẽ}{{\~e}}1 {ĩ}{{\~i}}1 {õ}{{\~o}}1 {ũ}{{\~u}}1
-           {â}{{\^a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1
-           {ä}{{\"a}}1 {ë}{{\"e}}1 {ï}{{\"i}}1 {ö}{{\"o}}1 {ü}{{\"u}}1
-           {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
-           {À}{{\`A}}1 {È}{{\`E}}1 {Ì}{{\`I}}1 {Ò}{{\`O}}1 {Ù}{{\`U}}1
-           {Ã}{{\~A}}1 {Ẽ}{{\~E}}1 {Ũ}{{\~u}}1 {Õ}{{\~O}}1 {Ũ}{{\~U}}1
-           {Â}{{\^A}}1 {Ê}{{\^E}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1
-           {Ä}{{\"A}}1 {Ë}{{\"E}}1 {Ï}{{\"I}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1
-           {ç}{{\c{c}}}1 {Ç}{{\c{C}}}1
-}
-
-%%%% source/notes START 
-%%%% define source and notes for table and figures
-\newcommand{\textSource}{%
-  \iflanguage{english}{Source:}{%
-  \iflanguage{french}{Source:}{%
-  \iflanguage{german}{Quelle:}{%
-  \iflanguage{spanish}{Fuente:}{%
-  \iflanguage{portuguese}{Fonte:}{Source:}
-  }}}}}
+% SOURCE - requires: caption
 \newcommand{\source}[1]{
  \captionsetup{skip=0.5ex,position=b}%
- \caption*{\textcolor{TLDarkGreen}{\textit{\textSource}} {#1}}
+ \caption*{\textcolor{TLDarkGreen}{\textit{\GetTranslation{source}}} {#1}}
 }
 
-\newcommand{\textNotes}{%
-  \iflanguage{english}{Note:}{%
-  \iflanguage{french}{Remarque:}{%
-  \iflanguage{german}{Hinweis:}{%
-  \iflanguage{spanish}{Nota:}{%
-  \iflanguage{portuguese}{Nota:}{Note:}
-  }}}}}
+% NOTE - requires: caption
 \newcommand{\notes}[1]{
  \captionsetup{skip=0ex,position=b}%
- \caption*{\textcolor{TLDarkGreen}{\textit{\textNotes}} {#1}}
+ \caption*{\textcolor{TLDarkGreen}{\textit{\GetTranslation{note}} {#1}}}
 }
-%%%% source/notes END
+
+% ADD SOURCE TO LISTING - BEGIN
+\lst@Key{source}{}{\def\lst@source{#1}}
+\let\orig@lst@MakeCaption=\lst@MakeCaption
+\def\lst@MakeCaption#1{%
+    \orig@lst@MakeCaption#1%
+    \ifx b#1%
+        \ifx\lst@source\@empty\else
+            \noindent
+            \hspace{-13pt}\normalfont\textcolor{TLDarkGreen}{\textit{\GetTranslation{source}}}\lst@source\expandafter%
+            \vskip\belowcaptionskip
+        \fi
+    \fi
+}
+% ADD SOURCE TO LISTING - END
 
 
-\RequirePackage{academicons}
-% ORCID
-\newcommand{\orcid}[1]{\href{https://orcid.org/#1}{\textcolor[HTML]{B8C624}{\aiOrcid}}}
-% A6CE39
-
-% PDF/A
-\RequirePackage[a-1b]{pdfx}
-\hypersetup{pdfpagelabels,pdfencoding=unicode}
-\makeatother
+% CITATIONS
 
 % BEGIN \citefirstlastauthor 
 % reference: https://tex.stackexchange.com/questions/581792/how-to-write-the-authors-full-name-and-avoid-style-formatting-given-by-biblatex/581838#581838
@@ -459,152 +366,31 @@
 % END \posscite
 
 
-
-%%%% AUTHORS CONTRIBUTIONS %%% BEGIN
-\newcommand{\contributorssecname}{%
-  \iflanguage{english}{Author contributions}{%
-  \iflanguage{french}{Les contributions de l'auteur}{%
-  \iflanguage{german}{Autorenbeiträge}{%
-  \iflanguage{spanish}{Contribuciones del autor}{%
-  \iflanguage{portuguese}{Contribuições dos autores}{Author Contributions}
-  }}}}}
-
-\newenvironment{contributors}[1]
-{
-\section*{\fontsize{10}{12}\selectfont \contributorssecname}\label{#1}
+% BEGIN contributors environment - requires: xparse, enumitem
+\newenvironment{contributors}[1][]{%
+\section*{\fontsize{10}{12}\selectfont \GetTranslation{authorcontributions}}\ifx#1\@empty\else\label{#1}\fi
 \begin{singlespace}
 \fontsize{8}{10}\selectfont\noindent
-\begin{itemize*}[before=\unskip{\hspace{-1ex}},itemjoin={{; }},label={}]
+\begin{itemize*}[before=\unskip{\hspace{-1ex}},itemjoin={\unskip{;}},after={\unskip{.}},mode=unboxed,label={}]
 }
 {
 \end{itemize*}
-\end{singlespace}
 \normalsize
+\end{singlespace}
 }
 
-\newcommand{\txcconceptualization}{%
-  \textbf{%
-  \iflanguage{english}{Conceptualization}{%
-  \iflanguage{french}{Conceptualisation}{%
-  \iflanguage{german}{Konzeptualisierung}{%
-  \iflanguage{spanish}{Conceptualización}{%
-  \iflanguage{portuguese}{Conceituação}{Conceptualization}%
-  }}}}}:}
+\newcommand\acitem[1]{\IfValueT{#1}{\GetTranslation{#1}\let\acitem\acitema}}
+\newcommand\acitema[1]{\IfValueT{#1}{, \GetTranslation{#1}}}
 
-\newcommand{\txcdatacuration}{%
-  \textbf{%
-  \iflanguage{english}{Data curation}{%
-  \iflanguage{french}{Curation de données}{%
-  \iflanguage{german}{Daten-Kuration}{%
-  \iflanguage{spanish}{Curación de datos}{%
-  \iflanguage{portuguese}{Curadoria de dados}{Data curation}%
-  }}}}}:}
+\NewDocumentCommand{\authorcontribution}{m >{\SplitArgument{13}{,}}o}{%
+  \item \textbf{#1}: {\ProcessList {#2} {\acitem}}
+}
+% END contributors environment
 
-\newcommand{\txcformalanalysis}{%
-  \textbf{%
-  \iflanguage{english}{Formal analysis}{%
-  \iflanguage{french}{Analyse formelle}{%
-  \iflanguage{german}{Formale Analyse}{%
-  \iflanguage{spanish}{Análisis formal}{%
-  \iflanguage{portuguese}{Análise Formal}{Formal analysis}%
-  }}}}}:}
+% 'Tabla' instead of 'Cuadro'
+\IfStrEq{\languagename}{spanish}{%
+ \gappto\captionsspanish{\renewcommand{\tablename}{Tabla}}%
+ \AfterEndPreamble{%
+  \crefname{table}{tabla}{tablas}\Crefname{table}{Tabla}{Tablas}}%
+}{}
 
-\newcommand{\txcfundingaquisition}{%
-  \textbf{%
-  \iflanguage{english}{Funding acquisition}{%
-  \iflanguage{french}{Acquisition de financement}{%
-  \iflanguage{german}{Förderung-Akquisition}{%
-  \iflanguage{spanish}{Adquisición de financiamiento}{%
-  \iflanguage{portuguese}{Aquisição de financiamento}{Funding acquisition}%
-  }}}}}:}
-
-\newcommand{\txcinvestigation}{%
-  \textbf{%
-  \iflanguage{english}{Investigation}{%
-  \iflanguage{french}{Investigation}{%
-  \iflanguage{german}{Untersuchung}{%
-  \iflanguage{spanish}{Investigación}{%
-  \iflanguage{portuguese}{Investigação}{Investigation}%
-  }}}}}:}
-
-\newcommand{\txcmethodology}{%
-  \textbf{%
-  \iflanguage{english}{Methodology}{%
-  \iflanguage{french}{Méthodologie}{%
-  \iflanguage{german}{Methodik}{%
-  \iflanguage{spanish}{Metodología}{%
-  \iflanguage{portuguese}{Metodologia}{Methodology}%
-  }}}}}:}
-
-\newcommand{\txcprojectadm}{%
-  \textbf{%
-  \iflanguage{english}{Project administration}{%
-  \iflanguage{french}{Administration du projet}{%
-  \iflanguage{german}{Projektverwaltung}{%
-  \iflanguage{spanish}{Administración de proyectos}{%
-  \iflanguage{portuguese}{Administração de projetos}{Project administration}%
-  }}}}}:}
-
-\newcommand{\txcresources}{%
-  \textbf{%
-  \iflanguage{english}{Resources}{%
-  \iflanguage{french}{Ressources}{%
-  \iflanguage{german}{Ressourcen}{%
-  \iflanguage{spanish}{Recursos}{%
-  \iflanguage{portuguese}{Recursos}{Resources}%
-  }}}}}:}
-
-\newcommand{\txcsoftware}{%
-  \textbf{%
-  \iflanguage{english}{Software}{%
-  \iflanguage{french}{Logiciels}{%
-  \iflanguage{german}{Software}{%
-  \iflanguage{spanish}{Software}{%
-  \iflanguage{portuguese}{Programas}{Software}%
-  }}}}}:}
-
-\newcommand{\txcsupervision}{%
-  \textbf{%
-  \iflanguage{english}{Supervision}{%
-  \iflanguage{french}{Supervision}{%
-  \iflanguage{german}{Supervision}{%
-  \iflanguage{spanish}{Supervisión}{%
-  \iflanguage{portuguese}{Supervisão}{Supervision}%
-  }}}}}:}
-
-\newcommand{\txcvalidation}{%
-  \textbf{%
-  \iflanguage{english}{Validation}{%
-  \iflanguage{french}{Validation}{%
-  \iflanguage{german}{Validierung}{%
-  \iflanguage{spanish}{Validación}{%
-  \iflanguage{portuguese}{Validação}{Validation}%
-  }}}}}:}
-
-\newcommand{\txcvisualization}{%
-  \textbf{%
-  \iflanguage{english}{Visualization}{%
-  \iflanguage{french}{Visualisation}{%
-  \iflanguage{german}{Visualisierung}{%
-  \iflanguage{spanish}{Visualización}{%
-  \iflanguage{portuguese}{}{Visualization}%
-  }}}}}:}
-
-\newcommand{\txcwritingdraft}{%
-  \textbf{%
-  \iflanguage{english}{Writing -- original draft}{%
-  \iflanguage{french}{Écrire -- Brouillon original}{%
-  \iflanguage{german}{Schreiben -- Originalentwurf}{%
-  \iflanguage{spanish}{Escribiendo -- borrador original}{%
-  \iflanguage{portuguese}{Escrita -- rascunho original}{Writing -- original draft}%
-  }}}}}:}
-
-\newcommand{\txcwritingreview}{%
-  \textbf{%
-  \iflanguage{english}{Writing -- review and editing}{%
-  \iflanguage{french}{Écrire -- Révision et édition}{%
-  \iflanguage{german}{Schreiben -- Review und Bearbeiten}{%
-  \iflanguage{spanish}{Escribiendo - Revisión y edición}{%
-  \iflanguage{portuguese}{Escrita -- revisão e edição}{Writing -- review and editing}%
-  }}}}}:}
-%%%% AUTHORS CONTRIBUTIONS %%% END
