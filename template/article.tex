@@ -62,6 +62,27 @@
 \setlength\epigraphwidth{.7\textwidth}
 % custom epigraph - END
 
+% LANGUAGE - BEGIN
+% ARABIC
+% for languages that use special fonts, you must provide the typeface that will be used
+% \setotherlanguage{arabic}
+% \newfontfamily\arabicfont[Script=Arabic]{Amiri}
+% \newfontfamily\arabicfontsf[Script=Arabic]{Amiri}
+% \newfontfamily\arabicfonttt[Script=Arabic]{Amiri}
+%
+% in the article, to add arabic text use: \textlang{arabic}{ ... }
+%
+% RUSSIAN
+% for russian text we also need to define fonts with support for Cyrillic script
+% \usepackage{fontspec}
+% \setotherlanguage{russian}
+% \newfontfamily\cyrillicfont{Times New Roman}
+% \newfontfamily\cyrillicfontsf{Times New Roman}[Script=Cyrillic]
+% \newfontfamily\cyrillicfonttt{Times New Roman}[Script=Cyrillic]
+%
+% in the text use \begin{russian} ... \end{russian}
+% LANGUAGE - END
+
 
 % add line numbers for submission
 %\usepackage{lineno}
@@ -177,10 +198,9 @@ Deverá ser enviado também o arquivo \texttt{.bib} contendo a bibliografia util
 O arquivo \texttt{.bib} deverá ser enviado mesmo que os autores optem por enviar o manuscrito no formato ODT.
 Veja mais sobre o formato \Hologo{BibTeX} no tutorial do \href{https://www.overleaf.com/learn/latex/Bibliography_management_in_LaTeX#The_bibliography_file}{Overleaf},
 no \href{https://en.wikibooks.org/wiki/LaTeX/Bibliography_Management}{Wikibooks} ou em \textcite{araujo2020}.
-Ao gerar o \texttt{.pdf} para submissão, selecione a opção \texttt{anonymous} na classe de documento do modelo da revista:
-(\verb|\documentclass[anonymous]{textolivre}|) e enumere as linhas utilizando o pacote \texttt{lineno} (ver comentários
-no cabeçalho deste documento). Outras informação para utilização deste modelo estão contidas no cabeçalho como, por exemplo:
-configuração de línguas, utilização de emojis e como iserir texto em árabe.
+Ao gerar o \texttt{.pdf} para submissão, enumere as linhas utilizando o pacote \texttt{lineno} (ver comentários
+no cabeçalho deste documento). 
+
 
 \section{Utilização do modelo}\label{sec-modelo}
 Recomendamos a utilização do \Hologo{XeLaTeX}\footnote{
@@ -190,7 +210,7 @@ a utilização de qualquer caractere do Unicode diretamente, o que não é poss�
 } para a confecção do manuscrito.
 Toda a formatação do texto é definida no arquivo de classe \texttt{textolivre.cls}.
 Este arquivo não deverá ser editado.
-Utilize o arquivo \texttt{tl-article-template.tex} como base para redigir o manuscrito.
+Utilize o arquivo \texttt{article.tex} como base para redigir o manuscrito.
 Caso haja necessidade de incluir novos pacotes e criar novas definições específicas para um artigo,
 estas deverão ser feitas no preâmbulo do arquivo \texttt{.tex}.
 Em caso de dúvida sobre a utilização do estilo, entre em contato com a equipe editorial da revista.
@@ -199,9 +219,9 @@ A bibliografia deverá ser elaborara separadamente, em um arquivo \texttt{.bib},
 convenções do \Hologo{BibTeX}. Para gerar a bibliografia deverá ser utilizada a ferramenta \texttt{Biber}.
 A \Cref{lst-compiledocument} apresenta a sequência de comandos para compilar o documento final.
 \begin{lstlisting}[language=bash, label=lst-compiledocument, caption={Sequência para gerar o documento final.}]
-xelatex tl-article-template.tex
-biber tl-article-template
-xelatex tl-article-template.tex
+xelatex article.tex
+biber article
+xelatex article.tex # pode ser necessário novamente, caso o número de páginas altere após inserir a bibliografia
 \end{lstlisting} %stopzone
 
 \section{Organização do Texto}\label{sec-organizacao}
@@ -248,14 +268,48 @@ tais como DOI, data de recebimento, aceite e publicação.
 Para definir a forma como o nome dos autores aparecerá no rodapé do artigo, utilize o comando \verb|\runningauthor{...}|.
 
 \subsubsection{Idioma}\label{sec-idioma}
-A revista \emph{Texto Livre} aceita a submissão em diferentes línguas, desta forma, faz-se necessário especificar quais
-línguas serão utilizadas no manuscrito. Utilizamos, para tanto, o pacote \verb|polyglossia|. Para definir
-a língua padrão e auxiliares do texto, faça como exemplificado na \Cref{lst-setlang}, inserindo tal informação
-no cabeçalho do documento.
-\begin{lstlisting}[language=tex, label=lst-setlang, caption={Definição das línguas utilizadas no artigo.}]
-\setdefaultlanguage[variant=brazilian]{portuguese}
-\setotherlanguage{english}
+Os artigos para a revista \textit{Texto Livre} podem ser submetidos em português, inglês,
+espanhol ou francês. Definição a língua principal do artigo na evocação da classe, conforme exemplos na
+\Cref{lst-language}. O comportamento \textit{default} da classe é utilizar o português como língua principal do artigo,
+desta forma, o inglês será a língua secundária. Caso o inglês seja a língua principal, o português passará a ser a língua secundária.
+Nos demais casos, o português será a língua secundária e o inglês a língua terciária.
+
+\begin{lstlisting}[language=tex, label=lst-language, caption={Definição da língua principal do artigo.},postbreak=\mbox{$\hookrightarrow$\space}]
+\documentclass{textolivre} % utilização da língua padrão: português
+\documentclass[portuguese]{textolivre}
+\documentclass[english]{textolivre}
+\documentclass[spanish]{textolivre}
+\documentclass[french]{textolivre}
+\end{lstlisting}
+
+Eventualmente, trechos em outras línguas poderão ser utilizados no manuscrito. Para prover o suporte a diferentes línguas,
+utilizamos o pacote \verb|polyglossia|. Para utilizar outras línguas, especifique no preâmbulo utilizando o 
+comando \verb|\setotherlanguage{...}|. Algumas línguas requerem ainda utilização de fontes que tenham suporte
+aos caracteres desta língua. Na \Cref{lst-setlang-arabic} apresentamos o que deve ser utilizado no preâmbulo para 
+prove o suporte a árabe e na \Cref{lst-setlang-russian} o que deve ser utilizado para prover o suporte a russo.
+
+\begin{lstlisting}[language=tex, label=lst-setlang-arabic, caption={Código para acrescentar ao preâmbulo para prover o suporte a árabe no texto.}]
+\setotherlanguage{arabic}
+\newfontfamily\arabicfont[Script=Arabic]{Amiri}
+\newfontfamily\arabicfontsf[Script=Arabic]{Amiri}
+\newfontfamily\arabicfonttt[Script=Arabic]{Amiri}
 \end{lstlisting} %stopzone
+
+\begin{lstlisting}[language=tex, label=lst-setlang-russian, caption={Código para acrescentar ao preâmbulo para prover o suporte a russo no texto.}]
+\usepackage{fontspec}
+\setotherlanguage{russian}
+\newfontfamily\cyrillicfont{Times New Roman}
+\newfontfamily\cyrillicfontsf{Times New Roman}[Script=Cyrillic]
+\newfontfamily\cyrillicfonttt{Times New Roman}[Script=Cyrillic]
+\end{lstlisting} %stopzone
+
+Para a utilização de emojis no manuscrito, utilizamos a fonte Symbola, conforme explicação
+apresentada no \href{https://stackoverflow.com/questions/190145/how-to-insert-emoticons-in-latex/57076064}{StackOverflow}.
+A fonte pode ser baixada na internet, por exemplo em \url{https://dn-works.com/ufas/}.
+Após instalar a fonte, basta acrescentar ao preâmbulo \verb|\newfontfamily\Symbola{Symbola}|
+e utilizar o comando \verb|\Symbola| seguido do emoji desejado.
+
+
 
 \subsubsection{Resumo}\label{sec-resumo}
 O texto do resumo, \emph{abstract} e, eventualmente, o resumo em um terceira língua serão inseridos, cada um,
@@ -372,6 +426,35 @@ utilizo a seguir para descrever os três tipos.
 \end{description}
 Observe no exemplo que os itens de uma lista podem ser referenciados. Para criar uma referência para lista descritiva,
 conforme ilustrado aqui, é necessário adicionar um código ao preâmbulo do documento. Veja o código \texttt{.tex} deste documento.
+
+Para referenciar itens de uma lista descritiva utilizando seus rótulos, ao invés dos números dos itens, 
+veja a \Cref{lst-refdescitem}, onde há o código que deverá ser acrescentado ao preâmbulo e a forma de utilização no documento.
+
+\begin{lstlisting}[language=tex, label=lst-refdescitem, caption={Código para ser inserido para realizar referências atravé do rótulo de itens de uma lista descritiva.}]
+% inserir o código abaixo no preâmbulo do documento
+% preâmbulo - BEGIN
+\makeatletter
+\let\orgdescriptionlabel\descriptionlabel
+\renewcommand*{\descriptionlabel}[1]{%
+  \let\orglabel\label
+  \let\label\@gobble
+  \phantomsection
+  \edef\@currentlabel{#1\unskip}%
+  \let\label\orglabel
+  \orgdescriptionlabel{#1}%
+}
+\makeatother
+% preâmbulo - END
+
+% código para utilização no documento
+\begin{description}
+  \item[first\label{itm1}] this is only an example;
+  % ...  add more items
+\end{description}
+Exemplo de referência a um item no texto: \ref{itm1}.
+
+\end{lstlisting} %stopzone
+
 
 
 \subsubsection{Figuras e tabelas}\label{sec-figuras-tabelas}
@@ -662,6 +745,29 @@ onde citamos o nome completo do autor e o título da obra:
 
 \epigraph{Computers are good at following instructions, but not at reading your mind.}{\citefirstlastauthor{donaldknuth1984}, \emph{\citetitle{donaldknuth1984}}}
 
+Para inserir uma epígrafe seguindo o modelo, demove-se acrescentar ao preâmbulo do documento o código apresentado na \Cref{lst-epigrafe}.
+\begin{lstlisting}[language=tex, label=lst-epigrafe, caption={Utilização de epígrafe seguindo o modelo da revista.}]
+% código para ser inserido no preâmbulo
+% custom epigraph - BEGIN 
+% https://tex.stackexchange.com/questions/193178/specific-epigraph-style
+\usepackage{epigraph}
+\renewcommand\textflush{flushright}
+\makeatletter
+\newlength\epitextskip
+\pretocmd{\@epitext}{\em}{}{}
+\apptocmd{\@epitext}{\em}{}{}
+\patchcmd{\epigraph}{\@epitext{#1}\\}{\@epitext{#1}\\[\epitextskip]}{}{}
+\makeatother
+\setlength\epigraphrule{0pt}
+\setlength\epitextskip{0.5ex}
+\setlength\epigraphwidth{.7\textwidth}
+% custom epigraph - END
+
+% exemplo de utilização no documento
+\epigraph{Computers are good at following instructions, but not at reading your mind.}{\citefirstlastauthor{donaldknuth1984}, \emph{\citetitle{donaldknuth1984}}}
+\end{lstlisting} %stopzone
+
+
 
 \subsubsection{Equações}\label{sec-equacao}
 Nesta secção iremos apresentar a forma de utilização de equações. A \Cref{eq-poisson} apresenta um
@@ -742,6 +848,35 @@ Conceituação; Curadoria de dados; Análise Formal; Aquisição de financiament
 Metodologia; Administração de projetos; Recursos; Programas; Supervisão; Validação;
 Visualização; Escrita - rascunho original; Escrita - revisão e edição.
 Neste exemplo de utilização do \emph{template}, a informação das contribuições do autores encontra-se na página \pageref{sec-contributors}.
+
+A contribuição dos autores deverá ser inserida dentro do ambiente \verb|contributors|. Para cada autor do manuscrito,
+deve-se chamar o comando \verb|\authorcontribution{nome}[contr1,contr2]|, passando como parâmetro obrigatório o nome do autor 
+e parâmetros opcionais os códigos das contribuições. Veja o exemplo de utilização apresentado na \Cref{lst-contributions}.
+A lista completa dos códigos e suas descrições é apresentada a seguir:
+\begin{description}
+\item[conceptualization] Conceituação;
+\item[datacuration] Curadoria de dados;
+\item[formalanalysis] Análise Formal;
+\item[funding] Aquisição de financiamento;
+\item[investigation] Investigação;
+\item[methodology] Metodologia;
+\item[projadm] Administração de projetos; 
+\item[resources] Recursos;
+\item[software] Programas;
+\item[supervision] Supervisão;
+\item[validation] Validação;
+\item[visualization] Visualização;
+\item[writing] Escrita - rascunho original;
+\item[review] Escrita - revisão e edição.
+\end{description}
+
+\begin{lstlisting}[language=tex, label=lst-contributions, caption={Contribuição dos autores.}]
+\begin{contributors}[sec-contributors]
+\authorcontribution{Leonardo Araújo}[conceptualization,datacuration,formalanalysis,investigation,methodology,software,validation,visualization,writing,review]
+\authorcontribution{Daniervelin Pereira}[methodology,projadm,resources,validation,writing,review]
+\end{contributors}
+\end{lstlisting} %stopzone
+
 
 
 \section{Conclusão}\label{sec-conclusao}
