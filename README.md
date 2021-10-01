@@ -2,16 +2,16 @@
 
 This repository contains the LaTeX templates for the journal [Texto Livre](https://periodicos.ufmg.br/index.php/textolivre/) and the final articles after the peer review and editorial process.
 
-The file ```textolivre.cls``` implements the LaTeX class to create PDFs and the file ```textolivre-html.cls``` implements the LaTeX class to create HTMLs. To create a new article using the template, use the file ```tl-article-template.tex``` as a starting point and read the instructions it provides. The template files should not be edited. If you require an additional package, inserted it directly in the header of your ```.tex``` file.
+The file ```textolivre.cls``` implements the LaTeX class to create PDFs and the file ```textolivre-html.cls``` implements the LaTeX class to create HTMLs. To create a new article using the template, use the file ```article.tex``` as a starting point and read the instructions it provides. The template files should not be edited. If you require an additional package, inserted it directly in the header of your ```.tex``` file.
 
 ## creating your ```article.tex```
-Copy the example file ```tl-article-template.tex``` and use it as your starting point. Note that, the ```.tex``` file must be encoded in UTF-8. Use the journal document class ```textolivre```:
+Copy the example file ```article.tex``` and use it as your starting point. Note that, the ```.tex``` file must be encoded in UTF-8. Use the journal document class ```textolivre```:
 ```
 \documentclass{textolivre}
 ```
-to switch for an anonymous submission, provide the parameter ```anonymous``` to the class:
+The class provides the template for portuguese, english, spanish and french. The default behaviour is to select portuguese as the manuscript main language. You may switch to different language by specifying it as a paremeter when loading the class. 
 ```
-\documentclass[anonymous]{textolivre}
+\documentclass[english]{textolivre}
 ```
 
 #### packages 
@@ -19,12 +19,12 @@ The provided template already uses a few LaTeX packages. You might check which a
 ``` 
 cat template/textolivre.cls | sed -n -e 's/\(^\\RequirePackage\)\(\[[-,a-z0-9=]*\]\)\?{\(.*\)}/\3/p' | sort | tr '\n' ','
 ```
-As a result, we see that the packages already included are: *abstract, academicons, adjustbox, amsmath, amsfonts, amssymb, amsthm, authblk, biblatex, caption, subcaption, cleveref, cmbright, datetime2, enumitem, etoolbox, xpatch, fancyhdr, fontspec, footmisc, geometry, graphicx, hyperref, ifxetex, ifluatex, inputenc, lastpage, lineno, listings, longtable, booktabs, tabularx, mfirstuc, microtype, pdfx, polyglossia, relsize, rotating, setspace, textcomp, textpos, titlecaps, titlesec, xcolor, xstring*.
+As a result, we see that the packages already included are: *abstract, adjustbox, amsmath, amsfonts, amssymb, amsthm, authblk, biblatex, caption, subcaption, cleveref, cmbright, csquotes, datetime2, enumitem, etoolbox, xpatch, fancyhdr, footmisc, geometry, graphicx, hyperref, hyperref, listings, longtable, booktabs, tabularx, colortbl, mfirstuc, polyglossia, relsize, setspace, textpos, titlesec, totpages, translations, xcolor, xstring*.
 
-Any other additional package might be included in the heading of your ```.tex``` file.
+Any other additional package might be included in the preambule of your ```.tex``` file.
 
 #### language support
-Multilanguage support is included through the polyglossia package. You just have to set the article default language by means of the ```\setdefaultlanguage``` command, as exemplified in the template example. Also set the second, third, ... languaged used by the command ```\setotherlanguage```. The text in language, other than the default one, should comes inside this language environment. See the example provided. For more information on this package and usage information, visit https://ctan.org/pkg/polyglossia.
+Multilanguage support is included through the ```polyglossia``` package. The main language should be setted when loading the class. The class will also set a secondary (and terciary language, if necessary). Other languages might be used by means of the ```\setotherlanguage{...}``` command.  The text in language, other than the default one, should comes inside this language environment. Read the instruction in the template usage example provided. For further information on ```polyglossia``` package, visit https://ctan.org/pkg/polyglossia.
 
 #### title, author, abstract, keywords
 Provided the title of the document using the standard ```\title``` command and the title in other language using the command ```\othertitle``` defined in the template. You might use ```\othertitle``` as many times as desired (usually just once and three times seldom).
@@ -55,6 +55,11 @@ The example above also shows the usage of ```keywords```. Use ```\sep``` between
 
 ### compiling your document
 Use XeLaTeX to compile you document using the commmand:  
+```
+xelatex article.tex
+```
+If a PDF/A is required, compile using:
+
 ```
 xelatex -shell-escape -output-driver="xdvipdfmx -z 0" article.tex
 ```
@@ -92,18 +97,18 @@ find . -name 'article.*' ! -name '*.tex' ! -name '*.pdf' ! -name '*.bib' ! -name
 ```
 
 ### compiling into HTML
-Change the class in your ```.tex``` file to ```textolivre-html```. And compile the document using ```make4ht```. 
+Compile the document using ```make4ht```. 
 
 It might be necessary to get the updated ```.4ht``` files at: https://github.com/michal-h21/files/blob/master/tex4ht-4ht-files.zip
 
 We also use some hooks written in the configuration file ```textolivre-html.cfg```. To compile, use the command
 ```
-make4ht -c textolivre-html.cfg -u -x article "fn-in,svg,pic-align"
+make4ht -e build.lua -c textolivre.cfg -x -u article "fn-in,svg,pic-align"
 ```
 we have added the parameter *fn-in* to have inline footnotes; *svg* for dvi pictures in svg format and *pic-align* for pictorial align environment.
 If you wish to get MathML equations, use
 ```
-make4ht -c textolivre-html.cfg -u -x article "fn-in,mathml,mathjax"
+make4ht -e build.lua -c textolivre.cfg -u -x article "fn-in,mathml,mathjax"
 ```
 French manuscrits also require the file ```gloss-french.4ht``` available at the template folder. See https://tex.stackexchange.com/questions/580456/error-when-using-polyglossia-french-and-make4ht
 
