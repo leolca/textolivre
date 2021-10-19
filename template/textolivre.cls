@@ -88,9 +88,12 @@
 \def\runningauthor#1{\def\@runningauthor{#1}}
 \def\journalname#1{\def\@journalname{#1}}
 \def\corrauthor#1{\def\@corrauthor{#1}}
-%\def\editorname#1{\def\@editorname{#1}}
+\def\editorname#1{\def\@editorname{#1}}
+\editorname{}
 \def\sectioneditorname#1{\def\@sectioneditorname{#1}}
+\sectioneditorname{}
 \def\layouteditorname#1{\def\@layouteditorname{#1}}
+\layouteditorname{}
 \def\articledoi#1{\def\@articledoi{#1}\articleid{\articleenumber}}
 \def\@articleid{}
 \newcommand{\articleenumber}{\StrRight{\@articledoi}{5}}
@@ -101,7 +104,15 @@
 }
 \def\thevolume#1{\def\@thevolume{#1}}
 \def\thenumber#1{\def\@thenumber{#1}}
+\thenumber{}
 \def\theyear#1{\def\@theyear{#1}}
+
+\def\printthenumber{\setbox0=\hbox{\@thenumber\unskip}\ifdim\wd0=0pt
+%
+\else
+|\enskip{n.\@thenumber}\enskip
+\fi
+}
 
 \RequirePackage[useregional]{datetime2}
 \def\langformatdate#1{%
@@ -161,25 +172,25 @@
   \minsizebox{0.9\textwidth}{1ex}{Linguagem e Tecnologia} 
 }
 
-\newcommand{\printifnotempty}[3]{%
+\newcommand{\printifnotempty}[4]{%
   \sbox0{#3}%
   \ifdim\wd0=0pt
-    {}% if #2 is empty
+    {}% if #3 is empty
   \else
-    {\textcolor{TLDarkGreen}{\bfseries #1: }{#2}#3}% if #2 is not empty
+    {\textcolor{TLDarkGreen}{\bfseries #1: }{#2}#3#4}% if #2 is not empty
   \fi
 }
 
 \newcommand{\more@metadata}{%
   \@cover@logo\par
-  \printifnotempty{DOI}{}{\@articledoi}\par
-  \printifnotempty{\GetTranslation{correspondingauthor}}{\\}{\@corrauthor}\par
-  %\printifnotempty{\GetTranslation{editedby}}{\\}{\@editorname}\\
-  \printifnotempty{\GetTranslation{sectioneditor}}{\\}{\@sectioneditorname}\\
-  \printifnotempty{\GetTranslation{layouteditor}}{\\}{\@layouteditorname}\par
-  \printifnotempty{\GetTranslation{received}}{\\}{\@receiveddate}\\
-  \printifnotempty{\GetTranslation{accepted}}{\\}{\@accepteddate}\\
-  \printifnotempty{\GetTranslation{published}}{\\}{\@publisheddate}\par
+  \printifnotempty{DOI}{}{\@articledoi}{\par}
+  \printifnotempty{\GetTranslation{correspondingauthor}}{\\}{\@corrauthor}{\par}
+  \printifnotempty{\GetTranslation{editedby}}{\\}{\@editorname}{\par}
+  \printifnotempty{\GetTranslation{sectioneditor}}{\\}{\@sectioneditorname}{\\}
+  \printifnotempty{\GetTranslation{layouteditor}}{\\}{\@layouteditorname}{\par}
+  \printifnotempty{\GetTranslation{received}}{\\}{\@receiveddate}{\\}
+  \printifnotempty{\GetTranslation{accepted}}{\\}{\@accepteddate}{\\}
+  \printifnotempty{\GetTranslation{published}}{\\}{\@publisheddate}{\par}
   \GetTranslation{license}
 }
 % information box END
@@ -269,7 +280,7 @@
 \appto{\footrule}{\endgroup}
 \fancyfootoffset[L]{3.25cm}
 \fancyfoot[R]{\small\thepage/\pageref*{TotPages}}
-\fancyfoot[L]{\small\emph{\@runningauthor}\enskip|\enskip\@journalname\enskip|\enskip{Belo Horizonte}\enskip|\enskip{v.\@thevolume}\enskip|\enskip{n.\@thenumber}\enskip|\enskip\@articleid\enskip|\enskip\@theyear}
+\fancyfoot[L]{\small\emph{\@runningauthor}\enskip|\enskip\@journalname\enskip|\enskip{Belo Horizonte}\enskip|\enskip{v.\@thevolume}\enskip\printthenumber|\enskip\@articleid\enskip|\enskip\@theyear}
 \pagestyle{fancy}
 \fancypagestyle{plain}{%
   \fancyhf{}
