@@ -127,5 +127,5 @@ sed -i 's/<meta\ charset=\x27utf-8\x27\ \/>/<meta\ content="text\/html;\ charset
 You should have created the HTMLs as described above. Now you need to zip all files and change the ```article.html``` name into ```index.html```.
 The following command will create this intended zip using the current folder name as the name of the zip file:
 ```
-ARTICLE=${PWD##*/} && zip ${ARTICLE}.zip article.html *.svg *.css && printf "@ article.html\n@=index.html\n" | zipnote -w ${ARTICLE}.zip
+ARTICLE=${PWD##*/} && zip ${ARTICLE}.zip article.html *.svg *.css *.png *.jpg && printf "@ article.html\n@=index.html\n" | zipnote -w ${ARTICLE}.zip
 ```
