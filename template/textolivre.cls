@@ -44,7 +44,7 @@
 
 \RequirePackage{amsmath,amsfonts,amssymb,amsthm}
 \RequirePackage{csquotes}
-\RequirePackage[backend=biber,style=abnt,ittitles,repeatfields]{biblatex}
+\RequirePackage[backend=biber,style=abnt,ittitles,repeatfields,uniquename=false,uniquelist=false]{biblatex}
 \DeclareLanguageMapping{brazil}{brazil-apa}
 \renewcommand{\bibfont}{\small}
 
