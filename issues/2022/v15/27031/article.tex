@@ -1,0 +1,632 @@
+% !TEX TS-program = XeLaTeX
+% use the following command:
+% all document files must be coded in UTF-8
+\documentclass[french]{textolivre}
+% build HTML with: make4ht -e build.lua -c textolivre.cfg -x -u article "fn-in,svg,pic-align"
+
+\journalname{Texto Livre}
+\thevolume{15}
+\thenumber{}
+\theyear{2022}
+\receiveddate{\DTMdisplaydate{2021}{1}{10}{-1}} % YYYY MM DD
+\accepteddate{\DTMdisplaydate{2021}{2}{15}{-1}}
+\publisheddate{\DTMdisplaydate{2021}{10}{18}{-1}}
+\corrauthor{Bahia Zemni}
+\articledoi{10.35699/1983-3652.2022.27031}
+%\articleid{NNNN} % if the article ID is not the last 5 numbers of its DOI, provide it using \articleid{} commmand
+\runningauthor{Zemni} 
+%\editorname{Leonardo Araújo}
+\sectioneditorname{Daniervelin Pereira}
+\layouteditorname{Anna Izabella M. Pereira}
+
+\title{Recherche cognitive et traduction automatique en jurilinguistique}
+\othertitle{Pesquisa cognitiva e tradução automática
+em jurilinguística}
+\othertitle{Cognitive research and automatic translation in jurilinguistics}
+
+% if there is a third language title, add here:
+%\othertitle{Artikelvorlage zur Einreichung beim Texto Livre Journal}
+
+\author[1]{Bahia Zemni \orcid{0000-0002-6238-7509} \thanks{Email: \url{baalzemni@pnu.edu.sa}}}
+\author[2]{Farouk Bouhadiba \orcid{0000-0002-6767-8073} \thanks{Email: \url{bouhadibafaroukoran2@gmail.com}}}
+\author[1]{Mimouna Zitouni \orcid{0000-0002-4167-3602} \thanks{Email: \url{mbzitouni@pnu.edu.sa}}}
+
+\affil[1]{Translation Department, College of Languages, Princess Nourah bint Abdulrahman University, Riyadh, Saudi Arabia.}
+\affil[2]{English Department, College of Foreign Languages, University of Oran 2-Mohamed Ben Ahmed, Oran, Algeria.}
+
+
+\addbibresource{article.bib}
+% use biber instead of bibtex
+% $ biber article
+
+% used to create dummy text for the template file
+\definecolor{dark-gray}{gray}{0.35} % color used to display dummy texts
+\usepackage{lipsum}
+\SetLipsumParListSurrounders{\colorlet{oldcolor}{.}\color{dark-gray}}{\color{oldcolor}}
+
+% used here only to provide the XeLaTeX and BibTeX logos
+\usepackage{hologo}
+
+% if you use multirows in a table, include the multirow package
+\usepackage{multirow}
+
+% provides sidewaysfigure environment
+\usepackage{rotating}
+
+% CUSTOM EPIGRAPH - BEGIN 
+%%% https://tex.stackexchange.com/questions/193178/specific-epigraph-style
+\usepackage{epigraph}
+\renewcommand\textflush{flushright}
+\makeatletter
+\newlength\epitextskip
+\pretocmd{\@epitext}{\em}{}{}
+\apptocmd{\@epitext}{\em}{}{}
+\patchcmd{\epigraph}{\@epitext{#1}\\}{\@epitext{#1}\\[\epitextskip]}{}{}
+\makeatother
+\setlength\epigraphrule{0pt}
+\setlength\epitextskip{0.5ex}
+\setlength\epigraphwidth{.7\textwidth}
+% CUSTOM EPIGRAPH - END
+
+% LANGUAGE - BEGIN
+% ARABIC
+% for languages that use special fonts, you must provide the typeface that will be used
+\setotherlanguage{arabic}
+\newfontfamily\arabicfont[Script=Arabic]{Amiri}
+\newfontfamily\arabicfontsf[Script=Arabic]{Amiri}
+\newfontfamily\arabicfonttt[Script=Arabic]{Amiri}
+%
+% in the article, to add arabic text use: \textlang{arabic}{ ... }
+%
+
+\usepackage{tipa}
+
+% RUSSIAN
+% for russian text we also need to define fonts with support for Cyrillic script
+% \usepackage{fontspec}
+% \setotherlanguage{russian}
+% \newfontfamily\cyrillicfont{Times New Roman}
+% \newfontfamily\cyrillicfontsf{Times New Roman}[Script=Cyrillic]
+% \newfontfamily\cyrillicfonttt{Times New Roman}[Script=Cyrillic]
+%
+% in the text use \begin{russian} ... \end{russian}
+% LANGUAGE - END
+
+% EMOJIS - BEGIN
+% to use emoticons in your manuscript
+% https://stackoverflow.com/questions/190145/how-to-insert-emoticons-in-latex/57076064
+% using font Symbola, which has full support
+% the font may be downloaded at:
+% https://dn-works.com/ufas/
+% add to preamble:
+% \newfontfamily\Symbola{Symbola}
+% in the text use:
+% {\Symbola emojihere}
+% EMOJIS - END
+
+% LABEL REFERENCE TO DESCRIPTIVE LIST - BEGIN
+% reference itens in a descriptive list using their labels instead of numbers
+% insert the code below in the preambule:
+%\makeatletter
+%\let\orgdescriptionlabel\descriptionlabel
+%\renewcommand*{\descriptionlabel}[1]{%
+%  \let\orglabel\label
+%  \let\label\@gobble
+%  \phantomsection
+%  \edef\@currentlabel{#1\unskip}%
+%  \let\label\orglabel
+%  \orgdescriptionlabel{#1}%
+%}
+%\makeatother
+%
+% in your document, use as illustraded here:
+%\begin{description}
+%  \item[first\label{itm1}] this is only an example;
+%  % ...  add more items
+%\end{description}
+% LABEL REFERENCE TO DESCRIPTIVE LIST - END
+
+
+% add line numbers for submission
+%\usepackage{lineno}
+%\linenumbers
+
+\begin{document}
+\maketitle
+
+\begin{polyabstract}
+\begin{abstract}
+De par ses caractéristiques morpho-phonologiques, morphosyntaxiques, lexicales et autres systèmes et sous-systèmes de son fonctionnement, la langue arabe représente un système de non-concaténation (ou non-enchaînement des morphèmes). Elle diffère dans ce sens des langues Indo-européennes – à systèmes de concaténation – et demeure pour ainsi dire, une langue assez complexe à gérer dans le domaine du Traitement Automatique des Langues(TAL). Ceci, surtout lorsqu’il s’agit de traduire automatiquement des faits de langue porteurs d’éléments culturels propres à cette langue. Les données examinées dans cet article sont révélatrices de hiatus quant à la traduction automatique de textes juridiques arabes vers d’autres langues telles que le français ou l’anglais.  L’apparentement génétique différent des langues en question pose non seulement des problèmes d’ordre linguistique dans le passage d’une langue vers une autre, mais aussi et surtout que les textes juridiques en langue arabe sont porteurs de poids sémantiques, culturels, religieux et civilisationnels qui ne reflètent pas toujours les mêmes référents ou gestalt des langues cibles. Il en est conclu que l’intervention humaine dans ce processus de traduction est plus que nécessaire comme le révèle l’étude des cas de textes juridiques en Arabie Saoudite.   
+
+\keywords{Langue arabe \sep Langue française \sep Traduction automatique \sep Jurilinguistique \sep Textes juridiques}
+\end{abstract}
+
+\begin{portuguese}
+\begin{abstract}
+Devido a seus sistemas e subsistemas morfofonológicos, morfossintáticos, lexicais e outros de seu funcionamento, a língua árabe representa um sistema de não-catenação (ou não-cadeia de morfemas). Difere-se nesse sentido das línguas indo-européias – com sistemas de concatenação – e permanece, por assim dizer, uma linguagem bastante complexa para se gerenciar no campo do Processamento Linguístico Automático (PNL). Isto se dá especialmente quando se trata da tradução automática de fatos linguísticos que carregam elementos culturais específicos daquela língua. Os dados examinados neste artigo são indicativos da lacuna resultante de uma tradução automática dos textos jurídicos árabes para outros idiomas, como o francês ou o inglês. A natureza geneticamente diferente das línguas em questão não só coloca problemas de natureza linguística na passagem de uma língua para outra, mas também – e sobretudo – dificulta o entendimento de textos jurídicos em árabe, que carregam cargas semânticas, culturais, religiosas e civilizacionais que nem sempre refletem os mesmos referentes ou gestalt das línguas-alvo. Conclui-se que a intervenção humana nesse processo de tradução é mais do que necessária, como revela o estudo de textos legais na Arábia Saudita.
+
+\keywords{Língua árabe \sep Língua francesa \sep Tradução automática \sep Jurilinguística \sep Textos jurídicos}
+\end{abstract}
+\end{portuguese}
+
+\begin{english}
+\begin{abstract}
+Due to its  morphophonological, morphosyntactic, lexical and other systems and subsystems of its functioning, the Arabic language represents a system of non-concatenation (or non-chaining of morphemes). It differs in this sense from Indo-European languages - with concatenation systems - and remains, so to speak, a fairly complex language to manage in the field of Automatic Language Processing (NLP).  This happens especially when it comes to automatically translating language facts that carry cultural elements specific to that language. The data examined in this article is indicative of the gap resulting from an automatic translation of Arabic legal texts into other languages such as French or English. The genetically different nature of the languages in question not only poses problems of linguistic nature in the passage from one language to another, but also and above all it makes the comprehension of legal texts in Arabic difficult, since they carry semantic, cultural, religious and civilizational loads that do not always reflect the same referents or gestalt of the target languages. It is concluded that human intervention in this translation process is more than necessary as revealed by the study of legal texts in Saudi Arabia.
+
+\keywords{Arabic language \sep French language \sep Machine translation \sep Jurilinguistics \sep Legal texts}
+\end{abstract}
+\end{english}
+
+% if there is another abstract, insert it here using the same scheme
+\end{polyabstract}
+
+\section*{Préambule}\label{sec-intro}
+L’une des difficultés premières dans l’automation et la numérisation de la langue arabe a été, à premier abord, l’instabilité de ses caractères graphiques, sa segmentation et sa modélisation. Ses diacritiques tels que l’allongement vocalique, l’allongement consonantique (gémination), l’emphase et surtout l’absence de vocalisation (voyellation) de ses consonnes (connue en Grammaire arabe sous le terme de ‘harakât’ ou‘mouvements consonantiques’ et ‘sukun’ ‘absence de mouvement consonantique’) représentaient autant de sources de difficultés dans sa programmation.
+
+Cette question de la représentation graphique de la langue arabe sur ordinateur a été soulevée dès les années 70. Certaines de ces difficultés ont trouvé solution puisqu’il est tout à fait possible de nos jours de procéder au traitement automatique de textes arabes, de faire appel à des dictionnaires et vérificateurs électroniques d’orthographe en arabe, voire même d’envoyer des messages en arabe sur Internet et à travers la téléphonie mobile. Ceci est révélateur de grands pas franchis depuis les balbutiements des années 70 face à la complexité, voire même l’impossibilité - disait-on- de procéder au traitement de l’écrit arabe et plus tard de la reconnaissance de la parole par ordinateur.
+
+Dans cet article, nous utilisons l’expression «texte juridique arabe» au lieu de «texte juridique en arabe» pour distinguer les textes juridiques rédigés en arabe selon la juridiction arabo-musulmane (voir infra) des textes juridiques d’origines diverses (français, anglais, espagnol, etc.) et traduits en langue arabe.
+
+La recherche sur les origines et la filiation des langues à des fins de traduction de textes –anciens, surtout- est assez vaste. La philologie et la linguistique comparée ont relevé des similitudes et des différences entre plusieurs langues. Les langues d’origine Indo-européennes représentaient ainsi un domaine de prédilection où des comparaisons étaient établies à plusieurs niveaux d’analyse (phonétique, phonologique, morphologique, syntaxique, lexical, sémantique, etc.). Le but étant de classifier et de catégoriser les langues selon leurs origines et leurs (degré de) parentés. Les études actuelles dans la fouille de texte (datamining) semblent moins investies dans la traduction par ordinateur d’ensembles phraséologiques tels que les proverbes et les dictons ou bien les textes juridiques arabes.
+
+Nous essayerons d’examiner le texte juridique arabe à travers des prototypes de jugements ou contrats rédigés en arabe et/ou en français en Arabie Saoudite, en France et en Algérie. Ceci pour essayer de comprendre comment le Traitement Automatique des Langues Naturelles (TALN) peut-il s’accaparer du sens de ces textes qui sont souvent porteurs de différences culturelles. De ce fait, la question serait de voir si la machine pourrait prendre en charge des faits culturels propres à chaque langue qui sont incorporés dans le texte juridique et qui se manifestent à travers le mot ou l’expression.
+
+A cet effet, deux notions nous serviront de base pour la compréhension de ces différences, à savoir :
+
+\begin{enumerate}[label={\alph*)}]
+    \item La relativité linguistique (ou « Linguistic Relativity») \cite{casasanto2008, drivonikou2007}\footnote{Concept développé au 19ème siècle par des penseurs tels que W. Von Humbolt et selon lequel le langage est l’expression de ‘l’esprit d’une nation’, de sa vision du Monde et de sa perception de la réalité. Concept repris et développé au 20ème siècle à travers la fameuse Hypothèse de Sapir et Whorf et plus récemment par le courant cognitiviste selon lequel le langage influence des processus cognitifs.} telle que développée chez W. Von Humbolt, reprise dans l’hypothèse de Sapir et Whorf\footnote{Edward \textbf{Sapir} : Lauenburg, Allemagne, 1884 - New Haven, Connecticut, 1939 Linguiste américain. Il a dégagé la notion de phonème et proposé une nouvelle typologie des langues, fondée sur des critères formels (syntaxe et sémantique) et non plus historiques. C'est l'un des initiateurs du courant structuraliste. \newline Benjamin Lee \textbf{Whorf} : Winthrop, Massachusetts, 1897 - Wethersfield, Connecticut, 1941. Linguiste américain. Disciple d’E. Sapir, il a émis l'hypothèse que le langage est en relation causale avec le système de représentation du monde. Le Petit Larousse, (2009).} et selon laquelle la pensée est soumise à la vision du monde à travers le langage – languages hapesthought –. Cette vision du monde à travers le langage diffère d’une langue à une autre. Les natifs d’une langue donnée perçoivent donc la réalité selon leur culture ou « force propre » que véhicule leur langue.
+    \item Les Universaux du langage tels que définis chez \textcite{chomsky1964, chomsky1965} en termes de « Language Universals »\footnote{Dans le courant cognitiviste et la Théorie universaliste, \textcite{chomsky1964, chomsky1965} a développé le concept de «Language Universals » pour stimuler la recherche d’une Grammaire Universelle (Universal Grammar).} pour expliquer que les langues partagent des traits communs tels que le genre et le nombre.
+\end{enumerate}
+
+Ainsi, en mettant en relief les éléments universels du langage, on pourrait parvenir à une meilleure compréhension du fonctionnement du langage et par conséquent aboutir à une vision plus claire de la relation langage/pensée, langage/société. Ces deux visions du langage représentent deux tendances: les Relativistes et les Universalistes. Elles semblent, à premier abord, contradictoires. En fait, elles convergent en ce sens qu’elles ont comme dénominateur commun le \emph{langage} et la \emph{pensée}. Les Relativistes insistent sur les idiosyncrasies (irrégularités) que l’on retrouve dans les langues et les différents dispositifs qui les gouvernent alors que les Universalistes insistent sur les traits et systèmes communs aux langues. Ceci représente en fait le premier stade de l’acte traductif.
+
+La traduction est basée, à notre sens, sur des hypothèses tirées implicitement de ces deux visions du langage humain. La genèse même de la traduction présuppose l'existence de certains paramètres universels qui rendent toutes les langues traduisibles. Certains éléments inhérents ou propres à chaque langue deviennent idiosyncratiques et posent le problème de l’intraduisibilité / l’intraductibilité. Par conséquent, une traduction totale, juste, fiable, ou parfaite ne semble pas, en fin de parcours, une opération possible et réalisable. Il existe par contre différentes stratégies de la traduction telles que la transposition culturelle pour gérer des cas d’exotisme ou de calque, la transplantation, l’emprunt culturel, la translitération, la compensation, la traduction par omission -comme pour le cas des doublets sémantiques en arabe-, l’addition, l’équivalence et toute une batterie de stratagèmes auxquels pourrait faire appel le traducteur humain -par opposition au traducteur machine\footnote{Le terme ‘traducteur machine’ est utilisé pour désigner l’ensemble des opérations à des fins de traduction automatique et dictionnairique tels que les algorithmes, les systèmes filtres, les systèmes experts, la segmentation, la modélisation, etc.}- pour aboutir à une représentation adéquate de l’intention de l’auteur du texte source sous forme d’\emph{intention} du traducteur du texte cible. En effet, la machine assure seulement un passage d’un système de mots à un autre système de mots \cite[p. 213]{aubin1995}. Elle ne prend pas en considération tous les phénomènes des langues naturelles, des anaphores aux métaphores et métonymies, en passant par les ellipses, déictiques...) \cite[p. 215]{sabah2004}.
+
+Selon Steiner, G. (1975, p. 149) la logique des relativistes sous-entend qu’aucun acte complet de traduction entre différents champs sémantiques n’est possible et que toute traduction n’est qu’approximative et ontologiquement réductrice du sens.
+
+D’autre part, une grammaire universelle postulera que l’inter-traduisibilité dans les langues naturelles est possible de par la nature même de la Proto-Langue (Proto-language), source ou mère de toutes les langues. \textcite{catford_linguistic_1965} met l’accent sur l'aspect situationnel et contextuel en présentant le concept d’équivalence en traduction. Par conséquent, le texte de la Langue Source (SL)\footnote{SL renvoie à Source Language (en anglais) par opposition au TL (Target Language) ou Langue Cible (en français).} et celui de la Langue Cible (TL) doivent être en rapport étroit avec les traits pertinents et fonctionnels d’une situation (contexte) donnée afin d’aboutir à l’équivalence en traduction. \textcite{nida1964} explique que la reproduction du message de la Langue Source (SL) doit être reflétée par l’équivalent le plus proche de la Langue Cible (TL). Ainsi, c’est la \emph{conservation} du message plutôt que la \emph{conversion} de la forme et de la structure du texte qui devrait être visée dans l’acte traductif.
+
+\section{La Traduction Automatique (TA)}
+Ce n’est qu’après la Seconde Guerre Mondiale que la TA s’est développée de manière observable. L’Université de Georgetown(USA) a réalisé une traduction entièrement automatique en 1954. Le projet portait sur une soixantaine de phrases figées en russe et traduites en anglais. Cette première expériencea déclenché une recherche accélérée grâce à des fonds de soutien pour la recherche en TA. Malgré de lourds investissements financiers, le progrès dans ce domaine restait limité.
+
+Le rapport de 1966 du Comité Consultatif sur le Traitement Automatique du Langage, ALPAC (Automatic LanguageProcessingAdvisory Committee) a été plus que négatif quant aux progrès de la TA aux Etats-Unis. Ceci a réduit au maximum lessubventions allouées dans ce domaine. L’euphorie des années cinquante s’est alors transformée en désagrément amer et en de profondes illusions (fromeuphoria to bitter criticism).
+
+Ce n’est que bien plus tard que les développements de l’informatique, des statistiques et de la linguistique computationnelle des années 80 ont permis la conception de plusieurs modèles de traduction automatique mis à la disposition du grand public sur le marché de l’informatique. Ces programmes et outils informatiques à des fins de TA présentaient des défaillances. Ils ont été raffinés et rendus plus performants au fil des ans et ils sont accessibles à divers utilisateurs et organismes tels que la CEE qui utilise une version adaptée (users-need) du système commercial SYSTRAN pour traduire un grand nombre de documents à usage interne. Microsoft a développé à son tour un système hybride de la TA dans l’élaboration d'une base de données de soutien technique Anglais-Espagnol. Le système a été conçu par le groupe de recherche «NaturalLanguage» de Microsoft (2003). Ceci a été suivi par l’élaboration d’un système de traduction automatique Anglais-Japonais sur la base de systèmes Anglais-Français et Anglais-Allemands développés auparavant \cite[p. 18]{ghenimi2007}. On retrouve actuellement ces logiciels sur le marché de l’informatique sous forme de produits finis ou bien sous forme de prototypes de traducteurs et de dictionnaires mis en ligne au service du grand public. Il fait référence ici à des programmes formulateurs et générateurs de traduction (\emph{formulating translation}) \cite{fulford2005} marquant une époque de maturité sémantique basée sur un énorme travail d’analyse linguistique et de formalisation \cite{anis1994} qui a contribué pour donner naissance à une traduction automatique neuronale (TAN) en 2015,  dont la qualité des traductions est nettement meilleure \cite{bedjaoui2020}.
+   
+\section{La TA, le TAL, le TALN et le TALA}
+La Traduction Automatique (TA) est un terme englobant qui réfère à l’automation de la langue en général. Elle se ramifie en Traitement Automatique des Langues (TAL) et ce suite au développement des technologies des langues, puis en Traitement Automatique des Langues Naturelles (TALN) pour distinguer ces dernières des langues dites artificielles. TALA – une ramification récente du TAL/TALN- réfère au Traitement Automatique de la Langue Arabe. La TA, le TAL, le TALN et le TALA dérivent de la linguistique l'informatique (Computational Linguistics) à des fins de conception et d’élaboration de logiciels de traduction de textes et de reconnaissance vocale.
+
+A l’origine, la TA se basait essentiellement sur la substitution de mots atomiques d’une langue par des mots ou cognats (équivalents) dans d’autres langues. En utilisant des techniques de fouille de textes grâce à la Linguistique de corpus (Corpus Linguistics) et aux Statistiques entre autres, des traductions plus complexes pouvaient être effectuées moyennant une meilleure manipulation et une bonne maîtrise des différences typologiques entre les langues naturelles, l'identification d'expressions et d’idiomes communs à deux ou plusieurs langues et en procédant à l'isolement des différences entre les langues. Cependant et malgré la rapidité de la traduction machine qui est le résultat de l’implication de compétences transversales et multidisciplinaires en linguistique, en informatique, en mathématiques et en statistiques, entre autres, les systèmes actuels ne peuvent offrir le même rendement avec la même qualité que le traducteur humain. Les traductions suggérées manquent de précision et sont erronées notamment quand il s’agit de traduire les adages et les proverbes de l’arabes vers le français par exemple \cite{bedjaoui2020}. Dépourvue de moyens de perception et d’action sur le monde réel, la TA considère la compréhension comme un ensemble de transformations successives d’un langage de représentation dans un autre \cite{ke_hu2020}. Ceci est d’autant plus évident lorsqu’il s’agit de traduire des documents spécifiques tels que le texte juridique. Il existe, certes, sur le marché de la programmation informatique (software) des dictionnaires spécialisés performants et des traducteurs automatiques très itératifs qui sont d’une aide précieuse pour le traducteur humain. Tout comme il existe des programmes de rédaction technique dans des domaines sensibles tels que celui de la santé et de la sécurité (publique, routière, industrielle, ferroviaire, aérienne, etc.) par exemple. Des logiciels de traduction automatique tels que le SYSTRAN, IBM, NASHQ, POWER TRANSLATOR et autres tiennent compte de la spécificité du domaine grâce à leurs dictionnaires par domaine et ils améliorent ainsi le rendement du traducteur humain en limitant au maximum le facteur temps nécessaire à l’opération de traduction. Des techniques nouvelles et particulièrement efficaces font appel aux décisions (sélections, instructions) de l’utilisateur. Cependant la machine manque toujours de cette compétence qui permet la mobilisation de plusieurs ressources cognitives (dont dispose le traducteur humain), car il s’agit d’un processus qui requiert une multitude de prises de décisions, en fonction des éléments contenus explicitement ou implicitement dans le texte à traduire, de la situation de communication dans laquelle s’insère l’acte traductionnel, du bagage cognitif du traducteur, etc \cite{politis2017}.
+
+En réalité, adopter une perspective cognitive \cite[p. 10]{fuchs2017} en traduction automatique semble être la seule solution. Il faudrait se demander comment les connaissances sont organisées pour pouvoir être acquises et mises en œuvre dans l’activité de langage automatique. En attendant, le rendement dans la traduction peut ainsi être amélioré qualitativement et quantitativement lorsque l’utilisateur agit sur le système (le logiciel) en identifiant les mots segments dans le texte qui ont la fonction de nom propres par exemple. Il s’agit dans ce cas de la Traduction Assistée par Ordinateur (TAO) où l’utilisateur intervient pour restreindre le champ lexical et limiter les structures possibles ou pour modifier ou corriger des structures ambiguës (pre-editing). Il peut intervenir aussi au cours du traitement, ou même à la fin pour révision (post-editing) décliner, adopter ou reformuler les combinaisons proposées \cite{lab_traduction_nodate, alcina2008, paulsen2016}. Avec l'aide de ces techniques, la TA s’est révélée utile comme outil pour aider les traducteurs humains. Elle peut même, dans certains cas, produire le rendement escompté. Mais cela est très rare et dépend essentiellement des systèmes filtres et des systèmes experts du logiciel en question. Avant, pendant et/ou après, le traducteur intervient pour aider la machine et, en conséquence, récolte un temps précieux, un effort cher, des coûts inutiles et une qualité distinguée \cite[p. 279]{zemni2020}.
+
+La Traduction Automatique (ou TAO) qui représentait initialement un objectif plutôt difficile à atteindre, offre de nos jours des programmes accessibles à tout un chacun et elle aboutit à des résultats de meilleure qualité qu’auparavant. Des traducteurs automatiques et dictionnaires électroniques (sous forme de produits finis ou en ligne) sont disponibles dans des domaines de spécialités aussi variés que celui de la santé, de la sécurité, du droit juridique, de la chimie, de l’architecture, etc \cite{hutchins1992}. Ils permettent d’accélérer le processus, afin de pouvoir publier simultanément les versions traduites et les documents en langue source, tout en participant à la réduction des coûts \cite{ke_hu2020}.
+
+De façon très générale, le processus de la reconnaissance textuelle en vue de la traduction se fait essentiellement sur la base d’un décodage de la signification du texte source et d’un encodage de cette signification dans la langue cible à travers une batterie d’algorithmes et de paramètres morphosyntaxiques et mathématiques. Ce procédé simple en apparence suscite des opérations cognitives très complexes. Ainsi, pour décoder la signification du texte source dans sa totalité, le traducteur doit interpréter et analyser tous les dispositifs du texte. Ceci exige une connaissance détaillée de la syntaxe des langues à traduire et de leur sémantique, entre autres, ainsi que la culture des langues en question avant de procéder au décodage et à l’encodage. C’est là, précisément que réside tout le défi dans la traduction automatique. Comment pourrait-on programmer un ordinateur pour "saisir" ces données sous-jacentes d’un texte (tel que le fait le traducteur humain) et "créer" un nouveau texte dans la langue cible avec la même signification. Comment pourrait-on surmonter les difficultés de la traduction des idiomaticités disparates et appréhender, par conséquent, des sens implicites qui imposent non seulement de prendre du recul à l’égard des unités lexicales prises indépendamment mais aussi de comprendre les différents modes de conceptualisation mis en œuvre et la façon dont ils se révèlent dans les langues source et cible \cite{vandaele2005}.
+
+Il existe plusieurs systèmes pour aboutir à une automation des langues telle que la Traduction automatique à base de dictionnaires électroniques ou Dictionary-Based Machine Translation(DBMT). Celle-ci utilise des bases d’entrées lexicales. Les mots sont traduits comme dans un dictionnaire au format papier. Ils sont présentés sous forme de mot-à-mot et sont généralement démunis de corrélation particulière quant à la signification des mots de la Langue Source par rapport à ceux de la Langue Cible.
+
+La Traduction automatique par Statistiques ou Statistical Machine Translation (SMT) est un autre procédé d’automation des langues. Son but est de produire des traductions en utilisant des méthodes statistiques combinant des corpus bilingues conséquents (big data) et l'apprentissage automatique (machine learning) \cite[p. 2]{zemni2021}. Il s’agirait dans ce cas d’élaborer des corpus de textes spécifiques bilingues pour aboutir à des résultats probants.
+
+La Traduction automatique à base d’exemples ou Example-Based Machine Translation (EBMT) se caractérise par l’utilisation d'un corpus bilingue en tant que base de données principale. C'est essentiellement une traduction par analogie et elle peut être considérée comme l’application de l’approche du raisonnement au cas par cas. Qu’elle soit par statistique ou à base d’exemples, ces deux types de traductions utilisent des mémoires de traduction permettant un stockage et une recherche très efficaces des textes existants sur support électronique, disponibles pour des langues variées, annotés avec des informations linguistiques, afin de permettre à la machine des interprétations conformes aux attentes des utilisateurs \cite{ke_hu2020}.
+
+La Traduction automatique inter-langue ou Interlingual Machine Translation fonctionne à base de règles génératrices. Ainsi, le texte à traduire est transformé en une représentation qui est indépendante de la langue source et de langue cible. Letexte de la langue cible est alors généré à partir de cette représentation intermédiaire.
+
+Il existe également des prototypes de traducteurs développés dans des universités et centres de recherche en TAL. Le Centre Lucien Tesnière de Besançon, par exemple, a développé des  dictionnaires et traducteurs automatiques tels que le Multilingual Co-built Dictionnary (MultiCodict) ou le Labelgram.
+
+Le système que nous essayons de développer actuellement est basé sur un composant instruit de génération de langue en utilisant des bases de données avec une mémoire de traduction d’un millier de phrases et ce dans les domaines des Hydrocarbures et du Tourisme \cite[p. 111, 141]{bouhadiba2008}.
+
+\section{Quelques aspects de la segmentation en arabe}
+Nous essayerons dans ce qui suit de mentionner brièvement des phases que nous jugeons nécessaires à la segmentation et à la modélisation de la langue arabe et ce par rapport aux caractéristiques et fonctionnements d’autres langues. La comparaison lexicologique est l’une des bases qui permettent de mieux saisir les différences et similitudes de la langue arabe par rapport à d’autres langues. A titre d’exemple, l’anglais possède des unités lexicologiques pour les articles \{a, an, the\} ou bien l’ensemble vide \{Ø\} pour l’indéfini pluriel, des prépositions \{in, on, out, and, about, …\},des pronoms non affixés \{I, You, Him, Her, …\} et des auxiliaires et modaux \{Be, Have, Can, May, …\} comme marqueurs du temps et de l'aspect. L’arabe génère certaines de ces fonctions soit en liant les mots et morphèmes affixés (préfixés, infixés, suffixés) et en les incorporant à d’autres formes telles que les noms et les verbes, soit en séparant ces derniers. Ceci étant gouverné par des règles morphosyntaxiques qui opèrent dans la langue. Nous optons pour une segmentation où les inflexions par exemple sont comptabilisées comme des unités lexicologiques indépendantes. Ainsi, l’article indéfini en arabe est représenté par l’ensemble vide \{Ø\}. Une forme arabe isolée telle que \textlang{arabic}{وَلَدٌ } walad (un)/\footnote{Les parenthèses à l’intérieur de la représentation phonologique indiquent la forme pausale en arabe et l’on entend [walad].} (vocalisée) que l’on retrouve dans un texte non vocalisé sous la forme graphique \textlang{arabic}{ولد}  et qui ne serait reconnue comme telle, c’est-à-dire ‘un garçon’ que si l’on insérait dans la chaine la structure \{Ø + \textlang{arabic}{ ولد }\} afin de ne pas confondre cette dernière avec d’autres formes isolées telles que le passif \textlang{arabic}{وُلِدَ‘} il est / fut né’ ou le causatif \textlang{arabic}{وَلَّدَ } ‘générer’ par exemple. Il en est de même pour les pronoms personnels implicites\footnote{En langue arabe, les pronoms personnels sujets sont implicites, c’est-à-dire qu’ils n’apparaissent pas généralement dans la forme verbale. En anglais il s’agit de ‘hidden pronouns’.} comme dans (\textlang{arabic}{أنا})\textlang{arabic}{كَتَبْتُ})/(anâ) katabt(u)/ ‘J’ai écrit’ que nous comptabilisons comme deux unités lexicales indépendantes (listemes) même si le pronom personnel \textlang{arabic}{أنا } n’apparait pas dans le texte mais il est sous-entendu comme dans la phrase  \textlang{arabic}{القصة كتبت}/katabtu l qissa(ta) /‘J’ai écrit l’histoire (le conte)'\footnote{Nous ne pouvons, dans le cadre de cet article, détailler les procédures qui nous permettent de comptabiliser des unités lexicologiques indépendantes. Ceci fera l’objet d’un prochain article dans ce sens.}.
+
+Une autre caractéristique de l’arabe par rapport à l’anglais c’est la profusion de noms pour désigner un concept alors que l’anglais contient un plus grand nombre d'adjectifs que l’arabe.
+
+La comparaison syntaxique permet également de mieux saisir les différences et similitudes entre l’arabe et d’autres langues. Le nombre d’unités syntaxiques (grammaticales) est plus élevé en anglais. L’arabe a tendance à utiliser des coordinations syndétiques et asyndétiques là où l’anglais fait appel à des phrases mixtes et complexes avec divers procédés de coordination. La coordination en arabe représente un dispositif très productif alors que le système de ponctuation est employé de façon non fonctionnelle. Nous citerons, à titre d’exemples, des cas tels que celui du wāw (\textlang{arabic}{و}) qui exprime la simultanéité en arabe là où le français et l’anglais utilisent d’autres constructions grammaticales sans le «et» ou le «and». Ainsi, une phrase arabe telle que: 
+
+\textlang{arabic}{قاطعها وصاح}
+\{\textipa{q\^a\:ta\textbarrevglotstop aha wa \:sa\textcrh a}\} 
+\cite[p. 236]{al-manfaluti1952}\footnote{Traduit de l’arabe.}
+
+ne se traduit pas en français par «*Il l’a interrompue \textbf{et} il a crié» ou en anglais par « *He interrupted her \textbf{and} he shouted »mais par «Il l’a interrompue tout en criant» et «He interrupted her, shouting …» respectivement. Nous remarquons que l’anglais utilise une virgule pour indiquer la simultanéité dans les actions là où le français a recours à la double préposition« tout en ».
+
+\section{Quelques aspects du texte juridique}
+La loi est une profession où chaque mot est supposé être porteur d’un sens bien particulier, voire même précis. Il s’agit d’un texte portant à la fois les deux notions mentionnées plus haut.  Il possède des dispositifs généraux communs qui s'appliquent à toute les langues. A l’arabe, à l’anglais ou au français ces dispositifs sont résumés comme suit : 
+
+\begin{itemize}
+    \item Le discours législatif est différent de la langue écrite sur le plan lexical et sur le plan de la construction de phrases qui sont généralement très longues. La différence entre l’arabe et le français ou l’anglais sur ce dispositif est que l’arabe utilise moins de ponctuation (non fonctionnelle en arabe) alors que les deux autres langues usent de la ponctuation comme mécanisme fonctionnel et producteur de sens dans la langue.
+    \item La profusion de phrases longues et complexes est due non seulement à l’archaïsme du discours juridique mais aussi et surtout dans un but d’éviter toute ambiguïté dans les textes du procès en plaçant le maximum d’information et de données sur une unité phraséologique particulière.
+    \item Un autre dispositif typique relie ensembles des mots ou des expressions par coordination : \{et, ou, …\} en français \{and, or, …\} en anglais et \{waw\} en arabe.
+    \item Une profusion dans l’utilisation de structures phrastiques peu communes ou très rarement utilisées par les natifs des deux langues.
+    \item La loi est toujours exprimée d'une façon impersonnelle afin de s'adresser à plusieurs instances (le législateur, l’exécutif, le mandatant, la sentence, la Cour, le Juge, l’Avocat, etc.
+    \item Le texte juridique évite en général toute allégorie, résonance, allitération, exotisme, synonymie, sens allusif, métaphore et autres aspects du langage humain pour éviter toute ambiguïté ou toute équivoque dans la lecture du procès.
+    \item Des sources religieuses en tant que sources bien fondées, sont généralement présentes dans le texte juridique. Il s’agirait d’instruire la machine en vue d’une traduction automatique dans ce sens.
+    \item Le texte juridique est, par définition, un texte conservateur, donc non susceptible de changement du fait que la phraséologie a déjà été testée, approuvée et appliquée dans la juridiction.
+\end{itemize}
+
+Le droit étant un phénomène social, le produit d’une culture, il acquiert dans chaque société un caractère unique tant au niveau de la microstructure (vocabulaire juridique), qu’au niveau de la macrostructure (la façon d’exprimer des situations juridiques dans chaque culture juridique \cite[p. 179]{petru2016}. En effet, Les cultures, au sein desquelles les systèmes juridiques sont apparus et se sont épanouis, sont le fruit d'une longue et tortueuse gestation au plus profond des groupements humains \cite[p. 17]{gemar2019}. Une telle situation a fait du texte légal un champ riche en termes ayant des significations différentes d’une société à une autre et parfois au sein d’une même société \cite[p. 20]{gemar2019}.
+
+Sur le plan grammatical par exemple, l’une des particularités du texte juridique anglais est qu’il est basé sur des modaux tels que \{can, could, maymight, will, …\} et dont les nuances en anglais sont parfois difficiles à traduire en arabe même pour un traducteur averti. La traduction du texte juridique de l’arabe vers le français (ou vice-versa) et encore plus de l’arabe vers l’anglais (ou vice-versa) doit surtout prendre en charge des problèmes étroite mentalités à la nature de la langue légale et aux dispositifs spécifiques des systèmes légaux des langues française et arabe ou anglaise et arabe. Ceci apparaît souvent dans des jugements arrêtés en France, aux Etats Unis ou en Grande Bretagne (divorces par exemple) à traduire en arabe et inversement.
+
+A prime abord, ces spécificités du texte juridique de chaque langue en question se manifestent dans la traduction dite juridique. Partant du principe que cette dernière se concevrait comme la transposition d’une culture juridique A vers une culture juridique B \cite{bourdon2019}, et visant avant tout la clarté et la compréhension, comme tout autre texte pragmatique \cite{kubler2014}, il s’agit d’un exercice de droit comparé requérant l’analyse comparative \cite[p. 12]{gemar2019}. En fait, d’un point de vue juridique, un texte- pour être juridique- doit produire des effets juridiques \cite[p. 53]{durr2017}. Donc, une telle analyse semble nécessaire pour surmonter l’absence partielle ou même totale d’équivalence entre les termes et trouver des structures adéquates qui rendraient les mêmes effets juridiques du texte source.
+
+De ce fait et afin de donner plus de précisions, nous citons les exemples suivants:
+Des \textbf{attendus} et de la \textbf{décision}. Les \textbf{faits} sont généralement traduits en arabe par: 
+\textlang{arabic}{الوقائع}
+[\textipa{al waq\^a\textbarglotstop i\textbarrevglotstop}]\footnote{Pour éviter tout problème de représentation phonétique / phonologiques, nous utilisons parfois des représentations image.},
+Les \textbf{attendus} par:
+\textlang{arabic}{ألحيثيات}
+[\textipa{al \textcrh ajTij\^at}]
+du fait que la copule arabe \textlang{arabic}{حيث} \textipa{\textcrh ajTu} et l’expression \textlang{arabic}{حيث أن} \textipa{\textcrh ajTu anna} (Vu que, étant donné, etc.) sont très productives dans le corps d’un jugement donné \textlang{arabic}{حكم}  [\textipa{\textcrh ukm}] et la \textbf{décision} devient:
+\textlang{arabic}{المنطوق}
+[\textipa{al man\:t\^uq}]
+Parce qu’elle est produite oralement.
+
+En voici quelques exemples:
+
+\emph{Les faits}:
+
+\begin{quote}
+\textlang{arabic}{بيان وقائع الدّعوة}
+
+\textlang{arabic}{\textbf{الوقائع:}
+
+بعريضة افتتاحية مذاعة لدى كتابة ضبط القسم المدني بتاريخ ..... رفع المدّعي ..... المباشر للخصام بوسيطة وكيله الأستاذ ..... بدعوة ضدّ المدّعي عليه المباشر للخصام بنفسه موضوعها تثبيت حجز تحفظي هذا ملخّصها
+}
+\end{quote}
+
+Que nous transcrivons ci-dessous :
+
+\begin{quote}
+\textipa{baj\^an waq\^a\textbarglotstop i\textbarrevglotstop   \space adda\textbarrevglotstop wa}
+
+\emph{Les faits}: \textipa{bi \textbarrevglotstop ari\:da iftit\^aHijja mud\^a\textbarrevglotstop a lad\^a kit\^abat \:dab\:t al qism al madani bitar\^IX ..... rafa\textbarrevglotstop a al mudda\textbarrevglotstop i ..... al mub\^aSir lil Xi\:s\^am biwas\^I\:tati wak\^Ilihi al ustaD ..... bida\textbarrevglotstop awa \:didda  al mudda\textbarrevglotstop i \textbarrevglotstop alaih al mub\^aSir  lilXi\:s\^am bi nafsihi mawDu\textbarrevglotstop uha taTb\^It HadZz taHaffuDi h\^ada mulaXXa\:suha}
+\end{quote}
+
+En donnant le texte arabe ci-dessous, ce dernier est traduit en français par des outils de traduction en ligne sur le NET de la façon suivante:
+
+\begin{quote}
+\textlang{arabic}{الوقائع:
+
+بعريضة افتتاحية مذاعة لدى كتابة ضبط القسم المدني بتاريخ ..... رفع المدّعي ..... المباشر للخصام بوسيطة وكيله الأستاذ ..... بدعوة ضدّ المدّعي عليه المباشر للخصام بنفسه موضوعها تثبيت حجز تحفظي هذا ملخّصها
+}
+\end{quote}
+
+\begin{quote}
+Exposé des faits en appel
+
+\emph{Faits}: Pétition écrit une section de contrôle éditorial diffusé sur civile.....Le demandeur ..... Argument direct à l'argument et son agent, M. ... Contre le défendeur invité à diriger son propre thème querelle de fixation de cette synthèse installée ...
+\end{quote}
+
+Et que nous traduisons par:
+
+\begin{quote}
+\emph{Résumé des faits}
+
+Suite à une requête déposée auprès du Greffe de la Section Civile en date du .... sous le N° .... , le défendeur a déposé par son avocat le Professeur ..... une plainte à l’encontre du défendant lui-même dont le sujet est la mise en conservation provisoire dont voici le contenu ...
+\end{quote}
+
+En traduisant ce texte arabe en Anglais, ces outils nous produisent:
+
+\begin{quote}
+Statement of the facts of the call
+
+\emph{Facts}:
+Petition in writing an editorial broadcast control section on civil... The plaintiff..... Direct argument for argument and his agent, Mr... Against the defendant invited to direct his own quarrel theme installed attachment summary of this...
+\end{quote}
+
+SYSTRAN version 6 avec la sélection du dictionnaire juridique) nous produit la ‘traduction’ suivante:
+
+\begin{quote}
+Following a request deposited après of Greffe of Section Civile on....>. .> under N° ..., the defendant deposited by its lawyer the professor....>. .> a complaint with opposition of the defendant itself whose subject is the setting in provisional conservation of which here contents...
+\end{quote}
+
+\emph{Les attendus}:
+
+\begin{quote}
+\textlang{arabic}{الحيثيات:
+
+بعدالمداولة قانونا حيث أنّ موضوع النزاع المطروح  يدور حول تثبيث الحجز التحفظي الوارث على .....
+
+}
+\end{quote}
+
+Que nous transcrivons: 
+
+\begin{quote}
+\emph{Les attendus}: \textipa{ba\textbarrevglotstop da l mud\^awala q\^an\^unan \textcrh ayTu anna mawdu\textbarrevglotstop \space anniz\^a\textbarrevglotstop \space al ma\:tr\^u\textcrh jad\^uru \textcrh awla taTb\^It al \textcrh adZz atta\textcrh affuDi al w\^ariT \textbarrevglotstop ala .....}    
+\end{quote}
+
+
+Traduit en français (par nous-mêmes) par :
+
+\begin{quote}
+Après avoir lu l’affaire en délibéré dont le sujet du conflit en présence tourne autour de la conservation provisoire concernant .....
+\end{quote}
+
+Cet extrait de texte juridique arabe est traduit en français par des outils de traduction sur le Net comme suit :
+
+\begin{quote}
+\emph{Attendus}
+
+Ensuite après avoir lu les affaires dessus de délibéré au sujet des dont le sujet du conflit en présence tourne autour de la conservation temporaire...
+\end{quote}
+
+SYSTRAN (version 6 avec dictionnaire juridique) le traduit en anglais comme suit:
+
+\begin{quote}
+\emph{Waited}
+
+Afterwards to have read the business in deliberated of which the subject of the involved conflict turn around the provisional conservation concerning...
+\end{quote}
+
+\emph{La décision}:
+
+\begin{quote}
+\textlang{arabic}{المنطوق:
+
+حكمت المحكمة فصلا في المواد المدنية حكما علانيا حضوريا و ابتدائيا .....
+
+\begin{enumerate}
+    \item قبول الدّعوة شكلا
+    \item ألحكم بتثبيت الحجز التحفظي الوراث على .....
+\end{enumerate}
+}
+\end{quote}
+
+Que nous transcrivons: 
+
+\begin{quote}
+\emph{La décision}: \textipa{\textcrh akamat al ma\textcrh kama fa\:slan fil maw\^ad al madanijja \textcrh ukman \textbarrevglotstop al\^anijjan \textcrh udurijjan wab tid\^a\textbarglotstop ijjan.....
+
+\begin{enumerate}
+    \item qab\^ul adda\textbarrevglotstop wa Saklan
+    \item al \textcrh ukmu bi taTb\^It al \textcrh adZz atta\textcrh affuDi al w\^ariT \textbarrevglotstop ala …..
+\end{enumerate}
+}
+\end{quote}
+
+Et que nous traduisons:
+
+\begin{quote}
+Le Tribunal a décidé en matière de droit civil et en procès publique et ce en présence des parties concernées et en premier ressort :
+
+\begin{enumerate}
+    \item L’affaire recevable en la forme
+    \item Confirmation des mesures conservatoires provisoires concernant....
+\end{enumerate}
+\end{quote}
+
+Cet extrait de texte juridique arabe est traduit en français par des outils de traduction sur le Net comme suit:
+
+\begin{quote}
+\textbf{Parlé / Oral}
+
+La cour décidée en ce qui concerne la loi civile et dans le public de procès et ceci en présence des pièces concernées et dans la première ressource:
+
+\begin{enumerate}
+    \item Les affaires admissibles sous la forme
+    \item Confirmation de C des mesures d'académies S temporaire au sujet de....
+\end{enumerate}
+\end{quote}
+
+Traduit en Anglais par SYSTRAN version 6 avec dictionnaire juridique, cela nous donne:
+
+\begin{quote}
+\emph{Décision}
+
+The Court decided out of matter of civil law and in lawsuit public and this in the presence of the parts concerned and in the first resort:
+
+\begin{enumerate}
+    \item The admissible business in the form
+    \item Confirmation of academies measurements concerning....
+\end{enumerate}
+\end{quote}
+
+Ces exemples sont révélateurs, nous semble-t-il, non seulement des irrégularités dans les correspondances plus spécialement aux niveaux syntaxique et lexical entre les langues en question mais aussi de la difficulté dans la transposition d’un texte chargé de tout un poids culturel, traditionnel et civilisationnel vers un texte n’ayant pas nécessairement les mêmes références socioculturelles et autres que même l’humain trouve parfois difficiles à traduire. Qu’en serait-il alors pour la machine? Nous remarquons, à titre d’exemple, que dans les traductions de l’arabe vers le français ou l’anglais, l’article défini de l’arabe est parfois omis et ce surtout lorsqu’il fait partie d’un mot isolé tel que \textlang{arabic}{الوقائع } traduit en français par \textbf{Faits} et en Anglais par \textbf{Facts} (voir supra les exemples de \textlang{arabic}{الحيثيات } et de\textlang{arabic}{ المنطوق}). Ceci n’empêche pas pour autant des tentatives de recherche dans ce domaine pour instruire la machine à procéder à des prototypes de traduction de textes juridiques.
+
+Le système TACT (Traduction Automatique Centre Tesnière, France) par exemple est un système de traduction automatique français-arabe \cite{alsharaf2004} de textes juridiques. Appliqué au domaine du droit, ce traducteur automatique arrive à générer le type de traduction suivante: l'ordre administratif connaît des litiges relatifs à l'organisation et au fonctionnement des services publics et aux contrats administratifs.
+
+\begin{quote}
+\textlang{arabic}{
+النظام الإداري يحكم في النزاعات المرتبطات بالتنظيم و ﺁلية الخدمات العامة و بالعقود الإدارية}
+
+%(\textipa{ani\:da:m al ida:ri: jja\textcrh kumu fi: anniza\textbarrevglotstop a:t al murtabi\:ta:t bitan\:di:m wa \textbarglotstop alijjat al Xadama:t al \textbarrevglotstop a:ma wa bil \textbarrevglotstop uqu:d al \textbarglotstop ida:rijja})
+\end{quote}
+
+
+Nous avons été à maintes fois surpris de constater que pour passer d’une langue à une autre certains systèmes empruntaient une 3ème langue qui est souvent l’anglais; ce qui fait que les résultats ne peuvent pas être nécessairement en adéquation entre SL et TL en passant par une langue intermédiaire (l’anglais). Par exemple, pour le mot « libre » en français ou « free » en anglais, nous avons trouvé dix neuf entrées lexicales dans la fouille de textes juridiques arabes. Ceci en plus du sens commun de \textlang{arabic}{حر }. Il s’agirait donc de répertorier ces différentes entrées lexicales arabes, de situer ou de localiser les contextes dans lesquels elles sont susceptibles d’apparaitre et d’instruire la machine dans ce sens. Tâche tout à fait réalisable par une recherche lexicographique et sémantique dans ce domaine.
+
+Dans les exemples suivants nous allons présenter 06 phrases, incluant des termes nécessitant une recherche extralinguistique, tirées d’un contrat de distribution établi entre une société saoudienne et une société française. Nous analyserons par la suite des traductions produites respectivement par le logiciel Reverso et/ou ALMAANY, SYSTRAN, et un traducteur humain (nous-même). Nous signalons ici que nous avons opté pour deux traductions automatiques puisque les logiciels choisis ne fonctionnent pas de la même manière. Reverso et ALMAANY ne prennent pas en charge des phrases entières. Contrairement à SYSTRAN, ils traitent des mots isolés, des expressions ou des mot-clés seulement qui se trouvent dans leurs bases de données. Nous pensons que ceci peut affecter la qualité des traductions fournies. A cet effet nous nous contenterons de garder la traduction du mot en question (souligné) produite par Reverso et/ ou ALMAANY et les traductions de la phrase entière fournies par SYSTRAN et par le traducteur humain. Enfin nous signalons que les autres erreurs ou spécificités (hors celles relatives aux mots choisis) ne seront pas prises en considération.
+
+\begin{quote}
+« Par conséquent, cette \emph{lettre d’engagement} a pour but de certifier que... »    
+\end{quote}
+
+
+\begin{quote}
+\textlang{arabic}{
+الرسالة 
+
+ولذلك الغرض من هذه الرسالة التصديق على ما يلي…
+
+بناء على ما سبق، يهدف هذا الخطاب إلى…
+
+}
+\end{quote}
+
+Que nous transcrivons:
+
+\begin{quote}
+\textipa{
+arris\ae:la
+
+wa liDalika al Gara\:d min ha:Dihi arris\ae:la atta\:sde:q \textbarrevglotstop ala ma: jali.....
+
+bina:an \textbarrevglotstop ala ma: sabaqa, jahdif ha:Da l Xi\:tab ila:......
+}
+\end{quote}
+
+Le logiciel Reverso Context a fourni \textlang{arabic}{رسالة التزام} comme traduction, SYSTRAN aussi. Le traducteur humain quant à lui a donné \textlang{arabic}{خطاب} après avoir consulté un expert saoudien lequel a confirmé qu’en Arabie Saoudite on utilise plutôt \textlang{arabic}{خطاب} dans le domaine juridique. Nous signalons ici qu’au Maghreb le mot \textlang{arabic}{خطاب} est souvent utilisé pour traduire « allocution ».
+
+\begin{quote}
+« Le statut de distributeur autorisé dans le domaine de la \emph{formation} des conducteurs sur le "Territoire" et pour la durée du "Contrat" ».    
+\end{quote}
+
+
+\begin{quote}
+\textlang{arabic}{
+تكوين
+
+حالة الموزع المسموح به في مجال تدريب السائقين في "الإقليم" وفترة "العقد.
+
+صفة " موزع معتمد في مجال تدريب السائقين داخل "منطقة التوزيع" خلال مدة "العقد".
+
+}
+\end{quote}
+
+Que nous transcrivons:
+
+\begin{quote}
+\textipa{takwi:n
+
+Ha:lat almuwazza\textbarrevglotstop \space almasmu:H bihi fi: maZa:l tadri:b assa:\textbarglotstop iqain fi: al\textbarglotstop iqli:m wa fitrat al\textbarrevglotstop aqd \:sefat muwazza\textbarrevglotstop mu\textbarrevglotstop tamid fi: maZa:l tadri:b assa\textbarglotstop iqain da:Xil min\:taqat attawzi:\textbarrevglotstop \space Xila:l muddat al\textbarrevglotstop aqd
+}
+\end{quote}
+
+Pour le mot « formation » ALMAANY nous a donné \textlang{arabic}{تكوين} alors que SYSTRAN a produit \textlang{arabic}{تدريب}. Pour le traducteur humain, une petite recherche documentaire sur Google a montré qu’en Arabie Saoudite le mot le plus fréquent est celui de \textlang{arabic}{تدريب}. Nous précisons qu’au Maghreb le mot \textlang{arabic}{تدريب} correspond en premier lieu à « entrainement ».
+
+\begin{quote}
+« Le concessionnaire s'engage à générer \emph{un chiffre d'affaires} minimum de 350 000,00 €. »
+\end{quote}
+
+\begin{quote}
+\textlang{arabic}{رقم أعمال
+
+ويلتزم صاحب الامتياز بإنتاج حد أدنى قدره 000 000 350 يورو للأعمال التجارية.
+
+يلتزم الموزع بتحقيق حجم مبيعات إجمالي يعادل 350000.00 يورو على الأقل.
+
+}
+\end{quote}
+
+Que nous transcrivons:
+
+\begin{quote}
+\textipa{raqm a\textbarrevglotstop ma:l
+
+wajaltazim \:saheb al\textbarglotstop imtijja:z bi\textbarglotstop inta:Z Hadd \textbarglotstop adna: qadruhu} 350 000 000 \textipa{ju:ro lil\textbarglotstop a\textbarrevglotstop ma:l  attiZa:rijja.
+
+jaltazim almuwazza\textbarrevglotstop \space bitaHqi:q haZm mabi:\textbarrevglotstop a:t \textbarglotstop iZma:li: ju\textbarrevglotstop adil} 3500000.00 \textipa{ju:ro  \textbarrevglotstop alal \textbarglotstop aqal
+}
+\end{quote}
+
+Le terme chiffre d’affaire a été traduit de trois manières différentes : Reverso l’a traduit littéralement et a donné \textlang{arabic}{رقم أعمال} SYSTRAN l’a remplacé par \textlang{arabic}{ إنتاج }ou production, le traducteur humain, après avoir consulté un expert en économie, a opté pour  \textlang{arabic}{حجم مبيعات} ou volume des ventes. Ce choix a été confirmé en consultant plusieurs articles économiques. Cependant, le choix de \textlang{arabic}{رقم أعمال} n’est pas totalement erroné. Il est l’largement employé au pays du Maghreb.
+
+\begin{quote}
+« Un logiciel spécialement conçu pour la formation \emph{pédagogique} des conducteurs et conductrices dans le Royaume. »
+\end{quote}
+
+\begin{quote}
+\textlang{arabic}{بيداغوجي
+
+برنامج خاص لتدريب السائقين والسائقين في المملكة المتحدة.
+
+برمجيات صممت خصيصا من أجل التدريب التعليمي للسائقين و السائقات بالمملكة.
+
+}
+\end{quote}
+
+Que nous transcrivons:
+
+\begin{quote}
+\textipa{bi:da:Gu:Zi:
+
+barna:mZ Xa:\:s litadri:b assa:\textbarglotstop iqi:n wassa:\textbarglotstop iqa:t fi: almamlaka almuttaHida
+
+barmaZijja:t \:sommimat Xe\:se:\:san min \textbarglotstop ajl attadri:b atta\textbarrevglotstop li:mi: lissa:\textbarglotstop iqi:n wassa:\textbarglotstop iqa:t bilmamlaka}
+\end{quote}
+
+Pour le mot « pédagogique » ALMAANY a emprunté le mot français et a produit \textlang{arabic}{بيداغوجي} SYSTRAN a omis le mot. Le traducteur humain a préféré \textlang{arabic}{تعليمي} un choix validé par un expert saoudien. Il est à signaler encore une fois que le mot \textlang{arabic}{بيداغوجي} est souvent utilisé au Maghreb où les sociétés sont influencées par la culture française.
+
+\begin{quote}
+« Une gamme complète de services d'assistance comprenant \emph{des mises à jour}. »
+\end{quote}
+
+\begin{quote}
+\textlang{arabic}{التحيينات
+
+مجموعة كاملة من خدمات الدعم تتضمن تحديثات
+
+تشكيلة متكاملة من خدمات المساعدة بما في ذلك التحديثات
+
+}
+\end{quote}
+
+Que nous transcrivons:
+
+\begin{quote}
+\textipa{attaHji:na:t
+
+maZmu:\textbarrevglotstop atun ka:milatun min Xadama:t adda\textbarrevglotstop m tata\:damman tahdi:Ta:t
+
+taSki:latun mutaka:milatun min Xadama:t almusa\textbarrevglotstop adati bima: fi: Da:lika attaHdi:Ta:t
+}
+\end{quote}
+
+Le logiciel ALMAANY a produit \textlang{arabic}{تحيينات} drivé de \textlang{arabic}{الحين} ou maintenant. SYSTRAN   a préféré \textlang{arabic}{تحديث} dérivé de \textlang{arabic}{حديث} ou actuel, nouveau... etc. le traducteur humain a opté pour le même choix. L’expert saoudien a confirmé d’ailleurs ne jamais avoir entendu le mot \textlang{arabic}{تحيين}.
+
+\begin{quote}
+« Le "Concédant" est un fabricant de simulateurs de conduite et une entreprise leader sur le marché européen de la simulation de \emph{conduite automobile}. »
+\end{quote}
+
+\begin{quote}
+\textlang{arabic}{سياقة
+
+المرحل" هو شركة محاكاة السيارات وشركة رائدة في السوق الأوروبية لمحاكاة قيادة السيارات.
+
+المنتج" مصنع لأجهزة محاكاة قيادة المركبات ومؤسسة رائدة في السوق الأوروبية
+
+}
+\end{quote}
+
+Que nous transcrivons:
+
+\begin{quote}
+\textipa{sijja:qa
+
+al marHal huwwa Sarikatu muha:kaat assijjara:t wa Sarikatun ra:\textbarglotstop idatun fi: assu:qi al\textbarglotstop uro:bijjati limuha:kaat qijja:dat assijja:ra:t
+
+almuntiZ mu\:sne\textbarrevglotstop li a\textbarglotstop aZhizat muha:ka:t qijja:dati almarkaba:t wa mu\textbarglotstop assasatun ra:\textbarglotstop idatun fi: assu:qi al\textbarglotstop urobijjati}
+\end{quote}
+
+Pour le dernier mot, Reverso a choisi \textlang{arabic}{سياقة} (un choix totalement validé en Algérie par exemple). SYSTRAN a omis le mot alors que le traducteur humain a donné \textlang{arabic}{قيادة}. Son premier choix portait lui aussi  sur \textlang{arabic}{سياقة } mais l’expert saoudien l’a rejeté et l’a remplacé par \textlang{arabic}{قيادة}. Ce choix a été validé après avoir consulté plusieurs articles traitant le sujet de la conduite en Arabie Saoudite.
+
+Les mots choisis peuvent paraître évidents, simples ou faciles, mais ils véhiculent des nuances culturelles importantes qui peuvent affecter l’acceptabilité de la traduction. D’ailleurs l’analyse ci-dessus nous a montré que le texte juridique arabe diffère d’une région à une autre (Pays du Golf et Maghreb). Ce qui est valable dans l’une ne l’est pas forcément dans l’autre. La machine n’a pas détecté ces différences et ne les a pas pris en considération sauf pour le logiciel SYSTRAN à quelques occasions seulement (on peut le justifier par la nature de la langue Arabe utilisé par le logiciel. Il se peut qu’elle soit celle de la région de l’Arabie Saoudite).  Le traducteur humain, quant à lui, grâce à des opérations de pre-editing, de post-editing, et de recherche documentaire (source humaines ou textuelles), a pu appréhender et identifier le sens d’un message, puis le transférer dans d’autres schémas cognitifs et enfin le transposer dans un autre code linguistique \cite[p. 63]{rollo2016} et fournir des traductions plutôt satisfaisantes qui correspondent aux critères d’acceptabilité du texte juridique arabe en Arabie Saoudite.
+
+En effet, il s’agit de ce qu’on appelle l’ergonomie cognitive \cite[p. 2]{lavault-olleon2012}. Une compétence qui met en exergue la relation entre l’homme et son environnement, de manière à ce que le sujet traducteur devient une entité cognitive, c’est-à-dire un être humain qui met ses facultés cognitives au service de la communication multilingue \cite{politis2017}.
+
+En conclusion, nous dirons simplement, que si l’on veut de bonnes traductions automatiques, il faudrait se limiter à un domaine précis. De plus, notre expérience nous a montré que les systèmes doivent être conçus de façon unidirectionnelle dans un premier temps et seulement ensuite l’on pourrait envisager de travailler dans l’autre sens, ce qui nécessite inévitablement la création d’un nouveau système. Si l’on cherche des résultats de qualité, l’analyse de la langue source devrait se faire en fonction de la langue cible, en sachant que ces analyses ne sont pas forcément réversibles. 
+
+Ainsi, pouvons-nous dire que la machine a besoin de se doter de ce que Holmes (1988) appelle une carte du texte original et une autre du genre de texte à produire dans la langue cible \cite[p. 2]{farnoud2014} et non traduire à partir d’une présentation intermédiaire comme nous venant de l’explique plus haut. Autrement, toute traduction automatique sollicitera une intervention humaine puisque lui seul possède ce processus mental faisant passer le message du niveau verbo-linguistique de la langue-source au niveau logico-cognitif \cite[p. 2]{farnoud2014}. Un tel processus se produit avant l’opération pour limiter et restreindre les champs lexicaux et le domaine auquel appartient le texte, pendant l’opération pour choisir les catégories des mots et faciliter la recherche et enfin après l’opération pour sélectionner les choix les plus pertinents en effectuant des recherches documentaires adéquates.
+
+\begin{english}
+\section*{Acknowledgements} This research was funded by the Deanship of Scientific Research at Princess Nourah bint Abdulrahman University through the Fast-track Research Funding Program.
+\end{english}
+
+\printbibliography\label{sec-bib}
+% if the text is not in Portuguese, it might be necessary to use the code below instead to print the correct ABNT abbreviations [s.n.], [s.l.]
+%\begin{portuguese}
+%\printbibliography[title={Bibliography}]
+%\end{portuguese}
+
+
+%full list: conceptualization,datacuration,formalanalysis,funding,investigation,methodology,projadm,resources,software,supervision,validation,visualization,writing,review
+\begin{contributors}[sec-contributors]
+\authorcontribution{Bahia Zemni}[conceptualization,methodology,writing,projadm]
+\authorcontribution{Farouk Bouhadiba}[software,formalanalysis,writing]
+\authorcontribution{Mimouna Zitouni}[methodology,resources,writing,review]
+\end{contributors}
+
+
+
+\end{document}
