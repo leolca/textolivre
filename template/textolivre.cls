@@ -203,16 +203,16 @@
 {\vspace{-1.5ex}\noindent\textcolor{TLLightGreen}{\rule{\linewidth}{.5pt}}\par}
 % polyabstract - END
 
-\RequirePackage{mfirstuc}
-% KEYWORDS % requires: mfirstuc
 \def\sep{\unskip. }%
+\ExplSyntaxOn
 \newcommand{\capitalizekeywords}[2][\sep]{%
   \def\dolist##1{\expandafter\@dolist##1#1\@eol}%
   \def\@dolist##1#1##2\@eol{%
-    \begingroup\setbox0=\hbox{##1\unskip}\ifdim\wd0=0pt\endgroup\else\endgroup\ignorespaces\makefirstuc{##1}\unskip\sep\fi%
+    \begingroup\setbox0=\hbox{##1\unskip}\ifdim\wd0=0pt\endgroup\else\endgroup\ignorespaces\text_titlecase_first:n{##1}\unskip\sep\fi%
     \ifx\@eol##2\@eol\else\@dolist##2\@eol\fi}%
   \dolist{#2}%
 }
+\ExplSyntaxOff
 
 \AtBeginDocument{% BEGIN
   % TITLE
