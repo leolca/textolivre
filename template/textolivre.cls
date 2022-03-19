@@ -95,7 +95,8 @@
 \def\layouteditorname#1{\def\@layouteditorname{#1}}
 \layouteditorname{}
 \def\articledoi#1{\def\@articledoi{#1}\articleid{\articleenumber}}
-\def\articlesessionname#1{\def\@articlesessionname{#1}}
+\newcommand\sessionnametranslation[1]{\IfValueT{#1}{\GetTranslation{#1}}} 
+\def\articlesessionname#1{\def\@articlesessionname{\sessionnametranslation{#1}}}
 \def\@articleid{}
 \newcommand{\articleenumber}{\StrRight{\@articledoi}{5}}
 \newcommand{\articleid}[1]{%
