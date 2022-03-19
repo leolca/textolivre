@@ -95,6 +95,7 @@
 \def\layouteditorname#1{\def\@layouteditorname{#1}}
 \layouteditorname{}
 \def\articledoi#1{\def\@articledoi{#1}\articleid{\articleenumber}}
+\def\articlesessionname#1{\def\@articlesessionname{#1}}
 \def\@articleid{}
 \newcommand{\articleenumber}{\StrRight{\@articledoi}{5}}
 \newcommand{\articleid}[1]{%
@@ -184,6 +185,7 @@
 \newcommand{\more@metadata}{%
   \@cover@logo\par
   \printifnotempty{DOI}{}{\@articledoi}{\par}
+  \printifnotempty{\GetTranslation{session}}{\\}{\@articlesessionname}{\par}
   \printifnotempty{\GetTranslation{correspondingauthor}}{\\}{\@corrauthor}{\par}
   \printifnotempty{\GetTranslation{editedby}}{\\}{\@editorname}{\par}
   \printifnotempty{\GetTranslation{sectioneditor}}{\\}{\@sectioneditorname}{\\}
