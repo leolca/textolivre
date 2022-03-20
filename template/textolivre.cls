@@ -186,7 +186,7 @@
 \newcommand{\more@metadata}{%
   \@cover@logo\par
   \printifnotempty{DOI}{}{\@articledoi}{\par}
-  \printifnotempty{\GetTranslation{session}}{\\}{\@articlesessionname}{\par}
+  \ifdefined\@articlesessionname\printifnotempty{\GetTranslation{session}}{\\}{\@articlesessionname}{\par}\fi
   \printifnotempty{\GetTranslation{correspondingauthor}}{\\}{\@corrauthor}{\par}
   \printifnotempty{\GetTranslation{editedby}}{\\}{\@editorname}{\par}
   \printifnotempty{\GetTranslation{sectioneditor}}{\\}{\@sectioneditorname}{\\}
