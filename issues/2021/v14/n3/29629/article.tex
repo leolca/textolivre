@@ -4,6 +4,26 @@
 \documentclass{textolivre}
 % See more information on the repository: https://github.com/leolca/textolivre
 
+% Metadata
+\begin{filecontents*}[overwrite]{article.xmpdata}
+    \Title{Matemática e Física em experiências de Robótica Livre: explorando o sensor ultrassônico}
+    \Author{Marcelo Pires da Silva \sep Fernando da Costa Barbosa}
+    \Language{pt-BR}
+    \Keywords{Robótica Educacional Livre \sep Aprendizagem Criativa \sep Construcionismo \sep Ondas Ultrassônicas com robótica livre \sep Arduino no Ensino Básico}
+    \Journaltitle{Texto Livre}
+    \Journalnumber{1983-3652}
+    \Volume{14}
+    \Issue{3}
+    \Firstpage{1}
+    \Lastpage{19}
+    \Doi{10.35699/1983-3652.2021.29629}
+
+    \setRGBcolorprofile{sRGB_IEC61966-2-1_black_scaled.icc}
+            {sRGB_IEC61966-2-1_black_scaled}
+            {sRGB IEC61966 v2.1 with black scaling}
+            {http://www.color.org}
+\end{filecontents*}
+
 \journalname{Texto Livre}
 \thevolume{14}
 \thenumber{3}
@@ -37,6 +57,76 @@
 \addbibresource{article.bib}
 % use biber instead of bibtex
 % $ biber tl-article-template
+
+
+% for spanish, use:
+%\setdefaultlanguage{spanish}
+%\gappto\captionsspanish{\renewcommand{\tablename}{Tabla}} % use 'Tabla' instead of 'Cuadro'
+%\AfterEndPreamble{\crefname{table}{tabla}{tablas}\Crefname{table}{Tabla}{Tablas}}
+
+% for languages that use special fonts, you must provide the typeface that will be used
+% \setotherlanguage{arabic}
+% \newfontfamily\arabicfont[Script=Arabic]{Amiri}
+% \newfontfamily\arabicfontsf[Script=Arabic]{Amiri}
+% \newfontfamily\arabicfonttt[Script=Arabic]{Amiri}
+%
+% in the article, to add arabic text use: \textlang{arabic}{ ... }
+
+% for russian text we also need to define fonts with support for Cyrillic script
+% \usepackage{fontspec}
+% \setotherlanguage{russian}
+% \newfontfamily\cyrillicfont{Times New Roman}
+% \newfontfamily\cyrillicfontsf{Times New Roman}[Script=Cyrillic]
+% \newfontfamily\cyrillicfonttt{Times New Roman}[Script=Cyrillic]
+%
+% in the text use \begin{russian} ... \end{russian}
+
+% to use emoticons in your manuscript
+% https://stackoverflow.com/questions/190145/how-to-insert-emoticons-in-latex/57076064
+% using font Symbola, which has full support
+% the font may be downloaded at:
+% https://dn-works.com/ufas/
+% add to preamble:
+% \newfontfamily\Symbola{Symbola}
+% in the text use:
+% {\Symbola }
+
+% reference itens in a descriptive list using their labels instead of numbers
+% insert the code below in the preambule:
+\makeatletter
+\let\orgdescriptionlabel\descriptionlabel
+\renewcommand*{\descriptionlabel}[1]{%
+  \let\orglabel\label
+  \let\label\@gobble
+  \phantomsection
+  \edef\@currentlabel{#1\unskip}%
+  \let\label\orglabel
+  \orgdescriptionlabel{#1}%
+}
+\makeatother
+%
+% in your document, use as illustraded here:
+%\begin{description}
+%  \item[first\label{itm1}] this is only an example;
+%  % ...  add more items
+%\end{description}
+ 
+
+% custom epigraph - BEGIN 
+%%% https://tex.stackexchange.com/questions/193178/specific-epigraph-style
+\usepackage{epigraph}
+\renewcommand\textflush{flushright}
+\makeatletter
+\newlength\epitextskip
+\pretocmd{\@epitext}{\em}{}{}
+\apptocmd{\@epitext}{\em}{}{}
+\patchcmd{\epigraph}{\@epitext{#1}\\}{\@epitext{#1}\\[\epitextskip]}{}{}
+\makeatother
+\setlength\epigraphrule{0pt}
+\setlength\epitextskip{0.5ex}
+\setlength\epigraphwidth{.7\textwidth}
+% custom epigraph - END
+
 
 % if you use multirows in a table, include the multirow package
 \usepackage{multirow}
@@ -146,7 +236,7 @@ A partir da teoria do Construcionismo, em conjunto com a robótica, o estudante 
 Na Robótica Educacional, temos uma vertente chamada de Robótica Educacional Livre ou Robótica Pedagógica Livre, que é um tipo de robótica que pressupõe a utilização de materiais e \emph{softwares} livres. O desenvolver da Robótica Livre se utiliza de materiais livres, tanto \emph{software} quanto \emph{hardware}, que são materiais que possuem licenciamentos baseados nas definições de \emph{software} livre. Segundo \textcite{association}, \emph{hardwares} livres são,
 
 \begin{quote}
-[...] artefatos tangíveis — máquinas, dispositivos ou outros objetos físicos — cujo projeto foi disponibilizado ao público de modo que qualquer um pode construir, modificar, distribuir e utilizar estes artefatos. É intenção desta definição auxiliar no desenvolvimento de guias gerais para o desenvolvimento e validação de licenças para Open Source Hardware \cite{association}.
+[…] artefatos tangíveis — máquinas, dispositivos ou outros objetos físicos — cujo projeto foi disponibilizado ao público de modo que qualquer um pode construir, modificar, distribuir e utilizar estes artefatos. É intenção desta definição auxiliar no desenvolvimento de guias gerais para o desenvolvimento e validação de licenças para Open Source Hardware \cite{association}.
 \end{quote}
 
 Os \emph{softwares} livres trazem algumas liberdades para com o usuário. \textcite{stallman2002} define essas liberdades:
