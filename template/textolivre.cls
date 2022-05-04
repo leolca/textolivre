@@ -397,8 +397,7 @@
 \newcommand\acitema[1]{\IfValueT{#1}{, \GetTranslation{#1}}}
 
 \NewDocumentCommand{\authorcontribution}{m >{\SplitArgument{13}{,}}o}{%
-  \item \textbf{#1}: {\ProcessList {#2} {\acitem}}
-}
+  \item \textbf{#1}: {\ProcessList {#2} {\acitem}}}
 % END contributors environment
 
 % 'Tabla' instead of 'Cuadro'
