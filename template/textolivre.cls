@@ -44,7 +44,7 @@
 
 \RequirePackage{amsmath,amsfonts,amssymb,amsthm}
 \RequirePackage{csquotes}
-\RequirePackage[backend=biber,style=abnt,ittitles,repeatfields]{biblatex}
+\RequirePackage[backend=biber,style=abnt,ittitles,repeatfields,sorting=nyt]{biblatex}
 \DeclareLanguageMapping{brazil}{brazil-apa}
 \renewcommand{\bibfont}{\small}
 
@@ -385,7 +385,7 @@
 \section*{\fontsize{10}{12}\selectfont \GetTranslation{authorcontributions}}\ifx#1\@empty\else\label{#1}\fi
 \begin{singlespace}
 \fontsize{8}{10}\selectfont\noindent
-\begin{itemize*}[before=\unskip{\hspace{-1ex}},itemjoin={\unskip{;}},after={\unskip{.}},mode=unboxed,label={}]
+\begin{itemize*}[before=\unskip{\hspace{-0.5ex}},itemjoin={\unskip{;}},after={\unskip{.}},mode=unboxed,label={}]
 }
 {
 \end{itemize*}
