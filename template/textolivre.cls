@@ -157,7 +157,7 @@
 
 \RequirePackage[absolute]{textpos}
 \RequirePackage{adjustbox}
-\RequirePackage{longtable,booktabs,tabularx,colortbl}
+\RequirePackage{longtable,booktabs,tabularx,colortbl,threeparttable}
 
 % information box BEGIN % requires: textpos, adjustbox, doclicense
 \newcommand{\@insert@metadata}{%
@@ -300,7 +300,7 @@
 
 \RequirePackage{caption,subcaption}
 \captionsetup*{singlelinecheck=false,font={small},labelfont={bf,color=TLDarkGreen},labelsep=period}
-\captionsetup*[table]{position=top}
+\captionsetup*[table]{position=top,justification=justified,singlelinecheck=false}
 \captionsetup*[sub]{labelfont=small,justification=centering}
 \newcommand{\headrow}{\rowcolor{TLDarkGray}}
 \newcommand{\thead}[1]{\bfseries #1\rule[-1.2ex]{0pt}{2em}}
