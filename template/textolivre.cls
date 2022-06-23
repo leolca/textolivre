@@ -48,13 +48,22 @@
 \DeclareLanguageMapping{brazil}{brazil-apa}
 \renewcommand{\bibfont}{\small}
 
+% must be loaded before hyperref
+% https://tex.stackexchange.com/questions/188273/using-setspace-package-breaks-footnotes-link
+\RequirePackage{setspace}
+\setstretch{1.15}
+
 \PassOptionsToPackage{hyphens}{url}
 \ifdefined\HCode%
 \RequirePackage[breaklinks=true,tex4ht]{hyperref}
 \else
 \RequirePackage[breaklinks=true]{hyperref}
 \fi
-\renewcommand{\UrlBreaks}{\do\/\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z}
+\renewcommand{\UrlBreaks}{\do\/\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z\do\=}
+
+\RequirePackage[marginal]{footmisc}
+\RequirePackage{footnotebackref}
+
 \hypersetup{colorlinks,allcolors=TLDarkGreen}
 \urlstyle{same}
 
@@ -73,9 +82,6 @@
   \RequirePackage{academicons}
   \newcommand{\orcid}[1]{\href{https://orcid.org/#1}{\textcolor{TLLightGreen}{\protect\aiOrcid}}}
 \fi
-
-\RequirePackage{setspace}
-\setstretch{1.15}
 
 \RequirePackage{geometry}
 \geometry{a4paper, 
@@ -266,12 +272,12 @@
 % LISTS % requires: enumitem
 \setlist{leftmargin=*,nosep}
 
-\RequirePackage[marginal]{footmisc}
-% FOOTNOTE % requires: footmisc
-\setlength{\footnotemargin}{-1em}
-\pretocmd{\@makefntext}{%
-  \renewcommand{\@makefnmark}{\thefootnote}
-}{}{}
+%\RequirePackage[marginal]{footmisc}
+%% FOOTNOTE % requires: footmisc
+%\setlength{\footnotemargin}{-1em}
+%\pretocmd{\@makefntext}{%
+%  \renewcommand{\@makefnmark}{\thefootnote}
+%}{}{}
 
 \RequirePackage{totpages}
 \RequirePackage{fancyhdr}
