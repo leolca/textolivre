@@ -67,7 +67,7 @@
 \hypersetup{colorlinks,allcolors=TLDarkGreen}
 \urlstyle{same}
 
-\RequirePackage[english,french,spanish,brazilian]{cleveref}
+\RequirePackage{cleveref}
 
 \RequirePackage[table]{xcolor}
 \RequirePackage{graphicx}
