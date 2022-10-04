@@ -35,9 +35,9 @@ while read FOLDER OVERLEAFID; do
   done
   if [ $? -eq 0 ]
   then
-     if [ -f "$FOLDER/article.tex" ] 
+     if [ -f "../$FOLDER/article.tex" ] 
      then 
-        if diff -q "$FOLDER/article.tex" "$TMPFOLDER/article.tex"; then
+        if diff -q "../$FOLDER/article.tex" "$TMPFOLDER/article.tex"; then
            echo -e "\e[1;32mTeX files are the same.\e[0m" 
         else
            echo -e "\e[1;31mTeX files are different!\e[0m"
@@ -56,17 +56,17 @@ while read FOLDER OVERLEAFID; do
            fi
            if [ $SAVERESULT = true ]; then
    	       OUTFILE="/tmp/$FOLDERreplaced-article-tex-diff"
-	       dwdiff --no-common --line-numbers <(cat "$FOLDER/article.tex") <(cat "$TMPFOLDER/article.tex") | colordiff --difftype=wdiff > "$OUTFILE"
-	       #wdiff --no-common --avoid-wraps <(cat "$FOLDER/article.tex") <(cat "$TMPFOLDER/article.tex") | colordiff --difftype=wdiff > "$OUTFILE"
-	       #diff --color --side-by-side --suppress-common-lines <(fold -s -w72 "$FOLDER/article.tex") <(fold -s -w72 "$TMPFOLDER/article.tex") -W 200 > "$OUTFILE"
-               #diff "$FOLDER/article.tex" "$TMPFOLDER/article.tex" > "$TMPFILE"
+	       dwdiff --no-common --line-numbers <(cat "../$FOLDER/article.tex") <(cat "$TMPFOLDER/article.tex") | colordiff --difftype=wdiff > "$OUTFILE"
+	       #wdiff --no-common --avoid-wraps <(cat "../$FOLDER/article.tex") <(cat "$TMPFOLDER/article.tex") | colordiff --difftype=wdiff > "$OUTFILE"
+	       #diff --color --side-by-side --suppress-common-lines <(fold -s -w72 "../$FOLDER/article.tex") <(fold -s -w72 "$TMPFOLDER/article.tex") -W 200 > "$OUTFILE"
+               #diff "../$FOLDER/article.tex" "$TMPFOLDER/article.tex" > "$TMPFILE"
                echo -e "\e[1;34mDifferences saved in $OUTFILE\e[0m"
            fi
 	fi
      fi
-     if [ -f "$FOLDER/article.bib" ]
+     if [ -f "../$FOLDER/article.bib" ]
      then
-        if diff -q "$FOLDER/article.bib" "$TMPFOLDER/article.bib"; then
+        if diff -q "../$FOLDER/article.bib" "$TMPFOLDER/article.bib"; then
            echo -e "\e[1;32mBiB files are the same.\e[0m" 
         else
            echo -e "\e[1;31mBiB files are different!\e[0m"
@@ -85,10 +85,10 @@ while read FOLDER OVERLEAFID; do
            fi
            if [ $SAVERESULT = true ]; then
    	    OUTFILE="/tmp/$FOLDERreplaced-article-bib-diff"
-	    dwdiff --no-common --line-numbers <(cat "$FOLDER/article.bib") <(cat "$TMPFOLDER/article.bib") | colordiff --difftype=wdiff > "$OUTFILE"
-   	    #wdiff --no-common --avoid-wraps <(cat "$FOLDER/article.bib") <(cat "$TMPFOLDER/article.bib") | colordiff --difftype=wdiff > "$OUTFILE"
+	    dwdiff --no-common --line-numbers <(cat "../$FOLDER/article.bib") <(cat "$TMPFOLDER/article.bib") | colordiff --difftype=wdiff > "$OUTFILE"
+   	    #wdiff --no-common --avoid-wraps <(cat "../$FOLDER/article.bib") <(cat "$TMPFOLDER/article.bib") | colordiff --difftype=wdiff > "$OUTFILE"
    	    #diff --color --side-by-side --suppress-common-lines <(fold -s -w72 "$FOLDER/article.bib") <(fold -s -w72 "$TMPFOLDER/article.bib") -W 200 > "$OUTFILE"
-               #diff "$FOLDER/article.bib" "$TMPFOLDER/article.bib" > "$TMPFILE"
+               #diff "../$FOLDER/article.bib" "$TMPFOLDER/article.bib" > "$TMPFILE"
                echo -e "\e[1;34mDifferences saved in $OUTFILE\e[0m"
            fi  
         fi
