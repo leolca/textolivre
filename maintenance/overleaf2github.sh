@@ -1,4 +1,11 @@
 #!/bin/bash
+
+#
+# usage example:
+# ./overleaf2github.sh 36965
+# ./overleaf2github.sh 36965 37426 37557 37569
+# ./overleaf2github.sh `sed -n '/36965/,$p' overleafprojectlist.csv | cut -d, -f1 | cut -d/ -f4 | tr '\n' ' '`
+
 IDs=( "$@" )
 ALWAYSOW=false
 OVERWRITE=false
@@ -7,16 +14,18 @@ ADDGITHUB=false
 ALWAYSCL=false
 CLEAN=false
 CURRENTFOLDER=$(pwd)
+TEXCOMPILER=1 # 1) XeLaTeX, 2) LuaLateX, 3) always XeLaTeX, 4) always LuaLateX
+ALWAYSTEXCOMP=false
 
 for (( i=0; i<${#IDs[@]}; i++ ));
 do
   echo "${IDs[$i]}"
   gresult=$(grep "${IDs[$i]}" overleafprojectlist.csv)
   DEST_FOLDER="../$(echo $gresult | cut -d, -f1)"
-  OID=$(echo $gresult | cut -d, -f2)
-  if [ ! -z $DEST_FOLDER ] && [ ! -z $OID ]
+  OVERLEAFID=$(echo $gresult | cut -d, -f2)
+  if [ ! -z $DEST_FOLDER ] && [ ! -z $OVERLEAFID ]
   then
-      echo "$DEST_FOLDER $OID"
+      #echo "$DEST_FOLDER $OID"
       if [ -d $DEST_FOLDER ]
       then
 	  if [ $ALWAYSOW = false ]; then
@@ -56,7 +65,24 @@ do
 	      ln -s ../../../../template/logo.pdf;
 	      ln -s ../../../../template/textolivre.cls;
 	      ln -s ../../../../template/textolivre.cfg;
-	      xelatex article.tex; biber article; xelater article.tex; xelatex article.tex;
+	      echo "compiling ${IDs[$i]}..."
+	      if [ $ALWAYSTEXCOMP = false ]; then 
+		  while true; do
+		      read -u 2 -p "Which TeX compiler? 1) XeLaTeX, 2) LuaLateX, 3) always XeLaTeX, 4) always LuaLateX:" wtc
+		      case $wtc in
+			  [1]* ) TEXCOMPILER=1; break;;
+			  [2]* ) TEXCOMPILER=2; break;;
+			  [3]* ) TEXCOMPILER=1; ALWAYSTEXCOMP=true; break;;
+			  [4]* ) TEXCOMPILER=2; ALWAYSTEXCOMP=true; break;;
+			  * ) echo "Please choose an option.";;
+		      esac
+		  done
+	      fi
+	      if [ $TEXCOMPILER = 1 ]; then
+		  xelatex article.tex; biber article; xelatex article.tex; xelatex article.tex;
+	      else
+	         lualatex article.tex; biber article; lualatex article.tex; lualatex article.tex;
+	      fi
 	      cd $CURRENTFOLDER 
 	  fi
           if [ $ALWAYSAG = false ]; then
@@ -77,7 +103,7 @@ do
 	  fi
 	  if [ $ALWAYSCL = false ]; then
 	      while true; do
-		  read -u 2 -p "Clen (y/n/a)?" yn
+		  read -u 2 -p "Clean (y/n/a)?" yn
 		  case $yn in
 		      [Yy]* ) CLEAN=true; break;;
 		      [Nn]* ) CLEAN=false; exit;;
@@ -88,7 +114,7 @@ do
 	  else
 	      CLEAN=true
 	  fi
-	  if [ $CLEAN = true]; then
+	  if [ $CLEAN = true ]; then
 	      git clean -dxf $DEST_FOLDER
 	  fi
       fi
