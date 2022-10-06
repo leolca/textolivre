@@ -1,0 +1,1026 @@
+% !TEX TS-program = XeLaTeX
+% use the following command:
+% all document files must be coded in UTF-8
+\documentclass[english]{textolivre}
+% build HTML with: make4ht -e build.lua -c textolivre.cfg -x -u article "fn-in,svg,pic-align"
+
+\journalname{Texto Livre}
+\thevolume{15}
+%\thenumber{1} % old template
+\theyear{2022}
+\receiveddate{\DTMdisplaydate{2022}{2}{10}{-1}} % YYYY MM DD
+\accepteddate{\DTMdisplaydate{2022}{4}{22}{-1}}
+\publisheddate{\DTMdisplaydate{2022}{7}{5}{-1}}
+\corrauthor{Luana Lopes Amaral}
+\articledoi{10.35699/1983-3652.2022.38715}
+%\articleid{NNNN} % if the article ID is not the last 5 numbers of its DOI, provide it using \articleid{} commmand 
+% list of available sesscions in the journal: articles, dossier, reports, essays, reviews, interviews, editorial
+\articlesessionname{articles}
+\runningauthor{Amaral} 
+%\editorname{Leonardo Araújo} % old template
+\sectioneditorname{Daniervelin Pereira}
+\layouteditorname{Carolina Garcia}
+
+\title{Online resources for the syntactic-semantic classification of verbs: theory, methods and applications}
+\othertitle{Recursos online para a classificação sintático-semântica de verbos: teoria, métodos e aplicações}
+% if there is a third language title, add here:
+%\othertitle{Artikelvorlage zur Einreichung beim Texto Livre Journal}
+
+\author[1]{Luana Lopes Amaral \orcid{0000-0002-4290-1208} \thanks{Email: \href{mailto:luanalopes@ufmg.br}{luanalopes@ufmg.br}}}
+\affil[1]{Faculdade de Letras, Universidade Federal de Minas Gerais, Belo Horizonte, Minas Gerais, Brasil.}
+
+\addbibresource{article.bib}
+% use biber instead of bibtex
+% $ biber article
+
+% used to create dummy text for the template file
+\definecolor{dark-gray}{gray}{0.35} % color used to display dummy texts
+\usepackage{lipsum}
+\SetLipsumParListSurrounders{\colorlet{oldcolor}{.}\color{dark-gray}}{\color{oldcolor}}
+
+% used here only to provide the XeLaTeX and BibTeX logos
+\usepackage{hologo}
+
+% if you use multirows in a table, include the multirow package
+\usepackage{multirow}
+
+% provides sidewaysfigure environment
+\usepackage{rotating}
+
+% CUSTOM EPIGRAPH - BEGIN 
+%%% https://tex.stackexchange.com/questions/193178/specific-epigraph-style
+\usepackage{epigraph}
+\renewcommand\textflush{flushright}
+\makeatletter
+\newlength\epitextskip
+\pretocmd{\@epitext}{\em}{}{}
+\apptocmd{\@epitext}{\em}{}{}
+\patchcmd{\epigraph}{\@epitext{#1}\\}{\@epitext{#1}\\[\epitextskip]}{}{}
+\makeatother
+\setlength\epigraphrule{0pt}
+\setlength\epitextskip{0.5ex}
+\setlength\epigraphwidth{.7\textwidth}
+% CUSTOM EPIGRAPH - END
+
+% LANGUAGE - BEGIN
+% ARABIC
+% for languages that use special fonts, you must provide the typeface that will be used
+% \setotherlanguage{arabic}
+% \newfontfamily\arabicfont[Script=Arabic]{Amiri}
+% \newfontfamily\arabicfontsf[Script=Arabic]{Amiri}
+% \newfontfamily\arabicfonttt[Script=Arabic]{Amiri}
+%
+% in the article, to add arabic text use: \textlang{arabic}{ ... }
+%
+% RUSSIAN
+% for russian text we also need to define fonts with support for Cyrillic script
+% \usepackage{fontspec}
+% \setotherlanguage{russian}
+% \newfontfamily\cyrillicfont{Times New Roman}
+% \newfontfamily\cyrillicfontsf{Times New Roman}[Script=Cyrillic]
+% \newfontfamily\cyrillicfonttt{Times New Roman}[Script=Cyrillic]
+%
+% in the text use \begin{russian} ... \end{russian}
+% LANGUAGE - END
+
+% EMOJIS - BEGIN
+% to use emoticons in your manuscript
+% https://stackoverflow.com/questions/190145/how-to-insert-emoticons-in-latex/57076064
+% using font Symbola, which has full support
+% the font may be downloaded at:
+% https://dn-works.com/ufas/
+% add to preamble:
+% \newfontfamily\Symbola{Symbola}
+% in the text use:
+% {\Symbola }
+% EMOJIS - END
+
+% LABEL REFERENCE TO DESCRIPTIVE LIST - BEGIN
+% reference itens in a descriptive list using their labels instead of numbers
+% insert the code below in the preambule:
+%\makeatletter
+%\let\orgdescriptionlabel\descriptionlabel
+%\renewcommand*{\descriptionlabel}[1]{%
+%  \let\orglabel\label
+%  \let\label\@gobble
+%  \phantomsection
+%  \edef\@currentlabel{#1\unskip}%
+%  \let\label\orglabel
+%  \orgdescriptionlabel{#1}%
+%}
+%\makeatother
+%
+% in your document, use as illustraded here:
+%\begin{description}
+%  \item[first\label{itm1}] this is only an example;
+%  % ...  add more items
+%\end{description}
+% LABEL REFERENCE TO DESCRIPTIVE LIST - END
+
+
+% add line numbers for submission
+%\usepackage{lineno}
+%\linenumbers
+
+
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\setotherlanguage{czech}
+
+
+\begin{document}
+\maketitle
+
+\begin{polyabstract}
+\begin{abstract}
+Verb classes are defined in lexical-semantics literature as syntactically coherent groups of verbs that also share meaning components. Thus, the investigation of verb classes leads to important insights into the syntax-semantics interface. In this perspective, starting from \posscite{levin_english_1993} foundational work for English, many authors have developed analyses for the syntactic-semantic classification of verbs in different languages. The aim of this paper is to provide an overview of such studies, focusing on those that constitute online open access resources for the syntactic-semantic classification of verbs: VerbNet for English, BVI for Basque, AnCoraVerb for Spanish and Catalan, VerboWeb for Brazilian Portuguese, CROVALLEX for Croatian, and VALLEX for Czech. Thus, this paper reviews the general theoretical assumptions on verb classification shared by all the works presented, and shows the specific characteristics of each one, considering the body of data, the specific theoretical perspective, analyses and methodology, and the search engines they provide. Finally, it offers a comparative analysis of two specific verb classes (namely, image creation verbs and verbs of creation and transformation), drawing on data from the studies mentioned above. Although these resources assume a specific lexical-semantic approach for verb classification, they provide valuable data and analyses that can be useful for research in different theoretical perspectives.
+
+\keywords{Verb classes \sep Event structure \sep Argument structure \sep  Online resources \sep Digital lexicons \sep Verbs of creation}
+\end{abstract}
+
+\begin{portuguese}
+\begin{abstract}
+Classes verbais são definidas na literatura em semântica lexical como grupos sintaticamente coerentes de verbos que também compartilham componentes de significado. Assim, a investigação de classes verbais leva a importantes descobertas sobre a interface sintaxe-semântica. Nessa perspectiva, a partir do trabalho fundador de \textcite{levin_english_1993} para o inglês, muitos autores desenvolveram análises para a classificação sintático-semântica de verbos em diferentes línguas. O objetivo deste artigo é fornecer uma visão geral de tais trabalhos, com foco naqueles que constituem recursos online de acesso aberto para a classificação sintático-semântica de verbos: VerbNet para o inglês, BVI para o basco, AnCoraVerb para o espanhol e o catalão, VerboWeb para o português brasileiro, CROVALLEX para o croata e VALLEX para o tcheco. O artigo revisa os pressupostos teóricos gerais sobre classificação de verbos compartilhados por todos os trabalhos apresentados e apresenta as características específicas de cada um, considerando o corpo de dados, as análises e metodologias específicas e os mecanismos de busca que eles fornecem. Por fim, o presente artigo oferece uma análise comparativa de duas classes verbais específicas (a saber, verbos de criação de imagem e verbos de criação e transformação), com base nos dados dos trabalhos citados acima. Embora esses recursos assumam uma abordagem léxico-semântica específica para classificação de verbos, eles fornecem dados e análises valiosos que podem ser úteis para pesquisas em diferentes perspectivas teóricas.
+
+\keywords{Classes verbais \sep Estrutura de eventos \sep Estrutura argumental \sep Recursos online \sep Léxicos digitais \sep Verbos de criação}
+\end{abstract}
+\end{portuguese}
+% if there is another abstract, insert it here using the same scheme
+\end{polyabstract}
+
+\section {Introduction}\label{Section1}
+
+Since \posscite{fillmore_grammar_2003} first findings, it has been argued that semantic properties of verbs have an impact on syntactic structure. In his seminal work on lexical semantics, the author showed that only the change of state verbs, such as \textit{break}, can occur in the well-known causative alternation, while verbs which do not describe changes of state, such as \textit{hit}, do not present the same pattern of change, as examples \ref{itm1} and \ref{itm2} illustrate, respectively.
+
+\begin{enumerate}[label=(\arabic*)]
+    \item \label{itm1}
+    \begin{enumerate}[label=\alph*)]
+        \item John broke the stick.
+        \item The stick broke.
+    \end{enumerate}
+    \item \label{itm2}
+    \begin{enumerate}[label=\alph*)]
+        \item John hit the tree (with a rock).
+        \item *The tree hit.
+    \end{enumerate}
+\end{enumerate}
+\cite[p.~126-128]{fillmore_grammar_2003}
+
+Following the idea that lexical semantic properties of verbs determine sentence form, \textcite{levin_english_1993} took over the immense endeavor of classifying English verbs according to the relation between their semantics and their syntax. In her study, she systematized the correlations first found by \textcite{fillmore_grammar_2003}, showing that what happens with \textit{break} and \textit{hit} are properties shared with a semantically defined group of verbs, or a \textit{verb class}.
+
+
+\begin{enumerate}[label=(\arabic*),resume]
+\item Break verb class: \textit{break}, \textit{crack}, \textit{rip}, \textit{shatter}, \textit{snap}...
+\item Hit verb class: \textit{bash}, \textit{hit}, \textit{kick}, \textit{pound}, \textit{tap}, \textit{whack}...
+\end{enumerate}
+\cite[p.~7]{levin_english_1993}
+
+As \textcite[p.~17]{levin_english_1993} herself puts it, “verb classes arise because a set of verbs with one or more shared meaning components show similar behavior”. Besides \textit{break} verbs and \textit{hit} verbs, many other classes emerged in \posscite{levin_english_1993} analysis, each one related to specific syntactic and semantic properties. Two of those classes are the image creation verbs, exemplified in \ref{itm5}, and the verbs of creation and transformation, exemplified in \ref{itm6}. These classes will be of special interest in this paper and will be further described in \Cref{Section4}.
+
+
+\begin{enumerate}[label=(\arabic*),resume]
+\item \label{itm5} Image creation verbs: \textit{embroider}, \textit{doodle}, \textit{illustrate}, \textit{mark}, \textit{paint}, \textit{type}…
+\item \label{itm6} Verbs of creation and transformation: \textit{build}, \textit{create}, \textit{compose}, \textit{develop}, \textit{transform}…
+\end{enumerate}
+\cite[p.~169--179]{levin_english_1993}
+
+\posscite{levin_english_1993} work inspired the syntactic-semantic classification of verbs that continued to be developed in different theoretical perspectives, and also the study of verb classes in different languages. One of the most relevant consequences of her work was the creation of VerbNet \cite{schuler_verbnet:_2005,kipper_large-scale_2008}, an online open access resource which gathers \posscite{levin_english_1993} classes and many others later developed and makes this information available in an easily searchable platform. Also, based on her initial ideas and inspired by VerbNet, many researchers around the world proposed similar classifications and resources for the verbal lexicon of languages other than English. BVI \cite{estarrona_methodology_2015}, AnCoraVerb \cite{aparicio_ancora-verb:_2008,taule_ancora-net:_2010}, VerboWeb \cite{cancado_verboweb:_2017}, CROVALLEX \cite{preradovic_crovallex:_2009,preradovic_crovallex_2010}, and VALLEX \cite{kettnerova_syntax-semantics_2012} are of particular interest in this paper, and they are all online resources, or digital lexicons, like VerbNet, for the analysis and syntactic-semantic classification of verbs in different languages (BVI for Basque, AnCoraVerb for Spanish and Catalan, VerboWeb for Brazilian Portuguese, CROVALLEX for Croatian, and VALLEX for Czech).
+
+The investigation of verb classes leads to important insights into the syntax-semantics interface, since each class is determined by correlations between verb meaning and sentence form. In this case, resources such as VerbNet can be viewed as valuable sources of information, both data and analyses, for Theoretical Linguistics. Besides, they are all accessible online, being a great example of research aligned with the growing interest of the scientific community in Open Science practices \cite{serrapilheira_guia_2020}. Assuming the relevance of such research work, the aim of this paper is to provide an overview of the syntactic-semantic classification of verbs in different languages, focusing on the online open access resources: VerbNet, BVI, AnCoraVerb, VerboWeb, CROVALLEX, and VALLEX. Theoretical linguists are not very familiar with these resources, as they are mostly built for NLP (natural language processing) purposes, and the discussion concerning these data occurs mainly in Computational Linguistics. Thus, this paper also aims at bringing these resources into Theoretical Linguistics, especially considering the rich body of data and the rich theoretical analyses they provide. In order to provide a clear view of the use of such resources, we also present a comparative analysis of image creation verbs and verbs of creation and transformation, drawing on data made available in the presented resources.
+
+Besides the ones presented, there are other important resources that should be acknowledged. FrameNet \cite{ruppenhofer_framenet_2016}, WordNet \cite{fellbaum_wordnet:_1998}, and PropBank \cite{bonial_propbank:_2014} are important lexical resources that are not specific to verbs, but analyze other aspects of the lexicon as well. Also, there are other studies which are focused on verbs, but take a typological perspective, such as the Leipzig Valency Classes Project \cite{hartmann_valency_2013,malchukov_introducing_2015}. We acknowledge the importance of these studies, but they are not going to be analyzed in this paper, as we focus here on online open access resources for the syntactic-semantic classification of verbs in specific languages\footnote{At the end of the paper, we provide an \hyperref[appendixA]{Appendix} with a brief list of useful online resources for the study of verb classes, including those analyzed here and those that were left out.}.
+
+The paper is organized as follows: in \Cref{Section2}, we review the theoretical background which is common throughout the studies hereby presented; \Cref{Section3} provides an overview of VerbNet, BVI, AnCoraVerb, VerboWeb, CROVALLEX, and VALLEX, including specific theoretical assumptions, methodology for data gathering and analysis, results and classes presented in each database, as well as comments on the practical search mechanisms. In \Cref{Section4}, the comparative analysis of image creation verbs and verbs of creation and transformation is presented; \Cref{Section5} brings some final remarks.
+
+\section{Shared theoretical assumptions}\label{Section2}
+
+This section reviews the general background for the syntactic-semantic classification of verbs. As all the works presented here are initially inspired by \textcite{levin_english_1993}, they all share general theoretical assumptions, despite differing in more specific topics (to be presented in \Cref{Section3}).
+
+First of all, all these studies share the same assumption about what a verb class is and what the criteria for verb classification are. As explained in \Cref{Section1}, verb classes are syntactically coherent groups of verbs which share semantic properties. According to \textcite{de_clerck_introduction:_2013}, this type of classification is made assuming lexical-grammatical criteria, i.e., assuming that lexical semantics defines the behavior of verbs and the syntactic realization of arguments. An important aspect of the syntactic-semantic correlation which defines classes is that not all semantic properties are grammatically relevant. It means that the semantic properties which define verb classes are those which have an impact on the syntactic realization of arguments (also called verbal diathesis or valency).
+
+\textcite{cancado_verboweb:_2018}, drawing on \posscite{levin_argument_2005} analysis of English, show for instance that \textit{motion verbs} cannot be a verb class in Brazilian Portuguese. Different verbs which describe the motion of an object do not have a uniform syntactic behavior, as the examples from Brazilian Portuguese illustrate:
+
+\begin{enumerate}[label=(\arabic*),resume]
+\item\label{itm7} \begin{tabular}[t]{*{3}{@{}l@{\hskip3pt}}}
+    O & maratonista & correu \\
+    the & marathon.runner & ran \\
+    \multicolumn{3}{@{}l@{}}{‘The marathon runner ran.’}
+    \end{tabular} 
+\item\label{itm8} \begin{tabular}[t]{*{5}{@{}l@{\hskip3pt}}}
+    O & menino & balançou & a & cortina. \\
+    the & boy & swung & the & curtain \\
+    \multicolumn{5}{@{}l@{}}{‘The boy swung the curtain.’}
+    \end{tabular}  
+\item\label{itm9} \begin{tabular}[t]{*{8}{@{}l@{\hskip3pt}}}
+    O & atacante & arremessou & a & bola & para & o & gol.\\
+    the & forward & threw & the & ball & to & the & goal\\
+    \multicolumn{8}{@{}l@{}}{‘The forward threw the ball to the goal.’}
+    \end{tabular}  
+\end{enumerate}
+\cite[p.~127]{cancado_verboweb:_2018}
+
+As can be seen in the examples \labelcref{itm7}, \labelcref{itm8} and \labelcref{itm9}, a verb describing a motion event can be either intransitive (as \textit{correr} ‘run’), transitive (as \textit{balançar} ‘swing’) or ditransitive (as \textit{arremessar} ‘throw’). Hence, the semantic property of motion alone does not define a verb class, as these verbs do not have a syntactically coherent behavior.
+
+However, analyzing more specific aspects of the semantics of motion verbs, other types of generalizations arise. \textit{Correr} ‘run’ is an agentive verb, and it describes the internal motion of the agent in itself; \textit{balançar} ‘swing’ describes the manner of motion of an inanimate object, caused by an external force; and, finally, \textit{arremessar} ‘throw’ describes the motion of an object through a path, also caused by an external force. These more general properties of the event described by these verbs are relevant for syntactic structure. So, agentive motion verbs will be intransitive like \textit{correr} ‘run’, manner of motion verbs will be transitive like \textit{balançar} ‘swing’, and verbs which describe a motion through a path will be ditransitive like \textit{arremessar} ‘throw’ \cite{levin_argument_2005,levin_english_1993,meirelles_propriedade_2017}.
+
+For \textcite{levin_english_1993}, \textit{run} and \textit{swing} belong to distinct subclasses of manner of motion verbs in English, and \textit{throw} belongs to the \textit{throw} verbs, a subclass within the more general class of verbs of throwing (which also includes the subclass of \textit{pelt} verbs).
+
+\begin{enumerate}[label=(\arabic*),resume]
+\item \label{itm10} Manner of motion verbs \cite[p.~264]{levin_english_1993}: \\
+\textit{Run} verbs: \textit{fly}, \textit{gallop}, \textit{hike}, \textit{jog}, \textit{run}, \textit{sleepwalk}… \\
+\textit{Roll} verbs: \textit{bounce}, \textit{drop}, \textit{float}, \textit{move}, \textit{roll}, \textit{swing}…
+\item \label{itm11}\textit{Throw} verbs: \textit{pass}, \textit{pitch}, \textit{shoot}, \textit{sling}, \textit{throw}, \textit{toss}…
+ \cite[p.~146]{levin_english_1993}   
+\end{enumerate}
+   
+The main motivation to distinguish these classes lies in their syntactic behavior, as shown in \labelcref{itm7}, \labelcref{itm8} and \labelcref{itm9}. Besides the basic transitivity, other syntactic properties define the classes. For instance, in both English and Brazilian Portuguese, only motion verbs of the \textit{roll} subclass occur in a type of causative alternation, as in the alternate sentences \textit{Bill rolled the ball down the hill/The ball rolled down the hill} \cite[p.~265]{levin_english_1993}. In English, only motion verbs of the \textit{throw} type occur in the dative alternation, as in the alternate sentences \textit{Steve tossed the ball to Anna/Steve tossed Anna the ball} \cite[p.~147]{levin_english_1993}. The dative alternation does not occur in Brazilian Portuguese with these verbs.
+
+These examples demonstrate which type of syntactic and semantic properties are taken into account in the classification of verbs. Syntactic behavior is understood as the syntactic functions of arguments, considering also the variable behavior, or argument alternations. Hence, for the classification of verbs, the syntactic properties taken into account are \textit{argument realization} properties, i.e., transitivity and argument alternations \cite{levin_argument_2005}, also called diathesis or valency. Argument realization properties relate to which argument of a verb goes to which syntactic function (subject, object and oblique positions, as in examples in \labelcref{itm7}, \labelcref{itm8} and \labelcref{itm9}). Alternations are variations in these syntactic patterns, as the cases illustrating the causative alternation (\textit{John broke the stick/The stick broke}), the manner of motion verbs alternation (\textit{Bill rolled the ball down the hill/The ball rolled down the hill}) and the dative alternation (\textit{Steve tossed the ball to Anna/Steve tossed Anna the ball}). In each of these cases, an argument of the verb may be in different syntactic positions, depending on the sentence (as the case of \textit{the stick}, which appears in either subject or object positions in the causative alternation).
+
+Semantically defined groups of verbs are understood as verbs that share semantic properties related to \textit{event structure}, as the more general properties of motion verbs - agentivity, manner, external causation, and path \cite{levin_argument_2005}. Event structure is a generalization over specific situations described by verbs, and groups of verbs may share the same event structure in the sense that they describe events of the same type, or which have the same types of participants and the same temporal contour. It is assumed that argument realization and argument alternations can be predicted from the event structure lexicalized by verbs and verb classes.
+
+In more recent studies, linguists working with argument structure, in different theoretical perspectives, agree that semantic properties which govern argument realization are event structure properties \cite{goldberg_constructions:_1995,croft_verbsaspect_2012,ramchand_situations_2018,beavers_roots_2020}. However, those more recent developments on the investigation of argument structure, which can be described as non-lexicalist, recognize that event structure may not be coded in verbal semantics, or at least not only in verbal semantics. In different ways, these studies analyze event structure as a property of both verbs and argument structure constructions, delegating many event structure properties to syntax or to a shared work between syntax and the lexicon. Without going into the details of those proposals, the important assumption to highlight, common in all frameworks, is that there is a strong link between event structure and argument realization.\footnote{See more details about different perspectives in \textcite{levin_argument_2018}.} The syntactic-semantic classification of verbs in the resources presented follows this path, despite assuming the lexicalist view that verbs and verb classes play a huge role in this relation.
+
+Going back to the examples of motion verbs, \textit{roll} verbs, \textit{run} verbs, and \textit{throw} verbs have different event structures: \textit{run} verbs describe a type of event in which an agent acts and moves at the same time; \textit{roll} verbs describe a type of event in which an agent causes the motion of an object; and \textit{throw} verbs describe a type of event in which an agent causes the motion of an object through a path.
+
+The semantic analysis of event structure assumes that verb meaning is compositional, so the meaning of verbs derives from a combination of smaller components of the event structure. More specifically, verb meaning comprises properties of smaller parts of the event, or subevents, and relations between subevents and participants, also known as force-dynamics or event complexity \cite{levin_argument_2005,croft_verbsaspect_2012}. \textcite{butt_building_1998} propose to represent the semantics of verb classes using more abstract properties of the event structure, in a predicate decomposition metalanguage, which will be further explored in \Cref{Section3}. The event structure for \textit{run} verbs, for example (an agent acts and moves at the same time), can be represented as in \ref{itm12}. The \textit{manner} component specifies the way in which an individual (x) acts, a type of motion in the case of \textit{run}.
+
+\begin{enumerate}[label=(\arabic*),resume]
+\item \label{itm12}[ x ACT$_{\textit{<MANNER>}}$] \\
+\cite[p.~108]{butt_building_1998}
+\end{enumerate}
+    
+Components of the event structure provide information about two important semantic properties widely used in verb classification: thematic roles and lexical aspect. Thematic roles are the semantic functions associated with the participants of an event \cite{bach__1968,jackendoff_semantic_1990,dowty_thematic_1991}. So, going back to motion verbs, the participant with control over the motion and who starts the motion is an Agent (the subject of the three types of verbs: \textit{run}, \textit{roll}, and \textit{throw}). The participant who is in motion is usually called the Theme (the subject of \textit{run} and the object of \textit{roll} and \textit{throw}). Finally, the place to which the Theme goes is characterized as the Goal (the oblique for \textit{throw} verbs). There are many other types of thematic roles, as we will see in \Cref{Section3}.
+
+Lexical aspect, in its turn, is defined as the internal temporal structure of situations \cite{vendler_linguistics_1967,dowty_word_1979,valin_jr._exploring_2005,rothstein_structuring_2004}. In \posscite{vendler_linguistics_1967} traditional approach, verbs can be divided into four aspectual types (activities, accomplishments, achievements, and states), according to three characteristics: dynamicity, duration, and telicity. Dynamic situations (or events) are energetic and need change and force to take place; non-dynamic situations (or states) are non-energetic, so there are no changes in the course of time. Durative situations have long duration in time, and non-durative (or punctual) situations occur in a short period of time. Telic situations develop in the direction of a result or ending point, while atelic situations do not. So, activities (exemplified by \textit{run} and \textit{roll} verbs) are dynamic, durative and atelic; accomplishments (exemplified by \textit{throw} verbs) are dynamic, durative and telic; achievements (exemplified by \textit{break} in an intransitive form) are dynamic, punctual and telic; states (exemplified by verbs such as \textit{know}, \textit{love} and phrases such as \textit{be pretty}) are non-dynamic, durative and atelic. Although Vendler’s proposal is widely used in verb classification, verbs can have variable aspectual behavior. \textit{Break}, for example, is an achievement in the intransitive form, but it can be an accomplishment in a transitive sentence. Besides, other types of aspects (in addition to the ones proposed by \textcite{vendler_linguistics_1967}) were also discovered (as semelfactives; \textcite{smith_parameter_1991}, and degree achievements, \textcite{dowty_thematic_1991}).
+
+Syntactic and semantic properties that define verb classes are represented in a variety of ways. Types of representation of the syntactic structure include subcategorization frames, and abstract sentence structures. Types of representations for the event structure of verbs are generally given in the form of thematic grids, aspectual classes and predicate decomposition (as shown in \ref{itm12}). In BVI, for instance, the syntactic-semantic properties of the Basque manner of motion verb \textit{dardaratu} ‘tremble’ are represented as:
+
+\begin{enumerate}[label=(\arabic*), resume]
+    \item \label{itm13} arg1: theme, - (abs) 
+\end{enumerate}
+   
+The representation in \cref{itm13} signals that \textit{dardaratu} has a single argument (a direct object; arg0 stands for subject and arg1 stands for object), bearing the Theme thematic role and marked with absolutive case (abs). These representations will be detailed in \Cref{Section3}.
+
+An important implication of the assumption that event structure determines argument realization is that different syntactic properties may emerge if a single verb is able to describe different types of events. As polysemy is a pervasive process in the world’s languages, a single verb normally does not display the same type of event structure in all its uses. According to the hypothesis that event structure determines argument realization, as the verb changes its meaning, it can also change its syntactic properties, as long as the change in meaning affects semantically relevant properties of the verb \cite{amaral_polysemy_2016}. Thus, lexical-semantic theories of verb classification treat verbal polysemy as the property of verbs which are able to belong to different classes \cite{arsenijevic_lexicalized_2013,cancado_introducao_2016}. The Croatian verb \textit{potisnuti}, for instance, has four entries in CROVALLEX, each one associated with a different meaning and a different class:\footnote{CROVALLEX does not provide English translations for the verbs. The translations in example \ref{itm14} are from Google Translator, based on the definition for each entry given in CROVALLEX.}
+
+\begin{enumerate}[label=(\arabic*),resume]
+\item \label{itm14} 1 \textit{potisnuti (pòtisnuti)} ‘press down’ \\
+class: put\_result \\
+2 \textit{potisnuti (pòtisnuti)} ‘force something to stay inside’ \\
+class: conceal \\
+3 \textit{potisnuti (pòtisnuti)} ‘force to retreat (in battle)’ \\ 
+class: force \\
+4 \textit{potisnuti (pòtisnuti)} ‘force when to move, remove; push away’ \\
+class: battle 
+\end{enumerate}
+
+A final important theoretical assumption for verb classification is the postulation of different levels of classification, more specifically classes and subclasses. As proposed by \textcite{levin_english_1993}, different levels of classification are needed in order to fully understand the verbal lexicon of a language. This happens because different types of grammatically relevant semantic properties might crosscut different classes and also might be more general or more specific. An interesting example provided by \textcite{wetzels_lexical_2016}, and also part of the classification of Brazilian Portuguese in VerboWeb, is the case of reciprocal verbs. Reciprocity is considered to be a grammatically relevant semantic property of verbs, since it determines the occurrence of the reciprocal participant as a single plural argument or as two distinct arguments in syntax \cite{godoy_os_2008}. The examples in \labelcref{itm15,itm16} are from VerboWeb; in (a) the reciprocal participant is a single plural argument whereas in (b) it appears as two distinct arguments in syntax:
+
+\begin{enumerate}[label=(\arabic*),resume]
+\item \label{itm15} \begin{enumerate}[label=\alph*)]
+    \item \begin{tabular}[t]{*{4}{@{}l@{\hskip3pt}}}
+    \textbf{O} & \textbf{casal} & brigava & sempre. \\
+    the & couple & argued & always \\
+    \multicolumn{4}{@{}l@{}}{‘The couple argued all the time.’}
+    \end{tabular} 
+    \item \begin{tabular}[t]{*{7}{@{}l@{\hskip3pt}}}
+    \textbf{O} & \textbf{marido} & sempre & brigava & com & \textbf{a} & \textbf{mulher}.\\
+    the & husband & always & argued & with & the & wife \\
+    \multicolumn{7}{@{}l@{}}{‘The husband argued with his wife all the time.’}
+    \end{tabular} 
+    \end{enumerate}
+
+\item \label{itm16} \begin{enumerate}[label=\alph*)]
+   \item \begin{tabular}[t]{*{5}{@{}l@{\hskip3pt}}}
+    O & técnico & conectou & \textbf{os} & \textbf{computadores}.\\
+    the & repairman & connected & the & computers \\
+    \multicolumn{5}{@{}l@{}}{‘The repairman connected the computers.’}
+    \end{tabular} 
+   
+   \item \begin{tabular}[t]{*{6}{@{}l@{\hskip3pt}}}
+    O & técnico & conectou & \textbf{um computador} & ao & \textbf{outro}. \\
+    the & repairman & connected & one computer & to.the & other \\
+    \multicolumn{6}{@{}l@{}}{‘The repairman connected one computer to the other.’}
+    \end{tabular} 
+    \end{enumerate}
+\end{enumerate}
+
+Reciprocity crosscuts other relevant semantic properties. As can be seen from the examples \labelcref{itm15} and \labelcref{itm16}, reciprocity can be a property of the Agent, as the case of \textit{brigar} ‘argue’ (two individuals are intentionally involved in a reciprocal action), or it can be a property of the Patient, as the case of \textit{conectar} ‘connect’ (two objects are reciprocally affected by an action). Thus, although reciprocity is relevant for syntax, it is subordinated to other more general properties, such as intentionality and change of state. For that, \textcite{wetzels_lexical_2016} propose that this property should be considered in a fine-grained classification, the level in which one can find subclasses in VerboWeb’s analysis. In VerboWeb’s analysis, the verb \textit{brigar} belongs to the class of internally caused verbs, and to the subclass of reciprocal verbs with reciprocity in the subject; and \textit{conectar} belongs to the optionally agentive change of state class, and to the subclass of reciprocal verbs with reciprocity in the object.
+
+Although each resource presented here has its own classes, subclasses and properties, they share the assumptions presented in this section, following \textcite{levin_english_1993}. And, as demonstrated with the Basque example in \ref{itm13}, they also provide representations for both syntactic and semantic properties of verbs. One can also find in these resources the syntactic-semantic properties that define each class, as well as several examples of verbs, classes, and subclasses for the object language. As \textcite[p.~10]{levin_english_1993} argues, “the existence of ties between verb behavior and verb meaning is not particular to English”. For this reason, a great deal of research has been developed in order to analyze such ties in many different languages. In the next section, we will present specifically the analyses for English, Basque, Spanish, Catalan, Brazilian Portuguese, Croatian, and Czech, which assume the same perspective as \textcite{levin_english_1993}.
+
+\section{Online resources for the syntactic-semantic classification of verbs}\label{Section3}
+
+This section is dedicated to providing a general overview of the online open access resources for the syntactic-semantic classification of verbs. These are VerbNet, BVI, AnCoraVerb, VerboWeb, CROVALLEX, and VALLEX, which present an analysis of the verbal lexicons of 7 different languages: English, Basque, Spanish and Catalan, Brazilian Portuguese, Croatian, and Czech, respectively. 
+
+\subsection{VerbNet (English)}
+
+VerbNet \cite{schuler_verbnet:_2005,kipper_large-scale_2008} is the most complete and developed online resource for the syntactic-semantic classification of verbs, being a great inspiration for those which came next. It “provides detailed syntactic semantic descriptions of Levin classes” for the English language \cite[p.~21]{kipper_large-scale_2008}. The current version (3.4) presents 4570 verbs in 6791 senses, 329 classes, and 272 subclasses. It also focuses on NLP applications, although its vast quantity of data, together with thorough theoretical analyses, are easily accessible for linguists. It can be accessed at \url{https://uvi.colorado.edu/} (accessed on: 24 Nov. 2021) together with other important lexical resources, such as FrameNet and PropBank (which are not focused on verbal classification). VerbNet’s analysis draws heavily on \textcite{levin_english_1993}, but brings several new theoretical analyses, representations, and classes \cite{kipper_large-scale_2008}.
+
+VerbNet provides an entry for each verb class. In the entry for a class, one can find the set of members of the class, the thematic roles for the arguments of the verbs, as well as selectional restrictions on the arguments, and a representation of the syntactic argument realization patterns of the class. VerbNet’s analyses, following \textcite{levin_english_1993}, incorporates different degrees of granularity, so classes can be further subdivided in distinct subclasses. Classes are labeled by the name of a representative verb, and numbers are used to signal the level of granularity. The class entry provides a sentence example of a representative verb for each argument realization pattern, as well as a semantic description of the event structure in terms of predicate decomposition. Specific entries for individual verbs provide information about specific semantic components of that verb (not shared by other class members) and also links to other resources.
+
+As \textcite{levin_argument_2005} explain, predicate decomposition is a representation of the meaning of verbs, which are taken to be decomposable semantic expressions. In this perspective, it is assumed that the meaning of verbs is built from a group of smaller semantic components, traditionally considered to be primitives, which can be represented in a predicate-argument structure using English verbs as a form of metalanguage. In VerbNet, predicates such as DO, CAUSE, BE, and HAVE are used to describe the semantic components of the meaning of verbs in a specific class. \textit{Run} verbs, for example, are described by the predicate MOTION, which is defined as “an agent or a theme in motion”. This representation is more specific than the one given in \labelcref{itm12}, as it includes the motion component of the verbal semantics. As an exemplification, we show in \Cref{Table1} the information provided in VerbNet for the class of \textit{run} verbs, and in \Cref{Table2} the entry for the verb \textit{crawl} (which belongs to the \textit{run} class).
+
+\begin{table}[h!]
+\centering
+\begin{threeparttable}
+\caption{Entry for the class of \textit{run} verbs in VerbNet.}
+\label{Table1}
+\begin{tabular} {lp{0.5\textwidth}}
+\toprule
+Class & run-51.3.2 \\
+\midrule
+Member Verb Lemmas (class members) & \textit{crawl}, \textit{jump}, \textit{roar}, \textit{step}, \textit{stomp}, \textit{troop}…\protect\footnotemark \\
+\midrule 
+\multirow{7}{*}{Syntactic structure} 
+& NP V \newline
+Example: The horse ran. \\
+& NP V PP.location \newline
+Example: The horse ran to the barn. \\
+& NP V PP.location \newline
+Example: The horse jumped over the fence.\\
+& There V PP NP \newline
+Example: There jumped out of the box a little white rabbit. \\
+& There V PP NP \newline 
+Example: There jumped a little white rabbit out of the box. \\
+& PP.location V NP \newline
+Example: Out of the box jumped a little white rabbit.\\
+\midrule
+\multirow{2}{*}{Semantic structure \protect\footnotemark} 
+& Roles/Selectional restrictions: \newline
+Theme [+animate|+machine] \newline
+Trajectory [+concrete] \newline 
+Initial\_Location [+concrete] \newline
+Destination [+concrete] \\
+& Semantics: \newline
+HAS\_LOCATION (e1\protect\footnotemark, Theme, ?Initial\_Location) \newline
+MOTION (ë2, Theme, Trajectory) \newline
+¬ HAS\_LOCATION (ë2, Theme, ?Initial\_Location) \newline
+HAS\_LOCATION (e3, Theme, ?Destination) \\
+\midrule
+Subclasses & run-51.3.2-1 \newline
+run-51.3.2-2 \newline
+run-51.3.2-2-1 \\
+\bottomrule
+\end{tabular}
+\source{VerbNet (\url{https://uvi.colorado.edu/verbnet/run-51.3.2}, accessed on: 24 Nov. 2021).}
+\end{threeparttable}
+\end{table}
+\addtocounter{footnote}{-3} %3=n
+\stepcounter{footnote}\footnotetext{The complete list can be found at \url{https://uvi.colorado.edu/verbnet/run-51.3.2} (accessed on: 25 Nov. 2021).}
+\stepcounter{footnote}\footnotetext{The Semantic Structure in \Cref{Table1} illustrates the semantic representation of the syntactic pattern NP V PP.location. Different semantic representations are provided for the other patterns of argument realization.}
+\stepcounter{footnote}\footnotetext{In VerbNet’s semantic representation for the events (Generative Lexicon event structures), “e” is the event variable; “e” indicates stative situations and “ë” indicates processes (dynamic situations). A number accompanying the event variable indicates the phase of the event, in the sense that e1 precedes e2, which precedes e3, and so on. More detail about such representations can be found in \textcite{brown_integrating_2018,brown_verbnet_2019}.}
+
+\begin{table}[h!]
+\centering
+\begin{threeparttable}
+\caption{Entry for the verb \textit{crawl} in VerbNet.}
+\label{Table2}
+\begin{tabular}{ll}
+\toprule
+Verb & \textit{crawl} \\
+\midrule
+\multirow{3}{*}{Verb features} & +speed \\
+& +bodily\_manner \\
+& +orientation \\
+WordNet correspondence & crawl\%2:38:00 \\
+FrameNet correspondence	& Self\_motion\\
+\bottomrule
+\end{tabular}
+\source{VerbNet (\url{https://uvi.colorado.edu/verbnet/run-51.3.2}, accessed on: 24 Nov. 2021).}
+\end{threeparttable}
+\end{table}
+
+Other information provided in class entries are dependence parse trees, for the syntactic structures, and force dynamic representations, for the event structure. Force dynamic representations of the event structure are based on the work of \textcite{croft_verbsaspect_2012}, \textcite{croft_constructions_2017}, and \textcite{kalm_event_2019}. Lexical aspect is not explicitly stated, but it can be derived from semantic representations. According to \textcite{kipper_large-scale_2008}, the predicates used in the semantic representation have temporal definitions, so they also provide aspectual information for the classes. MOTION, for instance, describes activities. According to \textcite[p.~25]{kipper_large-scale_2008},
+
+\begin{quote}
+    [e]ach predicate is associated with an event variable E that allows predicates to specify when in the event the predicate is true (start(E) for the preparatory stage, during(E) for the culmination stage, and end(E) for the consequent stage). Aspect is captured by this event variable argument present in the predicates. For example, verbs that denote activities or processes (e.g., motion verbs), have predicates referring to the during(E) stage of the event.
+\end{quote}
+
+The database also provides theoretical explanations and definitions for all the properties listed in the entry of a verb or verb class. The search in VerbNet’s database can be done using different parameters. One can search by verb, class (given that they are familiar with the class labels) and properties of the classes. A list of the classes is also provided. However, there is not a complete list of verbs.
+
+\subsection{BVI (Basque)}
+
+The Basque Verb Index \cite{estarrona_methodology_2015} follows VerbNet’s model and it is also focused on NLP applications. It can be accessed at \url{http://ixa2.si.ehu.eus/e-rolda/} (accessed on: 24 Nov. 2021), together with other resources, using the e-ROLda tool. It also links information to VerbNet, as well as to PropBank, FrameNet and WordNet. BVI provides “information about the syntactic and semantic structure of verbs as well as examples of use” for the Basque language, according to the introduction on the e-ROLda website.
+
+The database has 1211 verb entries and provides a complete list of verbs (some verb entries include more than one sense for the same verb). Despite following VerbNet’s model, BVI does not provide explicit information about verb classes, nor class entries, although classes can be derived from the information provided in the database.
+
+Information for each verb entry comprises a translation in English (which is also a FrameNet, VerbNet, and/or PropBank correspondent) and a syntactic-semantic representation in the form of a thematic grid, with information on the number of verb arguments, the thematic roles of such arguments and also syntactic functions of arguments, as well as information about case marking (as in example \ref{itm13}). Example sentences from corpora are also provided in each verb entry. In some entries, there is information on selectional restrictions for animate/inanimate, human/non-human, concrete/non-concrete. Moreover, in some of the entries it is also possible to get access to the Multilingual Central Repository, with the translation of the Basque verb into English, Catalan, Portuguese, Spanish, and Galician. Of all the resources presented here, BVI is the only one which offers a multilingual translation and comparison. The entry also specifies if the analysis was manual or automatic. More complex entries also provide information about different senses of the verb and different argument realization patterns. As an exemplification, \Cref{Table3} presents the information for the entry of the Basque verb \textit{defenditu}. The analysis presented in the entry in \Cref{Table3} was carried out automatically.
+
+\begin{table}[h!]
+\centering
+\begin{threeparttable}
+\caption{Entry for \textit{defenditu} in BVI.}
+\label{Table3}
+\begin{tabular}{>{\raggedright}p{0.3\textwidth}p{0.6\textwidth}}
+\toprule
+Verb & \textit{defenditu} \\
+\midrule
+FrameNet-PropBank correspondence/English translation & protect \\
+\multirow{3}{*}{Syntactic-semantic information} & \\	
+& arg0: agent, - (erg) \\
+& arg1: theme, - (abs) \\
+& arg2: loc, - (abl) \\
+Examples from corpora (EPEC-RolSem corpus) & Bestetik, Roldanen abokatuek guztiz gezurtatu dute atzo beren defendituak Felipe Gonzalez eta Narcis  Serra espiatzeko agindu zuenik.\protect\footnotemark \\
+\bottomrule
+\end{tabular}
+\source{BVI (\url{http://ixa2.si.ehu.eus/e-rolda/galdera.php?adi_eu=defenditu}; accessed o 24/11/2021).}
+\end{threeparttable}
+\end{table}
+
+As shown in \labelcref{itm13}, the syntactic-semantic information in BVI displays thematic roles, syntactic functions and case morphology for the verb’s arguments. Arg0 is the subject, arg1 is the object and arg2 is the oblique. Erg, abs, and abl are short for ergative, absolutive, and ablative case marking, respectively. The thematic roles associated with those functions are Agent, Theme, and Locative (loc).
+
+The search in the database can be done by verb, by sense, by English equivalent, by the number of arguments required, and by thematic structure. However, there is no class list or class search. A highlight of this resource is that English translations of the database structure, as well as translations of the data, make it easily accessible for those who are not fluent in Basque, but have interest in the Basque data. The database also provides a list of Basque verbs, with links to verb entries. The search in BVI, however, is not easy for the researcher who is not familiar with the database annotation. BVI is a corpus-based lexicon, which means that the list of verbs comes from a semiautomatic search in large Basque annotated corpora.
+
+\footnotetext{More examples are provided in \url{http://ixa2.si.ehu.eus/e-rolda/galdera.php?adi_eu=defenditu} (accessed on: 24 Nov. 2021). The examples do not have English translations.}
+
+\subsection{AnCoraVerb (Spanish and Catalan)}
+
+AnCoraVerb\_ES (for Spanish) and AnCoraVerb\_CA (for Catalan) \cite{aparicio_ancora-verb:_2008,taule_ancora-net:_2010}, as the BVI, are corpus-based lexicons. However, AnCoraVerb lexicons are not focused on NLP applications, and do not present automatic analyses. “AnCora-Verb lexicons focus on syntactic functions, arguments and thematic roles of each verbal predicate taking into account the verbal semantic class and those alternations in diathesis where the predicate can participate” \cite[p.~261]{aparicio_ancora-verb:_2008}. Both lexicons can be accessed at \url{http://clic.ub.edu/corpus/lexicons/} (accessed on: 24 Nov. 2021), together with the AnCora corpus. AnCoraVerb\_ES presents 2647 Spanish verbs, and AnCoraVerb\_CA presents 2143 Catalan verbs. A verb with more than one meaning may belong to more than one class.
+
+The theoretical basis of the classification in AnCoraVerb follows \posscite{levin_english_1993} initial assumptions, as described in \Cref{Section2}. For the representation of syntactic-semantic information, \posscite{butt_building_1998} predicate decomposition model is adopted. The semantic information is provided in the form of a Lexical Semantic Structure (LSS), built with the predicate decomposition metalanguage. The LSS determines argument structure, including alternations, and also provides information on aspect and thematic roles. In \posscite{butt_building_1998} representations, an LSS comprises three types of components: primitive predicates (such as CAUSE, BECOME and ACT), the root (or constant), which has an ontological category and specifies the meanings of individual verbs, and variables, which represent the arguments of verbs. Each class has its own LSS, however class entries are not provided in the database. The LSS in \labelcref{itm17} represents the event structure for the transitive-causative class of verbs \cite[p.~265]{aparicio_ancora-verb:_2008}:
+
+\begin{enumerate}[label=(\arabic*),resume]
+\item \label{itm17}[x CAUSE [BECOME [y <\textit{STATE} >]]]
+\end{enumerate}
+
+Verbs in this class, such as \textit{romper} ‘break’, \textit{abrir} ‘open’ and \textit{cerrar} ‘close’, have two arguments, a Cause argument (x), and a Patient argument (y) (called a Theme in AnCoraVerb’s analysis). They are also defined as accomplishment verbs. In the database, the structure in \labelcref{itm17} is not given, but it is indicated with a letter-number code: A11. The letter indicates the aspectual type of the class: accomplishments (A), achievements (B), states (C) and activities (D), and the number indicates the form of the predicate decomposition structure (as well as the granularity of the classification). The structure in \labelcref{itm17} is LSS A11, and a structure for an achievement verb, such as [BECOME [y <\textit{PLACE}>]], is LSS B21.
+
+\Cref{Table4} presents an example with the verb \textit{abismar} in Spanish. The entry of a specific verb includes its coded LSS, information about different senses associated to the same verb, the syntactic functions and thematic roles of the verb’s arguments, the alternations in which the verb occurs, and also example sentences. Verbal entries also provide links to several other resources, such as PropBank and VerbNet.
+
+\begin{table}[h!]
+\centering
+\begin{threeparttable}
+\caption{Entry for \textit{abismar} in AnCoraVerb\_ES.}
+\label{Table4}
+\begin{tabular}{>{\raggedright}p{0.3\textwidth}p{0.6\textwidth}}
+\toprule
+Verb & \textit{abismar} \\
+\midrule
+PropBank correspondent (sense 1) & immerse.01 \\
+VerbNet class & put-9.1 \\
+Syntactic-semantic information & 
+lss: A11.transitive-causative \newline
+    \begin{tabular}{lll}
+    \toprule
+        Function & Argument & Theme \\
+    \midrule
+        suj   &    arg0     & cau \\
+        cd    &    arg1     & tem \\
+        cc    &    argM     & loc \\
+    \bottomrule
+    \end{tabular}
+\\
+Example & - \\
+PropBank correspondent (sense 2) & immerse.01 \\
+VerbNet class &	put-9.1 \\
+Syntactic-semantic information & lss: B21.unaccusative-state \newline
+    \begin{tabular}{lll}
+    \toprule
+        Function & Argument & Theme \\
+    \midrule
+        suj	   &  arg1    &  tem \\
+        cd     &  argM 	  &  loc \\
+    \bottomrule
+    \end{tabular}
+\\
+Example & muchos otros que se han abismado definitivamente en el caos y el drama.\protect\footnotemark \\
+\bottomrule
+\end{tabular}
+\source{AnCoraVerb (\url{http://clic.ub.edu/mbertran/ancora/lexentry.php?file=abismar.lex.xml&lexicon=AnCoraVerb_ES}; accessed on: 24 Nov. 2021).}
+\end{threeparttable}
+ \end{table}
+
+As in BVI, arg0 is the subject (suj), arg1 is the object (cd) and arg2 is the oblique (cc). Cau, tem and loc are short for the thematic roles Cause, Theme and Locative. ArgM stands for adjunct; adjuncts are indicated in some cases, along with verbal arguments.
+
+\footnotetext{AnCoraVerb does not provide English translations for examples.}
+
+AnCoraVerb is available in English, and English translations for verbs are provided by means of PropBank correspondents. Both AnCoraVerb\_ES and AnCoraVerb\_CA provide the complete list of verbs. Specific search tools include search by syntactic structure, thematic roles and verb. There is no search by class.
+
+\subsection{VerboWeb (Brazilian Portuguese)}
+
+VerboWeb \cite{cancado_verboweb:_2017} can be accessed at \url{www.letras.ufmg.br/verboweb} (accessed on: 10 Mar. 2022). As VerbNet, VerboWeb is not corpus-based. Most of VerboWeb’s verbs come from \posscite{borba_dicionario_1990} dictionary of Brazilian Portuguese verbs. And differently from VerbNet and BVI, but similarly to AnCoraVerb, it is not focused on NLP applications. Although the authors do recognize its possible applications in NLP, VerboWeb comes as the result of theoretical lexical-semantic work, with the main goal of providing a representation of the speakers’ knowledge about the verbal lexicon, in line with \posscite{levin_english_1993} original goals. VerboWeb is also the only one of those resources which specifies a variant within a language, presenting a syntactic-semantic classification of the Brazilian Portuguese verbal lexicon. The database currently presents 1571 verbal entries (including distinct entries for polysemous verbs), 19 classes, and 8 subclasses.
+
+As AnCoraVerb, VerboWeb uses \posscite{butt_building_1998} predicate decomposition model. Based on previous studies for Brazilian Portuguese, VerboWeb develops the authors’ metalanguage for predicate decomposition and presents an event structure representation for each class. Classes are also defined by four other main properties: the common semantic content in the class, basic syntactic structure, thematic role structure, and basic lexical aspect. Each class is also determined by a group of argument realization properties. The name of a class is given considering the aspectual classification and the event structure properties of the verbs; they are crafted in order to briefly explain the semantic content of the class. All this information is provided in the class entry, together with explanations and bibliographical references for theoretical concepts.
+
+\begin{table}[h!]
+\centering
+\begin{threeparttable}
+\caption{Entry for the class of Activity: internally caused verbs (unergative) in VerboWeb.}
+\label{Table5}
+\begin{tabular}{l L{0.6\textwidth}} 
+\toprule
+Class & Activity: internally caused verbs (unergative) \\
+\midrule 
+\multirow{7}{*}{Class properties} 
+ & - Common semantic content in the class: do/make an event \\
+ & - Basic syntactic form: [NP V] (intransitive verb) \\
+ & - Thematic role structure: {Agent} \\
+ & - Predicate decomposition structure: [X DO <EVENT>] \\
+ & - Basic lexical aspect: activity \\
+ & - Licenses cognate object \\
+ & - Licenses an adjunct equivalent to the cognate object \\
+\midrule
+\multirow{10}{*}{\begin{tabular}[c]{@{}l@{}}Verbs belonging \\ to the class\end{tabular}} & Acenar $\sim$ Wave \\
+ & Andar $\sim$ Walk \\ 
+ & Apitar 2 $\sim$ Whistle \\
+ & Arrotar $\sim$ Burp \\
+ & Assobiar/Assoviar $\sim$ Whistle \\
+ & Balbuciar $\sim$ Babble \\
+ & Berrar $\sim$ Shout \\
+ & Bocejar $\sim$ Yawn \\	
+ & Bradar $\sim$ Scream \\	
+ & Brigar $\sim$ Fight...\protect\footnotemark \\
+\bottomrule
+\end{tabular}
+\source{VerboWeb (\url{http://www.letras.ufmg.br/sistemas/verboweb_cliente/ver_classe.php?id=14\#;} accessed on: 24  Nov. 2021).}
+\end{threeparttable}
+\end{table}
+
+VerboWeb also provides information on subclasses and non-classificatory (or multiclass) properties. Subclasses are a subgroup of verbs within a class, which have a specific property derived from a specific semantic content, as the case of reciprocal verbs exemplified in \Cref{Section2}. Subclasses have more properties than classes, so the subclass of reciprocal verbs (reciprocity in subject) has all the properties of the class to which it belongs (activity: internally caused verbs (unergative)), as in \Cref{Table5}, plus the properties shown in \Cref{Table6}.
+
+\footnotetext{The complete list of verbs in this class can be found in \url{http://www.letras.ufmg.br/sistemas/verboweb_cliente/ver_classe.php?id=14}(accessed on: 24 Nov. 2021).}
+
+\begin{table}[h!]
+\centering
+\begin{threeparttable}
+\caption{Entry for the subclass of Reciprocal verbs (reciprocity in subject) in VerboWeb.}
+\label{Table6}
+\begin{tabular}{ll}
+\toprule
+ Subclass &	Reciprocal verbs (reciprocity in subject) \\
+\midrule       
+\multirow{2}{*}{Subclass propertiess} 
+& - The subject argument has a plural denotation \\
+& - Licenses the discontinuous form (argument factoring) \\
+\midrule
+\multirow{8}{*}{Verbs belonging to the subclass} 
+& Brigar $\sim$ Fight \\	
+& Contracenar $\sim$ Act (with other actors) \\	
+& Conversar $\sim$ Talk 	\\
+& Dialogar $\sim$ Dialogue \\
+& Duelar $\sim$ Duel \\
+& Flertar $\sim$ Flirt \\	
+& Lutar $\sim$ Fight \\	
+& Prosear $\sim$ Chat \\
+\bottomrule
+\end{tabular}
+\source{VerboWeb (\url{http://www.letras.ufmg.br/sistemas/verboweb_cliente/ver_subclasse.php?id=30\#;} accessed on: 24 Nov. 2021).}
+\end{threeparttable}
+\end{table}
+
+Non-classificatory (or multiclass) properties are syntactic constructions which crosscut different classes, such as reflexivization, middle voice, and other properties driven by non-lexical factors. The database provides entries for non-classificatory properties, which also contain explanations and bibliographical references for theoretical concepts, as well as the list of verbs which accept the property.
+
+Finally, the entry for an individual verb presents an example of the basic use of the verb, its class and class properties, its subclass and subclass properties, as well as examples for each argument realization pattern for the specific verb. An example of non-classificatory properties is also provided, if the verb occurs in some type of non-classificatory construction. \Cref{Table7} illustrates a verb entry in VerboWeb, with the verb \textit{brigar}.
+
+\begin{table}[h!]
+\centering
+\begin{threeparttable}
+\caption{Entry for \textit{brigar} in VerboWeb.}
+\label{Table7}
+\begin{tabular}{p{0.3\textwidth}p{0.65\textwidth}} 
+\toprule
+Verb &	\textit{brigar} \\
+\midrule
+\arrayrulecolor[gray]{.7}
+English translation	& fight \\
+\midrule
+Example	& \textit{O casal brigava sempre.} \\
+& ‘The couple argued all the time.’\\
+\midrule
+Class & Activity: internally caused verbs (unergative) \\
+\midrule
+\multirow{7}{=}{Class properties \newline (with examples)} & 
+- Common semantic content in the class: do/make an event \\
+& - Basic syntactic form: [NP V] (intransitive verb) \\
+& - Thematic roles structure: {Agent} \\ 
+& - Predicate decomposition structure: [X DO <EVENT>] \\
+& - Basic lexical aspect: activity \\
+& - Licenses cognate object: \textit{O casal brigou uma briga feia.} \\
+& - Licenses an adjunct equivalent to the cognate object: \textit{O casal  brigou feio.}\protect\footnotemark \\
+\midrule
+Subclass & Reciprocal verbs (reciprocity in subject) \\
+\midrule
+\multirow{2}{=}{Subclass properties \newline (with examples)} & 
+- The subject argument has a plural denotation \\
+& - Licenses the discontinuous form (argument factoring): \textit{O marido sempre brigava com a mulher.} \\
+\arrayrulecolor{black}
+\bottomrule
+\end{tabular}
+\source{VerboWeb (\url{http://www.letras.ufmg.br/sistemas/verboweb_cliente/ver_verbo.php?id=1314;} accessed on: 24 Nov. 2021).}
+\end{threeparttable}
+\end{table}
+
+The database provides translations in English for most of the data and the interface, which makes it accessible for those who are not speakers of Portuguese. However, English translations are still in progress and many verbs, as well as explanations for classes and properties, are still only available in Portuguese.
+
+\footnotetext{Examples of properties do not have English translations in VerboWeb.}
+
+VerboWeb offers a very elaborate search engine. Simple search in the database can be done by verb, by English equivalent, by class, by subclass, and by non-classificatory property. The advanced search allows one to search for specific properties of verbs, such as aspect, thematic role structure, and specific argument alternations. An alphabetical list of verbs is provided, and it is also possible to access lists of classes, subclasses, class properties, subclass properties, and also non-classificatory properties.
+
+\subsection{CROVALLEX (Croatian)}
+
+The Croatian Verb Valency Lexicon (CROVALLEX) \cite{preradovic_crovallex:_2009,preradovic_crovallex_2010} can be accessed at \url{http://theta.ffzg.hr/crovallex/} (accessed on: 24 Nov. 2021). CROVALLEX contains 1739 verbs in 72 classes and their subclasses (based on VerbNet classes) and aims at providing a “high-quality machine-readable lexicon of Croatian verbs” \cite[p.~533]{preradovic_crovallex:_2009}. Thus, its focus is on NLP applications, although it is easily accessible also for human readers. Like VerboWeb, this is not a corpus-based lexicon. CROVALLEX picked out its verb entries from the Croatian frequency dictionary of \textcite{mogus_hrvatski_1999}, and the database presents all the verbs found in the dictionary that have frequency higher than 11. This resource differs from the others in considering the frequency of a verb as an important factor in the analysis.
+
+The theoretical approach adopted in CROVALLEX is the Valency Theory of \textcite{tesniere_ements_1959}. More specifically, it assumes the Functional Generative Description (FGD) approach of \textcite{hajicova_manual_2002}, cited in \textcite{preradovic_crovallex:_2009}. The fundamental assumptions remain those of \textcite{levin_english_1993}, as described in \Cref{Section2}. Some terminology and representations, however, differ in relation to the other resources presented. The syntactic properties of classes are represented in terms of valence frames, which correspond to the syntactic configuration of the verb’s arguments. Valence frames specify syntactic functions for arguments, including case markers and prepositions, and also specify obligatory and optional arguments, as well as typical modifiers. The semantic properties of classes are represented in terms of functors, or deep roles, which correspond to thematic roles in other approaches. The functors used in CROVALLEX are Agent-AGT, Patient-PAT, Recipient-REC, among others. Although they also present aspectual classifications, aspectual categories differ from the most common Vendlerian classification. In CROVALLEX there are two main aspectual classes, perfective verbs and imperfective verbs (typically described in the literature on Slavic languages); the dual aspect verbs may be perfective or imperfective depending on contextual factors. According to \textcite{croft_verbsaspect_2012}, the perfective/imperfective labels are used to define a distinction between temporally bounded events (perfective) and temporally unbounded events (imperfective).
+
+The database presents entries for verbs. These entries include information about the semantic and syntactic properties of verbs and their classes: valence frames and functors. The verb entry also indicates its class and provides corpus examples for each valence frame. \Cref{Table8} shows as an example the entry for the Croatian verb \textit{analizirati (analizírati)} ‘analyze’\footnote{Data in CROVALLEX do not have English translations. The translation of \textit{analizirati (analizírati)} is from Google Translator.}. 
+
+
+\begin{table}[h!]
+\centering
+\begin{threeparttable}
+\caption{Entry for \textit{analizirati (analizírati)} in CROVALLEX.}
+\label{Table8}
+\begin{tabular}{p{0.3\textwidth}p{0.65\textwidth}} 
+\toprule
+Verb &	\textit{analizirati (analizírati)} \\
+\midrule
+Aspect & dual \\
+\multirow{2}{=}{Frame (syntactic-semantic information)} & 
+$\text{AGT}^{\text{obl}}_{0\text{\_or\_}1}$ \hspace{2em}
+% AGT\textsuperscript{obl}\textsubscript{0\_or\_1} \hspace{2em}
+$\text{PAT}^{\text{obl}}_{4}$ \hspace{2em} 
+% PAT\textsuperscript{obl}\textsubscript{4}	\hspace{2em} 
+$\text{LOC}^{\text{typ}}_{u+6}$ \\
+% LOC\textsuperscript{typ}\textsubscript{u+6} \\
+& $\text{TWHEN}^{\text{typ}}_{\text{tijekom}+2}$ \\
+% TWHEN\textsuperscript{typ}\textsubscript{tijekom+2} \\
+Example	& \textlang{czech}{Dubrovački stručnjaci su analizirali brodove, sidrenja i sidrišta u gradskom akvatoriju tijekom prošle godine}.\\
+Class & Assessment/price \\
+\bottomrule
+\end{tabular}
+\source{CROVALLEX (\url{http://theta.ffzg.hr/crovallex/data/html/generated/word-entries/analizirati-(analizi_rati).html}; accessed on: 24 Nov. 2021).}
+\end{threeparttable}
+\end{table}
+
+In the frame, AGT, PAT and LOC are semantic functors (Agent, Patient, Locative), obl indicates an obligatory argument, and typ signals a non-obligatory typical argument or modifier. The numbers indicate case morphology for the complement (1 - nominative, 2 - genitive, 3 - dative, 4 - accusative, 5 - vocative, 6 - locative, and 7 - instrumental), which can be complemented by additional morphology, such as \textit{u} and \textit{tijekom}. TWHEN represents a temporal-when adverbial expression which typically occurs with the verb.
+
+The database does not have a specific search engine. However, all information is provided in organized lists, in a way that is easy to access. One can find a list of verbs alphabetically organized, a list of all classes, a list of functors, a list of forms (including information about inflexion), a list of aspectual classes, a list of complexity (verbs organized by the quantity of valence frames they can have), and other properties (which comprise derived reflexives, homographs, idiomatic frames, and homonyms). Besides, the website also dedicates a page for the explanation of the theoretical concepts used in the analysis. The database and the theoretical explanations and definitions are in English, but there are no translations for data, either verbs or examples.
+
+\subsection{VALLEX (Czech)}
+
+The last online open access resource for the syntactic-semantic classification of verbs to be presented here is the Valency Lexicon of Czech Verbs (VALLEX) \cite{kettnerova_syntax-semantics_2012}. VALLEX is a corpus-based lexicon, as BVI and AnCoraVerb, and it is also focused on NLP applications, similarly to VerbNet, BVI, and CROVALLEX. VALLEX lists and analyzes 2772 Czech verbs. It is available at \url{https://ufal.mff.cuni.cz/vallex} (accessed on: 24 Nov. 2021).
+
+As in CROVALLEX, the Functional Generative Description (FGD) is adopted as the main theoretical background. Thus, in VALLEX, classes are also defined using functors and valence frames. Aspectual classes are also imperfective verbs and perfective verbs. VALLEX is divided into two components: the data component and the rule component. Individual verb entries can be found in the data component, while the rule component comprises information about alternations and other grammatical properties of verbs. \Cref{Table9} shows an example of verb entry, using the Czech verb \textit{nabádat} ‘encourage’\footnote{Data in VALLEX do not have English translations. The translation of \textit{nabádat} is from Google Translator.}. 
+
+\begin{table}[h!]
+\centering
+\begin{threeparttable}
+\caption{Entry for \textit{nabádat} in VALLEX.}
+\label{Table9}
+\begin{tabular}{p{0.3\textwidth}p{0.65\textwidth}}
+\toprule
+Verb & \textit{nabádat} \\
+\midrule
+Aspect & impf \\
+Gloss & \textlang{czech}{vyzývat; pobízet; povzbuzovat; podněcovat; vést k určité činnosti} \\
+Frame (syntactic-semantic information) &
+$\text{ACT}^{\text{obl}}_{1}$
+% ACT\textsuperscript{obl}\textsubscript{1}
+$\text{ADDR}^{\text{obl}}_{4}$
+% ADDR\textsuperscript{obl}\textsubscript{4} 
+$\text{PAT}^{\text{obl}}_{k+3,\text{\textlang{czech}{aby,ať,že}}}$ \\
+% PAT\textsuperscript{obl} \textsubscript{k+3,\textlang{czech}{aby,ať,že}} \\
+Example	& \textlang{czech}{stále nabádala své děti, aby nechodily k rybníku / ať nechodí k rybníku / že se mají pořádně učit} \\
+Class & communication \\
+recipr & ACT-ADDR \textlang{czech}{vzájemně se nabádali k opatrnosti} \\
+reflex & ACT-ADDR \textlang{czech}{Musíš být opatrnější, nabádal jsem sám sebe a ještě jsem byl ze zážitku celý roztřesený.}\\
+\multirow{2}{=}{diat} & \underline{deagent} \textlang{czech}{lidé se stále nabádají, aby nechodili na slunce} \\
+& \underline{passive} \textlang{czech}{Už od mládí byl nabádán strážci královské etikety k vybranému chování. Fotbalisté ale bývají od svých klubů nabádáni, aby rozhovory do televize poskytovali}.\\
+\bottomrule
+\end{tabular}
+\source{VALLEX (\url{https://ufal.mff.cuni.cz/vallex/4.0/\#/lexeme/nabad1/0}; accessed on: 24 Nov. 2021).}
+\end{threeparttable}
+\end{table}
+
+As can be seen in \Cref{Table9}, VALLEX uses the same type of syntactic-semantic representation as CROVALLEX. Moreover, the VALLEX entry additionally presents a paraphrase of the verb, and more information on different types of syntactic structures, such as reciprocal (recip), reflexives (reflex), and passives. In \Cref{Table9}, impf stands for imperfective aspect, and ADDR indicates the addressee argument of a communication verb. More detailed information is difficult to access in the database, because of the lack of English translations. Only a small part of the database is accessible for readers who are not fluent in Czech, as data and analyses are not translated into English.
+
+In the same way as in CROVALLEX, in VALLEX there are only entries for verbs, but all other information is provided in organized lists. One can find a list of verbs alphabetically organized, a list of classes, a list of functors, a list of valence frames, and a list of alternations, along with other information, such as idiomatic expressions and complex predicates. The database provides also an advanced search engine, but it requires knowledge of the specific properties and annotation used in the database. On the website, a page is dedicated to the explanation of the theoretical concepts used in the analysis (only available in Czech).
+
+\section{An example of theoretical research using online resources: the case of verbs of creation}\label{Section4}
+
+The present section compares four verbs of creation in the 7 languages described in the online resources presented in \Cref{Section3}: English, Basque, Spanish, Catalan, Brazilian Portuguese, Croatian, and Czech. The compared verbs are \textit{write}, \textit{paint}, \textit{build}, \textit{create} and their translations in the chosen languages. As the verb may have multiple entries in the databases, the most basic one was considered (the one signaled as default or marked as 1). The goal of this comparative analysis is to provide an example of how the online open access resources presented here can be used in linguistic research. As these resources are mostly focused on NLP applications, the main aim of this section is to highlight the value of the information they provide for Theoretical Linguistics.
+
+Although the relation between event structure and argument realization holds crosslinguistically, as \textcite{levin_english_1993} explains, different languages do not have the same classes or the same patterns of lexicalization and argument realization. \textcite{amaral_metonymy_2020}, for example, show a comparison between the verbs \textit{drive} and \textit{dirigir} ‘drive’ in English and Portuguese, arguing that, although translatable, these verbs lexicalize different event structures, occurring also in different argument structure patters.
+
+\begin{enumerate}[label=(\arabic*),resume]
+\item \label{itm18}The Porsche drove away/around/into the garage.
+\item \label{itm19}*\begin{tabular}[t]{*{9}{@{}l@{\hskip3pt}}}
+    O & Porsche & dirigiu & por & aí/ & para & dentro & da & garagem. \\
+    the & Porsche & drove & for & there/ & to  & inside & of.the & garage.
+    \end{tabular} \\
+\cite[p.~25]{amaral_metonymy_2020}
+\end{enumerate}
+
+The authors show that the structure in \ref{itm18}, a form of \textit{drive} with the vehicle argument in subject position, can occur in English, but not in Portuguese, as \ref{itm19} demonstrates. They argue that the different patterns in \labelcref{itm18,itm19} arise because, despite describing the same situation in the world, \textit{drive} lexicalizes the event structure of a motion along a path verb (similar to \textit{throw} verbs), while \textit{dirigir} lexicalizes the event structure of a manner of motion verb (similar to \textit{run} verbs).
+
+Following this line of thought, the resources presented here, other than VerbNet, should not be seen as a simple translation of \textcite{levin_english_1993} or of VerbNet itself, but they consist of original studies which investigate the specific classes of a language. \textcite{preradovic_crovallex:_2009} and \textcite{kettnerova_syntax-semantics_2012} explicitly state this point in their analyses. Although CROVALLEX and VALLEX are based on VerbNet’s classes, classes were adapted and reanalyzed for the classification of Croatian and Czech verbs, respectively. \textcite{cancado_catalogo_2013} also explain that their work, although inspired in \textcite{levin_english_1993}, cannot be seen as a translation, and original classes based on specific properties of Brazilian Portuguese are provided in their analysis.
+
+Hence, the comparative analysis presented here assumes that verb classes may differ from language to language, despite maintaining the relation between event structure and argument realization. The choice of the four verbs \textit{write}, \textit{paint}, \textit{build} and \textit{create} aims at representing the two main classes of verbs of creation, defined in \textcite{levin_english_1993}: verbs of image creation (\textit{write}, \textit{paint}) and verbs of creation and transformation (\textit{build}, \textit{create}). As we will see, classes differ in the 7 languages analyzed, although they do have many similarities. For English, \textcite{levin_english_1993} proposes that each one of these classes is further subdivided into different subclasses. The same classification for English is also assumed in VerbNet:
+
+\begin{enumerate}[label=(\arabic*),resume]
+\item \label{itm20} Class: Image Creation Verbs\\
+Subclasses: Verbs of Image Impression; Scribble Verbs; Illustrate Verbs; Transcribe Verbs
+\item \label{itm21} Class: Verbs of Creation and Transformation \\
+Subclasses: Build Verbs; Grow Verbs; Verbs of Preparing; Create Verbs; Knead Verbs; Turn Verbs; Performance Verbs
+\end{enumerate}
+
+Image creation verbs describe events in which an image is created on a surface and they are all two-argument transitive verbs. Subclasses present more specific semantic properties and argument realization patters. \textcite{levin_english_1993} classifies these verbs according to four properties: the possibility of accepting a PP describing the surface, the image impression alternation, the unspecified object alternation, and the types of nominalizations, exemplified in \labelcref{itm22,itm23,itm24,itm25} for the image creation verb \textit{inscribe} \cite[p.~169]{levin_english_1993}:
+
+\begin{enumerate}[label=(\arabic*),resume]
+\item \label{itm22} Surface PP \\
+a) Smith inscribed his name.\\
+b) Smith inscribed his name on the ring/ over the door/under the picture.  
+\item \label{itm23} Image Impression Alternation \\
+a) Smith inscribed his name on the ring. (locative variant) \\
+b) Smith inscribed the ring with his name. (with variant) 
+\item \label{itm24} Unspecified Object Alternation \\
+a) Smith was inscribing the rings. \\
+b) Smith was inscribing.
+\item \label{itm25} Types of nominalizations \\
+a) Process Nominal: the inscription of the motto \\
+b) Result Nominal: the inscription (on the wall)
+\end{enumerate}
+   
+The subclasses of image creation verbs, thus, have the configuration presented in \Cref{table10}. \textit{Write} belongs to the subclass of \textit{scribble} verbs, and \textit{paint} to the subclass of image impression verbs. The image impression alternation is the main difference between these subclasses. It is available for \textit{paint}, but not for \textit{write}.
+
+\begin{table}[h]
+\centering
+\begin{threeparttable}
+\caption{Properties of subclasses of image creation verbs.}
+\label{table10}
+\begin{tabular}{*{5}{p{0.18\textwidth}}}
+\toprule
+\multicolumn{5}{c}{Image creation verbs} \\
+\midrule
+\multirow{2}{=}{Subclasses} & \multicolumn{4}{c}{Properties} \\
+\arrayrulecolor[gray]{.7}\cmidrule{2-5}\arrayrulecolor{black}
+& Surface PP & Image Impression Alternation & Unspecified Object Alternation & Types of nominalizations \\
+\midrule
+\arrayrulecolor[gray]{.7}
+Verbs of Image Impression (\textit{embroider, mark, tattoo}) & Yes & Yes & Yes & Process Nominal; Result Nominal \\
+\midrule
+Scribble Verbs (\textit{\textit{carve, doodle, scribble}}) & Yes & No & Some verbs & Zero-related nominal \\
+\midrule
+Illustrate Verbs (\textit{\textit{adorn, illustrate, decorate}}) & No & No & No & Process Nominal (some verbs); Result Nominal (some verbs); Zero-related nominal (some verbs) \\
+\midrule
+Transcribe Verbs (\textit{\textit{copy, film, transcribe}}) & No & No & No & Zero-related nominal \\
+\midrule
+\arrayrulecolor{black}
+\bottomrule
+\end{tabular}
+\source{\textcite{levin_english_1993}.}
+\end{threeparttable}
+\end{table}
+
+Verbs of Creation and Transformation are two-argument transitive verbs which describe events where an agent’s action brings an object into existence. The exception is the \textit{grow} subclass, composed of intransitive verbs which describe the coming into existence of an object, without external causation. Subclasses specify different ways in which an object can come into existence, and also differ in at least five properties: the material/product alternation, the total transformation alternation, the causative alternation, the raw material alternation, and the benefactive alternation (exemplified in \labelcref{itm26,itm27,itm28,itm29,itm30} with the verbs \textit{carve} and \textit{turn}).
+
+\begin{enumerate}[label=(\arabic*),resume]
+\item \label{itm26} Material/product alternation \\
+a) Martha carved a toy out of a piece of wood.\\
+b) Martha carved the piece of wood into a toy.
+\item \label{itm27} Total Transformation Alternation \\
+a) The witch turned him into a frog. \\
+b) The witch turned him from a prince into a frog.
+\item \label{itm28} Causative Alternation \\
+a) The witch turned him into a frog.\\
+b) He turned into a frog.
+\item \label{itm29} Raw Material Alternation \\
+a) Martha carved beautiful toys out of this piece of wood. \\
+b) This wood carves beautiful toys
+\item \label{itm30} Benefactive Alternation \\
+a) Martha carved a toy for the baby.\\
+b) Martha carved the baby a toy. \\
+\cite[p.~173,177]{levin_english_1993}
+\end{enumerate}
+
+The subclasses of verbs of creation and transformation, therefore, have the configuration presented in \Cref{table11}. \textit{Build} belongs to the subclass of \textit{build} verbs, and \textit{create} belongs to the subclass of \textit{create} verbs. The main differences between these subclasses are the material/product alternation and the raw material alternation, available for \textit{build}, but not for \textit{create}.
+
+\begin{table}[h!]
+\centering
+\begin{threeparttable}
+\caption{Properties of subclasses of verbs of creation and transformation.}
+\label{table11}
+\begin{tabular}{L{0.25\textwidth}*{5}{p{0.11\textwidth}}}
+\toprule
+\multicolumn{5}{c}{Verbs of creation and transformation} \\
+\midrule
+\multirow{2}{=}{Subclasses} & \multicolumn{5}{c}{Properties} \\
+\arrayrulecolor[gray]{.7}\cmidrule{2-6}\arrayrulecolor{black}
+& Material / product alternation & Total Transformation Alternation & Causative Alternation & Raw Material Alternation & Benefactive Alternation \\
+\midrule
+Build Verbs (\textit{build, carve, crochet}) & Yes & No & No & Yes & Yes \\
+Grow Verbs (\textit{evolve, grow, mature}) & Yes (intransitive) & No	& Yes & No & No \\
+Verbs of Preparing (\textit{boil, prepare, roast}) & No & No & No & No & Yes \\
+Create Verbs (\textit{coin, compose, create}) & No & No & No & No & No \\
+Knead Verbs (\textit{blend, knead, squash}) & No & No & Yes (some verbs) & No & No \\
+Turn Verbs (\textit{alter, change, turn}) & No & Yes & Yes & Yes& No \\
+Performance Verbs (\textit{chant, compose, perform}) & No & No & No	& No & Yes (some verbs) \\
+\bottomrule
+\end{tabular}
+\source{\textcite{levin_english_1993}.}
+\end{threeparttable}
+\end{table}
+
+\posscite{levin_english_1993} analysis shows that verbs of creation are an extremely complex and diverse group in English. Thus, for the comparison of this type of verbs in different languages, we hypothesized the existence of the two classes of verbs of creation proposed in \textcite{levin_english_1993}, and analyzed two members of each of those classes and their translations into Basque, Spanish, Catalan, Brazilian Portuguese, Croatian and Czech.\footnote{Translations for these verbs were taken from the original databases in BVI, VerboWeb and AnCoraVerb; Google Translator was used to translate verbs from Croatian and Czech.} We investigated in the object languages if there are the two distinct types of verbs of creation: verbs of image creation and verbs of creation and transformation. We also checked if they differ in the patters of lexicalization and argument structure. Starting from English data, \textit{write} and \textit{paint} describe the creation of an image on a surface; they are two-argument transitive verbs, but accept a third PP argument which describes the surface. These verbs differ in the possibility of accepting the image impression alternation. \textit{Build} and \textit{create} are two-argument transitive verbs which describe the action carried out by an agent resulting in the creation of an object. These verbs differ in the possibility of accepting the material/product alternation and the raw material alternation.
+
+In Basque, as the data in BVI show, there are three types of verbs of creation within the four verbs under scrutiny, differently from the English bipartite classification. \textit{Idatzi} ‘write’ takes three arguments, an Agent, a Theme, and a Destination. The analysis shows that \textit{idatzi} describes not only an image creation event, but an image creation with the purpose of communicating a message. In \posscite{levin_english_1993} analysis of English, this property is also described for \textit{write}, as the verb is also listed in the class of verbs of transfer of a message.
+
+\begin{enumerate}[label=(\arabic*),resume]
+\item \label{itm31}\textit{Idatzi} ‘write’ \\
+arg0: agent (erg) \\
+arg1: theme (abs) \\
+arg2: destination (dat)
+\end{enumerate}
+ 
+The Basque verb \textit{margotu} ‘paint’ has a single Theme absolutive argument (the object painted). As this verb is analyzed automatically in BVI, and the corpus examples presented are translatable into passive structures in English, we believe that it could be in fact a two-argument transitive verb. In any case, it differs substantially from the structure in \ref{itm31} for \textit{idatzi} ‘write’.
+
+\begin{enumerate}[label=(\arabic*),resume]
+\item \label{itm32} \textit{Margotu} ‘paint’ \\
+arg1: theme, - (abs)
+\end{enumerate}
+   
+This example indicates a setback in automatic corpus analyses, since the verb may be analyzed as intransitive if the corpus only includes its passive use.
+
+The Basque verbs \textit{eraiki} ‘build’ and \textit{sortu} ‘create’ are analyzed in BVI as three-argument verbs, bearing Agent, Product and Material roles. The syntactic expression of these arguments is the same for both verbs, as the case morphology indicates in the structure. The only distinction is that \textit{sortu} ‘create’ also has a Benefactive argument, absent in the representation of \textit{eraiki} ‘build’. Interestingly, as shown in \Cref{table11}, in English, the benefactive alternation occurs with \textit{build}, but not with \textit{create}.
+
+\begin{enumerate}[label=(\arabic*),resume]
+\item \label{itm33}\textit{Eraiki} ‘build’/ sortu ‘create’ \\
+arg0: agent, - (erg) \\
+arg1: product, - (abs) \\
+arg2: material, - (ins/soz)
+\end{enumerate}
+
+The Material argument in the structure of \textit{eraiki} ‘build’ and \textit{sortu} ‘create’ in Basque resembles the material/product alternation, which occurs with \textit{build} in English (recall example \ref{itm26}).
+
+The data from Spanish and Catalan, differently, seems to motivate a unified class of verbs of creation in those languages. In AnCoraVerb, all four verbs have the same event structure properties, and the same transitive argument structure.
+
+\begin{enumerate}[label=(\arabic*),resume]
+\item \label{itm34} Spanish: \textit{escribir} ‘write’, \textit{pintar} ‘paint’, \textit{construir} ‘build’, \textit{crear} ‘create’ \\
+Catalan: \textit{escriure} ‘write’, \textit{pintar} ‘paint’, \textit{construir} ‘build’, \textit{crear} ‘create’ \\
+lss: A21.transitive-agentive-patient \\
+  \begin{tabular}{lll}
+        \toprule
+         Function	& Argument	& Theme \\
+         \midrule
+         suj	    & arg0      & agt \\
+         cd	        & arg1	    & pat \\
+         \bottomrule
+        \end{tabular}
+\end{enumerate}
+
+However, these verbs differ is some other properties. Of all four verbs, Spanish \textit{escribir} is the only one which accepts a directional phrase, similar to the Destination argument in Basque \textit{idatzi} ‘write’ and also to the analysis of \textit{write} as a verb of transfer of a message. This possibility does not appear for \textit{escriure} ‘write’ in Catalan. In both languages, \textit{construir} ‘build’ and \textit{crear} ‘create’ accept a locative phrase, indicating the place of creation; but \textit{pintar} ‘paint’ does not. English and Basque analyses do not show Locative arguments for verbs of creation and transformation.
+
+In Brazilian Portuguese, \textit{escrever} ‘write’ and \textit{pintar} ‘paint’ are three-argument verbs, with Agent, Theme, and Location arguments, similarly to the English verbs of image creation, which can occur with a surface PP argument. They belong to the class of causation verbs: change of locative state. Change of locative state verbs describe a change of state of an entity in relation to a place.
+
+\begin{enumerate}[label=(\arabic*),resume]
+\item \label{itm35} \textit{escrever} ‘write’ and \textit{pintar} ‘paint’ (Causation: change of locative state verbs) \\
+- Common semantic content in the class: y comes to be in a specific state in or out of a place \\
+- Basic syntactic structure: [NP V NP (PP)] (bitransitive verb) \\
+- Thematic roles structure: {Agent, Patient, (Locative)} \\
+- Predicate decomposition structure:
+
+[[X ACT volition] CAUSE [BECOME [[Y<RESULT-STATE>] LOC Z]]] \\
+- Basic lexical aspect: accomplishment
+\end{enumerate}
+
+However, \textit{pintar} ‘paint’ is placed in the subclass of image creation verbs, while \textit{escrever} ‘write’ is not. This happens because only \textit{pintar} ‘paint’ in Portuguese occurs in the image impression alternation, as in the English example in \ref{itm23}. So, in a more fine-grained analysis, these verbs have distinct properties. This analysis is very similar to \posscite{levin_english_1993}, as in English \textit{paint} and \textit{write} are also analyzed as belonging to different subclasses according to the image impression alternation. \textit{Paint} allows the alternation, as \textit{pintar}, and \textit{write} does not, as \textit{escrever}.
+
+\textit{Construir} ‘build’ and \textit{criar} ‘create’ are not found in VerboWeb. But in \textcite{amaral_verbos_2014} these verbs are described as two-argument verbs, similar to their translations in Spanish and Catalan and clearly distinct from \textit{escrever} ‘write’ and \textit{pintar} ‘paint’. \textcite{amaral_verbos_2014} observe that \textit{escrever} ‘write’ and \textit{pintar} ‘paint’ can occur in intransitive sentences, they occur in the unspecified object alternation, as the English \textit{paint} and \textit{write}, while \textit{construir} ‘build’ and \textit{criar} ‘create’ do not.
+
+In Croatian, as the data in CROVALLEX show, \textit{pisati} (\textit{písati}) ‘write’ is a two-argument verb, but \textit{slikati} (\textit{slȉkati}) ‘paint’ is monovalent. However, both verbs can be used with Locative arguments (in the register class), which indicates that both are similar to English \textit{write} and \textit{paint} in allowing the expression of the surface in which the image is created. \textit{Pisati} (\textit{písati}) ‘write’ is also similar to \textit{write}, to Basque \textit{idatzi} ‘write’, and to Spanish \textit{escribir} ‘write’, in the sense that it describes not only an image creation, but the transfer of a message.
+
+\begin{enumerate}[label=(\arabic*),resume]
+\item \label{itm36} \textit{pisati} (\textit{písati}) ‘write’ \\
+ frame: $\text{AGT}^{\text{obl}}_{0\text{\_or\_}1}$
+ % AGT\textsuperscript{obl}\textsubscript{0\_or\_1}
+ $\text{PAT}^{\text{obl}}_{o+6}$
+ % PAT\textsuperscript{obl}\textsubscript{o+6} 
+ \item \label{itm37} \textit{slikati} (\textit{slȉkati}) ‘paint’ \\
+ frame: $\text{AGT}^{\text{obl}}_{0\text{\_or\_}1}$ 
+ % AGT\textsuperscript{obl}\textsubscript{0\_or\_1}
+\end{enumerate}
+
+Differently from Basque \textit{margotu} ‘paint’, the only argument which appears with \textit{slikati} (\textit{slȉkati}) ‘paint’ is the Agent subject, resembling the unspecified object alternation which occurs with English \textit{paint} and Brazilian Portuguese \textit{pintar}.
+
+\textit{Stvarati} (\textit{stvárati}) ‘create’ and \textit{graditi} (\textit{gráditi}) ‘build’ in Croatian are both two-argument verbs, and they differ from \textit{pisati} (\textit{písati}) ‘write’ and \textit{slikati} (\textit{slȉkati}) ‘paint’ in not having a Locative argument indicating a surface, and also in the case markings of the Patient argument. They seem to have a similar pattern of lexicalization in comparison to \textit{build} and \textit{create} in the other languages.
+
+\begin{enumerate}[label=(\arabic*),resume]
+\item \label{itm38}  \textit{graditi} (\textit{gráditi}) ‘build’ and \textit{stvarati} (\textit{stvárati}) ‘create’\\
+frame: $\text{AGT}^{\text{obl}}_{0\text{\_or\_}1}$
+% AGT\textsuperscript{obl}\textsubscript{0\_or\_1}
+$\text{PAT}^{\text{obl}}_{4}$
+% PAT\textsuperscript{obl}\textsubscript{4}
+\end{enumerate}
+
+Finally, in VALLEX, the Czech verb \textit{psát}, \textit{psávat} ‘write’ does not appear with a Locative argument, but similarly to English, Basque and Spanish, it has an optional Addressee argument, indicating that this verb describes the transmission of a message. In fact, in VALLEX, it is placed in the class of communication verbs.
+
+\begin{enumerate}[label=(\arabic*), resume]
+\item \label{itm39} \textit{psát}, \textit{psávat} ‘write’ \\
+frame: $\text{ACT}^{\text{obl}}_{1}$
+% ACT\textsuperscript{obl}\textsubscript{1}
+$\text{ADDR}^{\text{opt}}_{3}$
+%ADDR\textsuperscript{opt}\textsubscript{3} 
+$\text{PAT}^{\text{obl}}_{4,o+6,\text{aby,ať,zda,že,cont}}$
+%PAT\textsuperscript{obl}\textsubscript{4,o+6,aby,ať,zda,že,cont} 
+$\text{DIR3}^{\text{typ}} \text{MANN}^{\text{typ}}$ 
+% DIR3\textsuperscript{typ} MANN\textsuperscript{typ}
+$\text{MEANS}^{\text{typ}}_{7}$
+% MEANS\textsuperscript{typ}\textsubscript{7}
+\end{enumerate}
+    
+\textit{Namalovat} ‘paint’ also does not appear in VALLEX with the expression of the surface in which the image is created. Differently from \textit{psát}, \textit{psávat} ‘write’, however, it is a two-argument verb, similar to \textit{pintar} ‘paint’ in Spanish and Catalan.
+
+\begin{enumerate}[label=(\arabic*),resume]
+\item \label{itm40}\textit{Namalovat} ‘paint’ \\
+frame: $\text{ACT}^{\text{obl}}_{1}$
+% ACT\textsuperscript{obl}\textsubscript{1} 
+$\text{PAT}^{\text{obl}}_{4}$
+% PAT\textsuperscript{obl}\textsubscript{4}
+\end{enumerate}
+
+\textit{Stavět}, \textit{stavívat} ‘build’ and \textit{tvořit}, \textit{tvořívat} ‘create’ have four arguments. Besides Agent and Patient, these verbs also describe the origin (optional) of the creation (analogously to the Material in Basque and in English), and also the Beneficiary (typical). They belong to the change class in VALLEX.
+
+\begin{enumerate}[label=(\arabic*),resume]
+\item \label{itm41} \textit{Stavět}, \textit{stavívat} ‘build’ and \textit{tvořit}, \textit{tvořívat} ‘create’ \\
+frame: $\text{ACT}^{\text{obl}}_{1} \text{PAT}^{\text{obl}}_{4}$ 
+% ACT\textsuperscript{obl}1 PAT\textsuperscript{obl}4 
+$\text{ORIG}^{\text{opt}}_{z+2} \text{BEN}^{\text{typ}}_{3,\text{pro}+4}$
+% ORIG\textsuperscript{opt}z+2 BEN\textsuperscript{typ}3,pro+4
+\end{enumerate}
+
+Although it is not our aim here to provide an in-depth analysis of verbs of creation across languages, some important aspects of these verbs have emerged: for instance, it seems that the distinction between image creation and creation and transformation is relevant not only in English, but also in the other languages analyzed. In English, Basque, Spanish, Croatian, and Czech, the verbs equivalent to \textit{write} describe not only an image creation, but an image creation with the purpose of communicating a message. Although this information is not present in VerboWeb and in AnCoraVerb\_CA, we believe that in Brazilian Portuguese and in Catalan this verb may also be used as a communication verb. In this sense, \textit{write} is distinguished from \textit{paint}, although both are classified as image creation verbs. An interesting characteristic of \textit{paint} is that its translations occur as intransitive in English, Basque, Brazilian Portuguese, and Croatian. In Basque and Croatian, the intransitive form of this verb is considered to be its more basic use. In the other languages, it results from the unspecified object alternation. A surface PP appears for \textit{write}, \textit{paint} and their equivalents in English, Brazilian Portuguese and Croatian. \textit{Build} and \textit{create} and its translations specify a material from which a new object is created in English, Basque, and Croatian. In all languages, these verbs are transitive and distinct from \textit{paint} and \textit{write}.
+
+These few examples of verbs of creation demonstrate that the resources presented in \Cref{Section3} provide valuable information about verbs in the analyzed languages, including a great amount of data and theoretical analyses. The brief comparison between verbs of creation illustrates the type of theoretical work that can be done using those resources, but it does not do justice to the full range of possibilities they allow. More complex analyses, as well as comparisons between larger parts of the lexicons, are possible via the use of computational tools.
+
+\section{Final remarks} \label{Section5}
+
+The study of verb classes has been central in lexical-semantics literature, since \posscite{levin_english_1993} foundational work for English. The types of correlations between lexical semantics and sentence form, used to define classes, gave rise to important generalizations about the syntax-semantics interface. One of the most important of those generalizations is the widely accepted idea that event structure and argument realization are strictly tied. Assuming the centrality of verb classes for linguistic analysis, several authors have developed syntactic-semantic classifications of verbs in different languages. The purpose of this paper was to provide an overview of online open access resources for the syntactic-semantic classification of verbs (namely VerbNet, BVI, AnCoraVerb, VerboWeb, CROVALLEX, and VALLEX). We have shown that these resources, following \posscite{levin_english_1993} model of verb classification, share many theoretical assumptions, specifically regarding which criteria to use in verb classification. Despite adopting more specific theoretical claims, all resources show a strong link between event structure and argument structure, as well as the definition of a verb class as a group of verbs which is semantically defined and syntactically coherent.
+
+All the resources presented here offer a substantial body of data and rich theoretical analyses which are of value and importance for theoretical linguists. Although not flawless, these resources present valuable information about verbs and verb classes. We hope to have demonstrated their theoretical value with the brief comparison of verbs of creation in 7 different languages, based on information gathered from the resources presented here. VerbNet, BVI, AnCoraVerb, VerboWeb, CROVALLEX, and VALLEX provide a bird’s eye view of the verbal lexicons of English, Basque, Spanish and Catalan, Brazilian Portuguese, Croatian, and Czech, respectively.
+
+Finally, these resources are great examples of Open Science practices, as they provide free access to all data and analyses for whoever has an internet connection, as well as recognize the authorship of data gathering. The scientific community has acknowledged the importance of open access to data, as well as the recognition of authorship in data work, in linguistics and other fields. The reader is encouraged to access the websites of each resource presented here (and of others listed in \Cref{appendixA}) and to find more information on specific topics. Although these resources assume a specific lexical-semantic approach for verb classification, they provide valuable data and analyses that can be useful for research in different theoretical perspectives.
+
+\section{Acknowledgments}
+
+The author thanks the financial support of Fulbright Brazil (Fulbright Junior Faculty Member Award 2020/2021 - Department of Linguistics of the University of New Mexico/Fall semester 2021).
+
+
+\printbibliography\label{sec-bib}
+% if the text is not in Portuguese, it might be necessary to use the code below instead to print the correct ABNT abbreviations [s.n.], [s.l.]
+%\begin{portuguese}
+%\printbibliography[title={Bibliography}]
+%\end{portuguese}
+
+
+\appendix 
+\section{APPENDIX A: online resources for the study of verbs}\label{appendixA}
+
+AnCora Project: \url{http://clic.ub.edu/corpus/lexicons/} \\
+BVI/E-Rolda: \url{http://ixa2.si.ehu.eus/e-rolda/} \\
+CROVALLEX: \url{http://theta.ffzg.hr/crovallex/} \\
+Leipzig Valency Classes Project (ValPal): \url{https://valpal.info/} \\
+Multilingual Central Repository: \url{https://adimen.si.ehu.es/web/MCR} \\
+Unified Verb Index (FrameNet, VerbNet, PropBank, and others): \url{https://uvi.colorado.edu/} \\
+VALLEX: \url{https://ufal.mff.cuni.cz/vallex} \\
+VerboWeb: \url{www.letras.ufmg.br/verboweb} \\
+WordNet: \url{https://wordnet.princeton.edu/} 
+
+\section{APPENDIX B: Abbreviations used in the text}\label{appendixB}
+
+abl: ablative case \\
+abs: absolutive case \\
+ACT: actor/agent (functor) \\
+ADDR: addressee (functor) \\
+AGT: agent (functor) \\
+arg0: subject argument  \\
+arg1: object argument \\
+arg2: oblique argument \\
+argM: adjunct \\
+BEN: benefactive (functor) \\
+cau: cause \\ 
+cc: oblique argument \\
+cd: object argument \\
+dat: dative case \\
+diat: diathesis \\
+DIR: directional (functor) \\
+erg: ergative case \\
+Impf: imperfective aspect \\
+ins/soz: instrumental case \\
+loc/LOC: locative role/functor \\
+MANN: manner (functor) \\
+obl: obligatory \\
+opt: optional \\
+ORIG: origin (functor) \\
+PAT: patient (functor) \\
+REC: recipient (functor) \\
+recipr: reciprocal \\
+reflex: reflexive \\
+suj: subject argument \\
+tem: theme \\
+TWHEN: temporal “when” \\
+typ: typical argument or modifier 
+
+\end{document}
+

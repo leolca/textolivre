@@ -1,0 +1,311 @@
+% !TEX TS-program = XeLaTeX
+% use the following command:
+% all document files must be coded in UTF-8
+\documentclass[spanish]{textolivre}
+% build HTML with: make4ht -e build.lua -c textolivre.cfg -x -u article "fn-in,svg,pic-align"
+
+\journalname{Texto Livre}
+\thevolume{15}
+%\thenumber{1} % old template
+\theyear{2022}
+\receiveddate{\DTMdisplaydate{2022}{8}{8}{-1}} % YYYY MM DD
+\accepteddate{\DTMdisplaydate{2022}{9}{8}{-1}}
+\publisheddate{\DTMdisplaydate{2022}{9}{22}{-1}}
+\corrauthor{José Gijón Puerta}
+\articledoi{10.35699/1983-3652.2022.40725}
+%\articleid{NNNN} % if the article ID is not the last 5 numbers of its DOI, provide it using \articleid{} commmand 
+% list of available sesscions in the journal: articles, dossier, reports, essays, reviews, interviews, editorial
+\articlesessionname{dossier}
+\runningauthor{Gijón Puerta y col.} 
+%\editorname{Leonardo Araújo} % old template
+\sectioneditorname{Daniervelin Pereira}
+\layouteditorname{Leonado Araújo}
+
+\title{El mapa conceptual y el software CmapTools como herramientas neurodidácticas para la mejora del aprendizaje}
+\othertitle{O mapa conceitual e o software CmapTools como ferramentas neurodidáticas para melhorar a aprendizagem}
+\othertitle{The conceptual map and the CmapTools software as neurodidactic tools to improve learning}
+% if there is a third language title, add here:
+%\othertitle{Artikelvorlage zur Einreichung beim Texto Livre Journal}
+
+\author[1]{José Gijón Puerta \orcid{0000-0001-6324-1141} \thanks{Email: \href{mailto:josegp@ugr.es}{josegp@ugr.es}}}
+\author[2]{Meriem Khaled Gijón \orcid{0000-0001-9326-7422} \thanks{Email: \href{mailto:meriemkg@gmail.com}{meriemkg@gmail.com}}}
+\author[1]{Ana Matas Lara \orcid{0000-0001-5208-1066} \thanks{Email: \href{mailto:ana.matas.lara@gmail.com}{ana.matas.lara@gmail.com}}}
+\author[1]{Pablo García Sempere \orcid{0000-0001-6329-6089} \thanks{Email: \href{mailto:pgs@ugr.es}{pgs@ugr.es}}}
+\affil[1]{Universidad de Granada, Facultad de Ciencias de la Educación, Departamento de Didáctica y Organización Escolar, Granada, España.}
+\affil[2]{Universidad de Granada, Grupo de investigación SEJ658 CHTI-HAM, Granada, España.}
+
+
+\addbibresource{article.bib}
+% use biber instead of bibtex
+% $ biber article
+
+% used to create dummy text for the template file
+\definecolor{dark-gray}{gray}{0.35} % color used to display dummy texts
+\usepackage{lipsum}
+\SetLipsumParListSurrounders{\colorlet{oldcolor}{.}\color{dark-gray}}{\color{oldcolor}}
+
+% used here only to provide the XeLaTeX and BibTeX logos
+\usepackage{hologo}
+
+% if you use multirows in a table, include the multirow package
+\usepackage{multirow}
+
+% provides sidewaysfigure environment
+\usepackage{rotating}
+
+% CUSTOM EPIGRAPH - BEGIN 
+%%% https://tex.stackexchange.com/questions/193178/specific-epigraph-style
+\usepackage{epigraph}
+\renewcommand\textflush{flushright}
+\makeatletter
+\newlength\epitextskip
+\pretocmd{\@epitext}{\em}{}{}
+\apptocmd{\@epitext}{\em}{}{}
+\patchcmd{\epigraph}{\@epitext{#1}\\}{\@epitext{#1}\\[\epitextskip]}{}{}
+\makeatother
+\setlength\epigraphrule{0pt}
+\setlength\epitextskip{0.5ex}
+\setlength\epigraphwidth{.7\textwidth}
+% CUSTOM EPIGRAPH - END
+
+% LANGUAGE - BEGIN
+% ARABIC
+% for languages that use special fonts, you must provide the typeface that will be used
+% \setotherlanguage{arabic}
+% \newfontfamily\arabicfont[Script=Arabic]{Amiri}
+% \newfontfamily\arabicfontsf[Script=Arabic]{Amiri}
+% \newfontfamily\arabicfonttt[Script=Arabic]{Amiri}
+%
+% in the article, to add arabic text use: \textlang{arabic}{ ... }
+%
+% RUSSIAN
+% for russian text we also need to define fonts with support for Cyrillic script
+% \usepackage{fontspec}
+% \setotherlanguage{russian}
+% \newfontfamily\cyrillicfont{Times New Roman}
+% \newfontfamily\cyrillicfontsf{Times New Roman}[Script=Cyrillic]
+% \newfontfamily\cyrillicfonttt{Times New Roman}[Script=Cyrillic]
+%
+% in the text use \begin{russian} ... \end{russian}
+% LANGUAGE - END
+
+% EMOJIS - BEGIN
+% to use emoticons in your manuscript
+% https://stackoverflow.com/questions/190145/how-to-insert-emoticons-in-latex/57076064
+% using font Symbola, which has full support
+% the font may be downloaded at:
+% https://dn-works.com/ufas/
+% add to preamble:
+% \newfontfamily\Symbola{Symbola}
+% in the text use:
+% {\Symbola }
+% EMOJIS - END
+
+% LABEL REFERENCE TO DESCRIPTIVE LIST - BEGIN
+% reference itens in a descriptive list using their labels instead of numbers
+% insert the code below in the preambule:
+%\makeatletter
+%\let\orgdescriptionlabel\descriptionlabel
+%\renewcommand*{\descriptionlabel}[1]{%
+%  \let\orglabel\label
+%  \let\label\@gobble
+%  \phantomsection
+%  \edef\@currentlabel{#1\unskip}%
+%  \let\label\orglabel
+%  \orgdescriptionlabel{#1}%
+%}
+%\makeatother
+%
+% in your document, use as illustraded here:
+%\begin{description}
+%  \item[first\label{itm1}] this is only an example;
+%  % ...  add more items
+%\end{description}
+% LABEL REFERENCE TO DESCRIPTIVE LIST - END
+
+
+% add line numbers for submission
+%\usepackage{lineno}
+%\linenumbers
+
+\begin{document}
+\maketitle
+
+\begin{polyabstract}
+\begin{abstract}
+Cuando se desarrollan nuevos conceptos en cualquier cambio científico y, por supuesto, en el ámbito de la educación, se genera en muchos casos la idea de que se trata de algo nuevo va a cambiar radicalmente, en nuestro caso, en la forma de educar y aprender. ¿Podría ser este el caso de la Neurodidáctica? Es necesario contrastar desde la investigación estas nuevas conceptualizaciones, como en el caso de la neurociencia y la neurodidáctica, que dotan del marchamo «neuro» a muchas estrategias didácticas utilizadas tradicionalmente. Han aparecido alrededor de la neurociencia multitud de modelos «neuropedagógicos» que pretenden dar al profesional de la educación potentes herramientas para la mejora del aprendizaje apoyándose en los avances de las neurociencias. En el caso de los \textit{concept mapping} de Novak, se ha demostrado a lo largo de las últimas décadas su eficacia como herramientas de presentación del conocimiento experto y como promotores del aprendizaje significativo, permitiendo detectar con facilidad los errores conceptuales. Actualmente ha sido confirmada esta eficacia didáctica desde las investigaciones realizadas con técnicas neurocientíficas (TAC, TOC, MRI, fNIRs, entre otras) que presentamos en este artículo. Estas investigaciones confirman su valor metodológico, que sí podemos denominar neurodidáctico, a través de las evidencias de actividad cerebral diferencial o nivel de esfuerzo neurocognitivo que se produce cuando se comparan mapas conceptuales con otras herramientas didácticas.
+
+\keywords{Neurociencia \sep Neurodidáctica \sep Mapas conceptuales \sep Concept mapping}
+\end{abstract}
+
+\begin{portuguese}
+\begin{abstract}
+Quando novos conceitos são desenvolvidos em qualquer mudança científica e, claro, no campo da educação, em muitos casos gera-se a ideia de que é algo novo que vai mudar radicalmente, no nosso caso, na forma de educar e de aprender. Seria este o caso da Neurodidática? É necessário contrastar essas novas conceituações da pesquisa, como no caso da neurociência e da neurodidática, que dão o rótulo de "neuro" a muitas estratégias didáticas tradicionalmente utilizadas. Uma infinidade de modelos "neuropedagógicos" surgiram em torno da neurociência que visam fornecer ao profissional da educação ferramentas poderosas para melhorar o aprendizado com base nos avanços da neurociência. No caso do mapa conceitual de Novak, sua eficácia como ferramenta de apresentação de conhecimento especializado e como promotora de aprendizagem significativa tem sido demonstrada nas últimas décadas, permitindo que erros conceituais sejam facilmente detectados. Atualmente, essa eficácia didática foi comprovada a partir das pesquisas realizadas com técnicas neurocientíficas (CAT, TOC, MRI, fNIRs, entre outras) que apresentamos neste artigo. Essas investigações confirmam seu valor metodológico, que podemos chamar de neurodidático, através da evidência de atividade cerebral diferencial ou nível de esforço neurocognitivo que ocorre quando mapas conceituais são comparados com outras ferramentas didáticas.
+
+\keywords{Neurociência \sep Neurodidática \sep Mapas conceituais \sep Mapeamento de conceito}
+\end{abstract}
+\end{portuguese}
+
+\begin{english}
+\begin{abstract}
+When new concepts are developed in any scientific change and, of course, in the field of education, in many cases the idea is generated that it is something new that is going to change radically, in our case, in the way of educating and to learn. Could this be the case of Neurodidactics? It is necessary to contrast these new conceptualizations from research, as in the case of neuroscience and neurodidactics, which give the "neuro" label to many traditionally used didactic strategies. A multitude of “neuropedagogical” models have appeared around neuroscience that aim to give the education professional powerful tools for improving learning based on advances in neuroscience. In the case of Novak's concept mapping, its effectiveness as tools for presenting expert knowledge and as promoters of meaningful learning has been demonstrated over the last few decades, allowing conceptual errors to be easily detected. Currently, this didactic efficacy has been confirmed from the research carried out with neuroscientific techniques (CAT, TOC, MRI, fNIRs, among other) that we present in this article. These investigations confirm its methodological value, which we can call neurodidactic, through the evidence of differential brain activity or level of neurocognitive effort that occurs when conceptual maps are compared with other didactic tools.
+
+\keywords{Neuroscience \sep Neurodidactics \sep Conceptual maps \sep Concept mapping}
+\end{abstract}
+\end{english}
+% if there is another abstract, insert it here using the same scheme
+\end{polyabstract}
+
+\section{Introducción}\label{sec-intro}
+Hablar de neurodidáctica no puede ser algo aislado del contexto político, social y académico en el que estamos inmersos desde hace varias décadas. Vivimos en el mundo de lo políticamente correcto y de las modas que introducen prefijos para crear palabras compuestas, rimbombantes en muchos casos o directamente cursis -vacías de contenido- casi siempre, que dan lugar a una jerga o lenguaje para iniciados que suele ser poco comprensible incluso para los académicos, en detrimento muchas veces de la seriedad metodológica de las investigaciones y de la búsqueda de evidencias que, una vez analizadas, permitan realizar inferencias razonables.
+
+Edward O. Wilson, gran estudioso de los insectos sociales y creador de un potente corpus para abordar el comportamiento humano -la sociobiología- y de un concepto de gran proyección social y económica como es el de biodiversidad (ambas excepciones notables a lo indicado en el párrafo anterior) \cite{wilson1999unity,wilson2000sociobiology},%(WILSON, 1988, 2000) 
+previó estos fenómenos cuando afirmaba en su obra más filosófica -Consilience- \cite[p.~54--65]{wilson1999unity} %(WILSON, 1999, p. 54-65) 
+que
+
+\begin{quote}
+    a medida que la diversidad de metáforas se ha añadido […] para crear nuevas estaciones de trabajo en la industria académica postmodernista, y luego se ha politizado, las escuelas e ideologías se han multiplicado de forma explosiva […] A lo que cabe añadir todas las aturrullantes variedades de técnicas de deconstrucción y de holismo de la Nueva Era que se arremolinan a su alrededor. Sus partidarios se impacientan en el campo de juego, a veces de manera brillante, aunque no por lo general, y son propensos a la jerga y escurridizos. Cada uno, a su manera, parece ir derivando hacia aquel mysterium tremendum que la Ilustración abandonó en el siglo XVII.
+\end{quote}
+
+En efecto, en la actualidad, en las ciencias sociales y, especialmente, en las ciencias de la educación, se han introducido variadas ocurrencias en el mundo académico que también han colonizado las publicaciones científicas -incluso las de elevado índice de impacto- y se está volviendo a la tradición medieval en el uso exacerbado de los argumentos ad verecundiam, ad hominem y ad baculum \cite[p.~564]{puerta2020}, %(GIJÓN PUERTA, 2020: 564), 
+lo que es un hecho cada vez más frecuente. La reciente aparición de la séptima edición de las normas de estilo de la APA para la lengua inglesa puede ser quizá el mejor ejemplo de lo indicado anteriormente, el ejemplo de cómo la ideología y la política toman la academia y el lenguaje se vacía de contenido. La norma recoge detalladamente, aceptando de pleno la autodenominada «teoría Queer», referencias al denominado lenguaje libre de prejuicios (edad, discapacidad, género, raza y etnia, orientación sexual, situación socioeconómica, interseccionalidad e, incluso, lo relativo a la participación en investigaciones).
+
+Y es en este difícil contexto para la ciencia en general, y para las ciencias sociales en particular, en el que la neurodidáctica aparece entre un maremágnum de nuevos términos. Neuroeconomía, neuromarketing, neurociencias, neurociencia, neurociencia cognitiva, neurociencia educativa, neuroeducación, neuropedagogía \cite{santana2019disenos} %(CARVAJAL SANTANA, 2019) 
+se encuentran en gran cantidad de artículos académicos, y han dado y a buen seguro darán pie a muchas discusiones terminológicas y conceptuales en los próximos años, con mayor o menor profundidad y con mayor o menor creación de conocimiento útil para los profesionales de la educación.
+
+Pero ¿es lo «neuro» una nueva moda para las ciencias de la educación? O, por el contrario ¿estamos ante nuevas y potentes herramientas que podrá utilizar el profesional de la educación para mejorar los procesos de aprendizaje, basadas en la neurodidáctica? La pretensión de este artículo es la de argumentar a favor de la segunda opción, al menos en una herramienta concreta: los \textit{concept mapping} de Novak.
+
+Si asignamos a la neurociencia el papel de investigar los mecanismos neurológicos del aprendizaje (la organización y el funcionamiento del sistema nervioso para generar conductas) mediante la observación de mecanismos moleculares y procesos celulares en tiempo real \cite{goswami2006neuroscience}, %(GOSWAMI, 2006), 
+entonces podemos dar a la neurodidáctica (concepto desarrollado por el profesor G. Preiss, similar al de neuroeducación) el papel investigar los mecanismos neurológicos de la atención, el aprendizaje, el conocimiento lector y matemático y sus dificultades asociadas \cite{preiss1996neurodidaktik}.%(VVAA, 1998).
+
+No menospreciamos los estudios anteriores sobre el cerebro y su funcionamiento, que han jalonado la mejora en el conocimiento anatómico y fisiológico del sistema nervioso central \cite{sanchez_blanco_2016}. % (SÁNCHEZ, 2016) 
+Sin embargo, desde que el español Santiago Ramón y Cajal y el italiano Camillo Golgi recibieran en 1906 el Permio Nobel de Fisiología o Medicina por sus hallazgos sobre la estructura del sistema nervioso, lo que hoy podemos llamar neurociencia comenzó a gestarse con una larga secuencia de estudios que han llevado a la obtención de nuevas evidencias sobre la neurona en sus distintas variedades (célula que se estableció como unidad anatómica y funcional por Ramón y Cajal). Todo ello nos ha permitido considerar hoy la plasticidad neuronal como una base fundamental en la que apoyar el desarrollo y la selección de herramientas didácticas para la mejora del aprendizaje.
+
+
+\section{Los mapas conceptuales como herramienta didáctica}\label{sec-mapas}
+
+Aunque la denominación «mapa conceptual» (concept map o, término que usaremos aquí, \textit{concept mapping}) ha sido manejada por diferentes autores para describir distintos tipos de representación del conocimiento, como los mapas mentales de Buzan, sin duda los autores más influyentes y que mejor han desarrollado la idea de representar el conocimiento mediante diagramas de conceptos unidos por conectores de tipo lingüístico, han sido el biólogo y didacta de las ciencias naturales Joseph D. Novak y el educador y filósofo de la educación D. Robert Gowin \cite{canas2018mapas,novak1984learning} %(CAÑAS; NOVAK, 2018; NOVAK; GOWIN, 1984) 
+quienes iniciaron el camino más productivo en el desarrollo de herramientas de representación del conocimiento con capacidad para mejorar la cognición de los sujetos y detectar y evitar los errores conceptuales.
+
+El impacto que su trabajo ha tenido en el quehacer de muchos profesionales de la educación se inició fundamentalmente en la enseñanza de las ciencias naturales, para luego extenderse y consolidarse en todos los niveles educativos y en el mundo de la empresa, en el que resultaron muy valiosos los mapas de Novak para compartir el conocimiento experto, que en muchos casos es tácito, y convertirlo en conocimiento explícito, que puede ser refinado por quienes acceden a él. Hablamos de lo que se ha dado en llamar empresas basadas en el conocimiento y empresas creadoras de conocimiento \cite{nonaka2009knowledge,nonaka2007knowledge}. %(NONAKA, 2009; NONAKA; TAKEUCHI, 2007). 
+La enseñanza de las ciencias naturales ha sido así tradicional campo para el uso de mapas conceptuales, aunque ejemplos muy alejados de su origen se han podido ver a lo largo del tiempo.
+
+Hoy, todas las ramas de la educación y la mayoría de las áreas de conocimiento, tanto en las ciencias naturales como en las ciencias sociales, las ingenierías o las humanidades, utilizan con profusión los mapas conceptuales como técnica de refinado y representación del conocimiento y como herramienta didáctica para alcanzar aprendizajes significativos \cite{ausubel_educational_1968}. %(AUSUBEL; NOVAK; HANESIAN, 1968). 
+La formación en la empresa también ha desarrollado un elevado uso de mapas conceptuales \cite{gaines1996knowledge,michalski2000differences} %(GAINES et al., 1996; MICHALSKI; COUSINS, 2000) 
+en sectores tan diferentes como la salud \cite{dopp_integrating_2019}, % (DOPP et al., 2019), 
+la informática \cite{anwar_systematic_2019} %(ANWAR et al., 2019) 
+o el turismo \cite{enrique_bigne_concept_2002}. %(BIGNÉ et al., 2002). 
+Un histórico de la variedad de usos de los mapas conceptuales se puede ver en las comunicaciones presentadas en los congresos internacionales que, sobre mapas conceptuales y con carácter bienal, se han venido desarrollando desde 2004 (Pamplona) hasta 2018 (Medellín), interrumpidos ahora por la pandemia producida por el SARS-CoV-2. Solo a título de ejemplo de la amplitud en el uso de los mapas conceptuales, podemos citar un par de casos de uso de estos: la formación de enfermeros en el trabajo clínico \cite{jamison2014engaging} %(JAMISON; LIS, 2014) 
+o la formación de las tropas del ejército canadiense en el conocimiento de la estructura y funcionamiento de los talibanes, antes de enviarlas al combate en Afganistán \cite{moore2012}. %(MOORE, 2012). 
+De cualquier manera, son muy numerosos los estudios que avalan los mapas conceptuales de Novak como herramientas muy eficaces para el aprendizaje significativo \cite{agra_analysis_2019,marco_mapas_2018,dominguez_efectos_2020,schroeder2018studying}. %(AGRA et al., 2019; CARLOS CUYO; DOMINGUEZ; VEGA, 2020; SCHROEDER et al., 2018) (CARLOS CUYO; HUAMÁN HUAMÁN, 2018).
+
+Para la realización de mapas conceptuales se han creado varios programas informáticos que facilitan su creación y refinado. Entre ellos, destaca sin duda CmapTools, un entorno de software desarrollado en el Instituto de la Cognición Humana y de las Máquinas (IHMC por sus siglas en inglés) bajo la dirección de Alberto Cañas y Joseph D. Novak \cite{canas2018ecmap} %(CAÑAS; CARFF; LOTT, 2018)
+que permite a los usuarios, individualmente o colaborando entre ellos, representar cualquier conjunto de conceptos mediante la creación de mapas conceptuales para compartirlos, publicarlos y refinarlos.
+
+El programa CmapTools se diseñó para adaptarlo perfectamente a las bases teóricas de los \textit{concept mapping} de Novak, por lo que su interfaz es simple y no permite adornos más allá de los estrictamente necesarios para crear los mapas y dotarlos de capacidad multimedia. La arquitectura cliente-servidor de CmapTools da la posibilidad de una fácil publicación de los modelos de conocimiento en servidores de mapas conceptuales (CmapServers) y permite que los mapas conceptuales se vinculen con otros relacionados y con otros tipos de medios (imágenes, videos, páginas web, etc.), incluso en otros servidores, incorporando recientemente la herramienta eCmap para incluirlo dentro de páginas o sitios web. Las funciones de colaboración permiten a los usuarios remotos cooperar de forma asincrónica o sincrónica en la construcción de mapas conceptuales, así como realizar comentarios, críticas o revisión por pares.
+
+El software CmapTools ha sido reconocido en la literatura como una eficaz ayuda para el desarrollo de un aprendizaje significativo, la detección de errores conceptuales y la presentación interrelacionada de conceptos mediante conectores lingüísticos \cite{bezerra_cmap_2019,pedrajas2018innovacion,ramos2020aproximacion,suinaga2019cmap}. %(DE JESUS BEZERRA; DE LIMA ARRAIS, 2019; PONTES-PEDRAJAS; VARO-MARTÍNEZ; LÓPEZ-QUINTERO, 2018; RAMOS, 2020; SUINAGA; JIMÉNEZ, 2019).
+Así, podemos afirmar que, desde su creación hasta el momento presente, el desarrollo de los \textit{concept mapping} de Novak y su potencial para el aprendizaje ha estado unido de forma inseparable al uso del programa CmapsTools.
+
+
+
+\section{Hallazgos sobre el uso de mapas conceptuales desde la neuroeducación}\label{sec-hallazgos}
+
+Sin entrar a discutir la validez de las publicaciones las investigaciones que aplican los conceptos neurocientíficos a programas de enseñanza y que usan los mapas conceptuales como estrategia básica, como el de Do Amaral y Fregni sobre la metodología PLB y la clase invertida \cite{doamaral2021applying}, %(DO AMARAL; FREGNI, 2021), 
+no podemos dejar de considerar que cualquier estrategia didáctica que quiera ser etiquetada como «neuro», debe haber sido testada, por una parte, mediante pruebas neurofisiológicas -para comprobar que produce cambios significativos en la actividad cerebral y en la plasticidad neuronal- y, por otra, mediante pretest y postest que midan la mejora cognitiva en algún aspecto estandarizado, como la lectura, un idioma, el conocimiento de conceptos científicos, etc. No valdría, a nuestro juicio, usar uno solo de estos métodos investigativos y, por supuesto, no nos valdría dejar de lado los instrumentos de obtención de evidencias mediante neuroimágenes, que son hoy por hoy la fuente de datos más fiable de los cambios que ocurren en la anatomía y la fisiología del cerebro, tanto a nivel bioquímico como bioeléctrico.
+
+
+Vamos a intentar pues argumentar a favor de que los mapas conceptuales de \textcite{novak1990concept}%Joseph D. Novak (NOVAK, 1990)
+-herramienta didáctica que se viene usando desde hace varias décadas en la enseñanza, la empresa y en instituciones muy variadas- sí que puede considerarse una herramienta neurodidáctica. Esto significa que se pueden aplicar para mejorar los procesos de aprendizaje y que, a la vez, existen evidencias que demuestran su utilidad para desarrollar la plasticidad cerebral y modificar la actividad neurofisiológica del cerebro durante el proceso de aprendizaje. Los hasta ahora poco numerosos estudios neurofisiológicos en relación con el uso de los mapas conceptuales apuntan claramente en esa dirección.
+
+Así mismo -y esto es una cuestión interesante y muy excepcional en una herramienta didáctica-, los mapas conceptuales están ayudando a refinar el conocimiento que se va adquiriendo en el ámbito de las «neurociencias». Un doble flujo de conocimiento que refuerza si cabe la posición como herramienta útil que mejora la cognición -desde su base neurofisiológica- y que ayuda a la vez a comprender mejor los conceptos de la neurociencia y sus relaciones con los conceptos educativos.
+
+Desde una perspectiva consiliente en la que nos situamos \cite{puerta2020,wilson1999unity},
+%(GIJÓN PUERTA, 2020; WILSON, 1999), 
+el acceso a los sistemas complejos -en este caso el aprendizaje humano- ha de llevarse a cabo desde distintas disciplinas, por puntos concretos que nos permitan la observación de regularidades y accidentes, la obtención de evidencias y la realización de inferencias -por este orden-, evitando las «ocurrencias» que salpican muchas de las investigaciones actuales o la presentación de nuevas metodologías que son en realidad bastante antiguas y no dejan de serlo por incluir el prefijo «neuro» \cite{simon2019ambientes}.%(LIZARTE SIMÓN; GIJON PUERTA, 2020).
+
+Los \textit{concept mapping} de Novak son un buen punto de entrada para estudiar el aprendizaje humano desde la óptica de la representación del conocimiento mediante mapas de conceptos y sus relaciones, así como para la detección de los errores conceptuales. Sobre todo, si vienen acompañados de nuevas técnicas de estudio neurofisiológico y del desarrollo tecnológico en la obtención de imágenes del cerebro que nos acercan a comprender su funcionamiento. Algunas de estas técnicas se están mostrando muy útiles, solas o combinadas, para el acceso a evidencias sobre el aprendizaje en niveles neurofisiológicos (neurometabólicos y neuroeléctricos). Podemos citar, entre otras, la tomografía axial computerizada (TAC -que genera imágenes de «cortes» del cerebro mediante rayos X-), la tomografía óptica difusa (DOT – que usa la difusa para penetrar en los tejidos, produciendo imágenes de tipo tomográfico-), la resonancia magnética potenciada en difusión (RMD -que da una señal proporcional a la difusión de la moléculas de agua en los tejidos-), la resonancia magnética estructural y la resonancia magnética funcional (fRNM – que mide los cambios en el flujo sanguíneo que se producen con la actividad cerebral-), la tomografía por emisión de positrones (PET o TEP –que utiliza un marcador radiactivo para mostrar el funcionamiento del cerebro-), la espectroscopía funcional de infrarrojo cercano (fNIRs -que utiliza haces de luz infrarroja para determinar los niveles de activación en la corteza cerebral según el consumo de oxígeno-), la electroencefalografía (EEG), o la imagen por tensor de difusión (DTI -que evalúa la integridad de la sustancia blanca y proporciona información sobre la plasticidad cerebral y su reorganización funcional-).
+
+
+\subsection{La neurociencia como herramienta para mostrar la eficacia neurodidáctica de los mapas conceptuales}\label{sec-neurociencia}
+
+Como hemos indicado anteriormente, no son muchos los estudios que se han ocupado de los mapas conceptuales utilizando técnicas neuroanatómicas o neurofisiológicas. Sin embargo, sus resultados permiten dar argumentos a favor de la hipótesis de la calidad neurodidáctica de los mapas conceptuales de Novak. Presentaremos aquí algunos de los estudios recientes que avalan esta hipótesis, realizados en el área de ingeniería en los Estados Unidos de América.
+
+En primer lugar, son remarcables los estudios de Mo Hu, ingeniera estructural que trabaja actualmente en la Universidad de California Berkeley, integrada en distintos equipos de investigación multidisciplinares, quien ha estudiado desde hace varios años la conceptualización de la «sostenibilidad» en el campo de la ingeniería \cite{colgan_pkc_2018,hu2018neuroscience,shealy2017evaluating,hu2019empirical}. %(COLGAN et al., 2018; HU, 2018; SHEALY et al., 2017; SHEALY; HU, 2017). 
+Los hallazgos de estos equipos son muy interesantes por los siguientes motivos: ha sido comprobada una actividad cerebral más coordinada en el uso de mapas que en el de otras técnicas como la lluvia de ideas o el análisis morfológico; se ha podido establecer también que el aumento del número de conceptos mientras se usaban mapas conceptuales y cómo cambiaba la carga cognitiva desde las regiones asociadas a la secuenciación de procesos a las regiones asociadas con la flexibilidad cognitiva; por último, un menor esfuerzo cognitivo ha sido evidenciado cuando se utilizaron los mapas conceptuales en lugar de otras técnicas metacognitivas, lo que ha sido corroborado en estudios adicionales \cite{hu2019empirical}. %(HU et al., 2019).
+
+En segundo lugar, y también en el área de ingeniería, pero esta vez en el marco de la ingeniería de sistemas y en el Instituto Tecnológico de la Universidad de Virginia, se han desarrollado investigaciones para establecer los efectos neurocognitivos del pensamiento de los estudiantes, utilizando mapas conceptuales mientras se aplicaban técnicas de fNIRs para medir los cambios en la oxihemoglobina de la corteza prefrontal. Se observó un promedio más bajo en el grupo al que se pidió que desarrollara mapas conceptuales para plantear el diseño de un problema, con menor activación del córtex prefrontal izquierdo (PFC), reduciendo la necesidad de coordinación funcional entre las regiones del cerebro \cite{manandhar2022effects}. % (MANANDHAR, 2022).
+
+Parece pues que el uso de mapas conceptuales frente a otras técnicas de trabajo cognitivo o metacognitivo tiene la cualidad de reducir las necesidades metabólicas de ciertas regiones del cerebro y de un menor nivel de activación y coordinación de dichas regiones. Aunque pueda parecer un contrasentido -menor actividad cerebral, menos consumo de oxígeno- las evidencias apuntan a que el aprendizaje utilizando los mapas conceptuales es más eficaz que otras técnicas y más eficiente desde el punto de vista neurológico. Se podría introducir la comparación con los vehículos propulsados por motores de combustión: que los mapas conceptuales nos permiten subir una pendiente con un vehículo con motor de explosión en una marcha más larga, con el motor menos revolucionado y, por tanto, con menor consumo de energía.
+
+Aunque es mejor ser prudente hasta que un mayor número de estudios basados en métodos de neuroimagen, debemos ser optimistas en cuanto a la confirmación de los \textit{concept mapping} de Novak como una estrategia genuinamente neurodidáctica, por encima de modelos más abstractos que se basan en proposiciones que no se han sometido a la exploración del cerebro de los individuos mientras realizan tareas cognitivas.
+
+
+\subsection{Los mapas conceptuales como herramienta para la mejor comprensión de la neurociencia}\label{sec-conceptuales}
+
+Como indicamos anteriormente, los mapas conceptuales, a la vez que son avalados por los estudios neurocientíficos como herramientas para la mejora del aprendizaje, han sido utilizados inversamente para ayudar a los investigadores a refinar su conocimiento sobre la neurociencia y la neurodidáctica.
+
+Aunque se han utilizado distintas técnicas y herramientas para cartografiar la semántica de las neurociencias (p. ej., usando redes de conceptos para establecer las relaciones entre términos psicológicos y anatómicos -\cite{beam_mapping_2014}-),% BEAM et al., 2014-), 
+los \textit{concept mapping} de Novak han generado algunos artículos interesantes tratando de crear modelos de conocimiento sobre las neurociencias y sus relaciones con la educación.
+
+Se han empleado con éxito, por ejemplo, para mejorar el aprendizaje de la neuroanatomía en educación superior \cite{uribe2010mapas}. %(FLÓREZ URIBE; AYALA PIMENTEL; CONDE COTES, 2010). 
+También ha presentado su utilización para formar estudiantes de enfermería en técnicas de atención neurológica con un alto grado de satisfacción respecto a otras estrategias metodológicas tradicionales -aunque sin diferencias estadísticas significativas- \cite{hsu2016randomized}. % (HSU; PAN; HSIEH, 2016).
+
+Igualmente han mostrado su eficacia para hacer explícitas las percepciones de los neurocientíficos en cuanto a la visibilidad y aceptación de sus trabajos \cite{koh2016mapping}, %(KOH et al., 2016), 
+como ya habían sido utilizados con asesores educativos o para evidenciar las causas de la violencia interpersonal en prisión \cite{puerta2016} %(GIJÓN PUERTA, 2016) 
+a través del método biográfico-narrativo \cite{khaled2017caracterizacion,khaled2021andragogo}.
+%(KHALED GIJÓN, 2017; KHALED GIJÓN; LIZARTE SIMÓN; GIJÓN PUERTA, 2021).
+
+
+\section{Resultados}\label{sec-resultados}
+
+Aunque algunos autores han llegado a denominar ciertas ideas neuroeducativas «fraude» al no estar avaladas por la realización de estudios de campo \cite{jorgenson2003brain}, %(JORGENSON, 2003), 
+no parece razonable pensar que los investigadores en neurociencia intenten engañar a los profesionales de la educación. Muy al contrario, en el mundo esnob y políticamente correcto que hemos descrito, muchos pedagogos y educadores parecen encantados con poner el prefijo neuro a cualquier propuesta para darle un supuesto valor añadido. Por este motivo, debemos concluir que las propuestas neurodidácticas deben estar respaldadas por estudios de campo multidisciplinares, en los que los hallazgos neurofisiológicos apoyen las virtudes o potencialidades de los modelos propuestos o estrategias didácticas utilizadas.
+
+Por otra parte, las metodologías que ya se habían consolidado como útiles para mejorar el aprendizaje, previamente al furor, la moda o los mitos «neuro» \cite{howard2014neuroscience}, %(HOWARD-JONES, 2014), 
+parece que sí que promueven actividad amplia del cerebro y genera conexiones neuronales consistentes con la mejora del aprendizaje. Esto quiere decir, a nuestro juicio, que su valor ya había sido probado anteriormente por métodos indirectos, y que la neurofisiología confirma lo que, de forma empírica, se había comprobado. Es el caso de los \textit{concept mapping} de Novak que, como hemos descrito, ofrecen ya evidencias consistentes en la literatura reciente de su efecto neuroplástico, a la vez que han demostrado ampliamente en momentos anteriores su eficacia en la detección y eliminación de errores conceptuales, así como en la mejora del aprendizaje que, con su uso, transita desde lo memorístico hasta lo significativo \cite{garcia2008mapa,gonzalez2013modelos}. %(GONZÁLEZ GARCÍA, 2009; GONZÁLEZ GARCÍA et al., 2013).
+
+Para finalizar, debemos indicar que aún queda mucho trabajo interdisciplinar para confirmar el valor neurodidáctico de los \textit{concept mapping} de Novak, que corrobore los estudios ya realizados y de cierta capacidad predictiva, lo que caracteriza y separa la evidencia de la ocurrencia y la ciencia de la vaga teorización no fundamentada.
+
+
+
+
+\section{Conclusiones}\label{sec-conclusiones}
+
+La próxima frontera para avanzar en el conocimiento de los \textit{concept mapping} debe venir de la estrecha colaboración de los investigadores y docentes con los neurofisiólogos, los psicólogos y los genetistas, entre otras disciplinas, desde una perspectiva consiliente \cite{wilson1999unity}, %(WILSON, 1998), 
+que permita incrementar el nivel de conocimiento interdisciplinar, profundo y verificado \cite{dennett_conciencia_1995} %(DENNETT, 1995) 
+sobre la neurodidáctica, incluyendo estudios genéticos sobre las capacidades cognitivas de los individuos y delimitado su base genética y cultural.
+
+Combinando genética y neurofisiología, discutiendo y avanzando desde las ideas de Santiago Ramón y Cajal hasta las nuevas propuestas de los «conectomas» como base del funcionamiento del cerebro \cite{swanson2016cajal} %(SWANSON; LICHTMAN, 2016) 
+se podrá dotar al docente de conocimientos clave para el manejo de los grupos heterogéneos de estudiantes de cualquier nivel educativo, utilizando con fundamento neurocientífico herramientas como los \textit{concept mapping} que, en el diseño de Novak, han alcanzado una enorme potencia didáctica, ahora confirmada desde la neurociencia.
+
+Y esto implica, sin lugar a dudas, un nuevo reto en la formación de los docentes y profesionales de la formación, que deberán adquirir algo más que rudimentos sobre la neuroanatomía y la neurofisiología: una formación profunda en estos campos será sin duda una premisa necesaria para que lo «neuro» no sea una moda pasajera o una etiqueta vacía en el campo de la educación.
+
+
+
+
+\printbibliography\label{sec-bib}
+% if the text is not in Portuguese, it might be necessary to use the code below instead to print the correct ABNT abbreviations [s.n.], [s.l.]
+%\begin{portuguese}
+%\printbibliography[title={Bibliography}]
+%\end{portuguese}
+
+
+%full list: conceptualization,datacuration,formalanalysis,funding,investigation,methodology,projadm,resources,software,supervision,validation,visualization,writing,review
+\begin{contributors}[sec-contributors]
+\authorcontribution{José Gijón Puerta}[writing]
+\authorcontribution{Meriem Khaled Gijón}[writing]
+\authorcontribution{Pablo García Sempere}[review]
+\authorcontribution{Ana Matas Lara}[review]
+\end{contributors}
+
+
+% José Gijón Puerta, Grupo CHTI, Universidad de Granada (Writing – original draft)
+
+% Meriem Khaled Gijón, grupo CHTI, Universidad de Granada (Writing – original draft)
+
+% Pablo García Sempere, Grupo AREA, Universidad de Granada (Writing – review & editing)
+
+% Ana Matas Lara, Grupo ProfesioLab, Universidad de Granada (Writing – review & editing)
+\end{document}
+
