@@ -2,27 +2,33 @@
 % set default language
 \def\tl@mainlanguage{portuguese}\def\tl@mainvariant{brazilian}%
 \def\tl@secondlanguage{english}\def\tl@secondvariant{american}
+\def\tl@clevereflanguage{brazilian}
 \DeclareOption{portuguese}{%
   % do nothing - use default
 }
 \DeclareOption{english}{%
   \def\tl@mainlanguage{english}\def\tl@mainvariant{american}%
-  \def\tl@secondlanguage{portuguese}\def\tl@secondvariant{brazilian}}
+  \def\tl@secondlanguage{portuguese}\def\tl@secondvariant{brazilian}%
+  \def\tl@clevereflanguage{english}}
 \DeclareOption{spanish}{%
   \def\tl@mainlanguage{spanish}\def\tl@mainvariant{spanish}%
   \def\tl@secondlanguage{portuguese}\def\tl@secondvariant{brazilian}%
-  \def\tl@thirdlanguage{english}\def\tl@thirdvariant{american}}
+  \def\tl@thirdlanguage{english}\def\tl@thirdvariant{american}%
+  \def\tl@clevereflanguage{spanish}}
 \DeclareOption{french}{%
   \def\tl@mainlanguage{french}\def\tl@mainvariant{french}%
   \def\tl@secondlanguage{portuguese}\def\tl@secondvariant{brazilian}%
-  \def\tl@thirdlanguage{english}\def\tl@thirdvariant{american}}
+  \def\tl@thirdlanguage{english}\def\tl@thirdvariant{american}%
+  \def\tl@clevereflanguage{french}}
 \DeclareOption{german}{%
   \def\tl@mainlanguage{german}\def\tl@mainvariant{german}%
   \def\tl@secondlanguage{portuguese}\def\tl@secondvariant{brazilian}%
-  \def\tl@thirdlanguage{english}\def\tl@thirdvariant{american}}
+  \def\tl@thirdlanguage{english}\def\tl@thirdvariant{american}%
+  \def\tl@clevereflanguage{german}}
 \ProcessOptions\relax
 \ExecuteOptions{}
-\LoadClass{article}
+\LoadClassWithOptions{article}
+%\LoadClass{article}
 
 % fonts
 \RequirePackage[standard-baselineskips]{cmbright}
@@ -67,7 +73,8 @@
 \hypersetup{colorlinks,allcolors=TLDarkGreen}
 \urlstyle{same}
 
-\RequirePackage{cleveref}
+%\RequirePackage{cleveref}
+\RequirePackage[\tl@clevereflanguage]{cleveref}
 
 \RequirePackage[table]{xcolor}
 \RequirePackage{graphicx}
