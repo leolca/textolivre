@@ -1,0 +1,541 @@
+% !TEX TS-program = XeLaTeX
+% use the following command:
+% all document files must be coded in UTF-8
+\documentclass[portuguese]{textolivre}
+% build HTML with: make4ht -e build.lua -c textolivre.cfg -x -u article "fn-in,svg,pic-align"
+
+\journalname{Texto Livre}
+\thevolume{15}
+%\thenumber{1} % old template
+\theyear{2022}
+\receiveddate{\DTMdisplaydate{2021}{12}{19}{-1}} % YYYY MM DD
+\accepteddate{\DTMdisplaydate{2022}{4}{10}{-1}}
+\publisheddate{\DTMdisplaydate{2022}{5}{23}{-1}}
+\corrauthor{César Nardelli Cambraia}
+\articledoi{10.35699/1983-3652.2022.37557}
+%\articleid{NNNN} % if the article ID is not the last 5 numbers of its DOI, provide it using \articleid{} commmand 
+% list of available sesscions in the journal: articles, dossier, reports, essays, reviews, interviews, editorial
+\articlesessionname{articles}
+\runningauthor{Cambraia e Leite} 
+%\editorname{Leonardo Araújo} % old template
+\sectioneditorname{Daniervelin Pereira}
+\layouteditorname{Carolina Garcia}
+
+\title{Aplicação estendida de analisador computacional na extração de sintagmas nominais em textos antigos: um estudo de caso}
+\othertitle{Extended application of a computational parser in the extraction of noun phrases in old texts: a case study}
+% if there is a third language title, add here:
+%\othertitle{Artikelvorlage zur Einreichung beim Texto Livre Journal}
+
+\author[1]{César Nardelli Cambraia \orcid{0000-0002-2403-3021} \thanks{Email: \url{nardelli@ufmg.br}}}
+\author[1]{Ramon Cunha Sampaio Leite \orcid{0000-0003-0057-4162} \thanks{Email: \url{ramoncunhasl27@outlook.com}}}
+\affil[1]{Universidade Federal de Minas Gerais, Faculdade de Letras, Belo Horizonte, MG, Brasil.}
+
+
+
+\addbibresource{article.bib}
+% use biber instead of bibtex
+% $ biber article
+
+% used to create dummy text for the template file
+\definecolor{dark-gray}{gray}{0.35} % color used to display dummy texts
+\usepackage{lipsum}
+\SetLipsumParListSurrounders{\colorlet{oldcolor}{.}\color{dark-gray}}{\color{oldcolor}}
+
+% used here only to provide the XeLaTeX and BibTeX logos
+\usepackage{hologo}
+
+% if you use multirows in a table, include the multirow package
+\usepackage{multirow}
+
+% provides sidewaysfigure environment
+\usepackage{rotating}
+
+% CUSTOM EPIGRAPH - BEGIN 
+%%% https://tex.stackexchange.com/questions/193178/specific-epigraph-style
+\usepackage{epigraph}
+\renewcommand\textflush{flushright}
+\makeatletter
+\newlength\epitextskip
+\pretocmd{\@epitext}{\em}{}{}
+\apptocmd{\@epitext}{\em}{}{}
+\patchcmd{\epigraph}{\@epitext{#1}\\}{\@epitext{#1}\\[\epitextskip]}{}{}
+\makeatother
+\setlength\epigraphrule{0pt}
+\setlength\epitextskip{0.5ex}
+\setlength\epigraphwidth{.7\textwidth}
+% CUSTOM EPIGRAPH - END
+
+% LANGUAGE - BEGIN
+% ARABIC
+% for languages that use special fonts, you must provide the typeface that will be used
+% \setotherlanguage{arabic}
+% \newfontfamily\arabicfont[Script=Arabic]{Amiri}
+% \newfontfamily\arabicfontsf[Script=Arabic]{Amiri}
+% \newfontfamily\arabicfonttt[Script=Arabic]{Amiri}
+%
+% in the article, to add arabic text use: \textlang{arabic}{ ... }
+%
+% RUSSIAN
+% for russian text we also need to define fonts with support for Cyrillic script
+% \usepackage{fontspec}
+% \setotherlanguage{russian}
+% \newfontfamily\cyrillicfont{Times New Roman}
+% \newfontfamily\cyrillicfontsf{Times New Roman}[Script=Cyrillic]
+% \newfontfamily\cyrillicfonttt{Times New Roman}[Script=Cyrillic]
+%
+% in the text use \begin{russian} ... \end{russian}
+% LANGUAGE - END
+
+% EMOJIS - BEGIN
+% to use emoticons in your manuscript
+% https://stackoverflow.com/questions/190145/how-to-insert-emoticons-in-latex/57076064
+% using font Symbola, which has full support
+% the font may be downloaded at:
+% https://dn-works.com/ufas/
+% add to preamble:
+% \newfontfamily\Symbola{Symbola}
+% in the text use:
+% {\Symbola }
+% EMOJIS - END
+
+% LABEL REFERENCE TO DESCRIPTIVE LIST - BEGIN
+% reference itens in a descriptive list using their labels instead of numbers
+% insert the code below in the preambule:
+%\makeatletter
+%\let\orgdescriptionlabel\descriptionlabel
+%\renewcommand*{\descriptionlabel}[1]{%
+%  \let\orglabel\label
+%  \let\label\@gobble
+%  \phantomsection
+%  \edef\@currentlabel{#1\unskip}%
+%  \let\label\orglabel
+%  \orgdescriptionlabel{#1}%
+%}
+%\makeatother
+%
+% in your document, use as illustraded here:
+%\begin{description}
+%  \item[first\label{itm1}] this is only an example;
+%  % ...  add more items
+%\end{description}
+% LABEL REFERENCE TO DESCRIPTIVE LIST - END
+
+
+% add line numbers for submission
+%\usepackage{lineno}
+%\linenumbers
+
+\makeatletter
+\let\orgdescriptionlabel\descriptionlabel
+\renewcommand*{\descriptionlabel}[1]{%
+  \let\orglabel\label
+  \let\label\@gobble
+  \phantomsection
+  \edef\@currentlabel{#1\unskip}%
+  %\edef\@currentlabelname{#1}%
+  \let\label\orglabel
+  \orgdescriptionlabel{#1}%
+}
+\makeatother
+
+%\usepackage{fvextra}
+%\usepackage{soul}
+%\usepackage[soul]{lua-ul}
+\usepackage[normalem]{ulem}
+
+\begin{document}
+\maketitle
+
+\begin{polyabstract}
+\begin{abstract}
+Este estudo teve como objetivo analisar a aplicação estendida do analisador sintático \textit{LX-Parser} em um \textit{corpus} composto do trecho inicial da obra \textit{Peregrinação} (publicada em 1614), de Fernão Mendes Pinto (\textit{ca.} 1510-1583). Fez-se extração manual e automática de sintagmas nominais dos dez primeiros capítulos da obra. Testou-se a hipótese de que as especificidades de textos antigos limitam a precisão dos resultados gerados pelo analisador sintático considerado. A hipótese foi confirmada, uma vez que os resultados dessa aplicação estendida não se mostraram produtivos em função da alta frequência de problemas na análise produzida. Identificou-se que os principais problemas relativos a textos antigos estão relacionados à questão da extensão das sentenças, da grafia, da variação e mudança linguística. Além disso, constataram-se também problemas que não são específicos de textos antigos, mas que, ainda assim, limitaram o desempenho, como é o caso da ambiguidade estrutural e das categorias linguísticas.
+
+\keywords{Tecnologia \sep  Linguística Computacional \sep  Linguística Histórica \sep Sintaxe}
+\end{abstract}
+
+\begin{english}
+\begin{abstract}
+This study aimed to analyze the extended application of the \textit{LX-Parser}, a syntatic parser, in a corpus composed of the initial passage from \textit{Peregrinação} (published in 1614) written by Fernão Mendes Pinto (\textit{ca.} 1510-1583). Manual and automatic extraction of noun phrases from the first ten chapters of the work were carried out. The hypothesis that the specificities of old texts limit the accuracy of the results generated by the considered parser was tested. The hypothesis was confirmed, since the results of this extended application did not prove to be productive due to the high frequency of problems in the produced analysis. It was identified that the main problems related to old texts are related to the issue of sentece extension, spelling and linguistic variation and change. In addition, there were also problems that are not specific to old texts, but still limited performance: the issues of structural ambiguity and linguistic categories.
+
+\keywords{Technology \sep Computational Linguistics \sep Historical Linguistics \sep Syntax}
+\end{abstract}
+\end{english}
+% if there is another abstract, insert it here using the same scheme
+\end{polyabstract}
+
+\section{Introdução}\label{sec-intro}
+
+O desenvolvimento da computação tem possibilitado novas formas de realizar análises linguísticas, uma vez que os recursos computacionais já disponíveis têm oferecido cada vez mais novas alternativas para executar tarefas inerentes ao processo de pesquisa em linguística, tais como formação de \textit{corpora}, lematização do vocabulário, análise da estrutura sintática, dentre outros.
+
+No presente trabalho\footnote{Os autores agradecem ao CNPq pelo financiamento e aos pareceristas anônimos por suas críticas, as quais permitiram um melhor desenvolvimento do texto como um todo.} discute-se a aplicação estendida de um recurso computacional específico, o \textit{LX-Parser}, para a extração de sintagmas nominais (SNs) de um texto do séc. XVI: a \textit{Peregrinação}, de Fernão Mendes Pinto\footnote{Deve-se salientar aqui que a análise foi desenvolvida a partir do ponto de vista do linguista, e não do pesquisador em ciência da computação, razão pela qual não se adentra em questões propriamente técnicas de programação, sendo contempladas especificamente as questões de adequação da análise linguística produzida pelo recurso computacional examinado.}.
+
+\section{Fundamentação teórica}
+
+\subsection{Linguística computacional}
+
+Conforme assinalam \textcite[p.~25]{othero_linguistica_2005}, a linguística computacional é “a área da ciência linguística voltada para o tratamento computacional da linguagem e das línguas naturais”. Os primórdios dessa abordagem se situam na década de 1950, com o desenvolvimento da tradução automática.
+
+\textcite{vieira_linguistica_2001} esclarecem que a linguística computacional é passível de aplicação em diversos níveis do estudo da linguagem: no âmbito da \textit{fonética} e da \textit{fonologia}, através do desenvolvimento de sistemas de reconhecimento e síntese de fala; no âmbito da \textit{morfologia}, através do desenvolvimento de sistemas de reconhecimento das categorias de palavras (etiquetadores de categorias gramaticais ou \textit{POS} [\textit{Parts-Of-Speech}] \textit{taggers}); e no âmbito da \textit{sintaxe}, através do desenvolvimento de sistemas de reconhecimento dos constituintes da frase (analisadores sintáticos ou \textit{parsers}). No que se refere aos domínios da \textit{semântica} e da \textit{pragmática}, \textcite{vieira_linguistica_2001} não citam recursos específicos desenvolvidos para a análise linguística, embora registrem questões importantes para essas áreas, como ontologias, ambiguidade, atos de fala, dentre outros.
+
+Em breve revisão, \textcite{alencar_utilizacao_2011} analisou seis analisadores sintáticos de código aberto para o português\footnote{Uma lista mais ampla de analisadores, incluindo aplicativos com código proprietário, foi apresentada por \textcite{menuzzi_sintaxe_2008}.} então disponíveis: \textit{VISL} [\textit{Visual Interactive Syntax Learning}], baseado no \textit{Palavras} \cite{bick_parsing_2000}; \textit{Curupira} \cite{martins_curupira:_2003}; \textit{Selva} \cite{almeida_selva:_2003}; \textit{Grammar Play} \cite{othero_grammar_2004}; \textit{Linguístico} \cite{contier_tecnologia_2010}; e \textit{LX-Parser} \cite{silva_out-box_2010}. Em sua análise, \textcite{alencar_utilizacao_2011} identificou, como problemas para o processamento adequado relativos às entradas lexicais os processos produtivos de formação de palavras, os nomes próprios e as grafias não padrão. Segundo a avaliação do autor, a questão ainda estava a exigir melhoramentos, mesmo especificamente no âmbito do modelo gerativo:
+
+\begin{quote}
+    Em suma, podemos afirmar que a análise sintática automática de textos irrestritos em PB [= \textit{Português Brasileiro}], do ponto de vista do PLN [= \textit{Processamento de Linguagem Natural}], é uma área que ainda demanda muitos esforços de pesquisa, dadas as limitações das ferramentas disponíveis, que ou constituem software proprietário ou são de acesso restrito, ou não são precisas o suficiente, gerando análises errôneas mesmo para exemplos aparentemente triviais. \cite[p.~30]{alencar_utilizacao_2011}. 
+    
+    Concluímos [...] apontando que a análise sintática automática do PB, do ponto de vista da gramática gerativa, constitui um vasto campo a ser explorado, pois inexiste um parser que implemente de forma consistente a teoria X-barra, não obstante a existência de descrições da língua com base nesse modelo que utilizam a CFG [= \textit{Context-Free Grammar}] (e são, portanto, mais próximas de uma implementação computacional) [...] \cite[p.~32]{alencar_utilizacao_2011}.
+\end{quote}
+
+No presente estudo, pretende-se trabalhar com apenas um dos analisadores citados por \textcite{alencar_utilizacao_2011}: o \textit{LX-Parser}. A restrição a apenas este se baseia, em primeiro lugar, no objetivo de se fazer uma análise mais detalhada do grau de precisão do referido analisador, o que exige uma maior delimitação dos recursos computacionais investigados, e, em segundo lugar, no fato de se privilegiar um analisador com interface mais amigável, sem necessidade de instalação de \textit{software} e acessível gratuitamente na internet.
+
+O \textit{LX-Parser} é um analisador sintático baseado no \textit{Standford Parser} e foi desenvolvido por Patrícia Gonçalves e João Silva, sob a coordenação de António Branco, no NLX - Grupo de Fala e Linguagem Natural do Departamento de Informática da Universidade de Lisboa, tendo sido lançado em 2010 \cite{silva_out-box_2010} e estando atualmente na Plataforma Portulan Clarin\footnote{Disponível em: \url{https://portulanclarin.net/workbench.} Acesso em: 04 dez. 2021.}, como parte de um amplo conjunto de recursos computacionais.
+
+O \textit{LX-Parser} trabalha com o seguinte inventário de etiquetas (\Cref{Tabela01})\footnote{Lista disponível em: \url{https://portulanclarin.net/workbench/lx-parser.} Acesso em: 04 dez. 2021. Nessa lista, no entanto, não constam as etiquetas ART (artigo) e PNT (sinal de pontuação), que aparecem nos resultados do processamento. Na lista, apresenta-se a etiqueta O (ordinal), mas, nos dados processados, constatou-se ORD.}: 
+
+\begin{table}[htbp]
+\centering
+\begin{threeparttable}
+\caption{Etiquetas do LX-Parser.}
+\begin{tabular} {ll}
+\toprule
+\textbf{A}: adjetivo & \textbf{NP}: sintagma nominal \protect \footnotemark \\
+\textbf{AP}: sintagma adjetival & \textbf{ORD}: ordinal \\
+\textbf{ADV}: advérbio & \textbf{P}: preposição \\
+\textbf{ADVP}: sintagma adverbial &	\textbf{PNT}: pontuação \\
+\textbf{ART}: artigo & \textbf{PP}: sintagma preposicional \\
+\textbf{C}: complementador & \textbf{PPA}: particípio passado/adjetivo \\
+\textbf{CL}: clítico & \textbf{POSS}: possessivo \\
+\textbf{CP}: sintagma complementador & \textbf{PRS}: pronome pessoal \\
+\textbf{CARD}: cardinal & \textbf{QNT}: quantificador \\
+\textbf{CONJ}: conjunção & \textbf{REL}: relativo \\
+\textbf{CONJP}: sintagma conjuncional & \textbf{S}: frase \\
+\textbf{D}: determinante & \textbf{V}: verbo \\
+\textbf{DEM}: demonstrativo & \textbf{VP}: sintagma verbal \\
+\textbf{N}: nome  \\
+\bottomrule
+\end{tabular}
+\label{Tabela01}
+\source{Elaboração dos autores.}
+\end{threeparttable}
+\end{table}
+\footnotetext{NP (Noun Phrase) é sigla equivalente a SN (Sintagma Nominal) ao longo do presente texto.}
+
+Essas etiquetas estão associadas ao modelo teórico em que se baseia o analisador: trata-se da Teoria X-barra do modelo gerativista \cite{chomsky_remarks_1970,jackendoff_x_1977}, em que se trabalha, portanto, com níveis intermediários (X’) entre a categoria básica (X) e o limite superior do sintagma (XP) projetado pela referida categoria.
+
+\subsection{Experiências prévias em extração automática de sintagmas nominais (SNs)}
+
+A extração automática de SNs de textos em língua portuguesa tem sido discutida já há algum tempo, especialmente do ponto de vista da ciência da informação, para identificação de descritores.
+
+\textcite{miorelli_ed-cer:_2001}, com base na descrição de sintagma nominal (SN) de \textcite{perini_gramatica_1995}, propõe um método de extração de SNs, a que denomina \textit{ED-CER}, nome que reflete a forma de processamento: “as palavras dos textos são lidas da esquerda (E) para a direita (D), existe um ‘corte’ (C), uma ‘exclusão’ de palavras (E) e ‘reconhecimento’ do SN (R)” \cite[p.~47]{miorelli_ed-cer:_2001}. Esse método se baseia em dois módulos de processamento: \textit{módulo seletor} e \textit{módulo analisador}. O módulo seletor encontra candidatos a SN a serem encaminhados para o módulo analisador. Inicialmente, faz-se a etiquetagem manual dos itens do \textit{corpus}. Em seguida, o módulo realiza o corte das sequências, tomando como referência as chamadas \textit{etiquetas de corte} (referentes a itens que não fazem parte do SN, como verbos, sinais de pontuação e locuções prepositivas, adverbiais e conjuntivas) e faz exclusão desses itens. Já o módulo analisador extrai do \textit{corpus} pré-processado apenas os candidatos a SN que estiverem em conformidade com a gramática de SN proposta, que se baseou na fórmula SN → DET PN NSN MOD\footnote{DET = determinante; PN = pré-núcleo; NSN = núcleo do SN; e MOD = modificador.}. O protótipo foi desenvolvido em linguagem “C” e o teste de validação demonstrou 95,6\% de precisão \cite[p.~66]{miorelli_ed-cer:_2001}. Os casos de SNs não extraídos envolviam SN precedido por advérbio em \textit{-mente} (“inicialmente os principais métodos”) e SN dentro de SP (“na tradução entre as línguas portuguesa e inglesa”). A pesquisadora concluiu que essas falhas poderiam ser resolvidas com a inclusão de novas regras na gramática do seu modelo.
+
+Diferentemente do trabalho acima citado, em que houve a proposta de um recurso computacional, há trabalhos mais recentes que se ocuparam de testar recursos pré-existentes, como o de \textcite{silva_indexacao_2014}. O estudo de \textcite{silva_indexacao_2014}\footnote{O estudo de \textcite{silva_indexacao_2014} contém uma interessante resenha de diversos trabalhos relativos a extração automática de SNs desenvolvidos entre 1995 e 2011, com elucidativo quadro às pp. 160-161. Recomenda-se consulta a esse trabalho ao leitor interessado em conhecer cada uma das experiências.} é especialmente relevante para a presente discussão, uma vez que contempla igualmente o \textit{LX-Parser}.
+
+\textcite{silva_indexacao_2014} fez um levantamento do estado da arte da indexação automática por SNs para textos em português,  avaliou e comparou as ferramentas \textit{PALAVRAS}, \textit{OGMA}\footnote{Para a ferramenta \textit{OGMA}, cf. \textcite{maia_uso_2008}.} e \textit{LX-Parser}, usando como referência a extração manual de SNs. Em sua análise, apurou as taxas de acerto e de revocação\footnote{A taxa de acerto é “a razão do total de expressões que de fato constituem SN sobre o total de expressões extraídas pelos programas” e a taxa de revocação é “a razão do número de expressões que de fato são SNs extraídos pelos softwares sobre o número total de SNs extraídos pela técnica manual” \cite[p.~168]{silva_indexacao_2014}.} para cada uma dessas ferramentas, as quais se apresentam na \Cref{Tabela02}:
+
+\begin{table}[htbp]
+\centering
+\begin{threeparttable}
+\caption{Resultados da avaliação das ferramentas.}
+\begin{tabular}{lccc}
+\toprule
+& PALAVRAS & OGMA & LX-Parser \\
+\midrule
+Taxa de acerto & 94\% &	72,5\% & 75\% \\
+Taxa de revocação & 86,5\%	& 36,5\% & 97,5\% \\
+%\midrule
+\bottomrule
+\end{tabular}
+\label{Tabela02}
+\source{Adaptado de \textcite[p.~168-179]{silva_indexacao_2014}.}
+\end{threeparttable}
+\end{table}
+
+Como se pode ver, o \textit{Palavras} foi o que teve a melhor taxa de acerto, mas o \textit{LX-Parser} foi o que apresentou a melhor taxa de revocação. No que se refere aos problemas encontrados em relação a cada uma das ferramentas, \textcite{silva_indexacao_2014} esclarece que:
+
+\begin{enumerate}[label=\alph*.]
+    \item quanto ao \textit{PALAVRAS}, os problemas estavam relacionados à marcação de adjetivos e verbos como SN, à exclusão de palavras do SN, à identificação de numerais isoladamente como SNs e à confusão do artigo “\textit{os}” com o pronome oblíquo, sendo extraído como SN;
+    \item quanto ao \textit{OGMA}, os problemas disseram respeito à marcação de adjetivos e verbos como SN, a SNs extraídos iniciados por preposição ou conjunção e à fragmentação do SN (deixando-o incompleto);
+    \item quanto ao \textit{LX-Parser}, os problemas estavam relacionados à marcação de adjetivos, advérbios, numerais, siglas e  letras isoladas como verbo, e à identificação de adjetivos, verbos, numerais, artigos e  símbolos e letras isoladas como SNs.
+\end{enumerate}
+
+\section{Hipótese de trabalho}
+
+Lança-se, aqui, a hipótese de que as \textit{especificidades dos textos antigos limitam a precisão dos resultados gerados pelo analisador sintático LX-Parser},  justificada pelo fato de que os analisadores sintáticos geralmente são concebidos a partir de \textit{corpora} compostos de textos modernos, como é o caso do \textit{LX-Parser}, que foi criado a partir de treino em dados modernos, já que o \textit{corpus} de base, formado de 10.140 sentenças, apresentava 8.952 (88,3\%) extraídas de jornais, 403 extraídas de romances (4\%) e 785 (7,7\%) como série de teste (\textit{test suite}). Sendo confirmada a hipótese, cabe, em seguida, identificar quais são essas especificidades e que tipo de informação o analisador precisa incorporar para ampliar o grau de precisão dos resultados para textos de fases mais antigas da língua portuguesa.
+
+É necessário enfatizar aqui que, como o \textit{LX-Parser} foi concebido para textos modernos, não se está avaliando sua aplicação \textit{regular} (ou seja, exatamente aquela para a qual foi concebido), mas sim sua aplicação \textit{estendida} (isto é, diferente daquela para a qual foi concebido).
+
+\section{Metodologia}
+
+Este estudo se enquadra em um projeto em curso\footnote{Projeto “Para uma gramática do português clássico: o sintagma nominal e suas funções na \textit{Peregrinação}, de Fernão Mendes Pinto [Fase I]”, Produtividade em Pesquisa, CNPq, 2021-2024.} de elaboração de uma gramática do português clássico a partir de uma descrição linguística integral da obra \textit{Peregrinação} (1614), de Fernão Mendes Pinto (\textit{ca}. 1510-1583). Essa obra teria sido redigida por volta do terceiro quartel do séc. XVI e revela o uso linguístico escrito, mas com traços de oralidade, de um autor culto da variante da região de Lisboa (do dialeto padrão, portanto) na faixa etária de 60 anos, em um estilo mais ou menos informal \cite{cambraia_contributo_2000}. Seu interesse para os estudos linguísticos reside no fato de se tratar de texto narrativo em prosa extenso, permitindo assim um estudo mais aprofundado do nível sintático. Ademais, há evidências de que seu autor tinha grande sensibilidade linguística, empregando, no texto, marcas linguísticas que seriam próprias de diferentes grupos sociais \cite{cambraia_mudancinterrompida_2003}. A edição adotada para este estudo foi a edição digital da \textit{Biblioteca Virtual dos Autores Portugueses} \cite{biblioteca_coordenacao_1998}\footnote{Segundo esclarecido por \textcite[p.~185]{correia_construcao_1999}, a edição da BVAP baseia-se na edição de 1984 \cite{pinto_peregrinacao_1984}, a qual, por sua vez, tomou a de 1829 \cite{pinto_peregrinacao_1829} como modelo \cite[p.~VI]{pinto_peregrinacao_1984}, embora a de 1984 apresente normas de transcrição levemente diferentes.}, conferida com a edição \textit{princeps} de 1614\footnote{Fac-símile digital do exemplar de cota RES-4409-V da BNP disponível em: \url{https://purl.pt/82.} Acesso em: 04 dez. 2021} sempre que necessário, em função da constatação de alguns erros\footnote{Como erros mais graves apenas da edição de 1998, constam quatro repetições no lugar do texto correto: f. 51v (cap. 48) repetido no lugar do f. 59v (cap. 55); f. 72r (cap. 65) no lugar do f. 75v (cap. 68); f. 111r (cap. 97) no lugar do f. 112v (cap. 98) e  f. 163v (cap. 136) no lugar do f. 165r (cap. 137). Esses trechos, no entanto, não fizeram parte do \textit{corpus} do presente estudo, pois estão fora dos 10 primeiros capítulos.}: a edição digital adotou normas conservadoras de transcrição \cite{cambraia_introducao_2005}, diferenciando-se da edição de 1614 basicamente pela transcrição de \textit{s} longo como \textit{s} curto, de \textit{c}, como \textit{ç}, de maiúscula após capitular como minúscula e da abreviatura \textit{q̃} como \textit{que}, pela união de palavras divididas em final de linha (com eliminação do hífen) e pela separação entre a indicação do capítulo e o texto do título do capítulo. Foram selecionados os 10 primeiros capítulos da obra, perfazendo um total de aprox. 9.000 palavras (\textit{tokens}).
+
+O \textit{corpus} foi submetido a dois processos de extração de SNs: (a) manual\footnote{A extração manual foi feita a partir de leitura do texto pelos autores deste estudo, seleção de sequências que consistiam em SN e transcrição em uma planilha. Nessa extração, não foram coletados os SNs compostos por pronomes pessoais, pronomes demonstrativos neutros e pronomes relativos (\textit{que}, \textit{o}(\textit{s}) \textit{que}, \textit{a}(\textit{s}) \textit{que}, (\textit{o})\textit{s} \textit{qual}(\textit{is}) e (\textit{a})\textit{s qual}(\textit{is})). Esta decisão decorreu do objetivo do estudo dos SNs em andamento, que é o de compreender sua organização interna: nos casos citados, a estrutura apresenta pouca complexidade, não sendo, portanto, de interesse prioritário.}, feito pelos autores deste estudo; e (b) automático, com base no analisador \textit{LX-Parser}. A extração pelo \textit{LX-Parser} contou com os seguintes passos: (1) criação de arquivo \texttt{.txt} com codificação UTF-8, contendo os 10 primeiros capítulos da \textit{Peregrinação}, copiados da edição da BVAP, que apresenta o texto em formato \texttt{html}; (2) retificação do texto da edição em relação aos caracteres \textit{ẽ} e \textit{ũ} que estavam desconfigurados respectivamente como @ e ‰; (3) processamento do arquivo \texttt{.txt} no \textit{LX-Tokenizer}, que faz separação de unidades lexicais (como no caso de contrações entre preposições e outras categorias)\footnote{Em uma primeira rodada de processamento, o \textit{LX-Tokenizer} travou em 97\% de processamento e não terminou a tarefa. Em uma segunda rodada, no entanto, concluiu a tarefa.}; (4) processamento do arquivo \texttt{.txt} no \textit{LX-Parser}, com geração de novo arquivo com dados no formato de visualização de parênteses; (5) processamento do novo arquivo \texttt{.txt} no \textit{Tregex}\footnote{Disponível em: \url{https://nlp.stanford.edu/software/tregex.shtml.} Acesso em: 04 dez. 2021.} para seleção de SNs, utilizando o recurso de busca de padrão (\textit{Search pattern}) com valor NP com a opção de exibição apenas da porção da árvore correspondente (\textit{Show only matched portions of tree}); e (6) geração de novo arquivo \texttt{.txt} pelo \textit{Tregex} com lista de apenas NPs\footnote{Os autores agradecem ao Dr. João Silva (da Universidade de Lisboa), um dos desenvolvedores do \textit{LX-Parser}, pelas orientações fornecidas para possibilitar a realização desse conjunto de procedimentos.}.
+
+Após essa coleta de dados, fez-se uma comparação entre os dois resultados (extração manual × automática) e analisaram-se as diferenças para verificar a natureza destas.
+
+\section{Descrição e discussão dos dados}
+
+A aplicação estendida do \textit{LX-Parser} ao \textit{corpus} com os 10 primeiros capítulos da \textit{Peregrinação} de Fernão Mendes Pinto não apresentou resultado produtivo. Não se trata de resultado imprevisto, já que, como esclarecido, o \textit{LX-Parser} foi concebido para ser aplicado a textos modernos, e não a textos antigos. O aspecto mais importante da experiência, portanto, não está nessa constatação, mas sim na possibilidade de identificar \textit{quais são as especificidades de um texto do séc. XVI que limitam essa aplicação estendida do analisador sintático}.
+
+Uma primeira análise dos resultados obtidos segundo os seis procedimentos descritos na metodologia permitiu perceber que o processamento pelo \textit{LX-Tokenizer} criou um volume considerável de erros. Considerem-se os dados abaixo referentes ao texto do título do primeiro capítulo, em que \ref{01a} contém o texto simples, \ref{01b} contém o resultado de \ref{01a} processado pelo LX-Tokenizer e \ref{01c} contém o resultado \ref{01b} processado pelo \textit{LX-Parser}:
+
+\begin{description}[topsep=10pt, parsep=2pt, itemindent=!]
+\item[(01a)\label{01a}] Do que passey em minha mocidade neste Reyno ate que me embarquey para a India.
+
+\item[(01b)\label{01b}]
+<p> <s> de\_ o que passey em minha mocidade em\_ este Reyno ate que me embarquey para a India .*/ </s> </p>
+%\Verb[breaklines,commandchars=+\[\]]|<p> <s> de\_ o que passey em minha mocidade em\_ este Reyno ate que me embarquey para a India.*/\ <\/s> <\/p>|
+%\lstinline{<p> <s> de\_ o que passey em minha mocidade em\_ este Reyno ate que me embarquey para a India.*/\ <\/s> <\/p>}
+
+\item[(01c)\label{01c}]
+(ROOT (S (VP (PP (P de) (VP (V \_) (NP (ART o) (N' (CP (NP (REL que)) (S (VP (V passey) (PP (P em) (NP (N' (POSS minha) (N' (N mocidade) (PP (P em) (NP (N \_)))))))) (NP (DEM este) (N' (N' (N' (N Reyno) (A ate)) (CP (NP (REL que)) (S (V' (NP (CL me)) (V embarquey)) (PP (PP (P para) (NP (ART a) (N India))) (PNT .))))) (N' (N *) (N /)))))))))))))
+%\Verb[breaklines,commandchars=+\[\]]|(ROOT (S (VP (PP (P de) (VP (V \_) (NP (ART o) (N' (CP (NP (REL que)) (S (VP (V passey) (PP (P em) (NP (N' (POSS minha) (N' (N mocidade) (PP (P em) (NP (N \_)))))))) (NP (DEM este) (N' (N' (N' (N Reyno) (A ate)) (CP (NP (REL que)) (S (V' (NP (CL me)) (V embarquey)) (PP (PP (P para) (NP (ART a) (N India))) (PNT .))))) (N' (N *) (N /)))))))))))))|
+%\lstinline{(ROOT (S (VP (PP (P de) (VP (V \_) (NP (ART o) (N' (CP (NP (REL que)) (S (VP (V passey) (PP (P em) (NP (N' (POSS minha) (N' (N mocidade) (PP (P em) (NP (N \_)))))))) (NP (DEM este) (N' (N' (N' (N Reyno) (A ate)) (CP (NP (REL que)) (S (V' (NP (CL me)) (V embarquey)) (PP (PP (P para) (NP (ART a) (N India))) (PNT .))))) (N' (N *) (N /)))))))))))))}
+\end{description}
+
+
+Como se vê em \ref{01b}, o \textit{LX-Tokenizer} inseriu marca de início de parágrafo (\lstinline{<p>}), de início de sentença (\lstinline{<s>}), de separação de preposição (\lstinline{<_>}), de pontuação (\lstinline{<*/>}), de final de sentença (\lstinline{</s>}) e de final de parágrafo (\lstinline{</p>}). Entretanto, o \textit{LX-Parser} não reconheceu as marcas de separação e de pontuação como tal e considerou-as como parte do texto, atribuindo a elas etiquetas sintáticas: \lstinline{V} para a primeira ocorrência de \lstinline{_}, \lstinline{N}  para a segunda ocorrência de \lstinline{_} e \lstinline{N} para \lstinline{*}. Dada a alta frequência dessas marcas, o volume de erros tornou o resultado fortemente improdutivo.
+
+Tendo ficado claro que foi justamente o \textit{LX-Tokenizer} que deu origem ao problema das marcas acima mencionado, considerou-se então a possibilidade de fazer o processamento do texto sem passá-lo inicialmente por esse recurso, ou seja, eliminando o procedimento (3) descrito na metodologia. Realizado esse novo processamento, o resultado foi melhor, como se pode ver pelo dado em \ref{01d}, referente ao mesmo título de capítulo tratado aqui antes:
+
+\begin{description}[topsep=10pt, parsep=2pt, itemindent=!]
+\item[(01d)\label{01d}]
+(ROOT (S (S (VP (PP (P de\_) (NP (ART o) (N' (CP (NP (REL que)) (S (VP (V passey) (PP (P em) (NP (N' (POSS minha) (N' (N mocidade) (PP (P em\_) (NP (DEM este) (N' (N' (N Reyno) (A ate)) (CP (NP (REL que)) (S (VP (V' (NP (CL me)) (V embarquey)) (PP (P para) (NP (ART a) (N India))))))))))))))))))))) (PNT .)))
+%\Verb[breaklines,commandchars=+\[\]]|(ROOT (S (S (VP (PP (P de\_) (NP (ART o) (N' (CP (NP (REL que)) (S (VP (V passey) (PP (P em) (NP (N' (POSS minha) (N' (N mocidade) (PP (P em\_) (NP (DEM este) (N' (N' (N Reyno) (A ate)) (CP (NP (REL que)) (S (VP (V' (NP (CL me)) (V embarquey)) (PP (P para) (NP (ART a) (N India))))))))))))))))))))) (PNT .)))|
+%\lstinline{(ROOT (S (S (VP (PP (P de\_) (NP (ART o) (N' (CP (NP (REL que)) (S (VP (V passey) (PP (P em) (NP (N' (POSS minha) (N' (N mocidade) (PP (P em\_) (NP (DEM este) (N' (N' (N Reyno) (A ate)) (CP (NP (REL que)) (S (VP (V' (NP (CL me)) (V embarquey)) (PP (P para) (NP (ART a) (N India))))))))))))))))))))) (PNT .)))}
+\end{description}
+
+O resultado permitiu perceber que o próprio \textit{LX-Parser} fez a maioria das separações entre preposição e outras categorias (demonstrativos e artigos) — como no caso de neste > em este no exemplo em \ref{01a} — que o \textit{LX-Tokenizer} faria, exceto no caso da preposição em e do artigo definido (cf. \textit{no}, \textit{na}, \textit{nos}, \textit{nas}), o que limitou a precisão dos resultados.
+
+A discussão que se segue toma por base essa segunda rodada de processamento, sem a aplicação do \textit{LX-Tokenizer}.
+
+\subsection{Resultados quantitativos}
+
+Aplicados os procedimentos descritos na metodologia (sem o do \textit{LX-Tokenizer}, como já esclarecido), o processamento pelo \textit{LX-Parser} levou à identificação de 2.340 SNs. Desse total, foram excluídos 238, que eram os compostos de pronomes pessoais, pronomes demonstrativos neutros e pronomes relativos (que não fizeram parte da extração manual), deixando um total de 2.002 SNs para comparação. Levando em conta que a extração manual resultou em um total de 2.157 SNs e a automática 2.002 SNs, poder-se-ia pensar que o desempenho foi de precisão de 92,8\%. Entretanto, um exame detalhado mostra que o desempenho foi muito inferior. Confrontando-se os SNs da extração manual e os da extração automática, apenas 540 foram corretamente identificados pelo \textit{LX-Parser}, portanto, seu desempenho foi de 25\%, o que é um valor muito baixo. Trata-se de valor muito inferior ao de 97,5\% da taxa de revocação obtido por \textcite[p.~170]{silva_indexacao_2014}, com base em \textit{corpus} de textos modernos.
+
+\subsection{Fatores específicos que limitaram o desempenho}
+
+Dentre os fatores que limitaram o desempenho do \textit{LX-Parser}, há primeiramente aqueles que se consideraram que são específicos de textos antigos, a saber: a questão da extensão das sentenças, a questão gráfica e a questão da variação e da mudança linguística.
+
+\subsubsection{A questão da extensão das sentenças}
+
+O primeiro obstáculo constatado para o adequado processamento do \textit{corpus} foi a extensão das sentenças. O \textit{LX-Parser} excluiu da análise 7 sentenças, as quais foram apresentadas em arquivo separado pelo programa. Informou-se a mensagem “\textit{Error: processing this sentence was taking too long}” e também o tempo após o qual se decidiu pela interrupção do processamento, que foi entre 41 e 69 segundos (p. ex. “\textit{Gave up after 69 seconds}”). Essas frases apresentavam extensão entre 197 e 369 palavras (segundo o critério gráfico).
+
+A exclusão dessas 7 sentenças pelo \textit{LX-Parser} levou a uma perda de 403 SNs que deveriam ter sido extraídos, o que significou uma queda de 18,7 pontos percentuais na taxa de desempenho (ou de revocação).
+
+Embora sentenças longas não sejam propriamente uma especificidade de textos dos sécs. XVI e XVII, já que, em textos medievais, também se faziam presentes, ainda assim constituem um aspecto muito particular do estilo desse autor quinhentista, em cuja obra não são raras\footnote{Segundo \textcite[p.~7]{savoy_machine_2020}, constata-se uma diminuição da extensão das sentenças ao longo das épocas.}. Nessa obra, é possível encontrar SNs pesadíssimos, estando um deles justamente dentre as sentenças que foram excluídas (cf. trecho em itálico):
+
+\begin{description}[topsep=10pt, parsep=2pt, itemindent=!]
+\item[(02)\label{02}]
+Mas por outra parte quãdo vejo que do meyo de todos estes perigos \& trabalhos me quis Deos tirar sempre em saluo, \& porme em seguro, acho que não tenho tanta razão de me queixar por todos os males passados, quãta de lhe dar graças por este só bẽ presente, pois me quis conseruar a vida, paraque eu pudesse fazer \textit{esta rude \& tosca escritura, que por erança deixo a meus filhos (porque só para elles he minha tenção escreuella) paraque elles vejão nella estes meus trabalhos, \& perigos da vida que passei no discurso de vinte \& hũ ãnos em que fuy treze vezes catiuo, \& dezasete vendido, nas partes da India, Etiopia, Arabia felix, China, Tartaria, Macassar, Samatra, \& outras muitas prouincias daquelle oriental arcipelago, dos confins da Asia, a que os escritores Chins, Siames, Gueos, Elequios nomeão nas suas geografias por pestana do mũdo, como ao diante espero tratar muito particular, \& muito diffusamente, \& daqui por hũa parte tomem os homẽs motiuo de se não desanimarem cos trabalhos da vida para deixarem de fazer o que deuem, porque não ha nenhũs, por grandes que sejão, com que não possa a natureza humana, ajudada do fauor diuino \& por outra me ajudem a dar graças ao Senhor omnipotente por vsar comigo da sua infinita misericordia, a pesar de todos meus peccados, porque eu entendo \& cõfesso que delles me nacerão todos os males que por mim passarão, \& della as forças, \& o animo para os poder passar, \& escapar delles com vida.}
+\end{description}
+
+
+\subsubsection{A questão gráfica}
+
+O segundo obstáculo foi a questão gráfica: o sistema de representação gráfica da \textit{Peregrinação} apresenta diferenças em relação aos textos modernos, o que resulta em interpretação inadequada dos itens lexicais pelo \textit{LX-Parser}.
+
+Primeiramente, há a questão dos diacríticos. No que se refere ao til, por um lado, há os caracteres \textit{ẽ} e \textit{ũ}\footnote{No trecho do \textit{corpus} analisado, não ocorre \textit{ĩ}.}, combinações ausentes do sistema moderno; por outro lado, há os caracteres \textit{ã} e \textit{õ}, combinações presentes no sistema moderno, mas usados na \textit{Peregrinação} em casos em que se empregam formas alternativas atualmente.
+
+Nos casos de \textit{ẽ} e \textit{ũ}, parece ter havido mudança de codificação no curso do processamento: tanto o arquivo \textit{.txt} inserido com o \textit{corpus} quanto o arquivo .txt gerado com visualização das árvores sintáticas em parênteses estavam na codificação UTF-8, mas houve a substituição desses dois caracteres por sinal de interrogação. Parece, então, que se trabalhou intermediariamente, no curso do processamento, com a codificação ANSI, incompatível com os dois citados caracteres. A consequência dessa desconfiguração foi a de análise do sinal de interrogação efetivamente como um sinal de pontuação, gerando interpretação equivocada (o substantivo \textit{tẽpo} foi analisado de forma fragmentada: o \textit{t} foi etiquetado como N, o \textit{ẽ} substituído por \textit{?} e etiquetado como PNT, e o \textit{po} etiquetado como N)\footnote{Nos exemplos, os itens linguísticos serão apresentados em itálico para facilitar a leitura.}:
+
+\begin{description}[topsep=10pt, parsep=2pt, itemindent=!]
+%\item[(03)\label{03}] ... pella mayor parte, \& milhor tẽpo da minha vida ... $\Rightarrow$ ...  \Verb[breaklines,commandchars=+\[\]]|(NP (N' (N pella) (N mayor) (N parte))))))))))) (S (PNT ,) (S (S (NP (NP (N' (N &) (N milhor) +underline[(N t))) (NP (PNT ?)] +underline[(N' (N po)] (PP (P de_) (NP (ART a) (N' (POSS minha) (N vida)))))| ... 
+%\item[(03)\label{03}] ... pella mayor parte, \& milhor tẽpo da minha vida ... $\Rightarrow$ ...\lstinline{(NP (N' (N pella) (N mayor) (N parte))))))))))) (S (PNT ,) (S (S (NP (NP (N' (N &) (N milhor) (N t))) (NP (PNT ?) (N' (N po) (PP (P de_) (NP (ART a) (N' (POSS minha) (N vida)))))}
+\item[(03)\label{03}] 
+... \textit{pella mayor parte, \& milhor \uline{tẽpo} da minha vida} ... $\Rightarrow$ ... (NP (N' (N \textit{pella}) (N \textit{mayor}) (N \textit{parte}))))))))))) (S (PNT ,) (S (S (NP (NP (N' (N \&) (N \textit{milhor}) \uline{(N \textit{t}))) (NP (PNT \textit{?}) (N' (N \textit{po})} (PP (P \textit{de}\_) (NP (ART \textit{a}) (N' (POSS \textit{minha}) (N \textit{vida}))))) ...
+%... pella mayor parte, \& milhor tẽpo da minha vida ... $\Rightarrow$ ...\texttt{(NP (N' (N \textnormal{pella}) (N mayor) (N parte))))))))))) (S (PNT ,) (S (S (NP (NP (N' (N \&) (N milhor) \uline{(N t))) (NP (PNT ?) (N' (N po)} (PP (P de\_) (NP (ART a) (N' (POSS minha) (N vida)))))}
+\end{description}
+
+
+No caso de \textit{ã} e \textit{õ}, não houve a substituição desses caracteres por sinal de interrogação, mas o fato de a forma gráfica em que ocorrem ser diferente da moderna também levou à interpretação equivocada (o adjetivo \textit{grãdes} foi etiquetado como N e a preposição \textit{cõ} como V):
+
+\begin{description}[topsep=10pt, parsep=2pt, itemindent=!]
+\item[(04)\label{04}] 
+... \textit{os muitos \& \uline{grãdes} trabalhos \& infortunios} ... $\Rightarrow$ ... (NP (ART \textit{os}) (N' (CP (NP (QNT \textit{muitos}) (N' (N' (N \&) \uline{(N \textit{grãdes})} (N \textit{trabalhos}) (N \&) (N \textit{infortunios})) ...
+%... os muitos \& grãdes trabalhos \& infortunios ... $\Rightarrow$ ... \Verb[breaklines,commandchars=+\[\]]|(NP (ART os) (N' (CP (NP (QNT muitos) (N' (N' (N &) +underline[(N grãdes)] (N trabalhos) (N &) (N infortunios))| ...
+
+\item[(05)\label{05}] 
+... \textit{ficando \uline{cõ} isto as nossas fustas de todo mancas} ... $\Rightarrow$ ... (VP (VP (V \textit{ficando}) (VP (V' \uline{(V \textit{cõ})} (NP (DEM \textit{isto}))) (NP (ART \textit{as}) (N' (POSS \textit{nossas}) (N' (N \textit{fustas}) (PP (P \textit{de}) (NP (QNT \textit{todo}) (N \textnormal{mancas})))))))) ...
+%... ficando cõ isto as nossas fustas de todo mancas ... $\Rightarrow$ ... \Verb[breaklines,commandchars=+\[\]]|(VP (VP (V ficando) (VP (V' +underline[(V cõ)] (NP (DEM isto))) (NP (ART as) (N' (POSS nossas) (N' (N fustas) (PP (P de) (NP (QNT todo) (N mancas))))))))| ...
+\end{description}
+
+
+Mas a questão se estende também a outros diacríticos empregados de forma diferente da moderna: a preposição \textit{atê} (mod. \textit{até}) foi etiquetada como N, o advérbio \textit{câ} ou \textit{cà} (mod. \textit{cá}) como V, dentre outros.
+
+Curiosamente, certos termos com formas diferentes na escrita moderna do português (em função do diacrítico) receberam etiquetagem correta: o verbo \textit{pòr} (mod. \textit{pôr}) foi etiquetado como V, os verbos de perfeito \textit{forão} e \textit{viraõ} (mod. \textit{foram} e \textit{viram}) igualmente como V, o adjetivo \textit{nùs} (mod. \textit{nus}) como A, dentre outros.
+
+Em segundo lugar, há a questão dos \textit{grafemas}. Existem algumas diferenças bem evidentes entre como se escrevia nos sécs. XVI-XVII e hoje. Assim, o processamento pelo analisador gerou erros relativos também às palavras com grafia diferente da moderna, tais como \textit{Qvando}\footnote{Como já assinalado, na edição da BVAP, as maiúsculas que se seguiam às capitulares foram convertidas em minúsculas: assim, no texto impresso da \textit{Peregrinação}, estava na verdade \textit{QVando} (com \textit{Q} capitular), o que foi convertido na referida edição em \textit{Qvando} (com \textit{Q} não capitular).} e \textit{prouue}:
+
+
+\begin{description}[topsep=10pt, parsep=2pt, itemindent=!]
+\item[(06)\label{06}] 
+\textit{\underline{Qvando} às vezes ponho diante dos olhos} ... $\Rightarrow$ (NP (N' \uline{(N \textit{Qvando})} (PP (P \textit{a}\_) (NP (ART \textit{as}) (N \textnormal{vezes}))))) (VP (V' (V \textit{ponho}) (ADV \textit{diante})) (PP (P \textit{de}\_) (NP (ART \textit{os}) (N \textit{olhos}))))) ...
+%\underline{Qvando} às vezes ponho diante dos olhos ... $\Rightarrow$ \Verb[breaklines,commandchars=+\[\]]|(NP (N' (N +underline[Qvando]) (PP (P a_) (NP (ART as) (N vezes))))) (VP (V' (V ponho) (ADV diante)) (PP (P de_) (NP (ART os) (N olhos)))))| ...
+
+\item[(07)\label{07}] 
+... \textit{sua derrota prouue a nosso Senhor} ... $\Rightarrow$ ... (NP (NP (N' (POSS \textit{sua}) (N' (N \textit{derrota}) \uline{(A \textit{prouue})}))) (NP (ART \textit{a}) (N' (POSS \textit{nosso}) (N \textit{Senhor})))))) ...
+%... sua derrota prouue a nosso Senhor ... $\Rightarrow$ ... \Verb[breaklines,commandchars=+\[\]]|(NP (NP (N' (POSS sua) (N' (N derrota) +underline[(A prouue)]))) (NP (ART a) (N' (POSS nosso) (N Senhor))))))| ...
+\end{description}
+
+Era comum, nos textos da época de publicação da \textit{Peregrinação}, o uso alternado de \textit{v} e \textit{u} de forma diferente da moderna (cf. mod. \textit{Quando} e \textit{prouve}). No primeiro caso, o \textit{LX-Parser} etiquetou erroneamente a conjunção \textit{Qvando} como N e, no segundo caso, o verbo \textit{prouue}, perfeito de \textit{prazer}, como A.
+
+Outro exemplo interessante é a forma verbal \textit{he}, presente de \textit{ser}, que foi etiquetada como N:
+
+\begin{description}[topsep=10pt, parsep=2pt, itemindent=!]
+\item[(08)\label{08}] 
+... \textit{mas ja que \underline{he} forçado ser assi} ... $\Rightarrow$ ... (NP (CONJ \textit{mas}) (NP (N' (N \textit{ja}) (CP (NP (REL \textit{que})) (S (NP (N' \uline{(N \textit{he})} (A \textit{forçado}))) (VP (V \textit{ser}) (AP (A \textit{assi})
+%... mas ja que \underline{he} forçado ser assi ... $\Rightarrow$ ... \Verb[breaklines,commandchars=+\[\]]|(NP (CONJ mas) (NP (N' (N ja) (CP (NP (REL que)) (S (NP (N' +underline[(N he)] (A forçado))) (VP (V ser) (AP (A assi)| ...
+\end{description}
+
+Um aspecto também relevante é a forma \textit{\&}, historicamente um composto dos grafemas \textit{e} e \textit{t} em nexo, ou seja, com o \textit{t} usando parte dos traços do \textit{e}. Esse composto, baseado na conjunção coordenativa latina \textit{et}, passou por uma estilização formal e foi adotado como representação de conjunção coordenativa nos sistemas gráficos baseados no alfabeto latino, como é o caso do português. No exemplo em \ref{04} acima, vê-se que ele foi etiquetado equivocadamente como N, e não como CONJ.
+
+A grande diversidade na direção do erro de etiquetagem chama a atenção para uma certa imprevisibilidade em relação ao critério de decisão do \textit{LX-Parser} para a escolha de determinada etiqueta.
+	
+Em terceiro lugar, há a questão da \textit{separação vocabular}\footnote{A questão da separação vocabular é um aspecto bastante complicador para processamento automático de dados: como já assinalado por \textcite{cambraia_edicoes_2007}, o próprio fato de editores de textos antigos adotarem diferentes critérios em relação a este aspecto faz com que a coleta de dados em bases digitais de textos exija cuidados especiais para se evitarem conclusões equivocadas sobre o comportamento dos dados.}. No português dos sécs. XVI-XVII, o processo de mudança da separação vocabular do sistema de vocábulo fonológico (baseado em grupo acentual) para o de morfológico (baseado em classe de palavra) já estava bastante avançado, mas, ainda assim, persistia registro em certos casos segundo o sistema mais antigo (cf. \textit{perseguirme}, \textit{paraque}, \textit{aquem} etc.) e ocorriam também separações que não vingaram (cf. \textit{com nosco} etc.), o que causou interpretação equivocada pelo analisador (\textit{paraque} foi etiquetado como N em vez de P + CONJ; e \textit{com nosco} como P + NP (N) em vez de P + NP (PRS)):
+
+\begin{description}[topsep=10pt, parsep=2pt, itemindent=!]
+\item[(09)\label{09}] 
+... \textit{\underline{paraque} em nome daquelle pouo fizesse} ... $\Rightarrow$ ... (N' \uline{(N \textit{paraque})} (PP (P \textit{em}) (NP (N' (N \textit{nome}) (N \textit{daquelle}) (N \textit{pouo}) (N \textit{fizesse}) ...
+%... \underline{paraque} em nome daquelle pouo fizesse ... $\Rightarrow$ ... \Verb[breaklines,commandchars=+\[\]]|(N' +underline[(N paraque)] (PP (P em) (NP (N' (N nome) (N daquelle) (N pouo) (N fizesse)| ...
+
+\item[(10)\label{10}] 
+... \textit{fosse \underline{com nosco}} ... $\Rightarrow$ ... (S (VP (V \textit{fosse}) \uline{(PP (P \textit{com}) (NP (N \textit{nosco})))})))) ...
+%... fosse \underline{com nosco} ... $\Rightarrow$ ... \Verb[breaklines,commandchars=+\[\]]|(S (VP (V fosse) +underline[(PP (P com) (NP (N nosco)))]))))| ...
+
+\end{description}
+
+Por fim, ainda em relação à questão gráfica há o tema da \textit{pontuação}. O \textit{LX-Parser} usa como referência para limite de frase o ponto final, mas, no texto da \textit{Peregrinação}, esse sinal aparece com mais duas outras funções: sinal abreviativo (cf. \textit{S. Tome})\footnote{Para verificar como o \textit{LX-Parser} analisa abreviatura em texto moderno, testou-se uma sentença criada para essa finalidade (\textit{João mora na r. Camões}) e constatou-se que \textit{r.} foi analisado corretamente como N.} e identificador de algarismo\footnote{Na escrita medieval, algarismos romanos geralmente apareciam entre pontos como forma de indicar que se tratava de número e não de outro tipo de classe de palavra: assim, .\textit{vi}. deveria ser lido como algarismo \textit{6} e não como o perfeito do verbo \textit{ver}. A presença de ponto após número na \textit{Peregrinação} no interior de uma sentença parece ser resquício desse sistema, ainda que, nessa obra, já se tenham usado algarismos arábicos, além dos romanos (estes, na numeração de capítulo).} (cf. \textit{1538.}). No primeiro caso, o item \textit{S.} não foi analisado corretamente, tendo sido etiquetado como N e não como A (pois é uma abreviatura para o adjetivo \textit{São}), e, além disso, foi considerado como final de fronteira de NP, mesmo não o sendo. Ademais, a questão da ausência do diacrítico inviabilizou a interpretação correta de \textit{Tome} como N, tendo sido etiquetado como V (provavelmente considerado forma flexionada do verbo \textit{tomar}):
+
+\begin{description}[topsep=10pt, parsep=2pt, itemindent=!]
+\item[(11)\label{11}] ... \textit{trazião fretada de \uline{S. Tome}} ... $\Rightarrow$ ... (N \textit{trazião}) (N \textit{fretada}))))) (PP (P \textit{de}) \uline{(NP (N \textit{S.}))))) (VP (V' (V \textit{Tome})} ...
+\end{description}
+
+No segundo caso, o sinal de ponto final foi interpretado como marcador de limite de período (e não como identificador de algarismo), o que fez com que a oração principal que se seguia à subordinada temporal fosse considerada um novo período (marcado na anotação por ROOT):
+
+
+\begin{description}[topsep=10pt, parsep=2pt, itemindent=!]
+\item[(12)\label{12}] \textit{E surgindo as tres na barra de Diu a cinco de Setembro do mesmo anno de \uline{1538}. Antonio da Sylueira} ... $\Rightarrow$ (ROOT (S (S (CONJ \textit{E}) (S (VP (VP (V \textit{surgindo}) (NP (ART \textit{as}) (N' (N' (N \textit{tres}) (A \textit{na})) (N' (N \textit{barra}) (PP (P \textit{de}) (NP (N' (N \textit{Diu}) (PP (P \textit{a}) (NP (CARD \textit{cinco})))))))))) (PP (P \textit{de}) (NP (N' (N \textit{Setembro}) (PP (P \textit{de}\_) (NP (ART \textit{o}) (N' (A \textit{mesmo}) (N' (N \textit{anno}) (PP (P \textit{de}) \uline{(NP (N \textit{1538}))))))))))))) (PNT .)))} (ROOT (S (S (NP (NP (N' (N \textit{Antonio}) (PP (P \textit{de}\_) (NP (ART a) (N' (N' (N \textit{Sylueira}) ...
+\end{description}
+
+É importante assinalar aqui que a dita questão gráfica se refere tanto ao fato de uma dada palavra ser grafada sistematicamente de forma diferente da moderna, como no caso de \textit{daly}, registrada apenas com \textit{y} na \textit{Peregrinação}, quanto ao fato de uma mesma palavra ser grafada de diferentes formas, apresentando assim variação gráfica: cf. p. ex, \textit{abstinẽcia} e \textit{abstinencia}. Considera-se aqui que, nesses casos, a diferença gráfica não reflete diferenças no nível fonológico.
+
+\subsubsection{A questão da variação e da mudança linguística}
+
+Com o processo de normatização da língua portuguesa através de sua codificação em gramáticas prescritivas a partir do séc. XVI, a variação linguística, constitutiva de qualquer língua natural, passou paulatinamente a se tornar menos visível na escrita do que era antes, por exemplo, em registros escritos da Idade Média. Embora esse processo já estivesse em curso na época de redação da \textit{Peregrinação} (séc. XVI) e de sua publicação (séc. XVII), ainda assim esse texto se mostrava permeável a uma maior expressão da variação linguística. Nesse caso, trata-se da variação gráfica, que refletiria variação em outros níveis linguísticos, como fonológico, morfológico, sintático etc. (cf. a variação fonológica em \textit{razão} × \textit{rezão}). Como, na escrita moderna, a adoção da ortografia limita a expressão da variação linguística, disso resulta que o \textit{LX-Parser}, treinado em dados de textos modernos, encontra dificuldade para lidar com esse tipo de variação. Assim, por exemplo, o adjetivo comparativo \textit{milhor} (na ortografia moderna, \textit{melhor}) foi inadequadamente etiquetado como N:
+
+\begin{description}[topsep=10pt, parsep=2pt, itemindent=!]
+\item[(13)\label{13}] ... \textit{para milhor fortuna} ... $\Rightarrow$ ... (PP (P \textit{para}) (NP (N' (N \textit{milhor}) (N \textit{fortuna}))))) ...
+\end{description}
+
+A dificuldade também se verifica no caso de formas linguísticas que passaram por mudanças, como foi o caso do advérbio \textit{despois} em locução conjuncional na \textit{Peregrinação} (no português padrão moderno, \textit{depois}), que foi etiquetado como N:
+
+\begin{description}[topsep=10pt, parsep=2pt, itemindent=!]
+\item[(14)\label{14}] ... \textit{\uline{despois} de auer sobre isto} ... $\Rightarrow$ ... (S (NP (N' \uline{(N \textit{despois})} (PP (P \textit{de}) (NP (N' (N \textit{auer}) (PP (P \textit{sobre}) (NP (DEM \textit{isto}) ...
+\end{description}
+
+Embora o próprio analisador tenha feito separação de certas contrações presentes na escrita moderna (cf. \textit{das} > \textit{de\_as}, \textit{neste} > \textit{em\_este} etc.), falta-lhe incluir as contrações comuns nos sécs. XVI-XVII, como \textit{cos} (= \textit{com os}), equivocadamente interpretado como \texttt{N}, em vez de \texttt{P + ART}:
+
+\begin{description}[topsep=10pt, parsep=2pt, itemindent=!]
+\item[(15)\label{15}] ... \textit{\uline{cos} mercadores que nella vinhão,} ... $\Rightarrow$ ... (N' (N' \uline{(N \textit{cos})} (A \textit{mercadores})) (CP (NP (REL \textit{que})) (S (VP (V \textit{nella}) (A \textit{vinhão}))))) (PNT ,))) ...
+\end{description}
+
+Não houve análise correta também nos casos de elisão que não envolvessem apenas palavras gramaticais, como é o caso de \textit{douro}, interpretado erroneamente como N, e não como P + NP (N):
+
+\begin{description}[topsep=10pt, parsep=2pt, itemindent=!]
+\item[(16)\label{16}] ... \textit{mandara de esmolla trezentas oqueas douro} ...  $\Rightarrow$ ... (NP (N' (N' (N \textit{mandara}) (PP (P \textit{de}) (NP (N' (N \textit{esmolla}) (N \textit{trezentas}) (N \textit{oqueas}) \uline{(N \textit{douro})})))) ...
+\end{description}
+
+Não é muito claro, no entanto, o quanto a variação limita o processamento correto pelo \textit{LX-Parser}, já que, em certos casos, mesmo com diferenças linguísticas em relação ao português moderno, a etiquetagem foi correta, como N + A para \textit{citim cramesim} (cf. mod. \textit{cetim carmesim}):
+
+\begin{description}[topsep=10pt, parsep=2pt, itemindent=!, itemindent=!]
+\item[(17)\label{17}] ... \textit{hum chapeo forrado de \uline{citim} \uline{cramesim}} ... $\Rightarrow$ ... (N' (N' (N \&) (N \textit{hum}) (N \textit{chapeo}) (N \textit{forrado})) (PP (P \textit{de}) (NP (N' \uline{(N \textit{citim})} \uline{(A \textit{cramesim})})))) ...
+\end{description}
+
+\subsection{Fatores gerais que limitaram o desempenho}
+
+Dentre os fatores que limitaram o desempenho do \textit{LX-Parser}, há também aqueles que foram constatados, mas que não eram específicos de textos antigos, a saber: a questão da ambiguidade estrutural e a das categorias linguísticas.
+
+\subsubsection{A questão da ambiguidade estrutural}
+
+Como \textcite{vieira_linguistica_2001} já tinham assinalado, um aspecto difícil para o processamento automático é a ambiguidade estrutural. Uma frase como \textit{O homem viu o menino com o telescópio} permite diferentes interpretações "o menino com o telescópio" ou "viu com o telescópio") e uma frase como \textit{Cachorros e gatos felizes vivem na fazenda} é ambígua em relação ao alcance do adjetivo \textit{felizes} (pode dizer respeito apenas aos gatos ou ainda aos cachorros e aos gatos).
+
+No caso da \textit{Peregrinação}, as estruturas ambíguas estão presentes, embora não sejam tão comuns (perfazem aprox. 50 casos em um universo de aprox. 2.157 SNs obtidos por extração manual nos 10 primeiros capítulos, ou seja, aprox. 2,3\% dos dados). Há diversos tipos de situações, como nos exemplos a seguir:
+
+
+\begin{enumerate}[label=\alph*)]
+\item SP (\textit{neste Reyno}) associável a V (\textit{passey}) ou a N (\textit{mocidade}):
+
+\begin{description}[topsep=10pt, parsep=2pt, itemindent=!, itemindent=!]
+\item[(18)\label{18}] ... \textit{passey em minha mocidade \uline{neste Reyno}} ... $\Rightarrow$ ... (S (VP (V \textit{passey}) (PP (P \textit{em}) (NP (N' (POSS \textit{minha}) (N' (N \textit{mocidade}) \uline{(PP (P \textit{em\_}) (NP (DEM \textit{este}) (N' (N' (N \textit{Reyno})} ...
+\end{description}
+
+\item Elementos na margem esquerda de SN com coordenação, associáveis ao primeiro N ou a ambos os Ns (cf. \textit{muytas} no primeiro exemplo\footnote{No exemplo \ref{19}, há também o problema de \textit{muytas} ter sido etiquetado como N em vez de QNT, talvez por causa da grafia antiga com \textit{y}.} e \textit{grandes} no segundo):
+\begin{description}[topsep=10pt, parsep=2pt, itemindent=!]
+\item[(19)\label{19}] ... \textit{\uline{muytas} gritas \& apupadas} ... $\Rightarrow$ ... (N \uline{\textit{muytas}}) (N \textit{gritas}) (N \textit{\&}) (N \textit{apupadas}) ... 
+
+\item[(20)\label{20}] ... \textit{\uline{grandes} gritas \& tangeres} ... $\Rightarrow$ ... (A \uline{\textit{grandes}}) (N' (N \textit{gritas}) (N \textit{\&}) (N \textit{tangeres})) ...
+\end{description}
+
+\item Elementos na margem direita de SN com coordenação, associáveis ao último N ou a ambos os Ns (cf. o SP \textit{da pobre casa de meu pay na villa de Montemór o velho}):
+
+\begin{description}[topsep=10pt, parsep=2pt, itemindent=!]
+\item[(21)\label{21}] ... \textit{na miseria \& estreiteza \uline{da pobre casa de meu pay na villa de Montemór o velho}} ... $\Rightarrow$ ... (N \textit{na}) (N \textit{miseria}) (N \textit{\&}) (N \textit{estreiteza}))) \uline{(VP (PP (P \textit{de\_}) (NP (ART \textit{a}) (N' (A \textit{pobre}) (N' (N \textit{casa}) (PP (P \textit{de}) (NP (N' (POSS \textit{meu}) (N' (N \textit{pay}) (A \textit{na}))))))))) (VP (V \textit{villa}) (PP (P \textit{de}) (NP (N \textit{Montemór})))))) (S (NP (ART \textit{o}) (N' (A \textit{velho})} ...
+\end{description}
+
+\item Relativa (\textit{que os Portugueses nos tinhão insinado}) associável a diferentes Ns precedentes (\textit{cerimonias}, \textit{cortesia} ou \textit{vso}):
+
+\begin{description}[topsep=10pt, parsep=2pt, itemindent=!]
+\item[(22)\label{22}] ... \textit{com mais outras \uline{cerimonias} de \uline{cortesia} ao seu \uline{vso} \uline{que os Portugueses nos tinhão insinado}} ... $\Rightarrow$ ... (ADV \textit{mais}))) (NP (ART \textit{outras}) (N' (N \uline{\textit{cerimonias}}) (PP (P \textit{de}) (NP (N' (N \uline{\textit{cortesia}}) (PP (P \textit{a\_}) (NP (ART \textit{o}) (N' (POSS \textit{seu}) (N \uline{\textit{vso}})))))))))))) \uline{(CP (NP (REL \textit{que})) (S (NP (ART \textit{os}) (N' (N \textit{Portugueses}) (A \textit{nos}))) (VP (V \textit{tinhão}) (A \textit{insinado}))))))))))))))} ...
+\end{description}
+\end{enumerate}
+
+É interessante notar que o analisador não informa a existência ambiguidade, mas simplesmente propõe uma interpretação: no dado em \ref{18}, interpretou que o SP \textit{neste Reyno} se liga ao N (\textit{mocidade}) e não ao V (\textit{passey}); no dado em \ref{20}, considerou que o adjetivo \textit{grandes} se refere aos dois Ns (\textit{gritas} e \textit{tangeres}), e não apenas ao primeiro (\textit{gritas}).
+
+Nos casos de ambiguidade comentados acima, não há dados no contexto em que ocorrem que sejam capazes de solucionar a pluralidade de interpretações, por isso não se poderia esperar que o analisador apresentasse uma solução incontroversa para eles. Entretanto, não está claro quais são os critérios que o analisador utiliza para propor sua interpretação e, como ele não assinala que se trata de dados com ambiguidade estrutural, o usuário fica com a impressão de que se trata de dado de análise pacífica, o que não é o caso.
+
+\subsubsection{A questão das categorias linguísticas}
+
+Como apresentado no final da seção 2, o \textit{LX-Parser} trabalha com uma tipologia específica de etiquetas e, portanto, de categorias linguísticas.
+
+Por um lado, a hipercategorização de certas classes pode ser considerada um benefício, porque aumenta o nível de informação fornecida: em vez apenas da tradicional classe de pronomes, as categorias com que se trabalha são clítico (CL), demonstrativo (DEM), possessivo (POSS), pronome pessoal [tônico] (PRS), quantificador (QNT) e relativo (REL).
+
+Por outro lado, a hipocategorização apresenta o efeito inverso, com perda de informação relevante: assim, há apenas a classe de artigos (ART), sem diferenciação de definidos e indefinidos.
+
+Outra questão é a da realocação de diversos itens da classe dos pronomes (segundo a classificação tradicional) em outras classes: \textit{tal} como determinante (D); \textit{outro} como artigo (ART) ou adjetivo (A); e \textit{mesmo} como adjetivo (A).
+
+Ademais, as categorias com que trabalha o \textit{LX-Parser} permite perceber que se baseia em um estágio mais antigo da teoria X-barra do modelo gerativo, em que, por exemplo, não se trabalhava com DPs (sintagmas determinantes) nem com IPs (sintagmas flexionais), o que parece corresponder ao estado da questão segundo trabalhos anteriores à 2ª metade da década de 1980 \cite{raposo_teoria_1992}. Nesse sentido, para a aplicação dos resultados segundo os modelos mais recentes, mesmo dentro do próprio quadro do gerativismo, seria necessária uma nova análise dos dados, a ser feita manualmente pelo pesquisador\footnote{\textcite{othero_gramatica_2009} aborda uma série de problemas que o processamento computacional apresenta no quadro do modelo gerativo para lidar com a estrutura do SN, tais como o advérbio como modificador nominal (p. ex., \textit{até}, \textit{eis}, \textit{inclusive} etc.) e os elementos pesados no SN apenas em posição pós-nominal.}.
+
+\subsection{A otimização do analisador sintático}
+
+Como se viu acima, há cinco questões principais que devem ser enfrentadas para a otimização do \textit{LX-Parser}, a fim de que possa ser aplicado a textos antigos, ou, pelo menos, a textos do séc. XVI: \textit{extensão das sentenças, grafia, variação e mudança, ambiguidade estrutural e categorias linguísticas}.
+
+Dessas cinco questões, a que parece mais simples de ser otimizada é a das \textit{categorias linguísticas}. Considerando que a maioria das classes de itens gramaticais é de inventário fechado, há pouca dificuldade para fazer com que o analisador atribua etiquetas mais precisas: assim, é facilmente implementável uma etiquetagem que registre a diferença entre artigo definido (\textit{o, os, a, as}), com uma etiqueta como ARTD, e artigo indefinido (\textit{um, uns, uma, umas}), com etiqueta ARTI. Outra inovação auspiciosa seria passar a considerar como uma única forma as partes de estruturas gramaticalizadas como no caso das locuções conjuncionais (\textit{para que, a fim de que} etc.) e prepositivas (\textit{diante de, acima de} etc.), não as desdobrando em partes menores. Boa parte das gramáticas tradicionais apresenta extensa lista desse tipo de estruturas, o que permite inseri-las no \textit{thesaurus}, que serve de base à etiquetagem no \textit{LX-Parser}. Naturalmente, há expressões que não mais estão presentes em textos modernos e, por isso, escapam aos inventários das gramáticas tradicionais, como \textit{so color de}, usada na \textit{Peregrinação} com o sentido de “na condição de” (cf. \textit{E cometeome se queria eu lá yr, porque leuaria nisso muyto gosto, para \underline{so color de} Embaixador yr visitar de sua parte o Rey dos Batas, \& yr tambem com elle ao Achem} [...]), mas especificidades como estas podem ir sendo paulatinamente incluídas no \textit{thesaurus}, o que faz pensar que um modelo de analisador com possibilidade de personalização do \textit{thesaurus} pelo usuário\footnote{Os autores agradecem a um dos pareceristas por assinalar que uma das vantagens dos analisadores de código aberto é justamente a possibilidade de modificar a base de dados, resultando em ganho no desempenho sem comprometer seu processamento de textos modernos. É necessário ponderar, no entanto, que se trata de uma atividade passível de ser realizada por linguistas-programadores, e não por linguistas em geral.}, com inclusão de elementos, permitiria adequar o analisador à necessidade de cada interessado\footnote{Para uma discussão sobre o tratamento de neologismos em uma perspectiva de processamento morfológico, cf. \textcite{alencar_produtividade_2009}.}.
+
+A segunda questão que também não é tão difícil de ser implementada é a da \textit{grafia}. Como já assinalado aqui antes, a equipe do \textit{LX-Parser} tem em andamento a elaboração de um normalizador ortográfico, embora não estejam disponíveis informações mais precisas sobre o projeto. A questão da normalização gráfica para processamento computacional tem sido discutida já há algum tempo, e opções para a superação desse obstáculo têm sido propostas, como a construção de um dicionário de variantes gráficas \cite{giusti_automatic_2007} ou processamento através de \textit{softwares} específicos com conversão de formas como o VARD2 \cite{baron_tool_2008}, testados por \textcite{hendrickx_old_2011} e \textcite{marquilhas_manuscripts_2014} para o português.No que se refere a textos antigos, uma fonte relevante para o desenho de um tal sistema são os trabalhos no âmbito da crítica textual, nos quais não raramente se apresenta um conjunto de normas para uniformização gráfica de textos no processo editorial: cf., p. ex., as normas de uniformização gráfica para edições interpretativas apresentadas por \textcite[p.~131-132]{cambraia_introducao_2005}. Para confirmação do peso dessa questão no processamento de dados pelo \textit{LX-Parser}, aplicou-se a normalização gráfica nos dados já citados — cf. dados \ref{03} a \ref{07} —, e em quase todos eles, o analisador realizou a etiquetagem correta após a normalização: \ref{03} \textit{tempo}, N; \ref{04} \textit{grandes}, A; \ref{05} \textit{com}, P; \ref{06} \textit{Quando}, CONJ; \ref{07} \textit{prouve}, V; e \ref{08} \textit{é}, V. Entretanto, a questão parece ser mais complicada em relação a alguns dados: no caso de \ref{09}, a normalização de \textit{paraque} em para que melhorou a análise de N para (PP (P) (NP (REL))), mas não foi exatamente para CONJ, o que seria o mais adequado levando em conta a gramaticalização dessa locução conjuntiva; e no caso de \ref{10}, mesmo a normalização de \textit{com nosco} em conosco não resolveu a situação, porque passou de (PP (P) (NP (N))) para V, e não para (PP (P) (PRS)) como seria de esperar\footnote{Para verificar como o \textit{LX-Parser} analisa conosco em texto moderno, testou-se uma sentença criada para essa finalidade (\textit{João falou conosco}) e constatou-se que \textit{conosco} foi analisado equivocadamente como N.}. Vê-se, assim, que a normalização gráfica tem peso relevante para a produção de análises corretas, mas há outros aspectos a serem considerados, como a alomorfia do pronome pessoal na forma \textit{conosco}.
+
+Já a questão da variação linguística é mais complexa, porque há certa imprevisibilidade em relação às formas possíveis em textos antigos. Se, no que se refere à questão gráfica, há um escopo limitado de variações possíveis, o que torna as formas possíveis de certa forma previsíveis (cf. p. ex. a representação de ditongo nasal final como –\textit{am}, –\textit{ão} ou –\textit{aõ} na \textit{Peregrinação}), por outro lado, há uma ampla gama de variações que refletem aspectos fonológicos difíceis de serem previstos, como no caso de \textit{razão} × \textit{rezão}, sem contraparte no caso de \textit{naçaõ} (ou seja, não se constata \textit{neçaõ}). Por essa razão, criar módulos de regras para processamento de formas com variação linguística é bem mais complicado. É fato, porém, que a normalização sobre os casos de variação linguística também aumenta a precisão do \textit{LX-Parser}, pois a normalização de \textit{despois} em \textit{depois} levou a etiquetagem de N como ADV no dado em \ref{14} e de \textit{cos} em \textit{com os} de N para P + ART no dado em \ref{15}, mas de \textit{douro} em \textit{d’ouro} no dado em \ref{16} não resolveu, porque se passou de N para N + S, já que o apóstrofo foi interpretado como sinal de pontuação e, portanto, marcação de final de sentença.
+
+É importante assinalar que o resultado gerado pelo analisador não pode ser com as formas normalizadas, já que se trataria de afastamento dos dados autênticos: é necessário que se trate de um módulo intermediário de processamento, que realiza a operação de normalização para a etiquetagem e análise sintática, mas que apresente os resultados com as formas originais que foram inseridas como \textit{input}.
+
+Quanto à questão da extensão das sentenças, não está muito clara a razão de terem sido excluídas as muito longas. Em função da mensagem gerada como retorno (“\textit{Error: processing this sentence was taking too long}”), parece que a limitação decorre do código de programação, que deve conter uma instrução para interromper o processamento a partir de certo tempo de duração, provavelmente para não ocupar o processador por tempo demasiado. Em se tratando de textos antigos, em que a grande extensão dos períodos não é rara, o tempo de processamento aceito precisa naturalmente ser mais longo.
+
+Por fim, há a questão mais complexa de todas, que são os casos de ambiguidade estrutural. Há, por lado, a possibilidade de desambiguação com base em informações precedentes no contexto em certos casos, mas, em outros, essa desambiguação é simplesmente impossível, já que, muitas vezes, depende de conhecimento pressuposto pelo autor da produção linguística em relação aos leitores, e um processador não teria como buscar essa informação. Portanto, não se trata propriamente de um problema relacionado ao modelo do analisador sintático. Entretanto, o fato de o analisador não identificar para o usuário que há, nos dados processados, ambiguidade estrutural é certamente um problema, porque o usuário poderia considerar tratar-se de uma proposta de análise isenta de dúvida, mesmo não o sendo. Assim, por exemplo, para o dado em \ref{18} seria conveniente que o analisador informasse ao usuário as duas possibilidades de análise (associação do SP ao V ou ao N), deixando a este a decisão de optar por uma ou outra ou então tratar separadamente dados com ambiguidade, opção esta que parece ser a mais adequada no caso, para se evitar arbitrariedade na opção por uma das análises possíveis.
+
+As soluções propostas têm como objetivo tornar o analisador compatível com especificidades de textos antigos (mas não apenas), melhorando seu desempenho. Assim, não haverá má etiquetagem em função de diferenças gráficas, por exemplo, e, no caso de ambiguidade estrutural, o usuário será alertado para o fato, dando-lhe a oportunidade de tomar a decisão de como tratar o dado em questão.
+
+\section{Considerações finais}
+
+Neste estudo, analisou-se a aplicação estendida do analisador sintático \textit{LX-Parser} em um \textit{corpus} composto do trecho inicial da \textit{Peregrinação} de Fernão Mendes Pinto, obra redigida no séc. XVI e publicada no séc. XVII. Os resultados dessa aplicação não se mostraram produtivos em função da alta frequência de problemas na análise produzida. Vê-se, portanto, que a afirmativa de \textcite{alencar_utilizacao_2011} sobre analisadores sintáticos anteriormente citada continua válida para o caso de aplicação estendida do \textit{LX-Parser}, ou seja, trata-se de uma área que ainda demanda muitos esforços de pesquisa, uma vez que ainda não se obtêm resultados suficientemente adequados. Mais concretamente, deve-se reconhecer que essa tecnologia atualmente disponível ainda não serve para a finalidade de elaboração de uma gramática do português clássico a partir de uma descrição linguística integral da obra \textit{Peregrinação}.
+
+\printbibliography\label{sec-bib}
+
+\begin{contributors}[sec-contributors]
+\authorcontribution{César Nardelli Cambraia}[conceptualization,datacuration,resources,investigation,methodology,visualization,review]
+\authorcontribution{Ramon Cunha Sampaio Leite}[datacuration,investigation,writing]
+\end{contributors}
+
+
+
+
+
+\end{document}
+
