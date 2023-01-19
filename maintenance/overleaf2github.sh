@@ -5,6 +5,7 @@
 # ./overleaf2github.sh 36965
 # ./overleaf2github.sh 36965 37426 37557 37569
 # ./overleaf2github.sh `sed -n '/36965/,$p' overleafprojectlist.csv | cut -d, -f1 | cut -d/ -f4 | tr '\n' ' '`
+# ./overleaf2github.sh `./listOverLeafArticlesNotInGitHub.sh | grep -Po '/[0-9]+,' | tr -d '/,' | tr '\n' ' '`
 
 IDs=( "$@" )
 ALWAYSOW=false
@@ -43,6 +44,7 @@ do
 	  fi
       else
 	  mkdir -p $DEST_FOLDER
+	  OVERWRITE=true
       fi
 
       if [ $OVERWRITE = true ]
@@ -56,7 +58,8 @@ do
 	  done
 	  if [ $? -eq 0 ]
 	  then
-	      cp $TMPFOLDER/*.{pdf,png,jpg,jpeg,eps,tex,bib} $DEST_FOLDER 2>/dev/null
+	      cp $TMPFOLDER/*.{pdf,PDF,ps,PS,png,PNG,jpg,JPG,jpeg,JPEG,eps,EPS,tex,TEX,bib,BIB} $DEST_FOLDER 2>/dev/null
+	      ls -d $TMPFOLDER/*/ 2>/dev/null | while read d; do if [ -d "$d" ]; then cp -R $d $DEST_FOLDER 2>/dev/null; fi; done
 	      rm -rf "$TMPFOLDER"
 	      rm -rf $DEST_FOLDER/article.pdf $DEST_FOLDER/internationalization.tex $DEST_FOLDER/listingconfig.tex $DEST_FOLDER/logo.pdf
 	      cd $DEST_FOLDER
@@ -79,9 +82,9 @@ do
 		  done
 	      fi
 	      if [ $TEXCOMPILER = 1 ]; then
-		  xelatex article.tex; biber article; xelatex article.tex; xelatex article.tex;
+		 xelatex --interaction=batchmode article.tex; biber --quiet article; xelatex --interaction=batchmode article.tex; xelatex --interaction=batchmode article.tex;
 	      else
-	         lualatex article.tex; biber article; lualatex article.tex; lualatex article.tex;
+	         lualatex --interaction=batchmode article.tex; biber --quiet article; lualatex --interaction=batchmode article.tex; lualatex --interaction=batchmode article.tex;
 	      fi
 	      cd $CURRENTFOLDER 
 	  fi
