@@ -1,0 +1,418 @@
+% !TEX TS-program = XeLaTeX
+% use the following command:
+% all document files must be coded in UTF-8
+\documentclass[portuguese]{textolivre}
+% build HTML with: make4ht -e build.lua -c textolivre.cfg -x -u article "fn-in,svg,pic-align"
+
+\journalname{Texto Livre}
+\thevolume{16}
+%\thenumber{1} % old template
+\theyear{2023}
+\receiveddate{\DTMdisplaydate{2022}{10}{6}{-1}} % YYYY MM DD
+\accepteddate{\DTMdisplaydate{2022}{11}{28}{-1}}
+\publisheddate{\DTMdisplaydate{2023}{1}{17}{-1}}
+\corrauthor{Lucio Agostinho Rocha}
+\articledoi{10.1590/1983-3652.2023.38608}
+%\articleid{NNNN} % if the article ID is not the last 5 numbers of its DOI, provide it using \articleid{} commmand 
+% list of available sesscions in the journal: articles, dossier, reports, essays, reviews, interviews, editorial
+\articlesessionname{articles}
+\runningauthor{Rocha} 
+%\editorname{Leonardo Araújo} % old template
+\sectioneditorname{Daniervelin Pereira}
+\layouteditorname{Leonado Araújo}
+
+\title{Práticas pedagógicas no ensino superior com Internet das Coisas: metodologias, ferramentas e perspectivas futuras}
+\othertitle{Pedagogical practices in the higher teaching with Internet of Things: methodologies, tools and future perspectives}
+% if there is a third language title, add here:
+%\othertitle{Artikelvorlage zur Einreichung beim Texto Livre Journal}
+
+\author[1]{Lucio Agostinho Rocha~\orcid{0000-0001-8804-8698}\thanks{Email: \href{mailto:luciorocha@utfpr.edu.br}{luciorocha@utfpr.edu.br}}}
+\affil[1]{Universidade Tecnológica Federal do Paraná – campus Apucarana, Engenharia de Computação, Apucarana, PR, Brasil.}
+
+\addbibresource{article.bib}
+% use biber instead of bibtex
+% $ biber article
+
+% used to create dummy text for the template file
+\definecolor{dark-gray}{gray}{0.35} % color used to display dummy texts
+\usepackage{lipsum}
+\SetLipsumParListSurrounders{\colorlet{oldcolor}{.}\color{dark-gray}}{\color{oldcolor}}
+
+% used here only to provide the XeLaTeX and BibTeX logos
+\usepackage{hologo}
+
+% if you use multirows in a table, include the multirow package
+\usepackage{multirow}
+
+% provides sidewaysfigure environment
+\usepackage{rotating}
+
+% CUSTOM EPIGRAPH - BEGIN 
+%%% https://tex.stackexchange.com/questions/193178/specific-epigraph-style
+\usepackage{epigraph}
+\renewcommand\textflush{flushright}
+\makeatletter
+\newlength\epitextskip
+\pretocmd{\@epitext}{\em}{}{}
+\apptocmd{\@epitext}{\em}{}{}
+\patchcmd{\epigraph}{\@epitext{#1}\\}{\@epitext{#1}\\[\epitextskip]}{}{}
+\makeatother
+\setlength\epigraphrule{0pt}
+\setlength\epitextskip{0.5ex}
+\setlength\epigraphwidth{.7\textwidth}
+% CUSTOM EPIGRAPH - END
+
+% LANGUAGE - BEGIN
+% ARABIC
+% for languages that use special fonts, you must provide the typeface that will be used
+% \setotherlanguage{arabic}
+% \newfontfamily\arabicfont[Script=Arabic]{Amiri}
+% \newfontfamily\arabicfontsf[Script=Arabic]{Amiri}
+% \newfontfamily\arabicfonttt[Script=Arabic]{Amiri}
+%
+% in the article, to add arabic text use: \textlang{arabic}{ ... }
+%
+% RUSSIAN
+% for russian text we also need to define fonts with support for Cyrillic script
+% \usepackage{fontspec}
+% \setotherlanguage{russian}
+% \newfontfamily\cyrillicfont{Times New Roman}
+% \newfontfamily\cyrillicfontsf{Times New Roman}[Script=Cyrillic]
+% \newfontfamily\cyrillicfonttt{Times New Roman}[Script=Cyrillic]
+%
+% in the text use \begin{russian} ... \end{russian}
+% LANGUAGE - END
+
+% EMOJIS - BEGIN
+% to use emoticons in your manuscript
+% https://stackoverflow.com/questions/190145/how-to-insert-emoticons-in-latex/57076064
+% using font Symbola, which has full support
+% the font may be downloaded at:
+% https://dn-works.com/ufas/
+% add to preamble:
+% \newfontfamily\Symbola{Symbola}
+% in the text use:
+% {\Symbola }
+% EMOJIS - END
+
+% LABEL REFERENCE TO DESCRIPTIVE LIST - BEGIN
+% reference itens in a descriptive list using their labels instead of numbers
+% insert the code below in the preambule:
+%\makeatletter
+%\let\orgdescriptionlabel\descriptionlabel
+%\renewcommand*{\descriptionlabel}[1]{%
+%  \let\orglabel\label
+%  \let\label\@gobble
+%  \phantomsection
+%  \edef\@currentlabel{#1\unskip}%
+%  \let\label\orglabel
+%  \orgdescriptionlabel{#1}%
+%}
+%\makeatother
+%
+% in your document, use as illustraded here:
+%\begin{description}
+%  \item[first\label{itm1}] this is only an example;
+%  % ...  add more items
+%\end{description}
+% LABEL REFERENCE TO DESCRIPTIVE LIST - END
+
+
+% add line numbers for submission
+%\usepackage{lineno}
+%\linenumbers
+
+\begin{document}
+\maketitle
+
+\begin{polyabstract}
+\begin{abstract}
+As tecnologias digitais aplicadas na educação de nível superior são importantes para a melhoria da qualidade do ensino. Uma das mais recentes tecnologias digitais é a Internet das Coisas, com inúmeras aplicações para a formação de redes colaborativas de objetos digitais conectados através da Internet. A aplicação desses objetos digitais em práticas acadêmicas é um desafio em razão de envolver uma miríade de recursos de diferentes especificidades. Além disso, as atividades práticas interdisciplinares têm o potencial de melhorar o foco na área de estudo, ampliar a colaboração entre os estudantes em sala de aula e reduzir os níveis de evasão nos primeiros anos de cursos de graduação nas engenharias. Nesse sentido, este artigo apresenta uma revisão sistemática de metodologias de ensino com Internet das Coisas através de práticas interdisciplinares. É esperado que o conteúdo deste artigo desperte o interesse de educadores em aplicar novas tecnologias digitais na educação com metodologias ativas.
+
+\keywords{Metodologia do ensino \sep Tecnologia educacional \sep Pesquisa interdisciplinar \sep Ensino superior \sep Meios de ensino}
+\end{abstract}
+
+\begin{english}
+\begin{abstract}
+The digital technologies applied on the higher education are important to the improvement of the teaching quality. One of the most recent digital technologies is the Internet of the Things, with a set of applications to the generation of collaborative networks of digital objects connected throw of the Internet. The application of these digital objects in academic practices is a challenge due involves a myriad of resources of distinct specifies. Besides, the interdisciplinary activities has the potential of to improve the focus in the study area,  increase the collaboration between students in the classroom, and reduce the evasion levels in the first years of graduation in engineering courses. In this sense, this article presents a systematic review of methodologies of teaching with the Internet of Things through interdisciplinary practices. These practices are done in programming disciplines of university courses. It is expected that the contents of this article wake up the interest of educators in to apply new digital technologies in education with active methodologies.
+
+\keywords{Teaching methodology \sep Educational technology \sep Interdisciplinary research \sep University education \sep Means of teaching}
+\end{abstract}
+\end{english}
+% if there is another abstract, insert it here using the same scheme
+\end{polyabstract}
+
+\section{Introdução}\label{sec-intro}
+A aliança entre teoria e prática é um requisito fundamental e necessário para a formação acadêmica de estudantes de cursos de graduação em universidades. A aplicação prática da teoria através de projetos acadêmicos de curta e média duração têm o potencial de incentivar a colaboração temporal entre os estudantes com abordagens distintas de cada membro do grupo do projeto.
+
+O tema a ser contextualizado neste artigo é a aplicação prática de Internet das Coisas (IoT) em cursos de graduação para a melhoria da qualidade do ensino. Essa temática é relevante porque norteia o contexto da aplicação recente de IoT nas práticas educacionais, com a descrição das experiências de educadores que propuseram o uso desses instrumentos em suas práticas pedagógicas. A identificação de possibilidades de aplicação de projetos de IoT na educação serve de base para manter ativas iniciativas que propõem melhorias na aprendizagem em sala de aula. 
+
+Nesse contexto, o objetivo deste artigo é apresentar uma contextualização de projetos com IoT aplicados em cursos de graduação universitários através de uma revisão sistemática da literatura.
+
+É importante frisar que os projetos aqui mencionados são passíveis de serem realizados durante a execução semestral ou anual de uma disciplina da matriz curricular de um curso de graduação universitário. No projeto desenvolvido pelos estudantes são abordados conteúdos de outras disciplinas, com a possibilidade de utilizar recursos de \textit{hardware} para a sua realização. Nesse sentido, três quesitos são previamente elencados: a) o curso do estudante; b) a disciplina ofertada e c) a temática do projeto.
+
+Por exemplo, em uma disciplina de graduação, esses três quesitos são contemplados da seguinte forma: a) para estudantes do curso de bacharelado em Engenharia de Computação, b) na disciplina de Fundamentos de Programação, c) com a temática de painel solar. 
+
+Nesse caso, os estudantes poderão utilizar um simulador para aferição da carga máxima de energia obtida com a disposição do equipamento à exposição solar em determinadas horas do dia. Os conteúdos poderão ser previamente selecionados nas disciplinas de Cálculo, Física e Sistemas Digitais. 
+
+Por outro lado, os mesmos três quesitos poderão ter uma abordagem distinta em uma disciplina de graduação de outro curso, como segue: a) o projeto para estudantes do curso de bacharelado em Engenharia Elétrica; b) na disciplina de programação; c) com a temática de painel solar.
+
+Nesse caso, a abordagem poderá ser voltada para projetar um minipainel solar com um \textit{hardware} de baixo custo, dada a \textit{expertise} dos estudantes. Os conteúdos complementares de outras disciplinas da matriz curricular poderão ser consultados para enriquecer a demonstração do protótipo desenvolvido. Para os estudantes desses cursos, a gerência das atividades será administrada pelo professor ou tutor da disciplina. 	
+
+A base da pesquisa apresentada neste artigo são as metodologias ativas de ensino baseadas em projetos com Internet das Coisas (\textit{Internet of Things} – IoT) no ensino universitário. Essas metodologias onde o foco da aprendizagem está no estudante são conhecidas como Aprendizagem Baseada em Projetos (\textit{Project Based Learning} – PBL), que é definida como uma alternativa instrucional que oferece aos estudantes a oportunidade de desenvolverem conhecimentos e habilidades através de problemas que poderiam ser encontrados no cotidiano \cite{powerschool_project-based_nodate}. 
+
+O restante deste artigo é organizado como segue. A próxima seção apresenta trabalhos relacionados com o uso de tecnologias digitais na educação; a Seção \ref{sec-normas} faz uma revisão sistemática da literatura; a Seção \ref{sec-fmt-manuscrito} apresenta os resultados; a Seção \ref{sec-formato} faz uma discussão sobre os resultados obtidos; finalmente, a Seção \ref{sec-modelo} faz as considerações finais.
+
+\section{Trabalhos relacionados}\label{sec-normas}
+O entendimento de conceitos que permeiam a mudança de paradigmas no ensino do século XXI é importante para nortear e refletir sobre práticas educacionais no ensino plural da atualidade. \textcite{romero_tecnologias_2020} indicam que o atual paradigma de ensino foca a inserção do estudante como o agente principal do seu próprio processo de ensino-aprendizagem. Os autores também afirmam que as tecnologias da informação e comunicação (TICs) auxiliam o ensino adaptativo para as capacidades dos estudantes e que novas metodologias de aprendizagem ativa, como sala de aula invertida, aprendizagem móvel e colaborativa, despertam o interesse sobre como aplicar tecnologias digitais na educação.
+
+Segundo o Horizon Report \cite{pelletier_2021_2021} a pandemia de SARS-CoV-2 (COVID-19) trouxe novos desafios para a educação. O ensino remoto trouxe inovações na comunicação digital através de metodologias sociais e emocionalmente flexíveis para uma ampla gama de estudantes com diferentes particularidades. 
+
+O documento afirma que há uma previsão de continuidade do ensino remoto em muitas instituições de ensino, mesmo após a pandemia. Além disso, as desigualdades sociais também se refletiram no acesso e na qualidade de conexão à rede Internet e, em muitos casos, os períodos de isolamento exigiram transformações nos modelos educacionais, principalmente quanto à qualidade das interações remotas e virtuais para reduzir a preocupação e o stress da comunidade acadêmica. No ensino superior, modelos de aprendizagem híbridos que se alternam entre o ensino remoto e o presencial auxiliam na manutenção de currículos ativos.
+
+De certa maneira, o isolamento social acelerou a adoção de TICs em sala de aula. Educadores resistentes a ferramentas de videoconferência, plataformas digitais colaborativas e salas de aula virtuais tiveram que se adaptar à nova realidade. A pandemia questionou os altos custos com a educação de nível superior frente a possibilidade de oferta do ensino remoto com TICs para um número maior de estudantes, o que trouxe a demanda de novos profissionais aptos a prepararem materiais digitais educacionais.
+
+No estudo do Horizon Report também há destaque para metodologias de ensino que têm o potencial de serem aplicadas em sala de aula. Dentre essas metodologias de ensino, estão as que empregam Inteligência Artificial (IA), modelos de cursos híbridos, análise de aprendizagem, microcredenciamento em cursos de curta duração, recursos educacionais abertos e qualidade da aprendizagem \textit{online}. 
+
+Embora existam várias definições de inteligência artificial, \textcite{russell_artificial_2010} a definem como um sistema que realiza ações certas e ideais com base na racionalidade, sendo que o sistema é considerado racional quando realiza a ação certa baseada nos dados que possui. 
+
+Dessa forma, sistemas computacionais com IA realizam tarefas, que normalmente seriam realizadas por seres humanos, através de processos cognitivos e habilidades de tomada de decisão. No ensino superior, os sistemas de gerência de aprendizagem, tutoria, atribuição automática de notas, sistemas de informação estudantis com \textit{chatbots} que entregam respostas naturais para os estudantes são exemplos recentes de utilização de IA na academia. Muitas metodologias recentes de ensino fazem a Análise de Aprendizado suportada por IA.
+
+Os processos de aprendizagem de máquina (\textit{Machine-Learning}) são utilizados para analisar padrões e pontos-chave de aprendizagem do estudante ao longo de sua vida estudantil. Na medida em que seja possível prever resultados do desempenho de estudantes, o uso de ferramentas de IA com análise preditiva deveriam levar em consideração a utilização dos dados estudantis com responsabilidade e ética \cite{pelletier_2021_2021}.
+
+Nessas metodologias o professor é incentivado a incluir novas tecnologias em suas atividades letivas. Além disso, o professor é convidado a aprender junto com os alunos, que também são apresentados às novas ferramentas educacionais. De fato, objetos conectados e IoT se inter-relacionam. A definição para cada um deles é dada por \textcite{dorsemaine_internet_2015}:
+
+\begin{quote}
+    Uma definição para um objeto conectado (...): Sensores e/ou atuadores transportando uma função específica e que sejam capazes de se comunicar com outro equipamento. Esse objeto é parte de uma infraestrutura permitindo o transporte, armazenagem, processamento, e o acesso aos dados gerados pelos usuários ou outros sistemas\footnote{Tradução própria. Original: “a definition for a connected object (…): “Sensor(s) and/or actuator(s) carrying out a specific function and that are able to communicate with other equipment. It is part of an infrastructure allowing the transport, storage, processing and access to the generated data by users or other systems.”} \cite[p. 73]{dorsemaine_internet_2015}. 
+    
+    Portanto, uma definição para o IoT (...): Grupo de infraestruturas interconectando objetos conectados e permitindo sua gerência, mineração de dados, e o acesso aos dados que eles geram\footnote{Tradução própria. Original: “Then, a definition for the IoT (…): “Group of infrastructures interconnecting connected objects and allowing their management, data mining and the access to the data they generate.”} \cite[p. 73]{dorsemaine_internet_2015}.
+\end{quote}
+
+O termo IoT também é definido como um modelo de computação em que quaisquer objetos físicos podem interagir entre si através de protocolos abertos de comunicação, geralmente na Internet \cite{patel_internet_2016}. Na indústria, o termo Machine-to-Machine (M2M) \cite{gazis_survey_2017} é uma tendência de aplicação prática de IoT para redução de custos de produção, aumento da produtividade e segurança, em que os próprios equipamentos industriais interagem entre si sem intervenção humana para a realização de tarefas complexas. 
+
+Aliado a isso, o avanço da miniaturização na Eletrônica trouxe para o público uma grande quantidade de dispositivos eletrônicos de baixo custo. Grande parte desses dispositivos permite interação com protocolos abertos da Internet. Um dos principais apelos tanto para pesquisadores, estudantes e hobistas é a relativa facilidade de conectar componentes eletrônicos com conhecimentos básicos de física, eletrônica, matemática e programação. 
+
+Complementar a essa facilidade de uso de dispositivos eletrônicos microcontrolados, a melhoria da qualidade das redes sem fio também contribuiu para manter a escalabilidade do conjunto crescente de equipamentos conectados. Análises estatísticas do tráfego na Internet \cite{jovanovic_internet_nodate} estimam que em 2021 mais de dez bilhões de dispositivos IoT estiveram ativos para as mais diversas finalidades, e esse número tende a crescer nos próximos anos.
+
+\textcite{romero_tecnologias_2020} destacam o \textit{e-learning}, a aprendizagem combinada, a sala de aula invertida e a aprendizagem móvel como algumas das principais metodologias associadas ao ensino remoto. O conceito de aprendizagem por competências, ao invés de meramente por conteúdo, é associado ao conceito de fluência digital. Os autores também destacam uma série de alternativas educacionais que podem ser aplicadas.
+
+\begin{quote}
+    […] uso de aplicativos online para plataformas de streaming; aprendizagem de línguas por meio de smartphones; efeitos da metodologia de sala de aula invertida por meio do Blackboard; educação em segurança digital; contrastes de gênero em uma experiência de e-learning formativa; visões do uso das TIC para a educação inclusiva; o uso de jogos digitais educativos; formação tecnológica e multicultural de professores para a inclusão educacional; uso das TIC para incentivar a leitura em contextos vulneráveis; relação das TIC com neuroeducação, inclusão, multiculturalismo e educação ambiental; cursos massivos online abertos (MOOC); gamificação para estimular a ativação do aluno e experiências digitais, riscos e abordagem educacional para o lazer digital \cite[p. i]{romero_tecnologias_2020}.
+\end{quote}
+
+Os projetos em PBL são possíveis de serem aplicados em disciplinas dos primeiros anos de cursos de graduação. Além disso, essa metodologia é muito utilizada no ensino superior e recebeu especial atenção, principalmente durante o período de pandemia, para reduzir a propagação do coronavírus. \textcite{inoue_planning_2020} afirmam que o advento da pandemia trouxe um aumento significativo do interesse na aplicação de disciplinas em formato remoto com PBL e modelos sala de aula invertida no ensino superior.
+
+De fato, na visão construtivista, o projeto é considerado o melhor e mais apropriado método de ensinar. O projeto é um padrão de método de ensino que permite desenvolver independência e responsabilidade, além de fomentar práticas sociais e democráticas de comportamento \cite{knoll_project_1997}. 
+
+O “aprender fazendo” é frequentemente atribuído aos trabalhos pedagógicos de Dewey e Kilpatrick \cite{retter_centenary_2018}, muito embora \textcite{krueger_real_nodate} afirme que a aprendizagem baseada na prática é inata e intuitiva, ou seja, própria do ser humano. Essa prática pedagógica é vista também nas raízes educacionais das instituições de ensino no país. 
+
+Segundo \textcite{goncalves_o_2017}, nos primórdios do ensino superior no país as instituições de ensino se consolidaram nos modelos de institutos isolados e profissionalizantes, sendo que, somente a partir de 1920, surge a Universidade do Rio de Janeiro como a primeira universidade oficial com cursos superiores. Os autores mencionam o estudo de \textcite{carvalho_o_2011} que destaca a importância da autonomia e participação democrática dos sujeitos nela envolvidos:
+
+\begin{quote}
+    […] Trata-se de uma comunicação clara, além de transparência a respeito dos condicionantes institucionais mais abrangentes, os problemas, as dificuldades, o planejamento, a execução e a avaliação dos processos educativos \cite[p. 194]{goncalves_o_2017}.
+\end{quote}
+
+É notável pensar que a avaliação dos processos educativos é uma contribuição importante para o ensino superior, frente aos desafios de ensinar para uma geração de estudantes que ingressam no ensino superior e que vêm de uma pluralidade de formações educacionais de escolas públicas e privadas.
+
+Colaboram em direção a essa formação plural as Diretrizes Curriculares da Educação (DCNs) para cursos de graduação em cursos da área de ciências exatas \cite{ministerio_da_educacao_resolucao_2016}. Essas diretrizes apontam para a promoção de ambientes de aprendizagem, onde os estudantes adquirem competências através da associação do conhecimento com práticas de aprendizagem. Nesse ínterim, o egresso deve ser capaz de fomentar equipes colaborativas capazes de compreender problemas, projetar soluções, implementá-las e praticá-las na sociedade. 
+
+As disciplinas de cursos de graduação podem incentivar a realização de projetos interdisciplinares, sem necessariamente haver a junção de disciplinas de conteúdos diferentes. Um dos objetivos é formar o estudante através do  desenvolvimento de competências e habilidades, com profissionais atualizados para as exigências do mercado de trabalho, e a promoção de conhecimento metodológico aliado ao conhecimento técnico frente às exigências da sociedade.
+
+As abordagens com metodologias ativas não necessariamente envolvem a aplicação prática de conceitos teóricos, mas sim quaisquer práticas que tiram o aluno de mero agente passivo para agente atuante e participativo da sua própria aprendizagem. Essas práticas podem fazer parte do conteúdo da disciplina, em que o professor passa a atuar como um agente facilitador e mediador da aprendizagem. Aprendizagem ativa pode ser entendida como:
+
+\begin{quote}
+    [...] um termo amplo, comumente definido para qualquer método instrucional que engaja estudantes no processo de aprendizagem […] Aprendizagem ativa não dispensa a necessidade de leituras, mas fornece oportunidades para o estudante refletir, avaliar, analisar, sintetizar e comunicar a respeito ou sobre a informação a informação apresentada\footnote{Tradução própria. Original: "[…] is a broad, commonly used term “generally defined as any instructional method that engages studentes in the learning process” […] Active learning does not negate the need for lectures, but it provides opportunities for students to reflect, evaluate, analyze, synthetize, and communicate on or about the information presented".} \cite[p. 2]{crisol-moya_active_2020}.
+\end{quote}
+
+A diversidade de tratamentos em torno de um projeto acadêmico com metodologias ativas estimula a organização de ideias do grupo, a negociação, a definição de etapas de execução para o cumprimento de prazos, e o aprendizado em conjunto com os professores que lecionam as disciplinas necessárias para a realização do projeto acadêmico.
+
+\section{Metodologia}\label{sec-conduta}
+Tendo em vista a tendência de adoção de tecnologias digitais em práticas pedagógicas, este artigo faz uma revisão de trabalhos na literatura que aplicam IoT na educação. A revisão sistemática da literatura (RSL) é um processo de identificar, avaliar e interpretar a pesquisa feita sobre determinado assunto. Neste artigo, essa revisão é feita segundo a metodologia de \textcite{brereton_lessons_2007} que definem as seguintes etapas: definição das questões de pesquisa, definição dos termos de busca, seleção das bases bibliográficas, critérios de inclusão e exclusão de publicações e resumo dos trabalhos selecionados. 
+
+Essa mesma metodologia é adotada por \textcite{lopes_smart_2018}, o qual avalia publicações de ensino com IoT de 2012 até 2017. No entanto, na RSL que segue, é apresentada a avaliação de publicações mais recentes, de 2018 a 2022, com a comparação dos resultados obtidos por \textcite{lopes_smart_2018}.
+
+Na RSL foram definidos três passos para seleção das publicações: 1) busca de artigos de acordo com os termos de busca nas bases selecionadas; 2) filtragem por relevância por meio da leitura do título, resumo e palavras-chave; 3) leitura completa dos artigos para avaliação quantitativa e qualitativa. Sem perda de generalidade, foram definidas as seguintes questões de pesquisa:
+
+\begin{itemize}
+    \item QP1: Qual o foco da publicação ao utilizar IoT em sala de aula?
+    \item QP2: Quais metodologias são utilizadas para aplicar IoT em salas de aula de cursos de graduação?
+    \item QP3: Quais ferramentas de \textit{software} e \textit{hardware} dão apoio para a melhoria das atividades de ensino?
+    \item QP4: Quais conteúdos de ciências exatas são abordados?
+\end{itemize}
+    
+ A QP1 define a abordagem dada ao tema, uma vez que o foco é a aplicação prática de IoT em atividades de ensino de cursos de graduação. Nessa etapa, os artigos foram classificados em três categorias: 1) Monitoramento de dados em salas de aula; 2) Tecnologias de apoio ao ensino em sala de aula e 3) Gestão institucional. A QP2 identifica a metodologia de ensino com o suporte de IoT; a QP3 identifica as ferramentas de \textit{software} e \textit{hardware} que auxiliam no ensino do conteúdo na disciplina; finalmente, a QP4 avalia como os conteúdos de ciências exatas são contemplados através de projetos com IoT.
+ 
+A partir dessas questões de pesquisa, foram definidas as seguintes palavras-chave: Internet of Things, Internet das Coisas, Smart ClassRoom, Sala de Aula e Universidade. A seguir, foi definida uma \textit{string} de busca como segue: “Internet of Things” OR “Internet das Coisas” AND “Smart ClassRoom” OR “Sala de Aula” AND “Universidade” OR “University”. Essa \textit{string} de busca foi submetida nas seguintes fontes bibliográficas: IEEE Xplore, ACM Digital Library, SBIE (Simpósio Brasileiro de Informática na Educação), Portal de Periódicos revisados por pares da CAPES da coleção DOAJ (\textit{Directory of Open Access Journals}) dos títulos em Português e em Inglês. Essas fontes foram selecionadas porque possuem referências de qualidade sobre a temática abordada. Os critérios de inclusão e exclusão foram definidos como segue:
+
+\begin{enumerate}[label=\alph*.]
+    \item Critérios de Inclusão (CI):
+        \subitem CI1: estudos realizados nos últimos quatro anos (de 2018 a 2022);
+        \subitem CI2: aplicação de IoT em sala de aula de cursos de graduação;
+    \item Critérios de Exclusão (CE):
+        \subitem CE1: estudo anterior ao ano de 2017;
+        \subitem CE2: conteúdo classificado como proposta e/ou conceitual;
+        \subitem CE3: estudo com foco na coleta e análise de dados com IoT, sem contemplar aspectos didáticos ou pedagógicos de ensino com IoT;
+        \subitem CE4: estudo realizado em universidade, mas que não é aplicado em sala de aula.
+\end{enumerate}
+
+A \Cref{tab01} a seguir sumariza os resultados obtidos na pesquisa.
+
+\begin{table}[h!]
+\centering \small
+\begin{threeparttable}
+\caption{Revisão sistemática de artigos.}
+\label{tab01}
+\begin{tabular}{p{3cm} p{3.2cm} p{3.3cm} p{3.3cm}}
+\toprule
+Fontes bibliográficas & Etapa 1 (Seleção - CE1) & Etapa 2 (Categorização - CE2) & Etapa 3 (Refinamento - CE3 e CE4) \\
+ \midrule
+IEEE & 52 & 28 & 9 \\
+ACM & 4 & 2 & 1 \\
+SBIE & 4 & 1 & 0 \\
+Scopus & 51 & 36 & 6 \\
+Periódicos CAPES & 53 & 13 & 3 \\
+Total & 164 & 80 & 19 \\
+\bottomrule
+\end{tabular}
+\source{Autoria própria (Disponível em: \url{https://osf.io/et8bk}).}
+\end{threeparttable}
+\end{table}
+
+Para preencher os dados da \Cref{tab01} foram aplicadas as seguintes etapas:
+
+\begin{enumerate}
+    \item Etapa 1 (Seleção): seleção de artigos de acordo com a string de busca e os critérios de inclusão. Nessa etapa foram aplicados apenas os critérios de exclusão CE1 e CE2 com base na leitura do título e do resumo dos artigos, uma vez que os CE3 e CE4 exigem uma leitura mais aprofundada das fontes bibliográficas selecionadas. Essa etapa resultou em um total de 164 artigos.
+    \item Etapa 2 (Categorização): Na segunda etapa foram aplicados os critérios de exclusão CE2 para excluir os artigos de conteúdo conceitual e/ou proposta em estágio inicial com base na leitura do título e do resumo dos artigos. Essa etapa resultou em um total de 80 artigos e permitiu categorizá-los em três tipos:
+    \subitem Categoria 1: Monitoramento de dados em salas de aula. O foco do artigo é a coleta e a análise de dados com IoT, sem contemplar aspectos didáticos de ensino. São exemplos: detecção de entrada/saída de alunos, coleta de dados de sensores em sala de aula, qualidade do ar, controle de ar-condicionado, etc.;
+    \subitem Categoria 2: Tecnologias de apoio ao ensino em sala de aula. O foco do artigo é a utilização de IoT para melhoria das atividades pedagógicas em sala de aula. São exemplos: comparativos de melhoria da aprendizagem com IoT, utilização de dispositivos IoT em sala de aula, novas ferramentas de apoio ao ensino, etc.;
+    \subitem Categoria 3: Gestão institucional. É o nível mais elevado das categorias que compreende a gestão da instituição de ensino com o auxílio de IoT. São exemplos: gestão de disponibilidade de salas de aula, otimização do consumo de energia, alarmes de incêndio, vagas de estacionamento no \textit{campus}, etc.
+    \item Etapa 3 (Refinamento): Na terceira etapa foram aplicados os critérios de exclusão CE3 e CE4. O objetivo foi manter apenas as referências da Categoria 2: Tecnologias de apoio ao ensino em sala de aula. Essa etapa identificou um total de 19 artigos e foi realizada a leitura completa das publicações resultantes com acesso disponível. Nessa etapa também foram mantidos os artigos que, mesmo não cumprindo todos os critérios da busca, tiveram relevância para esta pesquisa. Essa leitura permitiu responder às questões de pesquisa propostas.
+\end{enumerate}
+
+\section{Resultados}\label{sec-fmt-manuscrito}
+Ao final da pesquisa na Etapa 3, foram selecionados 19 artigos relevantes, de acordo com a Categoria 2: Tecnologias de apoio ao ensino em sala de aula, de 2018 a 2022. 
+
+Com relação à primeira questão de pesquisa (QP1), dos artigos resultantes da Etapa 3, o principal objetivo da publicação é a melhoria da qualidade de ensino em sala de aula com dispositivos de IoT. Os trabalhos de \textcite{oteri_application_2020,nai_design_2022,liu_internet_2021,petrovic_designing_2021} descrevem arquiteturas para implantação de IoT em sala de aula, enquanto que \textcite{chang_learning_2020} descrevem um \textit{framework} com um estudo de caso. 
+
+\textcite{chang_learning_2020} propõem um \textit{framework} para automatizar o processo de interação com diferentes dispositivos IoT através de uma máquina de estados, com redução da intervenção do usuário para configurar os equipamentos. \textcite{lin_iot_2020} propõe o compartilhamento de recursos físicos em universidades tecnológicas, com laboratórios de IoT acessíveis através da Internet e que podem ser usados para ensino e pesquisa, expandindo o acesso a esses recursos para um número maior de estudantes, ampliando as possibilidades de cooperação e fortalecendo a formação de recursos humanos qualificados. 
+
+\textcite{shan_smart_2020} prefere vislumbrar o uso de IoT como um utilitário para mudar o modelo tradicional de ensino com currículos fixos. O autor utiliza o termo “Walking Class” para explicar que os estudantes podem escolher cursos em sua matriz curricular de acordo com os seus interesses, na forma de um currículo personalizado. Para manter informações complexas e frequentes de interação entre os estudantes, um \textit{campus} inteligente integra informação e tecnologias de informação. Os próprios assentos de sala de aula não são fixos, mas mudam constantemente de acordo com as atividades. 
+
+\textcite{memos_revolutionary_2020} definem o termo “Smart Education” como um ramo emergente da educação baseado em tecnologias de IoT, Computação em Nuvem, Redes de Sensores, Análise de Big Data, Detecção Compactada e Redes 5G. Para os autores, uma sala de aula inteligente pode ser estabelecida em uma rede sem fio 5G com acesso limitado à Internet para evitar que dados pessoais sejam tornados públicos sem autorização dos estudantes. 
+
+Os autores complementam que os dados de aprendizagem são enviados para um \textit{Learning Management System} (LMS) em um servidor de nuvem para análise de Big Data. Esses dados são armazenados em tempo-real com informações dos estudantes e dos sensores com os quais eles interagiram, além de dados de outros dispositivos conectados à rede, tais como óculos de realidade aumentada. Através de dispositivos táteis, os estudantes poderão atuar fisicamente nas aulas com realidade virtual imersiva apresentada nas aulas do LMS. 
+
+\textcite{petrovic_designing_2021} identificam a possibilidade de aliar jogos educacionais com IoT como meio de estimular os estudantes e focar a atenção no conteúdo da disciplina. Os autores também utilizam um LMS para hospedar testes personalizados com quizzes e quebra-cabeças através de experimentos \textit{online} com Arduino \cite{arduino_project_nodate}. \textcite{mahmood_raspberry_2019} utilizam um LMS com análise dos dados de expressões faciais para analisar a satisfação dos estudantes durante as aulas.
+
+Por outro lado, \textcite{nai_design_2022} aponta que dispositivos IoT podem ser utilizados em sala de aula para coleta de dados e processamento em nuvem, com a análise personalizada dos dados coletados dos estudantes e consequente melhoria da aprendizagem. Uma abordagem similar com computação em nuvem também é dada por \textcite{tan_teaching_2018} que utilizam cartões RFID (\textit{Radio Frequency Identification}) para identificar o ingresso de estudantes em sala, seguido da confirmação do estudante no seu próprio \textit{smartphone}, ou seja, um processo de verificação de presença em duas etapas. 
+
+\textcite{nai_design_2022} também usa o \textit{Quick Response Code} (QR Code) para promover um ensino ativo do estudante, que precisará utilizar o seu próprio \textit{smartphone} para \textit{scanner} o QR Code do exercício e rapidamente acessar o conteúdo \textit{online} da tarefa. A nuvem é utilizada para gravar os registros de presença dos estudantes e gravar a pontuação dos estudantes nas tarefas avaliativas.
+
+\textcite{oteri_application_2020,fortoul-diaz_project-based_2021,hincapie_use_2020} focam no uso de laboratórios de instrumentação remota para que um grande número de estudantes de engenharia tenham acesso a dispositivos IoT e também na disponibilização de \textit{kits} de IoT fornecidos para grupos de estudantes. 
+
+\textcite{fortoul-diaz_project-based_2021} destacam que a metodologia pedagógica em projetos com IoT apresenta desafios quanto ao caráter cognitivo (conhecimentos, estratégias), comportamental (habilidades, engajamento) e percepção de benefícios. Os autores realizaram diversas avaliações com formulários antes e durante a pandemia entre a experimentação tradicional e a experimentação remota com IoT.
+
+Os autores também avaliaram a experiência de aprendizagem, a assimilação de conteúdo, \textit{soft skills} (comunicação, resolução de problemas, organização, liderança, formação de equipes, adaptação, criatividade e relacionamento interpessoal) e o pensamento crítico (a capacidade de identificar, analisar, avaliar, classificar e interpretar informação com ferramentas de autoaprendizagem). As avaliações quantitativas indicaram notas similares na disciplina antes e depois da pandemia para um grupo de 112 estudantes de cursos de engenharia, mesmo nas atividades de laboratório a distância. 
+
+\textcite{debauche_internet_2018} utilizam uma abordagem similar, com o fornecimento de kits LoRaWAN com suporte ao protocolo Message Queue Telemetry Transport (MQTT) e gateway de conexão à nuvem The Things Network (TTN). O \textit{kit} é fornecido para grupos de estudantes realizarem interação remota com dispositivos IoT.
+
+\textcite{lin_construction_2019} indicam que IoT é uma inovação positiva que contribui para promover uma reforma do modo de ensino suportado por tecnologias digitais. Os autores apontam também que a tecnologia 5G traz grandes benefícios para a educação, sendo necessária para tecnologias imersivas de Realidade Virtual e Realidade Aumentada em sala de aula. 
+
+\textcite{burunkaya_design_2022} utilizam dispositivos IoT, integrados a um sistema em nuvem, para identificar de maneira personalizada como as adversidades do ambiente com relação à temperatura, ruídos, intensidade da luz, qualidade do ar e umidade do ambiente podem influenciar a aprendizagem do estudante em sala de aula. A média dos valores individuais percebidas pelos estudantes são calculadas e adaptadas automaticamente. Os autores apontam que o ajuste automático desses parâmetros em sala pode contribuir para a melhoria da aprendizagem.
+
+Com relação à segunda questão de pesquisa (QP2), nas publicações selecionadas ao final da Etapa 3, não há uma padronização da metodologia de aplicação de IoT em sala de aula. Considerando o quesito de projetos PBL aplicados em cursos de graduação, as referências que contemplam LMS para instrumentação remota e simuladores de IoT são as que mais se aproximam da aplicação de metodologias ativas com projetos \cite{oteri_application_2020,fortoul-diaz_project-based_2021,hincapie_use_2020}. 
+
+Com relação à terceira questão de pesquisa (QP3), a sumarização das publicações de acordo com os recursos utilizados é apresentada na \Cref{tab02}. Nas publicações selecionadas na Etapa 3, todos os autores que fazem a integração de dispositivos IoT e que analisam dados de estudantes utilizam a computação em nuvem. Isso provavelmente se deve ao fato de que as soluções de sistemas em nuvem reduzem o esforço de configuração e aquisição de recursos físicos para guardar e analisar uma grande quantidade de dados efêmeros. 
+
+\begin{table}[h!]
+\centering \small
+\begin{threeparttable}
+\caption{Sumarização dos recursos utilizados.}
+\label{tab02}
+\begin{tabular}{p{5cm} p{8.9cm}}
+\toprule
+Recursos utilizados & Publicações \\
+ \midrule
+Computação em Nuvem & \textcite{memos_revolutionary_2020,lin_construction_2019,fortoul-diaz_project-based_2021,nai_design_2022,liu_internet_2021,li_improved_2020,tan_teaching_2018,burunkaya_design_2022,liu_construction_2021}. \\
+\textit{Software} personalizado para o Ensino & Todas as publicações da Etapa 3. \\
+Plataforma para Gerência de Ensino (\textit{Learning Management System} - LMS) & \textcite{memos_revolutionary_2020,mahmood_raspberry_2019,fortoul-diaz_project-based_2021,nai_design_2022,petrovic_designing_2021,liu_internet_2021,hincapie_use_2020}. \\
+\textit{Smartphone} & \textcite{mohammed_powerful_2021,chang_learning_2020,lin_iot_2020,shan_smart_2020,oteri_application_2020,debauche_internet_2018,petrovic_designing_2021,tan_teaching_2018,saraubon_learning_2019}. \\
+\textit{Hardware} Personalizado para o Ensino e/ou outros dispositivos IoT & Todas as publicações da Etapa 3. \\
+Arduino & \textcite{oteri_application_2020,petrovic_designing_2021}). \\
+Raspberry Pi & \textcite{saraubon_learning_2019,mahmood_raspberry_2019,debauche_internet_2018}. \\
+Autodesk TinkerCad & \textcite{oteri_application_2020}. \\
+NodeMCU & \textcite{mohammed_powerful_2021,fortoul-diaz_project-based_2021,li_improved_2020,tan_teaching_2018}. \\
+RFID & \textcite{lin_iot_2020,petrovic_designing_2021,tan_teaching_2018} \\
+5G & \textcite{memos_revolutionary_2020,lin_construction_2019}. \\
+\bottomrule
+\end{tabular}
+\source{Autoria própria.}
+\end{threeparttable}
+\end{table}
+
+Com relação à quarta questão de pesquisa (QP4), nas publicações selecionadas na Etapa 3, é interessante notar que, à medida que os estudantes realizam projetos em plataformas de IoT, o foco por vezes fica centrado nas especificidades das ferramentas utilizadas, e não no conteúdo da disciplina em si. 
+
+\section{Discussão}\label{sec-formato}
+Após a apresentação dos resultados, logo foi observado que o grande foco das publicações é simplesmente o uso de novas tecnologias, sem se atentar para a importância de avaliar se houve melhoria na aprendizagem após sua inserção.
+
+É observado que a maior parte das publicações encaram IoT como uma tecnologia ubíqua utilitária que adiciona inovação no ensino, ou seja, um recurso digital que complementa o conteúdo da disciplina, que se integra ao ambiente de ensino, e que é ofertado de maneira semelhante ao fornecimento de água, energia, Internet e/ou gás natural. Em comparação com o relatado por \textcite{lopes_smart_2018}, ainda é observado que as tecnologias em sala de aula com IoT continuam a ser implementadas e testadas segundo a evolução dos recursos tecnológicos. 
+
+Novamente, esse é um ponto que merece destaque porque o ensino universitário não precisa estar vinculado ao uso de tecnologias digitais específicas. Também é observado que continua a existir uma falta de padronização das abordagens, sem vinculação com trabalhos de outros autores, o que por vezes gera um retrabalho. 
+
+Os trabalhos que descrevem arquiteturas podem servir de guia para a implementação em outras salas de aula porque não focam o uso de dispositivos específicos e/ou softwares personalizados \cite{oteri_application_2020,nai_design_2022,liu_internet_2021,petrovic_designing_2021,chang_learning_2020}.
+
+Além disso, inovação não é sinônimo de melhoria na qualidade do ensino. Com o advento da epidemia de coronavírus, as tecnologias de IoT trouxeram benefícios para o ensino quanto à interação remota com os dispositivos de uma sala de aula inteligente, sem necessidade de tocá-los \cite{mohammed_powerful_2021}. Mas a interação com dispositivos IoT é complexa e poderá exigir uma camada adicional de \textit{software} para simplificar a interação com dispositivos de diferentes fabricantes. 
+
+Nesse sentido, há a necessidade de implementar a integração de várias tecnologias que estejam mais próximas aos estudantes, como IoT, Internet móvel e sensores, para proporcionar ambientes de aprendizagem criativos e interativos. Por exemplo, a lista de presença pode ser realizada com o reconhecimento facial dos estudantes \cite{shan_smart_2020}. 
+
+Com relação à percepção de aprendizagem, \textcite{fortoul-diaz_project-based_2021} destacam que mais de 75\% dos estudantes perceberam como bom/excelente a experiência de prototipagem com IoT, porém houve uma nítida redução da percepção da qualidade de ensino a distância indicada pelos estudantes, sendo que os autores destacam como os possíveis fatores: a experimentação remota reduz a interação com outros estudantes e com o professor; os estudantes acreditam que poderiam ter um melhor desempenho pessoalmente e estresse ou problemas que poderiam afetar a percepção de aprendizagem dos estudantes. 
+
+Com relação à assimilação de conteúdo com a prática em IoT, os estudos apresentados por \textcite{fortoul-diaz_project-based_2021} mostraram que os estudantes foram capazes de entender os tópicos explicados, e que a maioria dos estudantes avaliaram o curso como bom/excelente. Porém, foi observado que mais de 53\% dos estudantes preferem o ensino face a face ao invés de modelos alternativos híbridos (face a face e virtual) ou totalmente virtuais. 
+
+Quanto às \textit{soft skills} com IoT, \textcite{fortoul-diaz_project-based_2021} também observaram que mais de 80\% dos estudantes acreditam que melhoraram ao menos uma \textit{soft skill} durante o curso com a experimentação com IoT. O estudo também revelou que mais de 60\% dos estudantes acreditam que melhoraram suas habilidades de pensamento crítico com IoT, referente à análise, sintetização de informação, identificação de problemas, entre outros. 
+
+Uma discussão sobre o desperdício de recursos educacionais também é necessária. \textcite{liu_internet_2021} destacam que, nas metodologias de ensino convencionais, os aprendizes não participam do processo de aprendizagem, demonstrando que atividades de ensino facilmente levam a uma sobrecarga cognitiva. Os autores afirmam que a grande quantidade de recursos educacionais tem levado a problemas sérios de dispersão de recursos e a um baixo nível de construção redundante de plataformas educacionais. Os autores propõem um modelo baseado em nuvem como plataforma de ensino inteligente. 
+
+Quanto à qualidade da conexão com a Internet, \textcite{lin_construction_2019} afirmam que a tecnologia 5G reduzirá significativamente o tempo de acesso remoto a atividades que exigem interação contínua e em tempo real de muitos estudantes a servidores de dados na Internet a longas distâncias. Nas referências selecionadas há uma nítida apresentação de metodologias no formato híbrido, com o ensino combinado com dispositivos IoT, por vezes acessíveis através da Internet e que viabilizam o ensino para um grande número de estudantes.
+
+Porém, também é observada a manutenção do ensino convencional presencial com a presença de um professor. Em comparação com o relatado por \textcite{lopes_smart_2018}, a inclusão e acessibilidade para pessoas com deficiência não foi relatada por nenhum dos autores. 
+
+Por outro lado, o uso de questionários preenchidos pelos estudantes foi a metodologia direta mais utilizada para avaliar a qualidade da aprendizagem \cite{shan_smart_2020,oteri_application_2020,fortoul-diaz_project-based_2021,petrovic_designing_2021,liu_internet_2021,hincapie_use_2020,burunkaya_design_2022}, sendo a avaliação indireta, em que o sistema avalia a qualidade da aprendizagem com base nos dados de desempenho dos estudantes, aferida por poucos autores \cite{nai_design_2022}.
+
+Quanto às plataformas \textit{online} de ensino, as referências mostram que não há um consenso sobre qual plataforma deve ser utilizada para integração com dispositivos IoT nas disciplinas, sendo que cada autor que utiliza um LMS prefere utilizar um sistema próprio. 
+
+Quanto aos \textit{hardwares} de IoT também não há um consenso. A maioria das soluções é personalizada o que torna difícil aplicá-las em outras salas de aula. Porém, há um consenso no uso do \textit{smartphone} pelo estudante como mecanismo de interação direta e/ou indireta com esses dispositivos em sala de aula. \textcite{saraubon_learning_2019} utiliza um modelo de \textit{thin-client} com computação em neblina, em que os estudantes coletam dados remotos do dispositivo IoT, mas fazem o processamento em seus próprios \textit{smartphones}.
+
+Nas referências selecionadas não foram apresentadas especificidades quanto à melhoria do conteúdo de disciplinas de ciências exatas com a inserção de projetos e/ou ensino com IoT. A RSL apresentada por \textcite{lopes_smart_2018} também não faz menção com relação à modificação do conteúdo de disciplinas de ciências exatas com a inserção de IoT em sala de aula. Nesses casos é importante que o educador oriente o estudante para a aprendizagem do conteúdo proposto com o auxílio complementar da experimentação, sem focar exclusivamente nas especificidades dos \textit{hardwares} e \textit{softwares} do projeto, que poderão mudar ou estarem indisponíveis sem prévio aviso.
+
+Os artigos revelam que a inserção de IoT em sala de aula não substitui o conteúdo básico convencional já ofertado em disciplinas de graduação. Nesse sentido, é importante reforçar que o ensino convencional não precisa ser atrelado ao uso dessas tecnologias digitais, mas sim utilizá-las como complemento na medida em que o seu uso agrega valor aos conceitos estudados. O ato de “forçar” o uso de equipamentos simplesmente para agregar inovação em sala de aula poderá ter um papel inversor, ou seja, ser um fator a mais para reduzir a atenção do estudante e a qualidade da educação, na medida em que não são feitos questionamentos sobre os métodos utilizados, os conceitos apreendidos e o \textit{feedback} dos estudantes inseridos nessas novas tecnologias. 
+
+Além disso, faltam materiais pedagógicos que ensinem como aplicar IoT em sala de aula para a melhoria da qualidade do ensino em todas as publicações selecionadas.
+
+
+\section{Considerações finais}\label{sec-modelo}
+Repensar a prática pedagógica frente às novas tecnologias é um desafio. Há um anseio de muitos estudantes de graduação que ingressam em instituições de ensino superior em ter uma visão ampla das possibilidades de aplicação prática dos conceitos aprendidos no mercado de trabalho. A oferta de disciplinas com atividades que promovem a colaboração, a autonomia e a prática pedagógica focada no estudante tornam mais agradáveis o ensino dentro e fora de sala de aula. 
+
+Mesmo que haja um inicial desconforto do educador em ofertar projetos de curta duração sem uma expectativa clara de sua conclusão, a prática mostra que há um aprendizado do docente junto com o estudante, prática esta que não seria obtida com aulas puramente expositivas com avaliações somativas. 
+
+Ainda que os projetos de curta duração não sejam concluídos como o esperado, o avanço das etapas promove a colaboração, a troca de experiências, instiga a reflexão, a autonomia, o repensar de práticas de ensino e a melhoria do relacionamento interpessoal entre estudantes e docentes, com redução da distância transacional entre o que se ensina e o que se aprende na prática. 
+
+A divisão de tarefas com definição de etapas claras a serem cumpridas preparam o estudante para atender prazos e planejar melhor as suas atividades com foco no alcance dos resultados em conjunto com os outros colegas. Há um nítido esforço em produzir uma inteligência coletiva, na qual os estudantes se unem através de meios digitais e redes sociais para a produção de um projeto comum.
+
+Os dispositivos IoT são projetados para serem recursos computacionais dedicados, voláteis, de baixo custo, com aplicações em rede escaláveis que surgem da combinação efêmera de dispositivos interligados na Internet. É um desafio a inserção de práticas pedagógicas com IoT frente à grande diversidade desses dispositivos, às questões de mobilidade, às exigências de configuração de \textit{hardware} e \textit{software}, à clareza e ao nível de profundidade dos manuais de configuração desses equipamentos. 
+
+Por conta disso, é importante que o educador reflita sobre metodologias de ensino baseadas em projetos onde o dispositivo IoT seja um meio para complementar as atividades de sala de aula. Há o risco do educador focar em dispositivos de IoT que podem estar desatualizados em pouco tempo, com aumento do esforço e do tempo necessário para elaboração de projetos de curta duração.
+
+
+\printbibliography\label{sec-bib}
+% if the text is not in Portuguese, it might be necessary to use the code below instead to print the correct ABNT abbreviations [s.n.], [s.l.]
+%\begin{portuguese}
+%\printbibliography[title={Bibliography}]
+%\end{portuguese}
+
+
+%full list: conceptualization,datacuration,formalanalysis,funding,investigation,methodology,projadm,resources,software,supervision,validation,visualization,writing,review
+
+
+\end{document}
+
