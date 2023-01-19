@@ -103,6 +103,7 @@ do
 	  fi
 	  if [ $ADDGITHUB = true ]; then
 	      git add $DEST_FOLDER/*
+	      git commit -m "adding ${IDs[$i]}"
 	  fi
 	  if [ $ALWAYSCL = false ]; then
 	      while true; do
@@ -123,3 +124,7 @@ do
       fi
   fi
 done
+
+if [ $ADDGITHUB = true ]; then
+    git push origin master
+fi
