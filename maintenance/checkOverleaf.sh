@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# check if there were changes in overleaf (compared to local files)
+
 # usage
 # ./checkOverleaf.sh
 # ./checkOverleaf.sh 37090 34141
