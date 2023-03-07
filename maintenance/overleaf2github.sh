@@ -6,6 +6,15 @@
 # ./overleaf2github.sh 36965 37426 37557 37569
 # ./overleaf2github.sh `sed -n '/36965/,$p' overleafprojectlist.csv | cut -d, -f1 | cut -d/ -f4 | tr '\n' ' '`
 # ./overleaf2github.sh `./listOverLeafArticlesNotInGitHub.sh | grep -Po '/[0-9]+,' | tr -d '/,' | tr '\n' ' '`
+#
+# github x overleaf equivalence codes are stored in overleafprojectlist.csv
+#
+# This script clones from overleaf, makes bib files tidy (using bibtex-tidy), remove unused references from bib file, compiles and add to github.
+#
+# requires
+# bibtex-tidy: https://github.com/FlamingTempura/bibtex-tidy
+
+
 
 IDs=( "$@" )
 ALWAYSOW=false
@@ -89,6 +98,7 @@ do
 	         lualatex --interaction=batchmode article.tex; biber --quiet article; lualatex --interaction=batchmode article.tex; lualatex --interaction=batchmode article.tex;
 	      fi
 	      bibtex-tidy --omit=abstract --curly --space=4 --blank-lines --sort=name,year --merge --sort-fields --strip-comments --no-trailing-commas --remove-empty-fields --no-wrap article.bib 
+	      # https://tex.stackexchange.com/questions/43276/unused-bibliography-entries-how-to-check-which-entries-were-not-used
 	      checkcites --backend biber --unused article.bcf | grep "=>" | cut -d' ' -f2 | 
 		  while read -r key 
 		  do 
