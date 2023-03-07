@@ -12,8 +12,11 @@ ALWAYSOW=false
 OVERWRITE=false
 ALWAYSAG=false
 ADDGITHUB=false
+PUSHGITHUB=false
 ALWAYSCL=false
 CLEAN=false
+ALWAYSAO=false # add to overleaf in case bib file changed after tindify
+ADDOVERLEAF=false
 CURRENTFOLDER=$(pwd)
 TEXCOMPILER=1 # 1) XeLaTeX, 2) LuaLateX, 3) always XeLaTeX, 4) always LuaLateX
 ALWAYSTEXCOMP=false
@@ -60,14 +63,13 @@ do
 	  then
 	      cp $TMPFOLDER/*.{pdf,PDF,ps,PS,png,PNG,jpg,JPG,jpeg,JPEG,eps,EPS,tex,TEX,bib,BIB} $DEST_FOLDER 2>/dev/null
 	      ls -d $TMPFOLDER/*/ 2>/dev/null | while read d; do if [ -d "$d" ]; then cp -R $d $DEST_FOLDER 2>/dev/null; fi; done
-	      rm -rf "$TMPFOLDER"
 	      rm -rf $DEST_FOLDER/article.pdf $DEST_FOLDER/internationalization.tex $DEST_FOLDER/listingconfig.tex $DEST_FOLDER/logo.pdf
 	      cd $DEST_FOLDER
-	      ln -s ../../../../template/internationalization.tex; 
-	      ln -s ../../../../template/listingconfig.tex;
-	      ln -s ../../../../template/logo.pdf;
-	      ln -s ../../../../template/textolivre.cls;
-	      ln -s ../../../../template/textolivre.cfg;
+	      ln -sf ../../../../template/internationalization.tex; 
+	      ln -sf ../../../../template/listingconfig.tex;
+	      ln -sf ../../../../template/logo.pdf;
+	      ln -sf ../../../../template/textolivre.cls;
+	      ln -sf ../../../../template/textolivre.cfg;
 	      echo "compiling ${IDs[$i]}..."
 	      if [ $ALWAYSTEXCOMP = false ]; then 
 		  while true; do
@@ -86,6 +88,40 @@ do
 	      else
 	         lualatex --interaction=batchmode article.tex; biber --quiet article; lualatex --interaction=batchmode article.tex; lualatex --interaction=batchmode article.tex;
 	      fi
+	      bibtex-tidy --omit=abstract --curly --space=4 --blank-lines --sort=name,year --merge --sort-fields --strip-comments --no-trailing-commas --remove-empty-fields --no-wrap article.bib 
+	      checkcites --backend biber --unused article.bcf | grep "=>" | cut -d' ' -f2 | 
+		  while read -r key 
+		  do 
+		      START=$(grep -Pn "^@\w+\{$key" article.bib | cut -d: -f1)
+		      END=$(tail -n +$START article.bib | grep -Pn "^\}" | head -n 1 | cut -d: -f1)
+		      END=$(($START+$END))
+		      sed -i "${START},${END}d" article.bib
+		  done
+	      if ! diff article.bib $TMPFOLDER/article.bib > /dev/null; then 
+		  if [ $ALWAYSAO = false ]; then
+		      while true; do
+			  read -u 2 -p ".bib file chaged after tidying... add chages to OverLeaf (y/n/a)?" yn
+			  case $yn in
+			      [Yy]* ) ADDOVERLEAF=true; break;;
+			      [Nn]* ) ADDOVERLEAF=false; exit;;
+			      [Aa]* ) ALWAYSAO=true; ADDOVERLEAF=true; break;;
+			      * ) echo "Please answer yes or no.";;
+			  esac
+	              done
+	          else
+		      ADDOVERLEAF=true
+	          fi
+	          if [ $ADDOVERLEAF = true ]; then
+		      cp article.bib $TMPFOLDER/article.bib
+		      cd $TMPFOLDER
+		      git add article.bib
+		      git commit -m 'tidying bib file'
+		      git push origin master
+		      cd $DEST_FOLDER
+		      ADDOVERLEAF=false
+	          fi
+	      fi
+	      rm -rf "$TMPFOLDER"
 	      cd $CURRENTFOLDER 
 	  fi
           if [ $ALWAYSAG = false ]; then
@@ -104,6 +140,8 @@ do
 	  if [ $ADDGITHUB = true ]; then
 	      git add $DEST_FOLDER/*
 	      git commit -m "adding ${IDs[$i]}"
+	      PUSHGITHUB=true
+	      ADDGITHUB=false
 	  fi
 	  if [ $ALWAYSCL = false ]; then
 	      while true; do
@@ -120,11 +158,12 @@ do
 	  fi
 	  if [ $CLEAN = true ]; then
 	      git clean -dxf $DEST_FOLDER
+	      CLEAN=false
 	  fi
       fi
   fi
 done
 
-if [ $ADDGITHUB = true ]; then
+if [ $PUSHGITHUB = true ]; then
     git push origin master
 fi
