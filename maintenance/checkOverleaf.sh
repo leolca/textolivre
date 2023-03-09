@@ -7,6 +7,13 @@
 # ./checkOverleaf.sh 37090 34141
 # ./checkOverleaf.sh 37090 34141 | tee >(ansi2html | sed 's/\/tmp\/\(issues[-_a-z0-9]\+\)/<a href="\1">\1<\/a>/g' > /tmp/diff.html)
 
+if ! command -v dwdiff &> /dev/null
+then
+    echo "dwdiff could not be found, please install it before running this script"
+    exit
+fi
+
+
 NUMBERS=""
 for arg in "$@"
 do
