@@ -14,7 +14,16 @@
 # requires
 # bibtex-tidy: https://github.com/FlamingTempura/bibtex-tidy
 
-
+if ! command -v bibtex-tidy &> /dev/null
+then
+    echo "bibtex-tidy could not be found, please install it before running this script"
+    exit
+fi
+if ! command -v checkcites &> /dev/null
+then
+    echo "checkcites could not be found, please install it before running this script"
+    exit
+fi
 
 IDs=( "$@" )
 ALWAYSOW=false
