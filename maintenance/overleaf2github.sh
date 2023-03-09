@@ -30,11 +30,12 @@ CURRENTFOLDER=$(pwd)
 TEXCOMPILER=1 # 1) XeLaTeX, 2) LuaLateX, 3) always XeLaTeX, 4) always LuaLateX
 ALWAYSTEXCOMP=false
 
+TL_FOLDER=$(dirname $CURRENTFOLDER)
 for (( i=0; i<${#IDs[@]}; i++ ));
 do
   echo "${IDs[$i]}"
   gresult=$(grep "${IDs[$i]}" overleafprojectlist.csv)
-  DEST_FOLDER="../$(echo $gresult | cut -d, -f1)"
+  DEST_FOLDER="$TL_FOLDER/$(echo $gresult | cut -d, -f1)"
   OVERLEAFID=$(echo $gresult | cut -d, -f2)
   if [ ! -z $DEST_FOLDER ] && [ ! -z $OVERLEAFID ]
   then
@@ -74,11 +75,11 @@ do
 	      ls -d $TMPFOLDER/*/ 2>/dev/null | while read d; do if [ -d "$d" ]; then cp -R $d $DEST_FOLDER 2>/dev/null; fi; done
 	      rm -rf $DEST_FOLDER/article.pdf $DEST_FOLDER/internationalization.tex $DEST_FOLDER/listingconfig.tex $DEST_FOLDER/logo.pdf
 	      cd $DEST_FOLDER
-	      ln -sf ../../../../template/internationalization.tex; 
-	      ln -sf ../../../../template/listingconfig.tex;
-	      ln -sf ../../../../template/logo.pdf;
-	      ln -sf ../../../../template/textolivre.cls;
-	      ln -sf ../../../../template/textolivre.cfg;
+	      ln -sf "$TL_FOLDER/template/internationalization.tex"; 
+	      ln -sf "$TL_FOLDER/template/listingconfig.tex";
+	      ln -sf "$TL_FOLDER/template/logo.pdf";
+	      ln -sf "$TL_FOLDER/template/textolivre.cls";
+	      ln -sf "$TL_FOLDER/template/textolivre.cfg";
 	      echo "compiling ${IDs[$i]}..."
 	      if [ $ALWAYSTEXCOMP = false ]; then 
 		  while true; do
