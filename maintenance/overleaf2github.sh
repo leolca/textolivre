@@ -103,9 +103,9 @@ do
 		  done
 	      fi
 	      if [ $TEXCOMPILER = 1 ]; then
-		 xelatex --interaction=batchmode article.tex; biber --quiet article; xelatex --interaction=batchmode article.tex; xelatex --interaction=batchmode article.tex;
+		 xelatex --interaction=batchmode article.tex || echo -e "\e[1;31mCompile error\e[0m"; biber --quiet article; xelatex --interaction=batchmode article.tex; xelatex --interaction=batchmode article.tex;
 	      else
-	         lualatex --interaction=batchmode article.tex; biber --quiet article; lualatex --interaction=batchmode article.tex; lualatex --interaction=batchmode article.tex;
+	         lualatex --interaction=batchmode article.tex || echo -e "\e[1;31mCompile error\e[0m"; biber --quiet article; lualatex --interaction=batchmode article.tex; lualatex --interaction=batchmode article.tex;
 	      fi
 	      bibtex-tidy --omit=abstract --curly --space=4 --blank-lines --sort=name,year --merge --sort-fields --strip-comments --no-trailing-commas --remove-empty-fields --no-wrap article.bib 
 	      # https://tex.stackexchange.com/questions/43276/unused-bibliography-entries-how-to-check-which-entries-were-not-used
