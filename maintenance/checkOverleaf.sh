@@ -6,6 +6,7 @@
 # ./checkOverleaf.sh
 # ./checkOverleaf.sh 37090 34141
 # ./checkOverleaf.sh 37090 34141 | tee >(ansi2html | sed 's/\/tmp\/\(issues[-_a-z0-9]\+\)/<a href="\1">\1<\/a>/g' > /tmp/diff.html)
+# ./checkOverleaf.sh $(grep "issues/2023/v16" overleafprojectlist.csv | cut -d, -f1 | cut -d/ -f4 | tr '\n' ' ')
 
 if ! command -v dwdiff &> /dev/null
 then
@@ -13,6 +14,17 @@ then
     exit
 fi
 
+if ! command -v colordiff &> /dev/null
+then
+    echo "colordiff could not be found, please install it before running this script"
+    exit
+fi
+
+if ! command -v ansi2html &> /dev/null
+then
+    echo "ansi2html could not be found, please install it before running this script"
+    exit
+fi
 
 NUMBERS=""
 for arg in "$@"
@@ -64,8 +76,14 @@ while read FOLDER OVERLEAFID; do
               SAVERESULT=true
            fi
            if [ $SAVERESULT = true ]; then
-   	       OUTFILE="/tmp/$FOLDERreplaced-article-tex-diff"
-	       dwdiff --no-common --line-numbers <(cat "../$FOLDER/article.tex") <(cat "$TMPFOLDER/article.tex") | colordiff --difftype=wdiff > "$OUTFILE"
+	       GITFILEDATE=$(git log -1 --follow --format=%ad --date=iso -- "../$FOLDER/article.tex")
+	       OVLFFILEDATE=$(git -C "$TMPFOLDER" log -1 --follow --format=%ad --date=iso -- "$TMPFOLDER/article.tex")
+	       OUTFILE="/tmp/$FOLDERreplaced-article-tex-diff"
+	       printf "GitHub was last updated on: %s\n" "$GITFILEDATE" > "$OUTFILE"
+	       printf "OverLeaf was last updated on: %s\n" "$OVLFFILEDATE" >> "$OUTFILE"
+	       dwdiff --no-common --line-numbers <(cat "../$FOLDER/article.tex") <(cat "$TMPFOLDER/article.tex") | colordiff --difftype=wdiff >> "$OUTFILE"
+               OUTFILE="/tmp/$FOLDERreplaced-article-tex-fulldiff.html"
+	       dwdiff --color <(cat "../$FOLDER/article.tex") <(cat "$TMPFOLDER/article.tex") | ansi2html > "$OUTFILE"
 	       #wdiff --no-common --avoid-wraps <(cat "../$FOLDER/article.tex") <(cat "$TMPFOLDER/article.tex") | colordiff --difftype=wdiff > "$OUTFILE"
 	       #diff --color --side-by-side --suppress-common-lines <(fold -s -w72 "../$FOLDER/article.tex") <(fold -s -w72 "$TMPFOLDER/article.tex") -W 200 > "$OUTFILE"
                #diff "../$FOLDER/article.tex" "$TMPFOLDER/article.tex" > "$TMPFILE"
@@ -93,8 +111,14 @@ while read FOLDER OVERLEAFID; do
            SAVERESULT=true
            fi
            if [ $SAVERESULT = true ]; then
+	    GITFILEDATE=$(git log -1 --follow --format=%ad --date=iso -- "../$FOLDER/article.bib")
+	    OVLFFILEDATE=$(git -C "$TMPFOLDER" log -1 --follow --format=%ad --date=iso -- "$TMPFOLDER/article.bib")
    	    OUTFILE="/tmp/$FOLDERreplaced-article-bib-diff"
-	    dwdiff --no-common --line-numbers <(cat "../$FOLDER/article.bib") <(cat "$TMPFOLDER/article.bib") | colordiff --difftype=wdiff > "$OUTFILE"
+	    printf "GitHub was last updated on: %s\n" "$GITFILEDATE" > "$OUTFILE"
+	    printf "OverLeaf was last updated on: %s\n" "$OVLFFILEDATE" >> "$OUTFILE"
+	    dwdiff --no-common --line-numbers <(cat "../$FOLDER/article.bib") <(cat "$TMPFOLDER/article.bib") | colordiff --difftype=wdiff >> "$OUTFILE"
+	    OUTFILE="/tmp/$FOLDERreplaced-article-bib-fulldiff.html"
+	    dwdiff --color <(cat "../$FOLDER/article.bib") <(cat "$TMPFOLDER/article.bib") | ansi2html > "$OUTFILE"
    	    #wdiff --no-common --avoid-wraps <(cat "../$FOLDER/article.bib") <(cat "$TMPFOLDER/article.bib") | colordiff --difftype=wdiff > "$OUTFILE"
    	    #diff --color --side-by-side --suppress-common-lines <(fold -s -w72 "$FOLDER/article.bib") <(fold -s -w72 "$TMPFOLDER/article.bib") -W 200 > "$OUTFILE"
                #diff "../$FOLDER/article.bib" "$TMPFOLDER/article.bib" > "$TMPFILE"
