@@ -1,1 +1,1 @@
-../../../../template/textolivre.cls
+/home/leoca/ee/textolivre/template/textolivre.cls
