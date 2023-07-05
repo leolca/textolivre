@@ -24,6 +24,16 @@ then
     echo "checkcites could not be found, please install it before running this script"
     exit
 fi
+if ! command -v meld &> /dev/null
+then
+    echo "meld could not be found, please install it before running this script"
+    exit
+fi
+if ! command -v vim &> /dev/null
+then
+    echo "vim could not be found, please install it before running this script"
+    exit
+fi
 
 IDs=( "$@" )
 ALWAYSOW=false
@@ -40,6 +50,7 @@ TEXCOMPILER=1 # 1) XeLaTeX, 2) LuaLateX, 3) always XeLaTeX, 4) always LuaLateX
 ALWAYSTEXCOMP=false
 
 TL_FOLDER=$(dirname $CURRENTFOLDER)
+SC_FOLDER="$TL_FOLDER/maintenance/"
 for (( i=0; i<${#IDs[@]}; i++ ));
 do
   echo "${IDs[$i]}"
@@ -106,6 +117,44 @@ do
 		 xelatex --interaction=batchmode article.tex || echo -e "\e[1;31mCompile error\e[0m"; biber --quiet article; xelatex --interaction=batchmode article.tex; xelatex --interaction=batchmode article.tex;
 	      else
 	         lualatex --interaction=batchmode article.tex || echo -e "\e[1;31mCompile error\e[0m"; biber --quiet article; lualatex --interaction=batchmode article.tex; lualatex --interaction=batchmode article.tex;
+	      fi
+	      ${SC_FOLDER}fixspaces.sh article.tex
+	      doublewords=$(${SC_FOLDER}FindDbl.pl article.tex)
+	      if [ ! -z "$doublewords" ]; then
+		  printf "Duplicated words were found!\n\n"
+		  echo $doublewords
+		  read -p "Lauch Vim so you may fix it? [y/n]: " answer
+		  if [[ "$answer" == "y" || "$answer" == "Y" ]]; then
+		      vim article.tex
+		  fi
+	      fi
+	      if ! diff article.tex $TMPFOLDER/article.tex /dev/null; then
+	          read -p "Launch Meld to see whitespaces modiffications? [y/n]: " answer
+		  if [[ "$answer" == "y" || "$answer" == "Y" ]]; then
+		      meld article.tex $TMPFOLDER/article.tex
+		  fi
+                  if [ $ALWAYSAO = false ]; then
+		      while true; do
+			  read -u 2 -p ".tex file chaged after fixing whitespaces... add chages to OverLeaf (y/n/a)?" yn
+			  case $yn in
+			      [Yy]* ) ADDOVERLEAF=true; break;;
+			      [Nn]* ) ADDOVERLEAF=false; exit;;
+			      [Aa]* ) ALWAYSAO=true; ADDOVERLEAF=true; break;;
+			      * ) echo "Please answer yes or no.";;
+			  esac
+	              done
+	          else
+		      ADDOVERLEAF=true
+	          fi
+	          if [ $ADDOVERLEAF = true ]; then
+		      cp article.tex $TMPFOLDER/article.tex
+		      cd $TMPFOLDER
+		      git add article.tex
+		      git commit -m 'fixing whitespaces in tex file'
+		      git push origin master
+		      cd $DEST_FOLDER
+		      ADDOVERLEAF=false
+	          fi
 	      fi
 	      bibtex-tidy --omit=abstract --curly --space=4 --blank-lines --sort=name,year --merge --sort-fields --strip-comments --no-trailing-commas --remove-empty-fields --no-wrap article.bib 
 	      # https://tex.stackexchange.com/questions/43276/unused-bibliography-entries-how-to-check-which-entries-were-not-used
