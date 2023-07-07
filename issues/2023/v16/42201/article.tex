@@ -1,0 +1,395 @@
+% !TEX TS-program = XeLaTeX
+% use the following command:
+% all document files must be coded in UTF-8
+\documentclass[portuguese]{textolivre}
+% build HTML with: make4ht -e build.lua -c textolivre.cfg -x -u article "fn-in,svg,pic-align"
+
+\journalname{Texto Livre}
+\thevolume{16}
+%\thenumber{1} % old template
+\theyear{2023}
+\receiveddate{\DTMdisplaydate{2022}{12}{20}{-1}} % YYYY MM DD
+\accepteddate{\DTMdisplaydate{2023}{4}{6}{-1}}
+\publisheddate{\DTMdisplaydate{2023}{6}{14}{-1}}
+\corrauthor{Renata de Souza França}
+\articledoi{10.1590/1983-3652.2023.42201}
+%\articleid{NNNN} % if the article ID is not the last 5 numbers of its DOI, provide it using \articleid{} commmand 
+% list of available sesscions in the journal: articles, dossier, reports, essays, reviews, interviews, editorial
+\articlesessionname{articles}
+\runningauthor{Diniz e França} 
+%\editorname{Leonardo Araújo} % old template
+\sectioneditorname{Daniervelin Pereira}
+\layouteditorname{Thaís Coutinho}
+
+\title{Tecnologias a serviço de quem? Um diálogo entre Álvaro Vieira Pinto, Evgeny Morozov, Paulo Freire e Sérgio Guimarães sobre capitalismo de vigilância na educação}
+\othertitle{Technologies at the service of whom? A dialogue between Álvaro Vieira Pinto, Evgeny Morozov, Paulo Freire, and Sérgio Guimarães about surveillance capitalism in education}
+% if there is a third language title, add here:
+%\othertitle{Artikelvorlage zur Einreichung beim Texto Livre Journal}
+
+\author[1]{Janaina do Rozário Diniz~\orcid{0000-0001-7993-5447}}
+\author[1]{Renata de Souza França~\orcid{0000-0002-3809-0975}}
+\affil[1]{Universidade do Estado de Minas Gerais, Departamento de Ciências Humanas e Fundamentos da Educação, Ibirité, Minas Gerais, Brasil.}
+
+\addbibresource{article.bib}
+% use biber instead of bibtex
+% $ biber article
+
+% used to create dummy text for the template file
+\definecolor{dark-gray}{gray}{0.35} % color used to display dummy texts
+\usepackage{lipsum}
+\SetLipsumParListSurrounders{\colorlet{oldcolor}{.}\color{dark-gray}}{\color{oldcolor}}
+
+% used here only to provide the XeLaTeX and BibTeX logos
+\usepackage{hologo}
+
+% if you use multirows in a table, include the multirow package
+\usepackage{multirow}
+
+% provides sidewaysfigure environment
+\usepackage{rotating}
+
+% CUSTOM EPIGRAPH - BEGIN 
+%%% https://tex.stackexchange.com/questions/193178/specific-epigraph-style
+\usepackage{epigraph}
+\renewcommand\textflush{flushright}
+\makeatletter
+\newlength\epitextskip
+\pretocmd{\@epitext}{\em}{}{}
+\apptocmd{\@epitext}{\em}{}{}
+\patchcmd{\epigraph}{\@epitext{#1}\\}{\@epitext{#1}\\[\epitextskip]}{}{}
+\makeatother
+\setlength\epigraphrule{0pt}
+\setlength\epitextskip{0.5ex}
+\setlength\epigraphwidth{.7\textwidth}
+% CUSTOM EPIGRAPH - END
+
+% LANGUAGE - BEGIN
+% ARABIC
+% for languages that use special fonts, you must provide the typeface that will be used
+% \setotherlanguage{arabic}
+% \newfontfamily\arabicfont[Script=Arabic]{Amiri}
+% \newfontfamily\arabicfontsf[Script=Arabic]{Amiri}
+% \newfontfamily\arabicfonttt[Script=Arabic]{Amiri}
+%
+% in the article, to add arabic text use: \textlang{arabic}{ ... }
+%
+% RUSSIAN
+% for russian text we also need to define fonts with support for Cyrillic script
+% \usepackage{fontspec}
+% \setotherlanguage{russian}
+% \newfontfamily\cyrillicfont{Times New Roman}
+% \newfontfamily\cyrillicfontsf{Times New Roman}[Script=Cyrillic]
+% \newfontfamily\cyrillicfonttt{Times New Roman}[Script=Cyrillic]
+%
+% in the text use \begin{russian} ... \end{russian}
+% LANGUAGE - END
+
+% EMOJIS - BEGIN
+% to use emoticons in your manuscript
+% https://stackoverflow.com/questions/190145/how-to-insert-emoticons-in-latex/57076064
+% using font Symbola, which has full support
+% the font may be downloaded at:
+% https://dn-works.com/ufas/
+% add to preamble:
+% \newfontfamily\Symbola{Symbola}
+% in the text use:
+% {\Symbola }
+% EMOJIS - END
+
+% LABEL REFERENCE TO DESCRIPTIVE LIST - BEGIN
+% reference itens in a descriptive list using their labels instead of numbers
+% insert the code below in the preambule:
+%\makeatletter
+%\let\orgdescriptionlabel\descriptionlabel
+%\renewcommand*{\descriptionlabel}[1]{%
+%  \let\orglabel\label
+%  \let\label\@gobble
+%  \phantomsection
+%  \edef\@currentlabel{#1\unskip}%
+%  \let\label\orglabel
+%  \orgdescriptionlabel{#1}%
+%}
+%\makeatother
+%
+% in your document, use as illustraded here:
+%\begin{description}
+%  \item[first\label{itm1}] this is only an example;
+%  % ...  add more items
+%\end{description}
+% LABEL REFERENCE TO DESCRIPTIVE LIST - END
+
+
+% add line numbers for submission
+%\usepackage{lineno}
+%\linenumbers
+
+\begin{document}
+\maketitle
+
+\begin{polyabstract}
+\begin{abstract}
+Tecnologias digitais são importantes ferramentas para viabilizar a educação de milhões de pessoas do Brasil. Google e Microsoft mediam atualmente processos pedagógicos por meio de suas plataformas. Esses monopólios digitais possuem como principal modelo de negócio a monetização dos dados pessoais dos seus usuários. Por meio de coleta, armazenamento, organização dos dados e comercialização dos produtos de predições, as mercadorias produzidas por essas corporações modificam o mercado, as estratégias políticas, as formas de trabalho, estruturações sociais e políticas públicas \cite{cruz_neoliberalismo_2020}. Esse fenômeno é definido como capitalismo de vigilância. A pesquisa tem como objetivo refletir sobre o avanço do capitalismo de vigilância na educação à luz de Álvaro Vieira Pinto, Evgeny Morozov, Paulo Freire e Sérgio Guimarães. Questiona-se: as tecnologias digitais hegemônicas presentes na educação pública estão a serviço de quais grupos? Como Álvaro Vieira Pinto, Evgeny Morozov, Paulo Freire e Sérgio Guimarães podem ajudar na reflexão sobre o capitalismo de vigilância na educação? O trabalho possui abordagem qualitativa. A técnica utilizada é a pesquisa bibliográfica, para a qual foram selecionadas as obras "Educar com a mídia: novos diálogos sobre educação", de Paulo Freire e Sérgio Guimarães; "O conceito de tecnologia", de Álvaro Vieira Pinto; e "Big Tech: a ascensão dos dados e a morte da política", de Evgeny Morozov. Constatou-se que os autores defendem o desenvolvimento da consciência crítica sobre as tecnologias, por meio da análise e da compreensão dos contextos histórico, econômico e político em que os artefatos tecnológicos são desenvolvidos.
+
+\keywords{Capitalismo de vigilância \sep Plataformas educacionais \sep Álvaro Vieira Pinto \sep Paulo Freire \sep Evgeny Morozov}
+\end{abstract}
+
+\begin{english}
+\begin{abstract}
+Digital technologies are important tools to facilitate the education of millions of people in Brazil. Google and Microsoft mediate pedagogical processes through their platforms. These digital monopolies have as their main business model the monetization of their users' personal data. Through the collection, storage, organization of data and the commercialization of prediction products, the goods produced by these corporations modify the market, political strategies, ways of working, social structures and public policies \cite{cruz_neoliberalismo_2020}. This phenomenon is defined as surveillance capitalism. The research aims to reflect on the advance of surveillance capitalism in education in the light of Álvaro Vieira Pinto, Evgeny Morozov, Paulo Freire and Sérgio Guimarães. It is questioned which hegemonic digital technologies present in public education are at the service of which groups? How can Álvaro Vieira Pinto, Evgeny Morozov, Paulo Freire and Sérgio Guimarães help in the reflection on surveillance capitalism in education? The work has a qualitative approach. The technique used is bibliographical research, in which the works Educar com a mídia: novos diálogos sobre educação by Paulo Freire and Sérgio Guimarães; O conceito de tecnologia by Álvaro Vieira Pinto; and Big Tech: a ascensão dos dados e a morte da política by Evgeny Morozov. It was found that the authors defend the development of critical awareness about technologies, through the analysis and understanding of the historical, economic and political contexts in which technological artifacts are developed.
+
+\keywords{Surveillance capitalism \sep Educational platforms \sep Alvaro Vieira Pinto \sep Paulo Freire \sep Evgeny Morozov}
+\end{abstract}
+\end{english}
+% if there is another abstract, insert it here using the same scheme
+\end{polyabstract}
+
+\section{Introdução}
+
+\begin{quote}
+ Quão genuína era a promessa de emancipação implícita nos primórdios da cibercultura. Teria sido possível outro rumo, se os cidadãos assumissem o controle? Ainda nos resta a esperança de retomar a soberania popular na tecnologia? \cite[p. 15]{morozov2018} 
+\end{quote}
+
+As empresas conhecidas como Big Tech ou pelo acrônimo GAFAM (Google, Amazon, Facebook/Meta, Apple e Microsoft) são consideradas monopólios digitais. Essas empresas atuam na comunicação e no comércio, mas têm adentrado em outros setores, como saúde \cite{redmond2022}, agricultura \cite{agrawal2020} e educação \cite{observatorioeducaçao}. A principal característica que faz dessas empresas monopólios digitais é o controle do mercado de tecnologias. Como exemplo, vale citar a Amazon e a Microsoft, que dominam 55\% do mercado do serviço de armazenamento na nuvem \cite{statista}.
+
+Os monopólios digitais possuem como principal modelo de negócio a monetização dos dados pessoais dos seus usuários. Há teorias que visam analisar o modelo de negócios dessas corporações. Uma delas é o capitalismo de vigilância da pesquisadora \textcite{zuboff2020era}.
+
+\begin{quote}
+ O capitalismo de vigilância reivindica de maneira unilateral a experiência humana como matéria-prima gratuita para a tradução em dados comportamentais. Embora alguns desses dados sejam aplicados para o aprimoramento de produtos e serviços, o restante é declarado como \emph{superavit comportamental} do proprietário, alimentando avançados processos de fabricação conhecidos como ‘inteligência de máquina’ e manufaturado em produtos de predição que antecipam o que um determinado indivíduo faria agora, daqui a pouco e mais tarde. Por fim, esses produtos de predições são comercializados num novo tipo de mercado para predições comportamentais que chamo de \emph{mercados de comportamentos futuros} \cite[p. 18-19, grifos da autora]{zuboff2020era}.
+\end{quote}
+
+Por meio da coleta, armazenamento, organização dos dados e a comercialização dos produtos de predições, as mercadorias produzidas pela GAFAM estão modificando todo o mercado e estratégias políticas, bem como formas de trabalho, estruturações sociais e políticas públicas \cite{cruz_neoliberalismo_2020}.
+
+Durante a pandemia de covid-19, as tecnologias digitais viabilizaram a educação de milhões de estudantes do Brasil. De acordo com o \textcite{observatorioeducaçao}, 50\% das secretarias de educação das capitais e dos municípios com mais de 500 mil habitantes e 79\% das universidades públicas brasileiras utilizam pelo menos o serviço de e-mail das empresas Google e Microsoft\footnote{Dados de abril de 2023. Disponível em: \url{https://educacaovigiada.org.br/pt/mapeamento/brasil/}}. A Google – pioneira do capitalismo de vigilância \cite{zuboff2020era} – e a Microsoft mediam os processos pedagógicos e a relação entre milhões de professores e alunos do país, por meio de plataformas.
+
+Até pouco tempo, essas plataformas eram ofertadas gratuitamente para várias instituições de ensino. No entanto, essa gratuidade possuía, na verdade, como moeda de troca, os dados dos usuários das plataformas. Muitas vezes, o fornecimento dos dados acontece de forma compulsória e sem o conhecimento do usuário final. Além disso, toda a responsabilidade pela utilização é repassada para as instituições, quando estas aceitam a política e os termos de privacidade das empresas \cite{lima2020educaccao}. A oferta supostamente gratuita das ferramentas por essas grandes empresas de tecnologia aos usuários e às instituições de ensino vem se modificando. Segundo pesquisa realizada pelo \textcite{observario2023}, Universidades Federais e Institutos Federais de Educação gastam 17 milhões de reais com utilização de ferramentas da Google, desde 2021. Ou seja, se, inicialmente, a Google permitia o acesso “gratuito” às suas ferramentas e plataforma por estudantes, professores e corpo administrativo das Instituições de ensino – quando na verdade cobrava por meio da coleta e mercantilização de dados dos usuários – atualmente, a empresa cobra também em moeda.
+
+O cenário brasileiro se depara com sistemáticos cortes de verbas na educação, que impactam na manutenção e no desenvolvimento dos parques tecnológicos das escolas e universidades \cite{cruz_neoliberalismo_2020}. Paralelamente, presencia-se a entrada de atores corporativos na educação para o fornecimento dessas tecnologias. A presença das plataformas dos monopólios digitais na educação tem gerado reflexões e preocupações em alguns setores da sociedade.
+
+O relatório \emph{Educação em um cenário de plataformização e de economia dos dados} \cite{comitegestor}, elaborado pelo Grupo de Trabalho Plataformas para a Educação Remota, do Núcleo de Informação e Coordenação do ponto BR (NIC.BR), apresenta uma revisão bibliográfica e conceitual sobre o tema e aponta problemas, impactos e desafios que a educação – bem como toda a sociedade – enfrenta diante do avanço das plataformas dos monopólios digitais na educação. O relatório identificou as seguintes questões críticas:
+
+\begin{quote}
+Falta de abertura e transparência das soluções adotadas pelas instituições de ensino no Brasil; Ameaças relacionadas à soberania de estados-nação no que tange à infraestrutura tecnológica de suporte ao ensino e à autonomia científica; Uso comercial dos dados de alunos brasileiros e vigilância das atividades educacionais. \cite[p. 41]{comitegestor}.
+\end{quote}
+
+Muitas vezes, as tecnologias digitais são vistas apenas como instrumentos e não é dada a devida importância para os aspectos político e econômico relacionados ao seu uso e ao seu desenvolvimento \cite{pinto_o_2005, freire_educar_2011, morozov2018, cruz_neoliberalismo_2020}. Assim, questões estratégicas, como soberania tecnológica, que deveriam ser problematizadas e estar no centro da discussão sobre tecnologia, são negligenciadas.
+
+Nesse cenário, cabem os questionamentos: as tecnologias digitais hegemônicas disponibilizadas à sociedade e, mais especificamente, presentes na educação pública estão a serviço dos interesses de quais grupos? Como Álvaro Vieira Pinto, Evgeny Morozov, Paulo Freire e Sérgio Guimarães podem contribuir para a reflexão sobre tecnologias digitais, em um contexto em que há o avanço do capitalismo de vigilância na educação? O objeto da presente pesquisa é o capitalismo de vigilância na educação. O trabalho tem como objetivo refletir sobre o avanço do capitalismo de vigilância na educação pública à luz de Álvaro Vieira Pinto, Evgeny Morozov, Paulo Freire e Sérgio Guimarães.
+
+Inicia-se explicitando o caminho metodológico utilizado, a seleção e a organização dos materiais. Em seguida, apresentam-se as obras selecionadas de Pinto, Freire e Guimarães e Morozov – base para o desenvolvimento do trabalho. Continua com o engendramento do diálogo entre os autores, por meio dos materiais selecionados, organizado nos itens \emph{Deslumbramento com as Tecnologias e Economia, Política e Tecnologias Digitais}. Conclui-se que, a partir da análise realizada, Pinto, Morozov, Freire e Guimarães concordam que é preciso ter um olhar crítico sobre as tecnologias. O desenvolvimento da criticidade se dá a partir da análise e da compreensão dos contextos histórico, econômico e político em que as tecnologias são desenvolvidas, pois não se pode pensar nos meios de comunicação sem refletir sobre a questão do poder \cite{freire_educar_2011}. Nesse sentido, realizam-se considerações sobre a importância de formação crítica, em conjunto com outras ações, para diminuir a dominação dos monopólios digitais na educação pública brasileira e possibilitar o alcance da soberania tecnológica do país.
+
+
+
+
+\section{Método}
+
+O estudo possui abordagem qualitativa. Para \textcite{gerhardt2009metodos}, a pesquisa qualitativa visa produzir informações aprofundadas e ilustrativas, e não há uma preocupação em quantificar as amostras. A técnica utilizada foi a pesquisa bibliográfica, pois foi realizada a partir de referências teóricas publicadas. Segundo \textcite[p. 76]{severino2013}, a pesquisa bibliográfica é
+
+\begin{quote}
+ [...] aquela que se realiza a partir do registro disponível, decorrente de pesquisas anteriores, em documentos impressos, como livros, artigos, teses etc […]. Os textos tornam-se fontes dos temas a serem pesquisados. O pesquisador trabalha a partir das contribuições dos autores dos estudos analíticos constantes dos textos.
+\end{quote}
+
+A investigação iniciou-se com a pesquisa e a seleção de obras de Paulo Freire, Álvaro Vieira Pinto e Evgeny Morozov que possibilitassem uma reflexão sobre educação, tecnologias digitais e vigilância na educação. As obras selecionadas foram \emph{Educar com a mídia: novos diálogos sobre educação} (Paulo Freire e Sérgio Guimarães); \emph{O conceito de tecnologia} (Álvaro Vieira Pinto) e \emph{Big Tech: a ascensão dos dados e a morte da política} (Evgeny Morozov).
+
+Em seguida, foi realizada a seleção das partes das obras a serem analisadas, apresentadas no \Cref{tab1}: 
+
+
+\begin{table}[h!]
+\centering
+\small
+\begin{threeparttable}
+\caption{Material selecionado para pesquisa}
+\label{tab1}
+\begin{tabular}{p{2cm}p{4cm}p{5.5cm}p{1.5cm}}
+\toprule
+Autor & Título da obra & Partes selecionadas & Ano de publicação da obra \\
+\midrule
+Paulo Freire e Sérgio Guimarães & Educar com a mídia: novos diálogos sobre educação & Capítulo - A escola escrava e “escola paralela & 2018 \\
+Álvaro Vieira Pinto & O conceito de tecnologia & Capítulo - Em face da “era tecnológica” & 2005 \\
+Evgeny Morozov & Big Tech: a ascensão dos dados e a morte da política & Prefácio \newline Introdução – capitalismo tecnológico e cidadania \newline Capítulo - Por que estamos autorizados a odiar o Vale do Silício? & 2011
+\\
+\bottomrule
+\end{tabular}
+\source{elaboração própria}
+\end{threeparttable}
+\end{table}
+
+Foi selecionado o primeiro capítulo de cada obra, pelo fato de apresentar uma visão panorâmica sobre o assunto a ser tratado no corpo da obra e, assim, possibilitar o diálogo entre os autores. Em específico, sobre a obra de \textcite{morozov2018}, foram incluídos o prefácio e a introdução do seu livro, por complementarem as temáticas para este estudo. Vale ressaltar que as obras de \textcite{freire_educar_2011} e de \textcite{pinto_o_2005} não possuem prefácio e introdução.
+
+Foram construídas duas categorias para análise: a) deslumbramento com as tecnologias; b) economia, política e tecnologias digitais. 
+
+A elaboração das categorias decorre da ênfase dada pelos autores ao desenvolvimento da criticidade sobre as tecnologias e da necessidade de analisar o contexto político e econômico em que as tecnologias se desenvolvem.
+
+Em seguida, realizou-se a classificação dos trechos das partes selecionadas nas categorias criadas. Assim, para serem incluídas na categoria a ou b, os trechos deveriam apresentar aspectos e mensagens comuns, que estivessem de acordo com a categoria. Após a classificação, foram realizadas a análise e a interpretação.
+
+
+\section{Um diálogo necessário: Pinto (2015), Morozov (2018) e Freire e Guimarães (2011)}
+
+\subsection{Apresentação das obras analisadas}
+
+Na década de 90, Paulo Freire e Sérgio Guimarães, em um contexto em que a comunicação e a disseminação da informação se concentravam fortemente no rádio e na televisão, problematizam quem tem o poder sobre os meios de comunicação. No livro \emph{Educar com a Mídia: novos diálogos sobre educação}, publicado em 2011, os autores questionam “a serviço ‘do que’ e a serviço ‘de quem’ os meios de comunicação se acham” \cite[p. 32]{freire_educar_2011}. Na obra, \textcite{freire_educar_2011} descrevem e analisam, por meio de um diálogo sobre suas vivências como educadores, a inserção dessas tecnologias na educação. Para além de uma discussão a respeito do quanto os meios de comunicação influenciam positiva ou negativamente a convivência em sociedade, os autores refletem sobre o desafio no uso desses meios no processo educativo.
+
+Álvaro Vieira Pinto foi filósofo e professor que influenciou intelectuais da sua época, inclusive Paulo Freire, o qual o chamava de "meu mestre" \cite[p. 1]{pinto_o_2005}. Após seu falecimento, em 1987, os seus bens e os da esposa, também falecida, foram geridos pelo advogado da família. A irmã do advogado encontrou manuscritos elaborados pelo filósofo e, juntamente com a professora Maria da Conceição Tavares, viabilizou a sua publicação \cite{pinto_o_2005}. Esse manuscrito resultou na obra \emph{O conceito de tecnologia}. No livro, o filósofo faz reflexões sobre técnica, tecnologia e suas relações com poder, política, dominação e ideologia.
+
+Mais recentemente, em 2018, Evgeny Morozov analisa a influência das grandes empresas de tecnologia na política e na economia da sociedade. O pesquisador bielorrusso é colaborador da grande mídia, fato pelo qual recebeu o título de um dos 28 europeus mais influentes no assunto, pela revista Político. A obra \emph{Big Tech: a ascensão dos dados e a morte da política} reúne textos escritos pelo autor, desde 2013 \cite{morozov2018}. A partir da problematização das corporações presentes no Vale do Silício, o pesquisador traz reflexões sobre como essas empresas influenciam direta e indiretamente a vida dos indivíduos, bem como o desenvolvimento de toda a sociedade \cite{morozov2018}.
+
+\subsection{Deslumbramento com as tecnologias}
+
+Não é raro que as tecnologias sejam vistas como algo mágico, dadas por bondosas pessoas para o usufruto da sociedade, como algo que nos foi concedido “pelas divindades da ‘internet’” \cite[p. 42]{morozov2018}. Esse olhar encantador sobre as tecnologias não é algo novo e já estava presente em tempos anteriores, com o advento de outros meios considerados inovadores.
+
+Na década de 90, \textcite{freire_educar_2011} dialogavam sobre o deslumbramento que a TV causava nas crianças:
+
+\begin{quote}
+ […] eu percebia claramente que as crianças reagiam. Claro que elas ficavam fascinadas pela televisão! Nesse caso — e no da televisão em cores mais ainda — são estímulos novos à sua visão, aos seus ouvidos, estímulos a que ainda estão abertas, por serem crianças. Assim, é natural que se embebam também, e, nesse sentido, tenham um prazer enorme diante dos desenhos animados, programas infantis, filmes sobre a vida dos animais ou mesmo diante de programas para adultos. \cite[p. 24]{freire_educar_2011}.
+\end{quote}
+
+Ainda nos dias de hoje, em determinados momentos e contextos sociais, a televisão é um meio utilizado na educação. Em conformidade com as proposições dos autores, é esperado que as crianças fiquem maravilhadas por dispositivos tecnológicos e seria um contrassenso presumir que, em um primeiro momento – sem reflexão e problematização das tecnologias – esses indivíduos tivessem um olhar crítico sobre esses dispositivos.
+
+No entanto, o exemplo trazido também ilustra um deslumbramento ingênuo que muitas pessoas possuem sobre as tecnologias digitais. Esse deslumbramento é consequência da ausência de uma formação que possibilite enxergar os processos históricos \cite{pinto_o_2005}, as questões ideológica \cite{pinto_o_2005, freire_educar_2011}, política e econômica \cite{freire_educar_2011, morozov2018} do desenvolvimento tecnológico.
+
+\textcite[p. 22]{morozov2018} afirma que, “enquanto a nossa crítica se limitar ao plano da tecnologia e da informação [...], o Vale do Silício\footnote{Vale do Silício é uma região da California, EUA, onde estão localizadas grandes empresas de tecnologia, como a GAFAM (Google, Amazom, Facebook/Meta, Apple, Microsoft).} continuará a ser visto como uma indústria extraordinária e singular”. Em consonância a \textcite{morozov2018}, \textcite{pinto_o_2005} alerta sobre o perigo da ideologia que há por trás do maravilhamento, que não permite enxergar o ontem e nem o amanhã, somente o agora. \textcite{pinto_o_2005} enfatiza que o próprio conceito de “era tecnológica” desfruta da relação acrítica, instrumental com a tecnologia. “A expressão era tecnológica se refere a qualquer época da história desde que o homem se constitui [como] [...] produtor, o sujeito da atividade econômica, no mais lato sentido da palavra” \cite[p.63]{pinto_o_2005}. No entanto, o autor ressalta que o conceito é utilizado pela classe dominante para iludir as massas e desvincular os processos históricos do desenvolvimento tecnológico.
+
+\begin{quote}
+ O conceito de ’era tecnológica’ encobre, ao lado de um sentido razoável e sério, outro, tipicamente ideológico, graças ao qual os interessados procuram embriagar a consciência das massas fazendo as crer que tem a felicidade de viver nos melhores tempos jamais desfrutados pela humanidade \cite[p. 41]{pinto_o_2005}.
+\end{quote}
+
+A ideia de que essa “época é superior a todas as outras, e qualquer indivíduo hoje existente deve dar graças aos céus pela sorte de ter chegado à presente fase da história, onde tudo é melhor que nos tempos antigos” \cite[p. 41]{pinto_o_2005}, converte a obra técnica em valor moral.
+
+\begin{quote}
+ Com essa cobertura moral, a chamada civilização técnica recebe um acréscimo de valor, respeitabilidade e admiração, que, naturalmente, reverte em benefício das camadas superiores, credoras de todos esses serviços prestados à humanidade, dá-lhes a santificação moral afanosamente buscada, que no seu modo de ver, traduz em maior segurança \cite[p. 41]{pinto_o_2005}.
+\end{quote}
+
+Esse valor moral compromete a capacidade das pessoas em perceberem as questões histórica e político-econômica envolvidas no desenvolvimento tecnológico, o que leva a sociedade a um deslumbramento ingênuo pelas tecnologias. A limitação para compreender “para quê” e “para quem” os meios de comunicação estão a serviço \cite{freire_educar_2011} é benéfica para aqueles que detêm o poder sobre as tecnologias hegemônicas. A ausência de criticidade sobre as tecnologias permite que os chamados por \textcite{pinto_o_2005} de “grupos dirigentes e promotores do progresso” (p. 42) “das grandes nações metropolitanas” (p. 36) mantenham o controle e a manipulação das massas.
+
+\textcite{morozov2018} problematiza a relação acrítica dos homens com as tecnologias e destaca como é desafiador descortinar os interesses políticos e econômicos daqueles que detêm o poder sobre as tecnologias hegemônicas.
+
+\begin{quote}
+ Nas últimas duas décadas, a nossa capacidade de estabelecer essa conexão entre máquinas e ‘arranjos coletivos’ praticamente se atrofiou. Desconfio que isso tenha acontecido porque presumimos que tais máquinas venham do ‘ciberespaço’, que pertence ao mundo ‘on-line’ e ‘digital’ – em outras palavras, que nos foram concedidas pelas divindades da ‘internet’. E a ‘internet’, como sempre nos diz o Vale do Silício, é o futuro. Então, opor-se a essas máquinas, significa opor-se ao próprio futuro \cite[p. 42]{morozov2018}.
+\end{quote}
+
+\textcite{morozov2018} mostra como o valor moral está presente nos discursos sobre tecnologia.
+
+\begin{quote}
+ Quando os ativistas da alimentação pressionam as grandes indústrias alimentícias e acusam as empresas de acrescentar sal e gordura demais aos salgadinhos a fim de estimular o consumo de seus produtos, ninguém se atreve a acusá-los de serem contrários à ciência. No entanto, críticas semelhantes ao Facebook ou ao Twitter – por exemplo, a de que projetaram os seus serviços de maneira a estimular as nossas ansiedades e a nos levar a sempre clicar no botão “atualizar” para obter a publicação mais recente – evocam quase imediatamente acusações de que somos tecnofóbicos e luditas \cite[p. 29]{morozov2018}.
+\end{quote}
+
+Na mesma linha de raciocínio construída por \textcite{morozov2018}, \textcite{pinto_o_2005} alerta que o valor moral que reveste a técnica é tão forte, que se opor a elas é ser considerado estar contra ao progresso. Como é necessário fazer crer que toda a humanidade está “em ‘pé de igualdade’ da mesma ‘civilização tecnológica’ que os ‘grandes’, na verdade os atuais ‘deuses’”, opor-se aos artefatos tecnológicos é um ato imoral \cite[p.43]{pinto_o_2005}. Assim, é necessário denunciar a intencionalidade que há no endeusamento das tecnologias, “mas não podemos dar a impressão de sermos reacionários” \cite[p. 44]{pinto_o_2005}.
+
+Construir um olhar que permita entender o contexto em que as tecnologias são criadas e ofertadas para a sociedade e compreender os interesses de quem as controlam é essencial para romper com os deslumbramentos ingênuos sobre esses artefatos.
+
+\begin{quote}
+ A história da técnica tem de ser evidentemente a história das produções humanas [...]. Se a história natural descreve as formas pelas quais passa o desenvolvimento da espécie, no homem tal história deixando de ser “natural” para se converter finalmente em social, não se refere as modificações da estrutura corpórea mas às modificações do mundo determinadas pelas intervenções humanas \cite[p. 64]{pinto_o_2005}.
+\end{quote}
+
+É possível reagir criticamente aos discursos que levam ao maravilhamento tecnológico ingênuo, seja por meio “da denúncia do lado secreto, maligno, do endeusamento da tecnologia” \cite[p. 44]{pinto_o_2005}, seja pela educação \cite{freire_educar_2011} e/ou pelo caminho apontado por \cite{morozov2018}:
+
+\begin{quote}
+ Ora, tudo isso é besteira: não existe ‘ciberespaço’, e o ‘debate digital’ não passa de um monte de sofismas inventados pelo Vale do Silício que permitem aos seus executivos dormirem bem à noite (Além de pagar bem!). Já não ouvimos o suficiente? Como primeiro passo, deveríamos nos apropriar da linguagem banal, mas extremamente eficaz, que eles usam. Depois, deveríamos nos apropriar de sua história imperfeita. E, como terceiro passo, reintroduzir a política e a economia nessa discussão. Vamos enterrar de vez o ‘debate digital’ – juntamente com o excesso de mediocridade intelectual por ele gerado \cite[p. 42]{morozov2018}.
+\end{quote}
+
+Para superar o olhar deslumbrado ingênuo sobre as tecnologias, \textcite{pinto_o_2005} defende que não se deve procurar romper com o maravilhamento, já que ele é justificado pelo grau de avanço das forças produtivas ou pelo domínio da natureza pelo homem. “É preciso distinguir entre a noção crítica que explica e enaltece esse comportamento e a atitude ingênua que, procedendo [...] fora do plano histórico, torna absolutos os modos de existências de cada época” \cite[p. 39]{pinto_o_2005}.
+
+\begin{quote}
+ Estamos por conseguinte obrigados a oscilar entre a justeza do reconhecimento do estado de admiração e sua imediata correção pelo pensamento historicista, dialético. Saber conservar o adequado equilíbrio entre estas duas vertentes, tal é a regra da sabedoria prática o princípio da intelecção teórica no problema do entendimento da tecnologia [...]. Nesse equilíbrio instável difícil de ser mantido mas indispensável, é que consiste a dinâmica distintiva do pensamento crítico \cite[p. 52]{pinto_o_2005}.
+\end{quote}
+
+Para isso, é necessário ter clareza de que todo avanço tecnológico está ligado ao processo de desenvolvimento das forças produtivas. Quando a análise não considera esse fato, a técnica é desvinculada do desenvolvimento econômico da sociedade, é transformada em “substância, categoria física, um ser, uma coisa. Com facilidade, dela se projetam visões igualmente fantásticas para o futuro tendo por suporte a imaginação” […] \cite[p. 50]{pinto_o_2005}. Para romper com esse olhar descontextualizado, deve-se pensar “‘fora da internet’, […] que significa pensar nas minúcias econômicas e geopolíticas do funcionamento de tantas empresas de alta tecnologia que atualmente nos escapam” \cite[p. 23]{morozov2018}.
+
+\textcite{pinto_o_2005, freire_educar_2011, morozov2018}, estão em concordância sobre os caminhos que levam à superação do maravilhamento sobre as tecnologias. A compreensão dos aspectos histórico, econômico e político em que as tecnologias estão inseridas permite a superação do deslumbramento ingênuo para um deslumbramento, ou estado de admiração que seja crítico. Assim, é possível compreender como os monopólios digitais lucram ao ofertar para milhões de pessoas o acesso gratuito às suas plataformas e \emph{softwares}. A compreensão dos aspectos histórico, econômico e político permite também entender as implicações geradas pela adoção dessas plataformas na educação pública.
+
+
+\subsection{Economia, política e tecnologias digitais}
+
+Os meios de comunicação hegemônicos, que hoje incluem as tecnologias digitais, estão nas mãos de poucas empresas. Essas tecnologias mediam a comunicação e as relações entre pessoas e instituições. \textcite{freire_educar_2011} problematizam o poder político e econômico dos meios de comunicação.
+
+\begin{quote}
+ Os meios de comunicação não são bons nem ruins em si mesmos. Servindo-se de técnicas, eles são o resultado do avanço da tecnologia, são expressões da criatividade humana, da ciência desenvolvida pelo ser humano. O problema é perguntar a serviço ‘do quê’ e a serviço ‘de quem’ os meios de comunicação se acham. E essa é uma questão que tem a ver com o poder e é política, portanto \cite[p. 22]{freire_educar_2011}.
+\end{quote}
+
+Esses autores também refletem sobre os riscos dos meios de comunicação estarem nas mãos de grupos que possuem interesses políticos e econômicos opostos aos da maioria da população. “Enquanto monopólio de um certo grupo de força, de poder, o risco que você tem, que a sociedade civil inteira tem, é o de ficar manipulada pelos interesses de quem detém o poder sobre esse meio de comunicação”. (\textcite[p. 22]{freire_educar_2011}.
+
+Para \textcite{morozov2018},
+
+\begin{quote}
+ [...] o verdadeiro inimigo não é a tecnologia, mas o atual regime político e econômico – uma combinação selvagem do complexo militar-industrial e dos descontrolados setores banqueiro e publicitário –, que recorre às tecnologias mais recentes para alcançar seus horrendos objetivos (mesmo que lucrativos e eventualmente agradáveis) \cite[p. 30]{morozov2018}.
+\end{quote}
+
+\textcite{morozov2018} recorda da expectativa que existia há décadas, quando a internet foi popularizada e como essa expectativa se tornou utópica nos dias de hoje:
+
+\begin{quote}
+ […] [os] crescentes indícios de que os sonhos utópicos, que estão por trás da concepção da internet como uma rede intrinsecamente democratizante, solapadora do poder e cosmopolita, há muito perderam seu apelo universal. A aldeia global jamais se materializou – em vez disso, acabamos em um domínio feudal, nitidamente partilhado entre as empresas de tecnologia e os serviços de inteligência (2018, p. 15).
+\end{quote}
+
+Assim como \textcite{freire_educar_2011}, \textcite{morozov2018}, relata sobre os riscos de poucas empresas dominarem a comunicação de uma sociedade inteira. O autor nos traz como exemplo um fato recente na nossa história. As eleições brasileiras de 2018 mostraram o alto custo a ser cobrado de sociedades que, dependentes de plataformas digitais e pouco cientes do poder que elas exercem, relutam em pensar as redes como agentes políticos \cite[p. 8]{morozov2018}.
+
+\textcite{morozov2018} complementa e recorda que
+
+\begin{quote}
+ [...] com exceções, como o Skype e o Spotify, não há equivalentes regionais [na Europa] do Facebook, do Google ou da Amazon, e a região parece ter se conformado com o predomínio do Vale do Silício, ainda que os outros setores da economia europeia, desde os fabricantes de automóveis até as editoras, comecem a mostrar inquietação com a possibilidade de seus mercados serem engolidos pelas empresas norte-americanas de tecnologia (2018, p. 15).
+\end{quote}
+
+Em tempos de capitalismo de vigilância,
+
+\begin{quote}
+ [...] o modelo de capitalismo “dado cêntrico” adotado pelo Vale do Silício busca converter todos os aspectos da existência cotidiana em ativo rentável: tudo aquilo que costumava ser o nosso refúgio contra os caprichos do trabalho e as ansiedades do mercado […] Dessa maneira, tudo vira um ativo rentável: nossos relacionamentos, nossa vida familiar, nossas férias e até nosso sono (agora você é convidado a rastrear o sono, a fim de aproveitá-lo ao máximo no menor tempo possível) \cite[p. 33]{morozov2018}.
+\end{quote}
+
+Ao adotarem o modelo de negócios baseados monetização de dados, a GAFAM obteve uma grande concentração de poder e domínio de mercado em vários países, principalmente nos países ocidentais. \textcite{morozov2018} argumenta que o poder monopolista das grandes empresas de tecnologias digitais, contribui, inclusive, para a geração de crises econômicas. Os monopólios, não só os digitais, mas também de outros setores da economia, utilizam estratégias no campo da economia e da política para eliminação e neutralização de empresas concorrentes. Assim, a concentração de poder das grandes empresas de tecnologia compromete o desenvolvimento econômico de diversos países, sobretudo os países mais pobres.
+
+Com o olhar para os países do sul global, \textcite{pinto_o_2005} afirma que um dos mecanismos utilizados pelos grupos que detém o poder tecnológico para permanecer com a dominação é incutir na mentalidade dos povos dos países atrasados que é natural que estes não desenvolvam as tecnologias mais avançadas, ficando a cargo apenas de fornecer matérias-primas, mão de obra barata e que sejam consumidores passivos das tecnologias que vêm das nações desenvolvidas. “Habituadas ao estado de exploração alheia, são incapazes de pensar em termos originais novas formas de utilização de seus bens naturais, de elaborarem outras técnicas, máquinas e objetos para a satisfação humana” \cite[p.46]{pinto_o_2005}.
+
+\textcite{pinto_o_2005} problematiza o discurso que defende que as potências mundiais são responsáveis por fornecer ao resto do mundo – como um gesto de bondade – as tecnologias que desenvolveram e os demais países devem ser gratos por ser agraciadas por tamanha generosidade. Quando não há reflexão crítica sobre desenvolvimento tecnológico, o discurso, o sofisma, criado pelos grupos dominantes, é aceito e induz a sociedade ao erro na compreensão da realidade. Assim, muitos permanecem na situação de dominados com poucas possibilidades de, no mínimo, questionar a condição que lhes é imposta.
+
+\textcite[p. 46]{pinto_o_2005} afirma que “redução do problema do progresso tecnológico aos aspectos exclusivamente técnicos é exatamente o que convém aos dirigentes dos centros de poder em cada fase histórica, porque os deixa sozinhos, sem concorrentes no campo de criação intelectual”. Sobre essa questão, \textcite{morozov2018} traz a seguinte reflexão:
+
+\begin{quote}
+ Como identificar ‘o debate digital’? Basta reconhecer os argumentos que remetem à essência das coisas – da tecnologia, da informação, do conhecimento e, claro, da própria internet. Assim, sempre que ouvimos alguém dizer ‘Essa lei é ruim porque vai quebrar a internet’ ou ‘Esse novo aparelho é bom porque a tecnologia precisa dele’, sabemos que não estamos mais no terreno da política – onde os argumentos costumam girar em torno do bem comum – e adentramos o reino da metafísica ruim. Nesse domínio, somos solicitados a defender o bem-estar de divindades digitais fantasmagóricas que funcionam como prepostos convenientes dos interesses empresariais. Por que qualquer coisa que poderia ‘quebrar a internet’ também quebraria o Google? Isso não pode ser uma coincidência, pode \cite[p. 30]{morozov2018}?
+\end{quote}
+
+Ao analisar a ideologia presente nos discursos dos grupos dominantes sobre as tecnologias, \textcite{freire_educar_2011} refletem sobre as questões que estão por trás das mensagens enviadas pelos meios de comunicação. Os autores examinam como beleza, raça, sexo e classe aparecem nos meios de comunicação, sob a ótica dos donos desses meios \cite{freire_educar_2011}. Diante disso, \textcite{freire_educar_2011} ressaltam que é necessário mostrar isso aos jovens e fazê-los refletir criticamente sobre a ideologia que existe nessas mensagens e discursos.
+
+A propagação da ideologia dos países dominantes para as nações pobres é uma importante arma de dominação. \textcite{morozov2018} lembra que as tecnologias e as ideologias promovidas por elas são, em sua maioria, norte-americanas, ou seja, ideologia daqueles que detêm o poder sobre as tecnologias de informação, e que “[…] o Vale do Silício acabou dominando completamente nossa maneira de pensar sobre a tecnologia e a subversão” \cite[p. 16]{morozov2018}. Os monopólios das mídias tradicional e digital refletem e defendem, direta ou indiretamente, os interesses políticos e econômicos das potências mundiais, dos seus proprietários e acionistas. Interesses que negam e excluem a maioria da população, afinal, os meios de comunicação estão nas mãos de um poder antipopular \cite{freire_educar_2011}.
+
+O uso de plataformas educacionais dos monopólios digitais contribui para o aumento da dependência tecnológica, política e econômica do País, comprometendo a soberania da nação. Uma política que visa adotar plataformas estrangeiras para mediar os processos educativos contribui para a submissão da educação pública aos interesses políticos e econômicos dos monopólios digitais, compromete a formação de mão de obra especializada no país e o desenvolvimento de soluções tecnológicas próprias.
+
+\textcite{freire_educar_2011} e \textcite{morozov2018} nos permitem enxergar caminhos para reagir ao domínio dos monopólios digitais. Ao problematizar a concentração de poder dos donos dos meios de comunicação, \cite{freire_educar_2011} chamam os educadores para a ação. Afirmam que os professores não devem secundarizar a questão política e econômica dos meios de comunicação e o poder de controle e de manipulação que poucos grupos exercem por intermédio desses meios.
+
+\begin{quote}
+ Os educadores não podem […] silenciar ou simplesmente botar entre parênteses esse problema […]. É preciso ver o que fazer durante o período em que os meios de comunicação estão preponderantemente nas mãos de um poder antipopular, por exemplo. De um poder que não opta pelo povo, pelas classes populares. Como educadores, temos de saber o que fazer para minimizar esse poder exacerbado nas mãos de um grupo antipopular, para aumentar a capacidade crítica das grandes massas populares, sobre quem recai o peso dos comunicados \cite[p. 33]{freire_educar_2011}.
+\end{quote}
+
+\textcite{morozov2018} destaca a necessidade de reconquistar a soberania sobre as tecnologias. “[…] É possível que os cidadãos reconquistem a soberania popular sobre a tecnologia? Sim, é possível – mas somente se antes reconquistarmos a soberania sobre a economia e a política” \cite[p. 25]{morozov2018}.
+
+\begin{quote}
+ É possível fazer uma crítica emancipatória da tecnologia? Estou convencido de que sim. Mas o primeiro passo para que ela seja articulada é entender as deficiências da nossa crítica de tecnologia atual, que é ineficaz por algum motivo. E há apenas uma forma de torná-la radical e verdadeiramente efetiva: ela precisa tratar seriamente não só da economia política do Vale do Silício, como também de seu papel cada vez mais preponderante na arquitetura fluida, e em constante evolução, do capitalismo global contemporâneo \cite[p. 26]{morozov2018}.
+\end{quote}
+
+Por meio do capitalismo de vigilância, os monopólios digitais ampliam suas possibilidades de exploração e se tornam mais poderosos política, econômica e tecnologicamente. Compreender os aspectos que possibilitam o desenvolvimento tecnológico é importante não só para o desenvolvimento da consciência crítica sobre esses artefatos, mas também para reagir ao domínio dos monopólios digitais. “O exame do conceito ‘civilização tecnológica’ para nós, povos subdesenvolvidos, deve começar pelo desmascaramento dos fatores políticos que encobrem à consciência as possibilidades das nações privadas de poder de pensarem a si mesmas” \cite[p. 46]{pinto_o_2005}.
+
+
+\section{Conclusão}
+
+A educação possui um papel importante no enfrentamento ao capitalismo de vigilância. É necessária uma formação que desvende uma neutralidade que não existe \cite{freire_educar_2011}, das mensagens, da arquitetura e da configuração das tecnologias; uma formação que desnude o deslumbramento sobre as tecnologias, que mostre, por exemplo, o que há por trás do acesso gratuito às plataformas. Os educadores devem ressignificar as tecnologias com os seus alunos, com uma formação e trabalho reflexivo e crítico sobre os meios de comunicação. É necessária uma formação que vá além da formação instrumental, do saber fazer e usar. É importante o desenvolvimento do pensamento crítico da comunidade escolar e acadêmica, bem como de toda a população.
+
+Álvaro Vieira Pinto, Evgeny Morozov, Paulo Freire e Sérgio Guimarães defendem o desenvolvimento da consciência crítica sobre as tecnologias, e que o desenvolvimento da criticidade se dá a partir da análise e da compreensão dos aspectos históricos, econômicos e políticos dos artefatos tecnológicos.
+
+No entanto, somente a educação não é suficiente para enfrentar e minimizar o domínio exercido pelos monopólios digitais. Seria inadequado colocar toda a responsabilidade na educação, nos educadores, quando é sabido que a questão perpassa também sobre outras esferas. A educação deve estar no bojo de uma política pública que tenha como objetivo a autonomia tecnológica do país. É preciso que haja investimentos nos parques tecnológicos da administração pública, em especial das escolas e universidades, para que seja possível o desenvolvimento de tecnológicas próprias. Essas são algumas ações necessárias para enfrentar a dominação dos monopólios digitais na educação pública brasileira e para se alcançar a soberania tecnológica do país.
+
+Almeja-se que o diálogo entre Pinto, Morozov, Freire e Guimarães tenha possibilitado uma reflexão acerca das implicações relacionadas ao uso acrítico das tecnologias e do poder político e econômico dos monopólios digitais. O trabalho não teve como intenção esgotar as possibilidades de diálogo entre os autores. Ao contrário, considera-se como um diálogo inicial. Sugere-se que mais estudos desenvolvam interseções com outras obras ou categorias. Tendo em vista a ampla produção bibliográfica desses autores, é possível realizar outras discussões sobre o capitalismo de vigilância na educação.
+
+\printbibliography\label{sec-bib}
+% if the text is not in Portuguese, it might be necessary to use the code below instead to print the correct ABNT abbreviations [s.n.], [s.l.]
+%\begin{portuguese}
+%\printbibliography[title={Bibliography}]
+%\end{portuguese}
+
+
+%full list: conceptualization,datacuration,formalanalysis,funding,investigation,methodology,projadm,resources,software,supervision,validation,visualization,writing,review
+\begin{contributors}[sec-contributors]
+\authorcontribution{Janaina do Rozário Diniz}[conceptualization,methodology,writing,review]
+\authorcontribution{Renata de Souza França}[conceptualization,methodology,review]
+\end{contributors}
+
+
+
+\end{document}
+
