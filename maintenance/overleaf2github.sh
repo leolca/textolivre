@@ -54,7 +54,7 @@ SC_FOLDER="$TL_FOLDER/maintenance/"
 for (( i=0; i<${#IDs[@]}; i++ ));
 do
   echo "${IDs[$i]}"
-  gresult=$(grep "${IDs[$i]}" overleafprojectlist.csv)
+  gresult=$(grep "/${IDs[$i]}," overleafprojectlist.csv)
   DEST_FOLDER="$TL_FOLDER/$(echo $gresult | cut -d, -f1)"
   OVERLEAFID=$(echo $gresult | cut -d, -f2)
   if [ ! -z $DEST_FOLDER ] && [ ! -z $OVERLEAFID ]
