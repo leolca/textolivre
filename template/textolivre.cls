@@ -50,7 +50,7 @@
 
 \RequirePackage{amsmath,amsfonts,amssymb,amsthm}
 \RequirePackage{csquotes}
-\RequirePackage[backend=biber,style=abnt,ittitles,repeatfields,sorting=nyt]{biblatex}
+\RequirePackage[backend=biber,style=abnt,ittitles,repeatfields,sorting=nyt,maxcitenames=3,maxbibnames=999]{biblatex}
 \DeclareLanguageMapping{brazil}{brazil-apa}
 \renewcommand{\bibfont}{\small}
 
