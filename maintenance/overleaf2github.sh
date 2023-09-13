@@ -48,6 +48,26 @@ ADDOVERLEAF=false
 CURRENTFOLDER=$(pwd)
 TEXCOMPILER=1 # 1) XeLaTeX, 2) LuaLateX, 3) always XeLaTeX, 4) always LuaLateX
 ALWAYSTEXCOMP=false
+UPDATEABNT=false
+
+
+while true; do
+  read -u 2 -p "update biblatex-abnt from github?(y/n)?" yn
+  case $yn in
+    [Yy]* ) UPDATEABNT=true; break;;
+    [Nn]* ) UPDATEABNT=false; exit;;
+    * ) echo "Please answer yes or no.";;
+  esac
+done
+
+if [ $UPDATEABNT = true ]
+then
+    git clone https://github.com/abntex/biblatex-abnt.git /tmp/abnt
+    cp /tmp/abnt/latex/bbx/* ~/texmf/tex/latex/biblatex-abnt/bbx/.
+    cp /tmp/abnt/latex/cbx/* ~/texmf/tex/latex/biblatex-abnt/cbx/.
+    cp /tmp/abnt/latex/lbx/* ~/texmf/tex/latex/biblatex-abnt/lbx/.
+    mktexlsr ~/texmf
+fi
 
 TL_FOLDER=$(dirname $CURRENTFOLDER)
 SC_FOLDER="$TL_FOLDER/maintenance/"

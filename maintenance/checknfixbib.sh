@@ -103,10 +103,10 @@ if [ $? -ne 0 ]; then
     exit 2 
 fi
 
-biber --tool --output_encoding=UTF-8 "$input_bib_file" -O "$OUTPUT_DIR/bibertool.bib"
+biber --tool --output_fieldcase=lower --output_encoding=UTF-8 "$input_bib_file" -O "$OUTPUT_DIR/bibertool.bib"
 cp "$OUTPUT_DIR/bibertool.bib" "$input_bib_file"
 
-biber_validation="$(biber --tool -V "$input_bib_file")"
+biber_validation="$(biber --tool --validate-datamodel --output_fieldcase=lower "$input_bib_file")"
 if [ $? -ne 0 ]; then
     errmsg="$(echo "$biber_validation" | grep -E "ERROR.*$entry")"
     printf "$errmsg" | sed s/ERRORS\\?/`printf "${RED}ERROR${NC}"`/
