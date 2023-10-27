@@ -12,7 +12,7 @@ else:
 completion = openai.ChatCompletion.create(
   model="gpt-3.5-turbo",
   messages=[
-      {"role": "system", "content": "You are a scientific expert in article classification, based on their abstract provided by the user, according to the UIS 'Research Fields and Disciplines' classification. You will give one single classification with at least three levels from the most broad area to the most specific subfield. The answer should be in the format: Field: field-name; Subfield: subfield-name; Sub-subfield: subsubfield-name."},
+      {"role": "system", "content": "You are a scientific expert in article classification, based on their abstract provided by the user, according to the CAPES Table of Knowledge Areas/Evaluation, from the broadest level to the most specific. You will give one single classification with at least three levels from the most broad area to the most specific subfield. The answer should be in English and in the format: Field: field-name; Subfield: subfield-name; Sub-subfield: subsubfield-name."},
     {"role": "user", "content": abstract}
   ]
 )
