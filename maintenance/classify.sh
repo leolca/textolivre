@@ -7,6 +7,27 @@
 # ./classify.sh `grep "/2021/" overleafprojectlist.csv | head | cut -d, -f1 | cut -d/ -f5 | tr '\n' ' '`
 
 
+capitalize_string() {
+      local input="$1"
+      local do_not_capitalize=("and" "or" "with" "of" "on" "in")
+      result=""
+      words=($input)
+      for word in "${words[@]}"; do
+          if [[ " ${do_not_capitalize[@]} " =~ " $word " ]]; then
+              result+=" $word"
+          else
+              result+=" $(echo "$word" | awk '{for(i=1;i<=NF;i++) $i=toupper(substr($i,1,1)) tolower(substr($i,2))}1')"
+          fi
+      done
+      result="${result# }"
+      echo "$result"
+}
+
+
+max_retries=3
+retry_delay=5
+timeout_seconds=30
+
 TL_FOLDER=$(dirname $(pwd))
 IDs=( "$@" )
 
@@ -38,13 +59,31 @@ do
     emails=$(grep -P '^\\author\[\d+\]\{\K[^\\]+' "$DEST_FOLDER/article.tex" | grep -Po 'Email: \\url{[^}]+}|\\href{mailto:[^}]+}' | sed 's/Email: \\url{//g' | sed 's/\\href{mailto://g' | sed 's/\\_/_/g' | sed 's/}$//g' | sed 's/ *}*$//')
     pub_date=$(grep -oP '^\\publisheddate\{\\DTMdisplaydate\{\d+\}{\d+}{\d+}{-\d+\}\}' "$DEST_FOLDER/article.tex" | sed 's/\\publisheddate{\\DTMdisplaydate{//g' | sed 's/}{-1}}//g' | sed 's/}{/-/g')
     if [ -n "${abstract// }" ]; then
-	json_result=$(python openai-classify.py "$abstract")
+	retry_count=0
+	while [ "$retry_count" -lt "$max_retries" ]; do
+	    json_result=$(timeout "$timeout_seconds" python openai-classify.py "$abstract")
+	    #json_result=$(python openai-classify.py "$abstract")
+	    if [ $? -eq 0 ]; then
+		break
+	    else
+		echo "Attempt $((retry_count + 1)) failed. Retrying in $retry_delay seconds..."
+		retry_count=$((retry_count + 1))
+		sleep "$retry_delay"
+	    fi
+	done
+	if [ "$retry_count" -eq "$max_retries" ]; then
+	    echo "All retry attempts failed. Exiting."
+	    exit 1
+	fi
     fi
     # Extract the values for Field, Subfield, and Sub-subfield using jq
     content=$(echo "$json_result" | jq -r .content)
     field=$(echo "$content" | grep -o 'Field: [^;]*' | cut -d ' ' -f 2-)
+    field=$(capitalize_string "$field")
     subfield=$(echo "$content" | grep -o 'Subfield: [^;]*' | cut -d ' ' -f 2-)
+    subfield=$(capitalize_string "$subfield")
     sub_subfield=$(echo "$content" | grep -o 'Sub-subfield: [^;]*' | cut -d ' ' -f 2- | sed 's/\.$//g')
+    sub_subfield=$(capitalize_string "$sub_subfield")
     readarray -t arr_authors <<<"$authors"
     readarray -t arr_orcids <<<"$orcids"
     readarray -t arr_emails <<<"$emails"
