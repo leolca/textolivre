@@ -1,0 +1,1008 @@
+% !TEX TS-program = XeLaTeX
+% use the following command:
+% all document files must be coded in UTF-8
+\documentclass[portuguese]{textolivre}
+% build HTML with: make4ht -e build.lua -c textolivre.cfg -x -u article "fn-in,svg,pic-align"
+
+\journalname{Texto Livre}
+\thevolume{14}
+%\thenumber{1} % old template
+\theyear{2020}
+\receiveddate{\DTMdisplaydate{2020}{10}{22}{-1}} % YYYY MM DD
+\accepteddate{\DTMdisplaydate{2020}{9}{3}{-1}}
+\publisheddate{\today}
+\corrauthor{Leonardo Araújo}
+\articledoi{10.35699/1983-3652.yyyy.nnnnn}
+%\articleid{NNNN} % if the article ID is not the last 5 numbers of its DOI, provide it using \articleid{} commmand 
+% list of available sesscions in the journal: articles, dossier, reports, essays, reviews, interviews, editorial
+\articlesessionname{articles}
+\runningauthor{Araújo e Pereira} 
+%\editorname{Leonardo Araújo} % old template
+\sectioneditorname{Daniervelin Pereira}
+\layouteditorname{Leonado Araújo}
+
+\title{Modelo de artigo para submissão à revista Texto Livre}
+\othertitle{Article template for submitting to the Texto Livre Journal}
+% if there is a third language title, add here:
+%\othertitle{Artikelvorlage zur Einreichung beim Texto Livre Journal}
+
+\author[1]{Leonardo Araújo~\orcid{0000-0003-3884-2177}\thanks{Email: \href{mailto:leolca@ufsj.edu.br}{leolca@ufsj.edu.br}}}
+\author[2]{Daniervelin Pereira~\orcid{0000-0003-1861-3609}\thanks{Email: \href{mailto:revista@textolivre.org}{revista@textolivre.org}}}
+\affil[1]{Universidade Federal de São João del Rei, DTECH, Ouro Branco, MG, Brasil.}
+\affil[2]{Universidade Federal de Minas Gerais, Faculdade de Letras, Belo Horizonte, MG, Brasil.}
+
+\addbibresource{article.bib}
+% use biber instead of bibtex
+% $ biber article
+
+% used to create dummy text for the template file
+\definecolor{dark-gray}{gray}{0.35} % color used to display dummy texts
+\usepackage{lipsum}
+\SetLipsumParListSurrounders{\colorlet{oldcolor}{.}\color{dark-gray}}{\color{oldcolor}}
+
+% used here only to provide the XeLaTeX and BibTeX logos
+\usepackage{hologo}
+
+% if you use multirows in a table, include the multirow package
+\usepackage{multirow}
+
+% provides sidewaysfigure environment
+\usepackage{rotating}
+
+% CUSTOM EPIGRAPH - BEGIN 
+%%% https://tex.stackexchange.com/questions/193178/specific-epigraph-style
+\usepackage{epigraph}
+\renewcommand\textflush{flushright}
+\makeatletter
+\newlength\epitextskip
+\pretocmd{\@epitext}{\em}{}{}
+\apptocmd{\@epitext}{\em}{}{}
+\patchcmd{\epigraph}{\@epitext{#1}\\}{\@epitext{#1}\\[\epitextskip]}{}{}
+\makeatother
+\setlength\epigraphrule{0pt}
+\setlength\epitextskip{0.5ex}
+\setlength\epigraphwidth{.7\textwidth}
+% CUSTOM EPIGRAPH - END
+
+% LANGUAGE - BEGIN
+% ARABIC
+% for languages that use special fonts, you must provide the typeface that will be used
+% \setotherlanguage{arabic}
+% \newfontfamily\arabicfont[Script=Arabic]{Amiri}
+% \newfontfamily\arabicfontsf[Script=Arabic]{Amiri}
+% \newfontfamily\arabicfonttt[Script=Arabic]{Amiri}
+%
+% in the article, to add arabic text use: \textlang{arabic}{ ... }
+%
+% RUSSIAN
+% for russian text we also need to define fonts with support for Cyrillic script
+% \usepackage{fontspec}
+% \setotherlanguage{russian}
+% \newfontfamily\cyrillicfont{Times New Roman}
+% \newfontfamily\cyrillicfontsf{Times New Roman}[Script=Cyrillic]
+% \newfontfamily\cyrillicfonttt{Times New Roman}[Script=Cyrillic]
+%
+% in the text use \begin{russian} ... \end{russian}
+% LANGUAGE - END
+
+% EMOJIS - BEGIN
+% to use emoticons in your manuscript
+% https://stackoverflow.com/questions/190145/how-to-insert-emoticons-in-latex/57076064
+% using font Symbola, which has full support
+% the font may be downloaded at:
+% https://dn-works.com/ufas/
+% add to preamble:
+% \newfontfamily\Symbola{Symbola}
+% in the text use:
+% {\Symbola }
+% EMOJIS - END
+
+% LABEL REFERENCE TO DESCRIPTIVE LIST - BEGIN
+% reference itens in a descriptive list using their labels instead of numbers
+% insert the code below in the preambule:
+%\makeatletter
+%\let\orgdescriptionlabel\descriptionlabel
+%\renewcommand*{\descriptionlabel}[1]{%
+%  \let\orglabel\label
+%  \let\label\@gobble
+%  \phantomsection
+%  \edef\@currentlabel{#1\unskip}%
+%  \let\label\orglabel
+%  \orgdescriptionlabel{#1}%
+%}
+%\makeatother
+%
+% in your document, use as illustraded here:
+%\begin{description}
+%  \item[first\label{itm1}] this is only an example;
+%  % ...  add more items
+%\end{description}
+% LABEL REFERENCE TO DESCRIPTIVE LIST - END
+
+
+% add line numbers for submission
+%\usepackage{lineno}
+%\linenumbers
+
+\begin{document}
+\maketitle
+
+\begin{polyabstract}
+\begin{abstract}
+Este artigo é um modelo que visa orientar os autores que submeterão seus textos
+à revista \emph{Texto Livre} a fazê-lo no padrão determinado pela revista a fim
+de facilitar sua empreitada, visualizando e configurando o texto no formato já
+configurado nesse modelo. Para fazê-lo, basta escrever ou colar seus textos no
+lugar aqui designado, substituindo os textos e figuras aqui existentes,
+verificando se eles mantêm a formatação aqui descrita. O resumo deverá ter
+entre 150 e 200 palavras.
+
+\keywords{palavra1 \sep palavra dois \sep palavra-três \sep palavra4}
+\end{abstract}
+
+\begin{english}
+\begin{abstract}
+This article is a template article which aims to guide authors who will submit
+their papers to the \emph{Texto Livre} journal. This template should facilitate
+their endeavor, viewing and configuring the text in the format already
+configured accordingly. Just write or paste your content in the desired places,
+replacing texts and figures, checking if they keep up the format. The abstract
+should have between 150 and 200 words.
+
+\keywords{word1 \sep word two \sep word-three \sep word4}
+\end{abstract}
+\end{english}
+% if there is another abstract, insert it here using the same scheme
+\end{polyabstract}
+
+\section{Introdução}\label{sec-intro}
+Este artigo é o modelo de documento que visa orientar os autores que submeterão seus textos à revista \emph{Texto Livre}.
+Este documento fornece o padrão determinado pela revista, a fim de facilitar sua empreitada, visualizando e configurando
+o texto no formato já configurado no modelo para a submissão. Para redigir seu texto neste modelo, basta escrever ou colar
+seus textos no lugar aqui designado, substituindo os textos e figuras aqui existentes, verificando se eles mantêm a formatação aqui descrita.
+
+A \Cref{sec-organizacao} apresenta as normas para a submissão. Informações sobre a utilização do modelo
+estão presentes na \Cref{sec-modelo}. A \Cref{sec-organizacao} apresenta as considerações gerais sobre a organização do artigo,
+apresenta a utilização de listas numeradas e não-numeradas (\Cref{sec-listas}),
+ilustra como inserir figuras e tabelas no documento (\Cref{sec-figuras-tabelas}), assim como citações
+e notas de rodapé (\Cref{sec-quotesandfootnotes}). A \Cref{sec-equacao} apresenta exemplos de equações
+e a \Cref{sec-codigos} apresenta como inserir algoritmos e códigos.
+Na página \pageref{sec-bib} encontram-se as referências e, em seguida, o \Cref{apx-longtable} que
+apresenta a inclusão de uma tabela longa, que se entende por várias páginas.
+
+\lipsum[1-5]
+
+\section{Normas para submissão}\label{sec-normas}
+A revista \emph{Texto Livre} tem como foco publicações originais em área interdisciplinar entre
+Estudos da Linguagem e Tecnologias digitais, com foco na produção textual e na produção de
+documentação para software livre e aceita submissões de textos inéditos (artigos, resenhas, ensaios e traduções).
+As resenhas devem tratar de livros publicados nos últimos 24 meses no Brasil ou no Exterior,
+em primeira edição ou tradução, abrangendo áreas contempladas neste periódico.
+
+O texto deverá vir devidamente revisado pelo autor. A comissão editorial reserva-se o direito de
+fazer nova revisão e de fazer as alterações necessárias. Textos que apresentem problemas de forma,
+estilo e/ou adequação aos padrões da revista serão rejeitados.
+Todos os artigos na revista \emph{Texto Livre} são publicados sob
+a \href{https://creativecommons.org/}{Licença Creative Commons CC-BY}.
+A reprodução de textos ou trechos devem seguir atribuições dada pela licença.
+Para qualquer finalidade, solicitamos a comunicação prévia aos editores da revista.
+
+Para textos com mais de um autor, todos os autores devem ser indicados na página de registro da submissão.
+Os autores devem ter registro no \href{https://orcid.org/}{ORCID}. No que se refere à autoria,
+\begin{quote}
+``Não se considera co-autor quem simplesmente auxiliou o autor na produção da obra literária, artística ou científica,
+revendo-a, atualizando-a, bem como fiscalizando ou dirigindo sua edição ou apresentação por qualquer meio'' (\citefield[Art.~15, §1º]{lei9610}{title}).
+\end{quote}
+Em caso de artigos em coautoria, todos os autores devem ser indicados na página de registro da submissão pelo autor
+responsável, na seção de metadados da submissão e em documento suplementar. Além disso, no documento suplementar,
+o responsável pela submissão deve declarar qual foi a contribuição específica de cada autor para a produção do artigo.
+
+O artigo submetido não poderá ter sido publicado anteriormente, nem estar sob avaliação em outro periódico.
+A originalidade e o ineditismo são cruciais para o trâmite de textos no periódico
+em questão (um programa anti-plágio será utilizado pelo editor para verificação da originalidade do artigo).
+A revista \emph{Texto Livre}, entretanto, encoraja os autores a publicarem \emph{preprints}
+como forma de acelera a disseminação de seus resultados e obter comentários sobre seu trabalho,
+antes do processo de revisão por pares.
+
+\subsection{Código de Conduta e Boas Práticas}\label{sec-conduta}
+A revista \emph{Texto Livre} segue as diretrizes do Código de Conduta e Boas Práticas do
+\href{http://publicationethics.org/}{COPE} (Committee on Publication Ethics)
+e as submissões devem atender a essas diretrizes: para conhecimento do Código,
+consulte o texto original em \href{http://publicationethics.org/files/Code_of_conduct_for_journal_editors_1.pdf}{inglês}
+ou sua tradução para o \href{http://www.periodicos.letras.ufmg.br/CCBP-COPE.pdf}{português}.
+
+Todas as submissões que contiverem relatos de pesquisas feitas com seres humanos deverão apresentar análise do COEP (apresentação do número CAAE) ou de outros órgãos de ética em pequisa.
+
+
+\subsection{Formato do manuscrito}\label{sec-fmt-manuscrito}
+O formato de página deverá ser A4 (já definido no modelo para \LaTeX{}). O limite de palavras é de 5 a 10 mil palavras (do título às referências)
+para artigos e de 800 a 1.000 palavras para resenhas.
+Serão aceitos textos em português, inglês, francês ou espanhol.
+O título, resumo e palavras-chave deverão ser fornecidos no idioma em que for escrito o manuscrito, em português e em inglês.
+O resumo deve seguir as normas da \href{https://www.abntcatalogo.com.br/norma.aspx?ID=2003}{ABNT NBR 6028:2003}: conter objetivo, método, resultados e conclusões do artigo;
+compor-se de sequência de frases concisas em parágrafo único;  usar verbo na voz ativa e na terceira pessoa do singular;
+e ter entre 100 e 250 palavras. O resumo não deve conter citações, nem abreviações (se possível).
+As palavras-chave devem vir logo abaixo do resumo.
+
+
+\subsection{Formato de arquivo}\label{sec-formato}
+O manuscrito deverá ser enviado em formato \TeX{}, utilizando o modelo da revista (veja a \Cref{sec-modelo}),
+ou em formato ODT (\emph{Open Document Format}). Não serão aceitos formatos proprietários, como .doc, .docx ou .rtf
+(conforme Comunicado de 13 de setembro de 2011 \url{http://www.periodicos.letras.ufmg.br/index.php/textolivre/about/editorialPolicies#custom-0}).
+As imagens deverão ser enviadas separadamente em arquivos (veja as orientações na \Cref{sec-figuras-tabelas}).
+Deverá ser enviado também o arquivo \texttt{.bib} contendo a bibliografia utilizada, no formato \Hologo{BibTeX}.
+O arquivo \texttt{.bib} deverá ser enviado mesmo que os autores optem por enviar o manuscrito no formato ODT.
+Veja mais sobre o formato \Hologo{BibTeX} no tutorial do \href{https://www.overleaf.com/learn/latex/Bibliography_management_in_LaTeX#The_bibliography_file}{Overleaf},
+no \href{https://en.wikibooks.org/wiki/LaTeX/Bibliography_Management}{Wikibooks} ou em \textcite{araujo2020}.
+Ao gerar o \texttt{.pdf} para submissão, enumere as linhas utilizando o pacote \texttt{lineno} (ver comentários
+no cabeçalho deste documento). 
+
+
+\section{Utilização do modelo}\label{sec-modelo}
+Recomendamos a utilização do \Hologo{XeLaTeX}\footnote{
+Para ter suporte a várias línguas, decidiu-se adotar o \Hologo{XeLaTeX} ao invés do \LaTeX{}.
+O \Hologo{XeLaTeX} processa documentos \TeX{} codificados em URF-8, isto possibilita
+a utilização de qualquer caractere do Unicode diretamente, o que não é possível com o \Hologo{pdfTeX}.
+} para a confecção do manuscrito.
+Toda a formatação do texto é definida no arquivo de classe \texttt{textolivre.cls}.
+Este arquivo não deverá ser editado.
+Utilize o arquivo \texttt{article.tex} como base para redigir o manuscrito.
+Caso haja necessidade de incluir novos pacotes e criar novas definições específicas para um artigo,
+estas deverão ser feitas no preâmbulo do arquivo \texttt{.tex}.
+Em caso de dúvida sobre a utilização do estilo, entre em contato com a equipe editorial da revista.
+
+A bibliografia deverá ser elaborara separadamente, em um arquivo \texttt{.bib}, utilizando as
+convenções do \Hologo{BibTeX}. Para gerar a bibliografia deverá ser utilizada a ferramenta \texttt{Biber}.
+A \Cref{lst-compiledocument} apresenta a sequência de comandos para compilar o documento final.
+\begin{lstlisting}[language=bash, label=lst-compiledocument, caption={Sequência para gerar o documento final.}]
+xelatex article.tex
+biber article
+xelatex article.tex # pode ser necessário novamente, caso o número de páginas altere após inserir a bibliografia
+\end{lstlisting} %stopzone
+
+\section{Organização do Texto}\label{sec-organizacao}
+O artigo deverá ter título na língua da manuscrito, título em português e título em inglês, nesta ordem.
+Se o manuscrito for redigido em português, teremos apenas dois títulos: em português e em inglês.
+Se for redigido em inglês, teremos a ordem inversa: inglês e português.
+A mesma regra vale para o resumo e palavras-chave que deverão ser apresentados nestas três ou duas línguas.
+
+O artigo poderá ser organizado de forma a conter seções, subseções e subsubseções.
+Não há limites para o tamanho de cada uma. Entretanto, deve-se evitar secções vazias, que não possuam texto e contenham apenas subseções.
+Ainda nesta secção, iremos apresentar a utilização de listas (\Cref{sec-listas}),
+tabelas e figuras (\Cref{sec-figuras-tabelas}), citações e notas de rodapé (\Cref{sec-quotesandfootnotes}).
+Na \Cref{sec-equacao} iremos apresentar a utilização de equações e na \Cref{sec-codigos}
+apresentaremos a forma de utilização de códigos fonte.
+
+\lipsum[5]
+
+\subsection{Definição do título, resumo, autores, seções e idioma no modelo para \LaTeX{}}\label{sec-organizacao-latex}
+Nesta seção iremos apresentar algumas definições básicas para a elaboração do manuscrito utilizando
+o modelo da revista.
+
+\subsubsection{Título}\label{sec-titulo}
+O título, no idioma do manuscrito, é definido utilizando o comando \verb|\title{...}|. Em seguida,
+utiliza o comando \verb|\othertitle{...}| para definir o título em outra língua. Repita o comando
+caso seja necessário definir o título em uma terceira língua.
+
+\subsubsection{Autores}\label{sec-autores}
+Os autores do manuscrito são definidos utilizando os comandos do pacote \verb|authblk|.
+Veja a documentação no \href{CTAN}{https://ctan.org/pkg/authblk}. Abaixo reproduzimos um exemplo típico de utilização
+em conformidade com o modelo da revista:
+
+\begin{lstlisting}[language=tex, label=lst-authors, caption={Definição dos autores do manuscrito.},postbreak=\mbox{$\hookrightarrow$\space}]
+\author[1]{author1 \orcid{0000-0000-0000-0000} \thanks{Email: \url{author1@dept.univ.edu}}}
+\author[1]{author2 \thanks{Email: \url{author2@dept.univ.edu}}}
+\author[2]{author3 \orcid{0000-0000-0000-0000} \thanks{Email: \url{author3@inst.gov}}}
+\author[2]{author4 \orcid{0000-0000-0000-0000} \thanks{Email: \url{author4@inst.gov}}}
+\affil[1]{affil1}
+\affil[2]{affil2}
+\end{lstlisting} %stopzone
+
+O nome do autor correspondente será definido através do comando \verb|\corrauthor{...}|. 
+Este nome aparecerá na primeira página, na lateral esquerda, junto de outras informações sobre o artigo,
+tais como DOI, data de recebimento, aceite e publicação.
+Para definir a forma como o nome dos autores aparecerá no rodapé do artigo, utilize o comando \verb|\runningauthor{...}|.
+
+\subsubsection{Idioma}\label{sec-idioma}
+Os artigos para a revista \textit{Texto Livre} podem ser submetidos em português, inglês,
+espanhol ou francês. Definição a língua principal do artigo na evocação da classe, conforme exemplos na
+\Cref{lst-language}. O comportamento \textit{default} da classe é utilizar o português como língua principal do artigo,
+desta forma, o inglês será a língua secundária. Caso o inglês seja a língua principal, o português passará a ser a língua secundária.
+Nos demais casos, o português será a língua secundária e o inglês a língua terciária.
+
+\begin{lstlisting}[language=tex, label=lst-language, caption={Definição da língua principal do artigo.},postbreak=\mbox{$\hookrightarrow$\space}]
+\documentclass{textolivre} % utilização da língua padrão: português
+\documentclass[portuguese]{textolivre}
+\documentclass[english]{textolivre}
+\documentclass[spanish]{textolivre}
+\documentclass[french]{textolivre}
+\end{lstlisting}
+
+Eventualmente, trechos em outras línguas poderão ser utilizados no manuscrito. Para prover o suporte a diferentes línguas,
+utilizamos o pacote \verb|polyglossia|. Para utilizar outras línguas, especifique no preâmbulo utilizando o 
+comando \verb|\setotherlanguage{...}|. Algumas línguas requerem ainda utilização de fontes que tenham suporte
+aos caracteres desta língua. Na \Cref{lst-setlang-arabic} apresentamos o que deve ser utilizado no preâmbulo para 
+prove o suporte a árabe e na \Cref{lst-setlang-russian} o que deve ser utilizado para prover o suporte a russo.
+
+\begin{lstlisting}[language=tex, label=lst-setlang-arabic, caption={Código para acrescentar ao preâmbulo para prover o suporte a árabe no texto.}]
+\setotherlanguage{arabic}
+\newfontfamily\arabicfont[Script=Arabic]{Amiri}
+\newfontfamily\arabicfontsf[Script=Arabic]{Amiri}
+\newfontfamily\arabicfonttt[Script=Arabic]{Amiri}
+\end{lstlisting} %stopzone
+
+\begin{lstlisting}[language=tex, label=lst-setlang-russian, caption={Código para acrescentar ao preâmbulo para prover o suporte a russo no texto.}]
+\usepackage{fontspec}
+\setotherlanguage{russian}
+\newfontfamily\cyrillicfont{Times New Roman}
+\newfontfamily\cyrillicfontsf{Times New Roman}[Script=Cyrillic]
+\newfontfamily\cyrillicfonttt{Times New Roman}[Script=Cyrillic]
+\end{lstlisting} %stopzone
+
+Para a utilização de emojis no manuscrito, utilizamos a fonte Symbola, conforme explicação
+apresentada no \href{https://stackoverflow.com/questions/190145/how-to-insert-emoticons-in-latex/57076064}{StackOverflow}.
+A fonte pode ser baixada na internet, por exemplo em \url{https://dn-works.com/ufas/}.
+Após instalar a fonte, basta acrescentar ao preâmbulo \verb|\newfontfamily\Symbola{Symbola}|
+e utilizar o comando \verb|\Symbola| seguido do emoji desejado.
+
+
+
+\subsubsection{Resumo}\label{sec-resumo}
+O texto do resumo, \emph{abstract} e, eventualmente, o resumo em um terceira língua serão inseridos, cada um,
+dentro de seu próprio ambiente \verb|abstract|. O conjunto dos resumos serão inseridos dentro do ambiente \verb|polyabstract|.
+A lista de palavras-chave será definida pelo comando \verb|\keywords{...}|, sendo as palavras separadas pelo
+comando \verb|\sep|. Veja o exemplo na \Cref{lst-abstract}.
+\begin{lstlisting}[language=tex, label=lst-abstract, caption={Como definir os resumos e palavras chaves em várias línguas.}]
+\begin{polyabstract}
+\begin{abstract}
+...
+
+\keywords{palavra1 \sep palavra2}
+\end{abstract}
+
+\begin{english}
+\begin{abstract}
+...
+
+\keywords{word1 \sep word2}
+\end{abstract}
+\end{english}
+\end{polyabstract}
+\end{lstlisting} %stopzone
+
+\subsubsection{Seções}\label{sec-secoes}
+As seções e subseções do artigo são criadas utilizando o comando \verb|section|
+e \verb|subsection|, respectivamente. Para referenciá-las ao longo do texto,
+defina um rótulo utilizando o comando \verb|label|. Este rótulo será utilizado
+pelo comando \verb|ref| ou \verb|Cref| para estabelecer a referência no ponto desejado.
+Veja um exemplo na \Cref{lst-seclbl}.
+\begin{lstlisting}[language=tex, label=lst-seclbl, caption={Seções, subseções e referências.}, source={Elaboracao propria.}]
+\section{Introdução}\label{intro}
+...
+
+\section{Conclusão}
+Vimos na \Cref{intro} que ...
+\end{lstlisting} %stopzone
+
+\subsection{Formatação simples}\label{sec-format-simple}
+Algumas formações simples de texto são utilizadas para evidenciar trechos e conceitos.
+Nesta secção veremos como utilizar itálico, negrito e sublinhar palavras.
+Para utilizar essas três formatações simples, devemos utilizar, respectivamente, os seguintes
+comandos: \verb|\emph{...}| ou \verb|\textit{...}|, \verb|\textbf{...}| e \verb|\underline{...}|.
+Veja a seguir uma frase utilizando estes comandos:
+`Muitas \textbf{grandes} descobertas das \textit{ciências} ocorrem por \underline{acidente}'.
+
+Os comandos \verb|\emph{...}| e \verb|\textit{...}| muitas vezes podem levar a um mesmo resultado,
+mas são essencialmente diferentes. O comando \verb|\textit{...}| coloca um texto em itálico enquanto
+o comando \verb|\emph{...}| dá ênfase a um texto. A forma como a ênfase será expressa, dependerá do contexto.
+Veja um exemplo em que utilizamos um comando dentro do contexto do outro comando.
+O comando \verb|\emph{isto é \emph{um} teste}| terá como resultado: \emph{isto é \emph{um} teste}.
+Já o comando \verb|\textit{isto é \textit{um} teste}| terá como resultado: \textit{isto é \textit{um} teste}.
+E utilizando \verb|\textit{isto é \emph{um} teste}| terá como resultado: \textit{isto é \emph{um} teste}.
+
+\subsection{Links}\label{sec-links}
+Para incluir links para sítios na internet, podemos utilizar os comandos \verb|\url{...}|
+ou \verb|\href{url}{texto}|. O primeiro irá imprimir o endereço do sítio,
+enquanto o segundo cria um link para um endereço para um determinado texto.
+Por exemplo, o síto da revista \href{https://periodicos.ufmg.br/index.php/textolivre/}{Texto Livre} é o seguinte:
+\url{https://periodicos.ufmg.br/index.php/textolivre/},
+onde utilizamos ambos comandos: \verb|href| para criar o link em `Texto Livre' e \verb|url| para incluir
+a URL da revista no texto.
+
+\subsection{Outras estruturas}\label{sec-outras-estr}
+Em um artigo, usualmente utilizamos outros recursos além do puro texto, como por exemplo:
+figuras, listas, citações e tabelas. Nesta seção iremos ver como inserir cada um destes
+seguindo o modelo da revista.
+
+
+\subsubsection{Listas numeradas e não numeradas}\label{sec-listas}
+Os artigos poderão conter listas numeradas ou não numeradas.
+Quando não houver numeração, deverão preferencialmente serem marcadas com ponto, conforme o exemplo a seguir:
+\begin{itemize}
+\item exemplo 1
+\item exemplo 2
+\item exemplo 3
+\end{itemize}
+As listas não-numeradas são definidas utilizando o ambiente \verb|itemize| e cada item da lista
+é definido por um \verb|item|, conforme exemplificado na \Cref{lst-itemize}.
+\begin{lstlisting}[language=tex, label=lst-itemize, caption={Listas não-numeradas.}]
+\begin{itemize}
+\item exemplo 1
+\item exemplo 2
+\item exemplo 3
+\end{itemize}
+\end{lstlisting} %stopzone
+
+\lipsum[2]
+
+Quando for necessária uma lista ordenada, dever-se-á, preferencialmente, seguir a numeração arábica:
+\begin{enumerate}
+\item exemplo 1
+\item exemplo 2
+\item exemplo 3
+\end{enumerate}
+Por sua vez, as listas numeradas são definidas no ambiente \verb|enumerate|, conforme vemos na \Cref{lst-enum}.
+\begin{lstlisting}[language=tex, label=lst-enum, caption={Listas numeradas.},float]
+\begin{enumerate}
+\item exemplo 1
+\item exemplo 2
+\item exemplo 3
+\end{enumerate}
+\end{lstlisting} %stopzone
+
+\lipsum[3]
+
+Em \LaTeX{} existem 3 tipos de ambientes para criar estruturas de listas: \ref{list-itemize}, \ref{list-enumerate} e \ref{list-description}.
+Os dois primeiros foram ilustrados anteriormente nesta seção, já o último tipo é
+utilizo a seguir para descrever os três tipos.
+\begin{description}[topsep=1ex,partopsep=1ex]
+  \item[itemize\label{list-itemize}] para listas do tipo \emph{ponto lista};
+  \item[enumerate\label{list-enumerate}] para listas \emph{numeradas}; e
+  \item[description\label{list-description}] para listas descritivas.
+\end{description}
+Observe no exemplo que os itens de uma lista podem ser referenciados. Para criar uma referência para lista descritiva,
+conforme ilustrado aqui, é necessário adicionar um código ao preâmbulo do documento. Veja o código \texttt{.tex} deste documento.
+
+Para referenciar itens de uma lista descritiva utilizando seus rótulos, ao invés dos números dos itens, 
+veja a \Cref{lst-refdescitem}, onde há o código que deverá ser acrescentado ao preâmbulo e a forma de utilização no documento.
+
+\begin{lstlisting}[language=tex, label=lst-refdescitem, caption={Código para ser inserido para realizar referências atravé do rótulo de itens de uma lista descritiva.}]
+% inserir o código abaixo no preâmbulo do documento
+% preâmbulo - BEGIN
+\makeatletter
+\let\orgdescriptionlabel\descriptionlabel
+\renewcommand*{\descriptionlabel}[1]{%
+  \let\orglabel\label
+  \let\label\@gobble
+  \phantomsection
+  \edef\@currentlabel{#1\unskip}%
+  \let\label\orglabel
+  \orgdescriptionlabel{#1}%
+}
+\makeatother
+% preâmbulo - END
+
+% código para utilização no documento
+\begin{description}
+  \item[first\label{itm1}] this is only an example;
+  % ...  add more items
+\end{description}
+Exemplo de referência a um item no texto: \ref{itm1}.
+
+\end{lstlisting} %stopzone
+
+
+
+\subsubsection{Figuras e tabelas}\label{sec-figuras-tabelas}
+Nesta seção iremos descrever como inserir figuras no documento em conformidade com o padrão da revista.
+As figuras serão numeradas na ordem em que são mencionadas no texto. Os arquivos de imagem deverão
+ser enviados separadamente com nomenclatura que siga a numeração das figuras (não é necessário para envios em \LaTeX{}).
+As figuras deverão ficar centralizadas, com legenda abaixo e informação de fonte, caso necessário.
+O título, fonte e legenda de figuras devem ser parte do manuscrito, e não parte do arquivo de figura.
+As figuras devem ser apropriadamente recortadas para exibir apenas o que é de interesse dos autores,
+reduzindo assim os espaços em branco que circundam as figuras.
+Os autores devem enviar a figura no formato adequado.
+Sempre que possível, utilize figuras vetoriais para manter uma melhor qualidade e propiciar uma boa apresentação do artigo.
+Use os formatos PDF ou EPS para as imagens vetoriais e os formatos PNG ou JPEG para as imagens rasterizadas.
+
+Não faça referência às figuras ou tabelas dizendo `a figura abaixo/acima'.
+Figuras e tabelas são elementos flutuantes. Muitas vezes não há espaço suficiente para
+eles no final de uma página ou, quando ocuparem muito espaço na página, podemos preferir
+ter uma página apenas com estes elementos, para não prejudicar o texto.
+A \LaTeX{} busca decidir o melhor local para inserir estes elementos, seguindo uma ordem
+de preferências dada pelo usuário, não garantindo que estes elementos apareçam exatamente
+no local em que se encontram no arquivo \verb|.tex|. Além disso, no processo de diagramação
+da revista, poderá ser necessário realizar alguns ajustes e, assim, a figura/tabela poderá
+não ficar exatamente logo abaixo/acima do texto que a referencia.
+Desta forma, prefira sempre referenciar as figuras/tabelas pelo seu nome,
+por exemplo, veja a \Cref{fig-img-a}. O mesmo é válido para qualquer outro elemento flutuante\footnote{
+Elementos flutuantes são aqueles que não podem ser quebrados na transição de páginas.
+Os elementos flutuantes não são parte do fluxo do texto, são tratados como entidades separadas
+e podendo serem posicionados em locais na página destinados a eles. Os elementos flutuantes devem então
+ser numerados, para serem referenciados no texto.
+}
+que seja inserido no texto. A princípio, figuras e tabelas, porém outros poderão ser definidos
+como elementos flutuantes.
+
+\begin{figure}[htbp]
+\centering
+\begin{minipage}{.5\textwidth}
+ \includegraphics[width=\textwidth]{example-image-a}
+ \caption{Imagem de teste.}
+ \label{fig-img-a}
+ \source{Forneça aqui a fonte da imagem.}
+\end{minipage}
+\end{figure}
+
+As figuras deverão ser inseridas no manuscrito utilizando o ambiente \verb|figure|.
+A \Cref{lst-figure} apresenta um exemplo de utilização.
+\begin{lstlisting}[language=tex, label=lst-figure, caption={Inserindo uma figura.}]
+\begin{figure}[htbp]
+\centering
+\begin{minipage}{.5\textwidth} 
+  \includegraphics[width=\textwidth]{example-image-a} 
+  \caption{Imagem de teste.} 
+  \label{fig-img-a}
+  \source{Forneça aqui a fonte da imagem.}
+\end{minipage}
+\end{figure}
+\end{lstlisting} %stopzone
+
+\lipsum[12]
+
+De maneira similar, as tabelas serão inseridas utilizando o ambiente \verb|table|.
+A \Cref{lst-table} apresenta um exemplo de utilização. O resultado é apresentado na
+\Cref{tbl-tabela-0}. O nome e legenda da tabela devem ficar acima dala, enquanto
+as fontes utilizadas e notas devem ficar abaixo. 
+O nome da tabela é alinhado à borda esquerda da tabela e vem
+seguido da legenda, com alinhamento justificado. A fonte e nota também
+serão alinhadas à borda esquerda.
+\begin{lstlisting}[language=tex, label=lst-table, caption={Inserindo uma tabela.}]
+\begin{table}[htpb]
+\centering
+\begin{threeparttable}
+\caption{Legenda da tabela.}
+\label{tbl-tabela-01}
+\begin{tabular}{llp{6cm}}
+\toprule 
+A & B & C \\ 
+\midrule
+1 & 2 & Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. \\ 
+3 & 4 & Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. \\ 
+\bottomrule
+\end{tabular}
+\source{Fonte da tabela.}
+\notes{Se necessário, poderá ser adicionada uma nota ao final da tabela.}
+\end{threeparttable}
+\end{table}
+\end{lstlisting} %stopzone
+
+\begin{table}[htpb]
+\centering
+\begin{threeparttable}
+\caption{Legenda da tabela.}
+\label{tbl-tabela-0}
+\begin{tabular}{llp{6cm}}
+\toprule 
+A & B & C \\ 
+\midrule
+1 & 2 & Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. \\ 
+3 & 4 & Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. \\ 
+\bottomrule
+\end{tabular}
+\source{Fonte da tabela.}
+\notes{Se necessário, poderá ser adicionada uma nota ao final da tabela.}
+\end{threeparttable}
+\end{table}
+
+Podemos adicionar ao final das tabelas e figuras a fonte e notas. Para tanto
+utilize os comandos \verb|\source{...}| e \verb|\notes{...}| respectivamente.
+Estes comandos devem vir logo antes do fim da tabela (\verb|\end{table}|).
+
+\begin{table}[htpb]
+\begin{threeparttable}
+\caption{Legenda da tabela do documento modelo da revista \emph{Texto Livre}.}
+\label{tbl-tabela-01}
+\begin{tabular}{llp{4.3cm}}
+\toprule 
+Tabela                      & Coluna 1                       & Coluna 2                                                               \\ 
+\midrule
+Lorem ipsum                 & Non consectetur                & Leo vel fringilla                                                      \\ 
+Lorem ipsum dolor sit amet. & Non consectetur a erat nam at. & Leo vel fringilla est ullamcorper eget nulla facilisi etiam dignissim. \\ 
+\bottomrule
+\end{tabular}
+\source{Fonte da tabela.}
+\notes{Esta é uma nota exemplo que poderá, opcionalmente, ser adicionada a uma tabela ou figura.}
+\end{threeparttable}
+\end{table}
+
+Uma tabela é um arranjo de células organizadas em colunas verticais e linhas horizontais.
+As células são elementos mínimos indivisíveis. Dependendo da necessidade, as células podem
+ser mescadas, expandindo assim ao longo de linhas (\verb|\multirow|) ou colunas (\verb|\multicolumn|). 
+Assim como ocorre com as figuras, as tabelas são elementos que se destacam do texto e ambos
+são elementos que convêm informação em forma visual.
+
+Utilize tabelas apenas quando necessário. Muitas vezes as informações podem ser expostas no 
+corpo do texto ou através de listas, deixando o texto mais fluído. Se criar uma determinada tabela torna-se uma tarefa extremamente
+complicada, talvez esta não seja a forma ideal de expor tais informações. Pode ser necessário utilizar uma lista,
+uma lista aninhada, ou talvez dividir a tabela em duas. Uma tabela deve ser tão simples quanto possível
+e facilmente compreendida de forma isolada, sem a necessidade de impor ao leitor a busca por outras informações
+no texto. O texto deve faze menção à tabela, destacando seus principais aspectos e resumindo as
+informações lá apresentadas, nunca criando redundâncias desnecessárias.
+
+As tabelas são muito úteis para apresentar dados numéricos, facilitando a visualização e comparação entre eles.
+Se a quantidade de dados a ser apresentada for muito grande e não havendo necessidade de expôr todos os detalhes,
+talvez um gráfico seja mais apropriado. Evite criar tabelas muito longas e tabelas de textos.
+
+Para criar uma unidade ao longo do texto e facilitar a comparação de informações entre diferentes tabelas,
+mantenha sempre um padrão de estilo para representação dos dados. Mantenha a mesma escolha de fontes,
+espaçamentos, linhas, formato de cabeçalho e abreviações em todas as tabelas do texto. 
+
+Quando optar por utilizar uma tabela, busque deixá-la visualmente leve. Lembre-se que os dados são os elementos
+importantes em uma tabela. As linhas devem ser utilizadas com parcimônia. 
+Evite utilizar linhas verticais. Busque utilizar apenas as linhas horizontais 
+necessárias: início de tabela, utilizando \verb|\toprule|; fim de cabeçalho, utilizando \verb|\midrule|; e
+fim da tabela, utilizando \verb|\bottomrule|. Em geral, as demais linhas horizontais apenas deixam a tabela
+pesada e difícil de ler. Se realmente for necessário, opte por linhas em cinza claro, para não criar competição 
+com os dados da tabela. Outra alternativa é alterar o espaçamentos entre linhas. Em caso de dúvida quando ao alinhamento 
+dos textos na tabela, utilize o alinhamento à esquerda. Utilize cores apenas quando necessário destacar
+alguma informação ou quando estas irão facilitar a leitura da tabela. As tabelas no meio de um texto devem ser curtas.
+Se necessário, faça uma página apenas com a tabela. Quando a tabela for muito longa, opte por inseri-la como apêndice.
+
+O \emph{template} da revista utiliza o pacote \verb|booktabs| para melhor a qualidade das tabelas. 
+Leia a documentação do pacote disponível no \href{https://www.ctan.org/pkg/booktabs}{CTAN}. 
+As \href{https://people.inf.ethz.ch/markusp/teaching/guides/guide-tables.pdf}{notas de aula do Markus Püschel}
+podem ser utilizadas como um bom guia sobre como criar uma tabela de forma elegante.
+
+\begin{table}[htpb]
+\begin{threeparttable}
+\caption{Exemplo de tabela utilizando linhas horizontais.}
+\label{tbl02}
+\begin{tabular}{llp{11cm}}
+\toprule
+Rótulo 1 & Rótulo 2 & Texto \\
+\midrule
+%\arrayrulecolor[gray]{.7}
+\multirow{6}{*}{AAAA} & \multirow{3}{*}{AABB} & Nam sed ex in massa tincidunt elementum nec dignissim leo.  \\
+ \cmidrule{3-3}
+ & & Sed nec placerat felis. In urna leo, convallis a nunc non, sollicitudin auctor nisi. \\
+ \cmidrule{3-3}
+ & & Proin eget rutrum elit. \\
+ \cmidrule{2-3}
+ & \multirow{3}{*}{BBCC} & Mauris vulputate magna id ante placerat molestie. \\
+ \cmidrule{3-3}
+ & & Praesent nisi magna, aliquam vel libero sit amet, sagittis volutpat tortor. \\
+ \cmidrule{3-3}
+ & & Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. \\
+%\arrayrulecolor{black}
+\bottomrule
+\end{tabular}
+\source{Template da revista Texto Livre.}
+\notes{Evite fazer tabelas como esta. Prefira utilizar uma lista neste tipo de situação. Se realmente for necessário, utilize poucas linhas e use cinza claro.}
+\end{threeparttable}
+\end{table}
+
+\lipsum[3]
+
+Ainda outros exemplos de utilização de figuras e tabelas são apresentados nas \Cref{fig:example,fig:twosubs,fig:landscape,tab:example}. Em especial, observe os exemplos para criar subfiguras (\Cref{fig:twosubs}) e inserir uma figura grande com orientação paisagem (\Cref{fig:landscape}).
+
+\begin{figure}[htbp]
+\centering
+\begin{minipage}{.6\textwidth}
+\includegraphics[width=\textwidth]{example-image}
+\caption{Esta é a legenda da figura. Esta pode ser breve ou longa e conter referências se necessário.}
+\label{fig:example}
+\source{Referência ao autor e à publicação original da figura. Se a figura foi de autoria própria, apenas indicar ``autoria própria'' como fonte.}
+\end{minipage}
+\end{figure}
+
+\lipsum[30-35]
+
+\begin{table}[htbp]
+\begin{threeparttable}
+\caption{Recorde de velocidade de automóveis (GR 5-10).}
+\label{tab:example}
+\centering
+\begin{tabular}{l l l l l}
+\headrow \thead{Speed (mph)} & \thead{Driver} & \thead{Car} & \thead{Engine} & \thead{Date} \\
+407.447     & Craig Breedlove & Spirit of America          & GE J47    & 8/5/63   \\
+413.199     & Tom Green       & Wingfoot Express           & WE J46    & 10/2/64  \\
+434.22      & Art Arfons      & Green Monster              & GE J79    & 10/5/64  \\
+468.719     & Craig Breedlove & Spirit of America          & GE J79    & 10/13/64 \\
+526.277     & Craig Breedlove & Spirit of America          & GE J79    & 10/15/65 \\
+536.712     & Art Arfons      & Green Monster              & GE J79    & 10/27/65 \\
+555.127     & Craig Breedlove & Spirit of America, Sonic 1 & GE J79    & 11/2/65  \\
+576.553     & Art Arfons      & Green Monster              & GE J79    & 11/7/65  \\
+600.601     & Craig Breedlove & Spirit of America, Sonic 1 & GE J79    & 11/15/65 \\
+622.407     & Gary Gabelich   & Blue Flame                 & Rocket    & 10/23/70 \\
+633.468     & Richard Noble   & Thrust 2                   & RR RG 146 & 10/4/83  \\
+763.035     & Andy Green      & Thrust SSC                 & RR Spey   & 10/15/97\\
+\end{tabular}
+\source{\url{https://www.sedl.org/afterschool/toolkits/science/pdf/ast_sci_data_tables_sample.pdf}}
+\end{threeparttable}
+\end{table}
+
+\lipsum[2-4]
+
+\begin{figure}[htbp]
+\begin{minipage}[t]{0.47\textwidth}
+\includegraphics[width=\linewidth]{example-image}
+\subcaption{Esta é uma subfigura.}
+\source{Autoria própria.}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.47\textwidth}
+\includegraphics[width=\linewidth]{example-image}
+\subcaption{Esta é outra subfigura.}
+\end{minipage}
+
+\caption{Esta é a legenda geral aplicada a ambas figuras.}
+\label{fig:twosubs}
+\source{Caso ambas figuras tenham a mesma autoria, basta especificar a fonte uma única vez.}
+\end{figure}
+
+\begin{sidewaysfigure}
+\centering
+\includegraphics[width=0.85\textwidth]{example-image}
+\caption{Esta é a legenda para uma figura grande que ocupa toda a página. Para melhor apresentação desta figura, ela é rotacionada utilizando o ambiente \texttt{sidewaysfigure}, sendo então exibida no formato paisagem.}
+\label{fig:landscape}
+\source{Figura de autoria própria.}
+\end{sidewaysfigure}
+
+Se possível, evite tabelas muito longas. Se elas foram necessários, utilize-as preferencialmente na sessão de apêndice. 
+Veja como exemplo a \Cref{longtbl-01} no \Cref{apx-longtable}.
+
+
+\subsubsection{Citações e notas de rodapé}\label{sec-quotesandfootnotes}
+Para inserir citações no texto utilize a formatação descrita nesta seção.
+
+\begin{quote}
+Book printing differs significantly from ordinary typing with respect to dashes, hyphens, and minus signs.
+In good math books, these symbols are all different; in fact there usually are at least four different symbols (...)
+Hyphens are used for compound words like `daughter-in-law' and `X-rated'. En-dashes are used for number ranges like
+`pages 13--34', and also in contexts like `exercise 1.2.6--52'.
+Em-dashes are used for punctuation in sentences---they are what we often call simply dashes.
+And minus signs are used in formulas. A conscientious user of \TeX{} will be careful to distinguish these four usages
+\cite[p. 4]{donaldknuth1984}.
+\end{quote}
+
+As notas de rodapé serão numeradas e devem aparecer no final da página onde foi utilizada\footnote{
+Observe que esta nota de rodapé está presente na página em que foi citada.}. Para os textos
+redigidos com \LaTeX{}, basta utilizar o comando \verb|\footnote{...}| para inserir uma nota de rodapé
+no local desejado.
+
+Para realizar citações devemos utilizar os comandos do \texttt{biblatex}. Por exemplo, para realizar uma
+citação textual, utilize comando \verb|\textcite{...}| (equivalente ao comando \texttt{citet}) para gerar o
+resultado como aqui exemplificado: \textcite{donaldknuth1984}.
+Para criar uma citação entre parênteses, utilize o comando \verb|\parencite{...}| (equivalente ao comando \texttt{citep})
+para gerar um resultado como o do exemplo a seguir: \parencite{donaldknuth1984}.
+Outra opção é utiliza o comando \verb|\cite{...}| para obter o mesmo resultado: \cite{donaldknuth1984}.
+
+Muitas vezes, em uma citação, queremos referenciar um página específica de uma obra ou passar
+alguma outra informação adicional.
+Neste caso, devemos fazer como ilustrado na citação acima, onde utilizamos o seguinte comando: \verb|\cite[p. 4]{donaldknuth1984}|.
+Em outros casos, queremos realizar uma citação indireta. Isto pode ser feito utilizando os
+comandos do \href{https://github.com/abntex/abntex2}{abnTeX2}: \verb|\apud{autor_indireto}{autor_direto}| ou \verb|\textapud{autor_indireto}{autor_direto}|.
+Veja o seguinte exemplo:
+\begin{quote}
+Some bookes are to bee tasted,
+others to bee swallowed,
+and some few to bee chewed and disgested \apud{bacon}{donaldknuth1984}.
+\end{quote}
+
+\begin{english}
+English texts might need a possessive citation for a given author. For example,
+suppose we want to talk about \posscite{donaldknuth1984} book. To accomplish such citation, we have used the command \verb|\posscite{...}|
+provided in the template.
+\end{english}
+
+Se desejar referenciar o nome completo do primeiro autor, podemos utilizar o seguinte comando disponível no \emph{template} da revista: \verb|\citefirstlastauthor{...}|.
+Para qualquer referência, o item referenciado deverá estar contido no arquivo \texttt{.bib}. A \Cref{lst-bib} ilustra a sintaxe básica para
+as entradas no arquivo de bibliografia. É importante fornecer o nome completo do autor, sem abreviações.
+Muitas publicações aceitam abreviações do primeiro nome do autor. Esta prática, entretanto, acarreta maior
+dificuldade na identificação do autor.
+
+\begin{lstlisting}[language=tex, label=lst-bib, caption={Estrutura básica de uma entrada no arquivo de bibliografia.}, source={\LaTeX{} Wikibook (\protect\url{https://en.wikibooks.org/wiki/LaTeX/Bibliography_Management}).}]
+@article{greenwade93,
+    author  = "George D. Greenwade",
+    title   = "The {C}omprehensive {T}ex {A}rchive {N}etwork ({CTAN})",
+    year    = "1993",
+    journal = "TUGBoat",
+    volume  = "14",
+    number  = "3",
+    pages   = "342--351"
+}
+\end{lstlisting} %stopzone
+
+No exemplo a seguir, utilizamos uma epígrafe, seguindo o modelo do \emph{template} (veja o código fonte deste documento), 
+onde citamos o nome completo do autor e o título da obra:
+
+\epigraph{Computers are good at following instructions, but not at reading your mind.}{\citefirstlastauthor{donaldknuth1984}, \emph{\citetitle{donaldknuth1984}}}
+
+Para inserir uma epígrafe seguindo o modelo, demove-se acrescentar ao preâmbulo do documento o código apresentado na \Cref{lst-epigrafe}.
+\begin{lstlisting}[language=tex, label=lst-epigrafe, caption={Utilização de epígrafe seguindo o modelo da revista.}]
+% código para ser inserido no preâmbulo
+% custom epigraph - BEGIN 
+% https://tex.stackexchange.com/questions/193178/specific-epigraph-style
+\usepackage{epigraph}
+\renewcommand\textflush{flushright}
+\makeatletter
+\newlength\epitextskip
+\pretocmd{\@epitext}{\em}{}{}
+\apptocmd{\@epitext}{\em}{}{}
+\patchcmd{\epigraph}{\@epitext{#1}\\}{\@epitext{#1}\\[\epitextskip]}{}{}
+\makeatother
+\setlength\epigraphrule{0pt}
+\setlength\epitextskip{0.5ex}
+\setlength\epigraphwidth{.7\textwidth}
+% custom epigraph - END
+
+% exemplo de utilização no documento
+\epigraph{Computers are good at following instructions, but not at reading your mind.}{\citefirstlastauthor{donaldknuth1984}, \emph{\citetitle{donaldknuth1984}}}
+\end{lstlisting} %stopzone
+
+
+
+\subsubsection{Equações}\label{sec-equacao}
+Nesta secção iremos apresentar a forma de utilização de equações. A \Cref{eq-poisson} apresenta um
+exemplo de equação no modelo da revista \emph{Texto Livre}.
+\begin{equation}
+l(\Lambda)=\sum_{i=1}^{n} \sum_{w=1}^{q} (z_{i w} \ln (\lambda_{i w}) - \lambda_{i w} - \ln (z_{i w}!))
+\label{eq-poisson}
+\end{equation}
+As equações deverão ser numeradas, para que seja possível realizar referência a elas ao longo do texto.
+Outro exemplo é apresentado na \Cref{eq-frac}.
+\begin{equation}
+  x = a_0 + \frac{1}{\displaystyle a_1 
+          + \frac{1}{\displaystyle a_2 
+          + \frac{1}{\displaystyle a_3 + a_4}}}
+\label{eq-frac}
+\end{equation}
+
+Apresentamos nas \Cref{eq-align-ex1,eq-align-ex2,eq-align-ex3,eq-align-ex4,eq-align-ex5,eq-align-ex6} um exemplo de utilização de equações com mais de uma linha. 
+Para este tipo de equação devemos utilizar o ambiente \texttt{aling}. 
+As equações que compõem a sequência poderão ser enumeradas ou não. Case sejam enumeradas, opte por inseri-las dentro do contexto do ambiente 
+\texttt{subsequations} para que a numeração seja conforme o exemplo apresentado.
+Se esta sequência de equações for longa, recomenda-se permitir a quebra de linha ao longo desta. 
+Para tanto, utilize o comando \verb|\allowdisplaybreaks|. Isto evitará o aparecimento de espaços vazios 
+no manuscrito.
+
+\begin{subequations}
+\allowdisplaybreaks
+\begin{align}
+H(Z|X) &= \sum_x p(x) H(Z|X=x) \label{eq-align-ex1} \\
+       &= - \sum_x p(x) \sum_z p(Z=z|X=x) \log p(Z=z|X=x) \label{eq-align-ex2}\\
+       &= - \sum_x p(x) \sum_y p(Y=z-x|X=x) \log p(Y=z-x|X=x) \label{eq-align-ex3} \\
+       &= - \sum_x p(x) \sum_y p(Y=y|X=x) \log p(Y=y|X=x) \label{eq-align-ex4} \\
+       &= \sum_x p(x) H(Y|X=x) \label{eq-align-ex5} \\
+       &= H(Y|X) \label{eq-align-ex6}
+\end{align}
+\end{subequations}
+
+A \Cref{fig:example} apresenta uma figura normal, enquanto 
+a \Cref{fig:twosubs} ilustra a divisão de uma figura em duas sub-figuras. 
+A \Cref{fig:landscape} é um exemplos de utilização de figura na orientação paisagem.
+Utilize o comando \verb|\subcaption{...}| do pacote \texttt{subcaption} para adicionar legendas 
+às sub-figuras e sub-tableas. Não utilize o pacote \texttt{subfigure} para evirar incompatibilidades com este modelo.
+
+\lipsum[10-14]
+
+\subsubsection{Códigos}\label{sec-codigos}
+Para inserir códigos no texto utilize o ambiente \texttt{lstlisting}. 
+O modelo da revista permite a inserção da fonte utilizada como referência, confome 
+pode ser visto no exemplo apresentado na \Cref{lst-code}.
+ 
+\begin{lstlisting}[language=python, label=lst-code, caption={\emph{Bubble sort}, ou ordenação por flutuação.}, source={Rosetta Code (\url{https://rosettacode.org/wiki/Sorting_algorithms/Bubble_sort}).}]
+def bubble_sort(seq):
+    """Inefficiently sort the mutable sequence (list) in place.
+       seq MUST BE A MUTABLE SEQUENCE.
+ 
+       As with list.sort() and random.shuffle this does NOT return 
+    """
+    changed = True
+    while changed:
+        changed = False
+        for i in xrange(len(seq) - 1):
+            if seq[i] > seq[i+1]:
+                seq[i], seq[i+1] = seq[i+1], seq[i]
+                changed = True
+    return seq
+\end{lstlisting} %stopzone
+
+\lipsum[20-21]
+
+
+\section{Contribuição dos autores}\label{sec-contributors-expl}
+Espera-se que cada autor tenha realizado contribuição substanciais para o desenvolvimento do trabalho.
+Em publicações com mais de um autor, deverá haver ao final do artigo, após as referências, uma
+secção com declaração de contribuição de cada autor. Para criar esta secção basta utilizar o
+ambiente \verb|contributors| e elencar os autores na lista de taxonomia com as 14 funções, conforme o
+\href{http://credit.niso.org/}{CRediT (\emph{Contributor Roles Taxonomy})}, utilizadas para representar as contribuições do autores:
+Conceituação; Curadoria de dados; Análise Formal; Aquisição de financiamento; Investigação;
+Metodologia; Administração de projetos; Recursos; Programas; Supervisão; Validação;
+Visualização; Escrita - rascunho original; Escrita - revisão e edição.
+Neste exemplo de utilização do \emph{template}, a informação das contribuições do autores encontra-se na página \pageref{sec-contributors}.
+
+A contribuição dos autores deverá ser inserida dentro do ambiente \verb|contributors|. Para cada autor do manuscrito,
+deve-se chamar o comando \verb|\authorcontribution{nome}[contr1,contr2]|, passando como parâmetro obrigatório o nome do autor 
+e parâmetros opcionais os códigos das contribuições. Veja o exemplo de utilização apresentado na \Cref{lst-contributions}.
+A lista completa dos códigos e suas descrições é apresentada a seguir:
+\begin{description}
+\item[conceptualization] Conceituação;
+\item[datacuration] Curadoria de dados;
+\item[formalanalysis] Análise Formal;
+\item[funding] Aquisição de financiamento;
+\item[investigation] Investigação;
+\item[methodology] Metodologia;
+\item[projadm] Administração de projetos; 
+\item[resources] Recursos;
+\item[software] Programas;
+\item[supervision] Supervisão;
+\item[validation] Validação;
+\item[visualization] Visualização;
+\item[writing] Escrita - rascunho original;
+\item[review] Escrita - revisão e edição.
+\end{description}
+
+\begin{lstlisting}[language=tex, label=lst-contributions, caption={Contribuição dos autores.}]
+\begin{contributors}[sec-contributors]
+\authorcontribution{Leonardo Araújo}[conceptualization,datacuration,formalanalysis,investigation,methodology,software,validation,visualization,writing,review]
+\authorcontribution{Daniervelin Pereira}[methodology,projadm,resources,validation,writing,review]
+\end{contributors}
+\end{lstlisting} %stopzone
+
+
+
+\section{Conclusão}\label{sec-conclusao}
+Para elaborar um texto com melhor qualidade \cite{donaldknuth1984,leslielamport1994,araujo2020}, busque utilizar o modelo para \LaTeX{} 
+disponível no sítio da revista. Leia as regras e orientações sobre a utilização de cada tipo de estrutura em um texto.
+
+
+\lipsum[17-19]
+
+
+\printbibliography\label{sec-bib}
+% if the text is not in Portuguese, it might be necessary to use the code below instead to print the correct ABNT abbreviations [s.n.], [s.l.]
+%\begin{portuguese}
+%\printbibliography[title={Bibliography}]
+%\end{portuguese}
+
+
+%full list: conceptualization,datacuration,formalanalysis,funding,investigation,methodology,projadm,resources,software,supervision,validation,visualization,writing,review
+\begin{contributors}[sec-contributors]
+\authorcontribution{Leonardo Araújo}[conceptualization,datacuration,formalanalysis,investigation,methodology,software,validation,visualization,writing,review]
+\authorcontribution{Daniervelin Pereira}[methodology,projadm,resources,validation,writing,review]
+\end{contributors}
+
+
+\appendix 
+\section{Tabela longa}\label{apx-longtable}
+Apresentamos aqui um exemplo de uma tabela longa. Para este tipo de tabela utilzie o ambiente \texttt{longtable}.
+
+\setlength\LTleft{-1in}
+\setlength\LTright{-1in}
+\begin{small}
+\renewcommand{\arraystretch}{1.5}
+\begin{longtable}{
+    >{\raggedright\arraybackslash}p{0.3\textwidth}
+    p{0.4\textwidth}
+    p{0.4\textwidth}
+    }
+\caption{Exemplo de tabela longa.}
+\label{longtbl-01}
+\\
+\toprule
+coluna 1 & coluna 2 & coluna 3 \\
+\midrule
+\lipsum[2] & \lipsum[3] & \lipsum[4] \\
+\lipsum[5] & \lipsum[6] & \lipsum[7] \\
+\lipsum[8] & \lipsum[9] & \lipsum[10] \\
+\lipsum[11] & \lipsum[12] & \lipsum[13] \\
+\bottomrule
+\source{Texto de preenchimento gerado pelo pacote lipsum.}
+\end{longtable}
+\end{small}
+
+
+\end{document}
+
