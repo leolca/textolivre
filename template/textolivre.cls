@@ -252,6 +252,7 @@
   \preto{\abstract}{%
     \setlength{\parindent}{\z@}%
     \newcommand{\keywords}[1]{%
+    \par%
     \emph{\GetTranslation{keywords}}: \capitalizekeywords{#1}\par
     }
   }
@@ -420,3 +421,21 @@
   \crefname{table}{tabla}{tablas}\Crefname{table}{Tabla}{Tablas}}%
 }{}
 
+
+\IfStrEq{\languagename}{spanish}{%
+\DefineBibliographyStrings{spanish}{
+  and = {y},           % "and" to "y"
+  in = {en},           % "in" to "en"
+  editor = {editor},   % "editor" (masculine singular)
+  editors = {editores},% "editors" (masculine plural)
+  byeditor = {editado por},  % "edited by" to "editado por"
+  edition = {edición}, % "edition" to "edición"
+  volume = {volumen},  % "volume" to "volumen"
+  number = {número},   % "number" to "número"
+  pages = {páginas},   % "pages" to "páginas"
+  page = {página},     % "page" to "página"
+  chapter = {capítulo},% "chapter" to "capítulo"
+  book = {libro},      % "book" to "libro"
+  forthcoming = {en prensa}, % "forthcoming" to "en prensa"
+  techreport = {informe técnico}, % "techreport" to "informe técnico"
+}}{}
