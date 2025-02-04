@@ -329,7 +329,7 @@
 % NOTE - requires: caption
 \newcommand{\notes}[1]{
  \captionsetup{skip=0ex,position=b}%
- \caption*{\textcolor{TLDarkGreen}{\textit{\GetTranslation{note}} {#1}}}
+ \caption*{\textcolor{TLDarkGreen}{\textit{\GetTranslation{note}}} {#1}}
 }
 
 % ADD SOURCE TO LISTING - BEGIN
