@@ -1,0 +1,211 @@
+\section{Metodologia}\label{sec-metologia}
+
+Como esta pesquisa possui um viés linguístico dentro do PLN, a proposta
+dos métodos e de seus respectivos algoritmos refletirá essa perspectiva,
+como apontam \textcite{rodrigues2022}. Destaca-se que o ambiente
+utilizado para criar, treinar e testar os modelos apresentados neste
+trabalho foram configurados na versão 3.12.3 do Python, tendo como
+sistema operacional o POP!\_OS 22.04. Ademais, as bibliotecas utilizadas
+em Python serão especificadas ao longo desta seção. Destaca-se que o
+código completo para desenvolvimento deste estudo, bem como sua
+documentação detalhada, está disponível na plataforma GitHub dos
+autores.
+
+A proposta de classificação de papéis semânticos neste trabalho segue a
+proposta metodológica de \textcite{ilmy2021}. Os autores propõem
+identificar relações linguísticas utilizando uma estrutura hierárquica
+entre \emph{parent} e \emph{child}, sendo, respectivamente, as palavras
+de saída e de chegada em uma representação em grafo de sentenças
+anotadas com AMR. Após isso, constrói-se um arquivo no formato texto
+(com extensão txt) em que todas essas informações estão organizadas. A
+fim de exemplificação, apresentamos a sentença anotada em \ref{itm4}, bem como
+o \Cref{tab-02}, em que as informações linguísticas estão organizadas.
+
+\begin{enumerate}[start=4,label={(\arabic{enumi})}]
+  \item\label{itm4}
+    \begin{enumerate}[label=(\arabic{enumi}.\alph*)]
+      \item\label{itm4a} Sentença: Meyer tem duas explicações para esses resultados.
+      \item\label{itm4b} Anotação: (h3 / ter-01 :ARG0 (p0 / person :name (n1 / name :op1
+  "Meyer") :ARG1 (e5 / explicar-01 :ARG0 p0 :ARG1 (t8 / coisa :mod (t7 /
+  esse) :ARG2-of (r9 / resultar-01)) :quant 2) :wiki -))
+    \end{enumerate}
+\end{enumerate}
+
+
+\begin{table}[htpb]
+  \centering
+  \begin{threeparttable}
+  \caption{Mapeamento estrutural em \emph{parent} e \emph{child} de informações linguísticas.}
+  \label{tab-02}
+  \begin{tabular}{
+  >{\raggedright\arraybackslash}p{.35\textwidth} 
+  >{\raggedright\arraybackslash}p{.3\textwidth} 
+  >{\raggedright\arraybackslash}p{.3\textwidth}
+  }
+  \toprule
+  \multirow{3}{=}{Dependência sintática} & \emph{parent} &  ter \\
+  &  \emph{child} &  Pessoa (\emph{person})  \\
+  & 5 dep &  nsubj \\
+  \multirow{4}{=}{Características ligadas a \emph{parent}} &  Texto (\emph{Text}) &  tem \\
+  & Lema (\emph{Lemma}) & ter \\
+  & Etiqueta morfossintática (POS) & verbo (VERB) \\
+  & Entidade nomeada &  \emph{não se aplica} \\ 
+  \multirow{4}{=}{Características ligadas a \emph{child}}
+  & Texto (\emph{Text}) & Meyer \\
+  & Lema (\emph{Lemma}) & Meyer \\
+  & Etiqueta morfossintática (POS) & Nome próprio (PROPN) \\
+  & Entidade nomeada & Pessoa (pers) \\
+  Papel semântico & Rótulo (Label) &  Arg0 \\
+  \bottomrule
+  \end{tabular}
+\source{Elaborado pelos autores.}
+\end{threeparttable}
+\end{table}
+
+No \Cref{tab-02}, observam-se características extraídas da relação apenas
+entre as palavras ``Meyer'' e ``ter''. Para que seja feita a
+classificação do papel (a saber, Arg0), são consideradas informações
+morfológicas, morfossintáticas e de Entidades nomeadas tanto da palavra
+na posição \emph{parent}, quanto da palavra na posição \emph{child}.
+Tais informações servirão de \emph{features} para os modelos automáticos
+de classificação, ao passo que o valor da aresta entre \emph{parent} e
+\emph{child} (a saber, a dependência sintática) servirá como variável
+\emph{target}.
+
+Nesta pesquisa, foram utilizados os quatro \emph{corpora} do AMR-BP, os
+quais foram padronizados na extensão txt. Tal procedimento não foi
+necessário para o \emph{corpus} PropBank, que estava em formato CoNLL.
+Em seguida, foi gerado um arquivo de extensão json para todos os
+\emph{corpora}. Para extrair as informações linguísticas exemplificadas
+no \Cref{tab-02}, foi utilizada a biblioteca spaCy \cite{spacy2024}. Ao final, o
+arquivo json contém as seguintes informações:
+
+\begin{itemize}
+\item ID da sentença;
+\item Nome do \emph{corpus} de origem;
+\item Informações dos nós: IDs dos nós e seus respectivos valores;
+\item Informações das arestas: ID das arestas e os nós que elas conectam;
+\item Sentença original;
+\item Sentença anotada em AMR;
+\item Alinhamentos entre itens léxicos e conceitos AMR, quando for possível
+  criar ou estiverem disponíveis. O \emph{corpus news} possui parte de
+  suas sentenças com alinhamentos; no caso do PropBank, é possível criar
+  os alinhamentos dada a formatação CoNLL do \emph{corpus};
+\item Sentença com anotação linguística, contendo texto, lema, POS,
+  dependência e Entidades nomeadas.
+\end{itemize}
+
+Algumas sentenças dos \emph{corpora} não apresentaram alinhamentos entre
+as palavras analisadas como \emph{parent} e \emph{child}. Nesse sentido,
+optou-se pela inferência utilizando o método \emph{match} da
+\emph{string} do AMR com a sentença original. Porém, houve casos em que
+isso não foi possível, já que a anotação semântica não apresentava uma
+palavra/\emph{token} correspondente ao texto original, como ``Tenho de
+admitir'' em relação à anotação ``\emph{obligate}''. Assim, ao final,
+somaram-se 2.212 casos em foi possível inferir o alinhamento, frente a
+3.760 em que não foi possível, sendo estes últimos desconsiderados neste
+trabalho.
+
+Ao final, obteve-se a seguinte distribuição de papéis semânticos: (i)
+Arg0 com 4.154 exemplares; (ii) Arg1 com 7.052; (iii) Arg2 com 1.714;
+(iv) Arg3 com 188; (v) Arg4 com 137; e (vi) Arg5 com 1 único exemplar.
+Diante dessa distribuição, optou-se por não considerar Arg5 por conta de
+sua baixa representatividade. Além disso, dado o desbalanceamento dos
+outros papéis, optou-se por realizar dois experimentos para a construção
+dos classificadores automáticos: Experimento 1, utilizando apenas os
+dados relativos a Arg0 e Arg1; Experimento 2, utilizando os dados
+relativos a Arg0 até Arg4.
+
+A construção do modelo de predição de papéis semânticos deste trabalho
+baseou-se em seis etapas. Na primeira, realizou-se a separação dos
+conjuntos de treino e teste. Os dados provenientes do PropBank foram
+utilizados apenas para treino; já os dados restantes foram divididos em
+80\% para treino e 20\% para teste, considerando a informação
+``\emph{label}'' das instâncias que, neste trabalho, são os próprios
+papéis semânticos.
+
+Na segunda etapa foi necessário aplicar a vetorização em variáveis
+preenchidas com valor textual (ou seja, categóricas). Para tanto, foi
+aplicada a técnica \emph{One-Hot Encoding} (Rodríguez \emph{et al}.,
+2018). Ainda, para as \emph{features} relacionadas ao lema das palavras
+das instâncias, foi feita a vetorização utilizando o modelo Word2Vec de
+\emph{Continuos Bag-of-Words} com 300 dimensões de \textcite{hartmann2017}.
+
+A terceira etapa consistiu na sequência organizada de subetapas. Foi
+utilizado o método Pipeline do \emph{imbalanced-learn}\footnote{Disponível
+  em:
+  \href{https://imbalanced-learn.org/stable/references/generated/imblearn.pipeline.Pipeline.html}{Pipeline
+  --- Version 0.12.3}. Acesso em: 20 jul.2024.}, consistindo em:
+
+\begin{itemize}
+\item \emph{Normalização}, em que as variáveis foram normalizadas utilizando
+  \emph{Z-score}\footnote{O Z-score mede quantos desvios padrão um valor
+    está distante da média da distribuição. Trata-se de uma forma de
+    transformação dos dados que torna a distribuição deles mais
+    compreensível e comparável entre si.} através do método
+  \emph{StandardScaler}\footnote{Disponível em: \href{https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html}{StandardScaler
+    -- scikit-learn 1.5.1 documentation}. Acesso em: 20 jul.2023.} do
+  \emph{scikit-learn} (Pedregosa \emph{et al.}, 2011);
+\item \emph{Seleção de melhores features}, em que foram selecionadas as
+  melhores features por meio do método
+  \emph{SelectPercentile}\footnote{Disponível em:
+    \href{https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.SelectPercentile.html}{SelectPercentile
+    -- scikit-learn 1.5.1 documentation}. Acesso em: 20 jul.2023.} do
+  \emph{scikit-learn};
+\item \emph{Sobre-amostragem}, em que o método \emph{Synthetic Minority
+  Over-sampling Technique} (SMOTE), do
+  \emph{imbalanced-learn}\footnote{Disponível em:
+    \href{https://imbalanced-learn.org/stable/references/generated/imblearn.over_sampling.SMOTE.html}{SMOTE
+    --- Version 0.12.3}. Acesso em: 20 jul. 2023.} \cite{lemaitre2017}, foi utilizado para sobre-amostrar as
+  classes minoritárias até que elas possuíssem o mesmo número de
+  amostras da classe majoritária;
+\item \emph{Classificação}, em que foi utilizado o algoritmo \emph{Extreme
+  Gradient Boosting} (XGBoost) \cite{chen2016} da biblioteca
+  XGBoost\footnote{Disponível em:
+    \href{https://xgboost.readthedocs.io/en/stable/python/python_api.html\#xgboost.XGBClassifier}{Python
+    API Reference -- xgboost 2.1.0 documentation}. Acesso em: 20
+    jul.2023.}.
+\end{itemize}
+
+A quarta etapa consistiu no ajuste de hiperparâmetros do algoritmo
+XGBoost. Trata-se de uma etapa necessária para otimizar o desempenho do
+modelo de classificação. Para tanto, foi utilizado o método
+\emph{RandomizedSearch} do \emph{scikit-learn}\footnote{Disponível em:
+  \href{https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.RandomizedSearchCV.html}{RandomizedSearchCV
+  --- scikit-learn 1.5.1 documentation}. Acesso em: 20 jul.2024.}, que
+realiza uma validação cruzada com combinações aleatórias de parâmetros
+pré-definidos.
+
+A quinta etapa de avaliação foi realizada a partir das métricas
+clássicas de AM, a saber:
+
+\begin{itemize}
+\item
+  \emph{Precisão} (P), em que é medida a proporção de verdadeiros
+  positivos entre os exemplos classificados como positivos pelo modelo.
+  Para tanto, baseia-se no seguinte cálculo: \(P = \frac{VP}{VP + FP},\)
+  em que VP é a quantidade de verdadeiros positivos, e FP é o número de
+  falsos positivos.
+\item
+  \emph{Revocação} (R), em que é medida a proporção de verdadeiros
+  positivos entre os exemplos que são realmente positivos. Para tanto,
+  baseia-se no seguinte cálculo: \(R = \frac{VP}{VP + FN},\) em que FN é
+  o número de falsos negativos.
+\item
+  \emph{Medida-F} (MF), que é a média harmônica entre P e R,
+  proporcionando balanceamento entre as duas métricas. Para tanto,
+  baseia-se no seguinte cálculo:
+  \(MF = 2\frac{Precision \cdot Recall}{Precision + Recall}\)
+\item
+  \emph{Acurácia} (A), em que é medida a proporção de exemplos
+  corretamente classificados pelo modelo entre todos os exemplos. Para
+  tanto, o cálculo é feito da seguinte maneira:
+  \(acur\acute{a}cia = \frac{VP + VN}{VP + VN + FP + FN}\), em que VN é a
+  quantidade de falsos negativos.
+\end{itemize}
+
+Por fim, a sexta etapa consistiu na seleção de \emph{features} mais
+relevantes para a classificação de papéis semânticos. Foram utilizados
+os métodos \emph{feature\_importance} do algoritmo XGBoost e a
+biblioteca SHAP (\emph{SHapley Additive exPlanations}) \cite{lundberg2017}, a qual permitiu comparar as \emph{features} mais importantes para
+cada tipo de argumento.
