@@ -277,6 +277,7 @@
 \titlespacing*{\subsubsection}{\z@}{\baselineskip}{\z@}
 \titlespacing*{\paragraph}{\z@}{\baselineskip}{\z@}
 \setcounter{secnumdepth}{4}
+\newcommand{\subsubsubsection}{\paragraph}
 
 \RequirePackage[inline]{enumitem}
 % LISTS % requires: enumitem
