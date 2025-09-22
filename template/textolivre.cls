@@ -271,10 +271,12 @@
 \titleformat{\section}{\large\bfseries}{\hspace*{-1em}\makebox[\z@][r]{\thesection}}{1em}{}
 \titleformat{\subsection}{\large}{\hspace*{-1em}\makebox[\z@][r]{\thesubsection}}{1em}{}
 \titleformat{\subsubsection}{\normalsize}{\hspace*{-1em}\makebox[\z@][r]{\thesubsubsection}}{1em}{}
+\titleformat{\paragraph}{\normalsize}{\hspace*{-1em}\makebox[\z@][r]{\theparagraph}}{1em}{}
 \titlespacing*{\section}{\z@}{\baselineskip}{\z@}
 \titlespacing*{\subsection}{\z@}{\baselineskip}{\z@}
 \titlespacing*{\subsubsection}{\z@}{\baselineskip}{\z@}
-\setcounter{secnumdepth}{3}
+\titlespacing*{\paragraph}{\z@}{\baselineskip}{\z@}
+\setcounter{secnumdepth}{4}
 
 \RequirePackage[inline]{enumitem}
 % LISTS % requires: enumitem
