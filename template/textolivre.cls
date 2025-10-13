@@ -417,6 +417,14 @@
   \item \textbf{#1}: {\ProcessList {#2} {\acitem}}}
 % END contributors environment
 
+
+% BEGIN RESEARCH DATA AVAILABILITY environment
+\newenvironment{dataavailability}[1][]{%
+\section*{\fontsize{10}{12}\selectfont \GetTranslation{dataavailability}}\ifx#1\@empty\else\label{#1}\fi
+}{}
+\newcommand\txtdataavailability[1]{\IfValueT{#1}{\GetTranslation{#1}}}
+% END
+
 % 'Tabla' instead of 'Cuadro'
 \IfStrEq{\languagename}{spanish}{%
  \gappto\captionsspanish{\renewcommand{\tablename}{Tabla}}%
