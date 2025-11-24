@@ -425,6 +425,13 @@
 \newcommand\txtdataavailability[1]{\IfValueT{#1}{\GetTranslation{#1}}}
 % END
 
+% BEGIN FUNDING
+\newenvironment{funding}[1][]{%
+\section*{\fontsize{10}{12}\selectfont \GetTranslation{FUNDING}}\ifx#1\@empty\else\label{#1}\fi
+}{}
+
+% END
+
 % 'Tabla' instead of 'Cuadro'
 \IfStrEq{\languagename}{spanish}{%
  \gappto\captionsspanish{\renewcommand{\tablename}{Tabla}}%
