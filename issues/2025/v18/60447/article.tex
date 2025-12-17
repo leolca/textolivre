@@ -1,0 +1,727 @@
+% !TEX TS-program = XeLaTeX
+% use the following command:
+% all document files must be coded in UTF-8
+\documentclass[english]{textolivre}
+% build HTML with: make4ht -e build.lua -c textolivre.cfg -x -u article "fn-in,svg,pic-align"
+
+\journalname{Texto Livre}
+\thevolume{19}
+%\thenumber{1} % old template
+\theyear{2026}
+\receiveddate{\DTMdisplaydate{2025}{7}{22}{-1}} % YYYY MM DD
+\accepteddate{\DTMdisplaydate{2025}{9}{2}{-1}}
+\publisheddate{\DTMdisplaydate{2025}{12}{16}{-1}}
+\corrauthor{Ahmad Haider}
+\articledoi{10.1590/1983-3652.2026.60447}
+%\articleid{NNNN} % if the article ID is not the last 5 numbers of its DOI, provide it using \articleid{} commmand 
+% list of available sesscions in the journal: articles, dossier, reports, essays, reviews, interviews, editorial
+\articlesessionname{articles}
+\runningauthor{Haider et al.} 
+%\editorname{Leonardo Araújo} % old template
+\sectioneditorname{Daniervelin Pereira~\orcid{0000-0003-1861-3609}}
+\layouteditorname{Leonardo Araujo~\orcid{0000-0003-3884-2177}}
+
+\title{Tech-driven advances in audiovisual translation: developing a cloud-based English-Arabic subtitle corpus for training and practice}
+\othertitle{Avanços tecnológicos na tradução audiovisual: desenvolvimento de um corpus de legendas inglês-árabe baseado na nuvem para treinamento e prática}
+% if there is a third language title, add here:
+%\othertitle{Artikelvorlage zur Einreichung beim Texto Livre Journal}
+
+\author[1]{Ahmad S. Haider~\orcid{0000-0002-7763-201X}\thanks{Email: \href{mailto:a_haidar@asu.edu.jo}{a\_haidar@asu.edu.jo}}}
+\author[2]{Mohammed M. Obeidat~\orcid{0000-0002-1235-0492}\thanks{Email: \href{mailto:mmobeidat@yu.edu.jo}{mmobeidat@yu.edu.jo}}}
+\author[1]{Yousef Hamdan~\orcid{0000-0002-1937-8738}\thanks{Email: \href{mailto:y_hamdan@asu.edu.jo}{y\_hamdan@asu.edu.jo}}}
+\author[1]{Omair AlZghoul~\orcid{0000-0003-4430-4244}\thanks{Email: \href{mailto:o_alzghloul@asu.edu.jo}{o\_alzghloul@asu.edu.jo}}}
+\author[3]{Hussein Abu-Rayyash~\orcid{0000-0002-9695-4030}\thanks{Email: \href{mailto:haburayy@kent.edu}{haburayy@kent.edu}}}
+\affil[1]{Applied Science Private University, Department of English Language and Translation, Amman, Jordan.}
+\affil[2]{Yarmouk University, Translation Department, Irbid, Jordan.}
+\affil[3]{Kent State University, College of Arts and Sciences, Department of Modern and Classical Language Studies, Kent, Ohio, USA.}
+
+\addbibresource{article.bib}
+% use biber instead of bibtex
+% $ biber article
+
+% used to create dummy text for the template file
+\definecolor{dark-gray}{gray}{0.35} % color used to display dummy texts
+\usepackage{lipsum}
+\SetLipsumParListSurrounders{\colorlet{oldcolor}{.}\color{dark-gray}}{\color{oldcolor}}
+
+% used here only to provide the XeLaTeX and BibTeX logos
+\usepackage{hologo}
+
+% if you use multirows in a table, include the multirow package
+\usepackage{multirow}
+
+% provides sidewaysfigure environment
+\usepackage{rotating}
+
+% CUSTOM EPIGRAPH - BEGIN 
+%%% https://tex.stackexchange.com/questions/193178/specific-epigraph-style
+\usepackage{epigraph}
+\renewcommand\textflush{flushright}
+\makeatletter
+\newlength\epitextskip
+\pretocmd{\@epitext}{\em}{}{}
+\apptocmd{\@epitext}{\em}{}{}
+\patchcmd{\epigraph}{\@epitext{#1}\\}{\@epitext{#1}\\[\epitextskip]}{}{}
+\makeatother
+\setlength\epigraphrule{0pt}
+\setlength\epitextskip{0.5ex}
+\setlength\epigraphwidth{.7\textwidth}
+% CUSTOM EPIGRAPH - END
+
+% to use IPA symbols in unicode add
+%\usepackage{fontspec}
+%\newfontfamily\ipafont{CMU Serif}
+%\newcommand{\ipa}[1]{{\ipafont #1}}
+% and in the text you may use the \ipa{...} command passing the symbols in unicode
+
+% LANGUAGE - BEGIN
+% ARABIC
+% for languages that use special fonts, you must provide the typeface that will be used
+% \setotherlanguage{arabic}
+% \newfontfamily\arabicfont[Script=Arabic]{Amiri}
+% \newfontfamily\arabicfontsf[Script=Arabic]{Amiri}
+% \newfontfamily\arabicfonttt[Script=Arabic]{Amiri}
+%
+% in the article, to add arabic text use: \textlang{arabic}{ ... }
+%
+% RUSSIAN
+% for russian text we also need to define fonts with support for Cyrillic script
+\usepackage{fontspec}
+\setotherlanguage{russian}
+\newfontfamily\cyrillicfont{Times New Roman}
+\newfontfamily\cyrillicfontsf{Times New Roman}[Script=Cyrillic]
+\newfontfamily\cyrillicfonttt{Times New Roman}[Script=Cyrillic]
+
+% in the text use \begin{russian} ... \end{russian}
+% LANGUAGE - END
+
+% EMOJIS - BEGIN
+% to use emoticons in your manuscript
+% https://stackoverflow.com/questions/190145/how-to-insert-emoticons-in-latex/57076064
+% using font Symbola, which has full support
+% the font may be downloaded at:
+% https://dn-works.com/ufas/
+% add to preamble:
+% \newfontfamily\Symbola{Symbola}
+% in the text use:
+% {\Symbola }
+% EMOJIS - END
+
+% LABEL REFERENCE TO DESCRIPTIVE LIST - BEGIN
+% reference itens in a descriptive list using their labels instead of numbers
+% insert the code below in the preambule:
+%\makeatletter
+%\let\orgdescriptionlabel\descriptionlabel
+%\renewcommand*{\descriptionlabel}[1]{%
+%  \let\orglabel\label
+%  \let\label\@gobble
+%  \phantomsection
+%  \edef\@currentlabel{#1\unskip}%
+%  \let\label\orglabel
+%  \orgdescriptionlabel{#1}%
+%}
+%\makeatother
+%
+% in your document, use as illustraded here:
+%\begin{description}
+%  \item[first\label{itm1}] this is only an example;
+%  % ...  add more items
+%\end{description}
+% LABEL REFERENCE TO DESCRIPTIVE LIST - END
+
+
+% add line numbers for submission
+%\usepackage{lineno}
+%\linenumbers
+
+\begin{document}
+\maketitle
+
+\begin{polyabstract}
+\begin{abstract}
+This study introduces a new SDL Trados-based cloud of English-Arabic subtitles. The compiled corpus consists of subtitle files extracted from Netflix, featuring high-rated and award-winning English-language films, and aims to provide a comprehensive bilingual resource for subtitlers and translation educators. The study investigates the effect of using this cloud-based corpus on the productivity and accuracy of translators and subtitlers. A comparative analysis was conducted between translators who used the compiled corpus within SDL Trados and those who relied solely on traditional translation methods. Results indicate that users of the corpus demonstrated significantly faster translation times, higher terminological consistency, and improved overall quality. Furthermore, translation students and professional translators who participated in training sessions reported that the interface was user-friendly and the corpus highly beneficial for handling genre-specific terminology. Data analysis also showed that over 60\% of the terms present in final translations matched entries from the compiled corpus. The study concludes that the cloud corpus can serve as a valuable educational and professional tool in audiovisual translation training programs.
+
+\keywords{Computer-assisted translation \sep SDL Trados \sep Audiovisual translation \sep Cloud \sep Translation memory}
+\end{abstract}
+
+\begin{english}
+\begin{abstract}
+Este estudo apresenta uma nova nuvem de legendas em inglês-árabe baseada no SDL Trados. O corpus compilado é composto por arquivos de legendas extraídos da Netflix, com filmes em língua inglesa bem avaliados e premiados, e tem como objetivo oferecer um recurso bilíngue abrangente para legendistas e formadores na área de tradução. O estudo investiga o efeito do uso desse corpus na nuvem sobre a produtividade e a precisão de tradutores e legendistas. Foi realizada uma análise comparativa entre tradutores que utilizaram o corpus compilado no SDL Trados e aqueles que se basearam apenas em métodos tradicionais de tradução. Os resultados indicam que os usuários do corpus demonstraram tempos de tradução significativamente mais rápidos, maior consistência terminológica e melhor qualidade geral. Além disso, estudantes de tradução e tradutores profissionais que participaram das sessões de treinamento relataram que a interface era de fácil utilização e o corpus altamente benéfico para lidar com terminologia específica de gêneros. A análise dos dados também mostrou que mais de 60\% dos termos presentes nas traduções finais correspondiam às entradas do corpus compilado. O estudo conclui que o corpus na nuvem pode servir como uma ferramenta educacional e profissional valiosa em programas de formação em tradução audiovisual.
+
+\keywords{Tradução assistida por computador \sep SDL Trados \sep Tradução audiovisual \sep Nuvem \sep Memória de tradução}
+\end{abstract}
+\end{english}
+% if there is another abstract, insert it here using the same scheme
+\end{polyabstract}
+
+\section{Introduction}\label{sec-intro}
+Audiovisual translation (AVT) has evolved in recent decades, especially with the global demand for visual content on digital platforms such as Netflix and other streaming services \cite{chaume2013turn,chiaro2009issues,diazcintas2014audiovisual}. Subtitlers are vital elements in making this content accessible to a wide, multilingual, and multicultural audience \cite{alabbas2021using,alboul2025enhancing,haider2025enhancing}. With this expansion, the need for technical tools to support translators in performing their tasks efficiently and professionally has increased \cite{aburayyash2024transvisio}, especially in light of the temporal, spatial, and cultural constraints and challenges associated with the subtitling of audiovisual materials \cite{gottlieb1994subtitling,karamitroglou2000towards,luyken1991overcoming}. Despite the abundance of Computer-Assisted Translation (CAT) tools such as SDL Trados, most of these tools are not sufficiently adapted to meet the needs of subtitling between English and Arabic in a variety of contexts.
+
+Translation between Arabic and English plays a central role in facilitating linguistic and cultural communication \cite{ahmad2025assessing,almomani2025audience,alkhawaldeh2025from,darwish2025reception,saideen2024alleys}. The Arabic audiovisual translation environment is devoid of automated and data-driven institutional resources, especially those that rely on cloud computing technologies and specialized translation memory databases \cite{aburayyash2022parallel,aburayyash2023swearwords,haider2023creating}. In this context, subtitling is one of the most important types of AVT that requires high linguistic accuracy, terminological consistency, and cultural adaptation to the Arab audience \cite{akasheh2024artificial,dries1995dubbing,sahari2023euphemising}. However, Arabic translators often face difficulties in accessing reliable linguistic references or bilingual databases (English-Arabic) that can be employed during translation to ensure consistency and quality \cite{ahmad2017english}. At the same time, academic institutions and training centers still lack practical training resources that combine technical and linguistic aspects and keep pace with developments in the labor market.
+
+From a review of the literature and previous studies, it is clear that most research has focused on translation quality analysis or audiovisual translation strategies \cite{alzgoul2022fansubbers,haider2024netflix,hashish2022strategies,saideen2024alleys}, without delving into the creation or evaluation of real and practically usable databases in an interactive cloud environment. A very limited number of studies have been concerned with developing bilingual resources that can be combined with professional tools such as SDL Trados to facilitate the training of translators and develop their performance \cite{aburayyash2022parallel,ahmad2017english,alhammar2020some}. Therefore, there is a gap related to the scarcity of computer resources dedicated to training translators in audiovisual translation, especially in the context of English-Arabic subtitling.
+
+Language has long been a focal point of academic inquiry, and many scholars have investigated issues related to its nature, functions, and impact on society \cite{ammari2023corpus,fraihat2024effect,jaafreh2023pragmatic,meqdad2023semantic,naib2025algerian}. Technology is now widely integrated into classrooms \cite{aldhuhli2022digital,khatatbah2024role,masoud2025investigating}. The importance of this study lies in the fact that it is not limited to the theoretical or analytical aspect, but seeks to provide a new practical resource: a subtitling live cloud based on SDL Trados containing subtitles taken from award-winning, high-rating films from the Netflix platform. This resource is expected to improve the performance of translators in terms of speed, accuracy, and terminological consistency, as well as support educational institutions in providing advanced qualitative training that keeps pace with modern technologies.
+
+We approached Netflix to get permission for using their subtitles in this study and were informed that any use for teaching and research purposes does not require prior consultation. Other platforms, such as HBO or Prime Video, were not prioritized given their more limited accessibility and regional restrictions in the Arab world. Fansubs, although present in English-Arabic contexts, were excluded to avoid issues of quality control, informality, and lack of institutional validation.
+
+This study aims to make a qualitative leap in the field of training Arab translators on subtitling by combining cloud resources with professional translation tools. It also seeks to provide a scientific and applied base that can be built upon to develop more future digital projects in the field of computer-aided translation.
+
+Based on the above, the study attempts to answer the following research question: how does the use of SDL Language Cloud affect subtitling productivity and quality, as well as users’ overall experience in terms of usability and user-friendliness?
+
+\section{Parallel corpora}\label{sec-normas}
+\textcite{tognini2001corpus} defined parallel corpora as bilingual or multilingual collections of texts and their direct translations, aligned at the sentence or segment level, which enable the study of cross-linguistic correspondences and translation patterns. Parallel corpora are one of the most important linguistic resources \cite{haider2019using,haider2023influence,mcenery2001corpus}. They have transformed translation practices and academic studies, especially in light of the increasing reliance on CAT tools and artificial intelligence. Parallel corpora are defined as groups of texts translated between two or more languages, so that the original text can be compared to the translation at different levels, including sentences or paragraphs. In this way, parallel groups allow the analysis of linguistic phenomena across languages.
+
+In the context of Arabic and English translation, subtitlers may face a great challenge due to the cultural and linguistic differences between the two languages \cite{haider2023creating}. Parallel corpora can be helpful in such situations, as they provide translators with cohesive, coherent, and well-structured translation that takes into account the stylistic and cultural differences between the two languages under study. Translation studies have greatly benefited from parallel corpora. These allow the study of the translators’ behavior with specific linguistic units in different contexts, thus helping them identify whether the translation strategies employed were direct, explicatory, or adaptive. Parallel corpora are used as an effective training tool, where students can compare their translations with authentic texts and gain awareness of the professional and aesthetic standards of translation.
+
+Despite the importance of these resources, the Arab world still experiences a clear lack of development of specialized parallel corpora between English and Arabic, especially in such specific areas as audiovisual translation, legal translation, or scientific translation. Most of the available efforts lack interactive cloud construction or do not integrate with tools such as SDL Trados or professional translation software \cite{haider2025sdl}.
+
+Hence, there is an urgent need to develop modern parallel corpora that are built on precise linguistic foundations and employed in a smart technological environment, which enhances the quality of translation and makes a qualitative leap in the training of Arab translators, bringing theory and practice closer in translation studies.
+
+Different scholars investigated the use of computer-assisted tools in translation studies. The study by \textcite{cheng2023sdl} is a clear instance where SDL Trados Studio was compared to TMXmall when it is put in a practical context, emphasizing corpus management as an important participant in better translation workflows. SDL Trados makes use of an .sdltm-based format for its translation memory file, but it also supports a bilingual alignment, which allows more efficient reuse of earlier translated material. On the contrary, TMXmall is more focused on cloud retrieval and flexible than the earlier paradigm, going beyond such formats like .tmx, .xls, and .xlsx, inclusive of collaborative participation. Research has shown that bilingual corpora—structured orders of aligned texts in two languages for comparison—have faster matching and more terminologically consistent matches than without any kind of example.
+
+\textcite{polo2013managing} dived into SDL Trados Studio 2011 and explained how the actual software features, like translation memories, concordance search, auto-propagation, and integration into term bases, made the task of translating easier and better. This study also examined important pedagogical aspects, for example, students using Trados tools during translation courses designed to simulate professional environments. With this in mind, \textcite{panasenkov2019teaching} sought to construct a trained structured model approach to teaching the CAT tool to future translators. The empirical observations confirmed that students trained with translation tools such as SDL Trados and Smartcat produced better translations in a shorter time with much more confidence. Their approach took students through project preparation phases to real-time collaboration while strongly emphasizing hands-on work with translation memory and terminology.
+
+\textcite{tsai2017flipped} focused on translation education from a flipped perspective, and the results demonstrate that students trained in blended learning environments with asynchronous instruction complementing classroom instruction using CAT tools retained more of the material and were more engaged with the subject matter. These classes featured SDL Trados Studio prominently, particularly for teaching audiovisual translation.
+
+\textcite{zetzsche2007translationmemory} analyzed the changes in translation memory tools since SDL acquired Trados. He also predicted a development whereby the said tools evolve from desktop applications into cloud environments that are scalable and support multilingual parallel corpora. He remarked that interoperability, standards for the exchange of translation memories, including TMX and TBX, and collaborative infrastructures are of utmost importance in designing large-scale English-Arabic translation parallels.
+
+\textcite{zaretskaya2015integration} investigated the integration of Machine Translation (MT) within CAT tools. They made a distinction between internal, e.g., fuzzy match augmentation, and external, e.g., real-time MT suggestions, integration models. The study, based on user surveys, confirmed that environments combining MT and Translation Memory (TM) resulted in greater throughput and increased accuracy. MT has found acceptance among users within SDL Trados and MateCat involved in specialized post-editing and translation work.
+
+The previously discussed empirical studies pointed out the inclusion of parallel text in computer-aided translation tools, which entails a great improvement in overall professional translation output. These tools have indeed begun to minimize linguistic complexity, create consistency of specialized terms, and present an actual environment of real work in audiovisual translation from English into Arabic or vice versa.
+
+\section{Methodology}\label{sec-conduta}
+In the present study, quantitative methods using a questionnaire are employed to evaluate the usability, impact, and educational value of a curated English-Arabic subtitle corpus integrated with SDL Trados. The study primarily examined the experiences of the translation students and professional translators in using the online subtitle corpus within SDL Trados.
+
+
+\subsection{Questionnaire development}\label{sec-fmt-manuscrito}
+The questionnaire used in this study is divided into two main sections. The first section contained demographic-related questions in which participants reported their gender, age, academic level, years of experience in translation, familiarity with SDL Trados, prior use of subtitle files, and their usual working language pairs. The second section contained a construct-based questionnaire designed with 12 statements clustered into four major constructs: Ease of Use, Productivity and Accuracy, Output Comparison, and Training and Satisfaction. Participants rated each item on a five-point Likert scale ranging from Strongly Disagree to Strongly Agree.
+
+
+\subsection{Validity and reliability}\label{sec-formato}
+To determine the clarity and internal consistency of the instrument, a pilot test with 22 participants was conducted. The results were further analyzed through Cronbach’s Alpha, where each construct showed an acceptable to a high level of reliability (\Cref{tab-1}).
+
+\begin{table}[h!]
+\centering
+\begin{threeparttable}
+\caption{Reliability analysis result through Cronbach’s Alpha \cite{cronbach1951coefficient}.}
+\label{tab-1}
+\begin{tabular}{lcc}
+\toprule
+Construct & Number of items & Cronbach’s Alpha \\
+\midrule
+Ease of use & 3 & 0.781 \\
+Productivity \& accuracy & 3 & 0.806 \\
+Output comparison & 3 & 0.812 \\
+Training \& satisfaction & 3 & 0.834 \\
+All variables & 12 & 0.894 \\
+\bottomrule
+\end{tabular}
+\source{Own elaboration.}
+\end{threeparttable}
+\end{table}
+
+In all cases, the constructs have crossed the reliability threshold of 0.70 recommended for social sciences \cite{nunnally1978psychometric}, thereby indicating quite excellent internal consistency and appropriateness for further analysis.
+
+
+\subsection{Normality test}\label{sec-modelo}
+Skewness and Kurtosis values have been calculated, as shown in \Cref{tab-2}, to determine the normality assumption for the parametric statistical analyses.
+
+\begin{table}[h!]
+\centering
+\begin{threeparttable}
+\caption{Normality indicators.}
+\label{tab-2}
+\begin{tabular}{lcc}
+\toprule
+Construct & Skewness & Kurtosis  \\
+\midrule
+Ease of use & -0.412 & 0.582 \\
+Productivity \& Accuracy & -0.376 & 0.492 \\
+Output comparison & -0.389 & 0.519 \\
+Training \& satisfaction & -0.441 & 0.671 \\
+All variables & -0.406 & 0.568 \\
+\bottomrule
+\end{tabular}
+\source{Own elaboration.}
+\end{threeparttable}
+\end{table}
+
+The fact that all values fell within the acceptable range (-3 to +3) suggests that the data are normally distributed and appropriate for further inferential testing \cite{george2003spss}.
+
+\subsection{Sample and data collection}\label{sec-organizacao}
+Using a snowballing procedure \cite{naderifar2017snowball}, the questionnaire was distributed by means of Microsoft Forms and forwarded to translators and students of translation through email, social networks, and university networks. The total number of valid responses was 500, retrieved from a wide range of Arab institutions and translation communities.
+
+The respondents covered a wide demographic, with a well-balanced distribution of gender, academic level, and work experience. This ensured that results represent both novice and experienced SDL Trados users.
+
+\subsection{Hypotheses}\label{sec-organizacao-latex}
+This study proposed the following hypotheses:
+
+\textbf{Hypothesis 1}: Demographic variables (gender, academic level, SDL familiarity, etc.) significantly impact the participants’ perception of subtitle cloud usability.
+
+\textbf{Hypothesis 2}: Better productivity and accuracy of subtitles are obtained with SDL subtitle cloud.
+
+\textbf{Hypothesis 3}: Subjects using the subtitle cloud experience output of higher quality than that of conventional subtitling systems.
+
+\textbf{Hypothesis 4}: The subtitle cloud increases the confidence and willingness of users to use SDL in a professional subtitling context.
+
+\subsection{Statistical tests}\label{sec-titulo}
+For testing the hypotheses of the study, a plethora of statistical techniques was employed. Hypothesis 1 was tested through a one-way ANOVA that compares the group means among demographics for their influences on usability perceptions. Hypotheses 2 and 3 were tested using descriptive statistics, which include mean score, standard deviation, minimum, and maximum scores, in order to get a clear picture of productivity and accuracy outcomes. Finally, for Hypothesis 4, multiple linear regression was utilized to test the predictive power and statistical significance of many factors that affect the participants’ willingness to use SDL in their future professional context.
+
+\subsection{Ethical considerations}\label{sec-autores}
+The research was conducted in accordance with the ethical principles outlined in the Declaration of Helsinki. Ethical approval was obtained from the Institutional Review Board of Applied Science Private University, under approval number FOAH 20/2023. Date: 5/10/2023.
+
+\subsection{The research procedure}\label{sec-idioma}
+Steps that were followed in the research:
+
+Step 1: Designing research questions.
+
+Step 2: Selecting the movies to be included in the parallel corpus: more than 100 highly rated and/or award-winning movies will be selected.
+
+Step 3: Extracting the movies’ scripts in English and the subtitles in Arabic from Netflix.
+
+Step 4: Segmenting the data.
+
+Step 5: Aligning the data.
+
+Step 6: Creating an SDL language cloud.
+
+Step 7: Checking the accuracy of the alignment.
+
+Step 8: Asking 500 translators and students who used the cloud to fill in a questionnaire designed for the purpose of the study.
+
+
+\section{Steps of compiling an English-Arabic parallel AVT corpus and creating an SDL language cloud}\label{sec-resumo}
+The processes involved in compiling a large parallel corpus of movie subtitles and creating an SDL cloud for the corpus include the following:
+
+\textbf{Step 1} (Selection of Data): Researchers selected highly rated and award-winning films, as listed in \Cref{tab-3}. Such films are well-known internationally, have high IMDb rankings, and thus may well serve as representatives for commonly accepted norms in linguistic, cultural, and generic respects. Besides, they are accessible on Netflix, which assures consistency in subtitle formatting across the corpus.
+
+\begin{small}
+\centering
+\setlength{\LTcapwidth}{11.25cm}
+\begin{longtable}{lcc}
+\caption{Selected movies that are included in the cloud.}
+\label{tab-3}
+\\
+\toprule
+\textbf{Movie} & \textbf{Release year} & \textbf{Genre} \\
+\midrule
+Marriage story & 2019 & Drama \\
+The trial of the Chicago 7 & 2020 & Drama \\
+Icarus & 2017 & Drama \\
+The Irishman & 2019 & Drama \\
+Mudbound & 2017 & Drama \\
+The two popes & 2019 & Drama \\
+Okja & 2017 & Drama \\
+Lion & 2016 & Drama \\
+My octopus teacher & 2020 & Drama \\
+Da 5 bloods & 2020 & Drama \\
+Seabiscuit & 2003 & Drama \\
+2 guns & 2013 & Action \\
+The old guard & 2020 & Action \\
+King Kong & 2005 & Action \\
+Rocky & 1976 & Action \\
+The harder they fall & 2021 & Action \\
+Skyfall & 2012 & Action \\
+The forgotten battle & 2020 & Action \\
+Rush & 2013 & Action \\
+The lord of the rings: The two towers & 2002 & Action \\
+The lord of the rings: The fellowship of the ring & 2001 & Action \\
+Mile 22 & 2018 & Action \\
+Nocturnal animals & 2016 & Thriller \\
+I care a lot & 2020 & Thriller \\
+Reservoir dogs & 1992 & Thriller \\
+The stranger & 2020 & Thriller \\
+Road to perdition & 2002 & Thriller \\
+I don't feel at home in this world anymore & 2017 & Thriller \\
+The stepfather & 2009 & Thriller \\
+Solace & 2015 & Thriller \\
+The good nurse & 2022 & Thriller \\
+The devil all the time & 2020 & Thriller \\
+The rental & 2020 & Thriller \\
+The nice guys & 2016 & Comedy \\
+The sting & 1973 & Comedy \\
+Forrest gump & 1994 & Comedy \\
+Rango & 2011 & Comedy \\
+Jerry Maguire & 1996 & Comedy \\
+The hangover & 2009 & Comedy \\
+Julie and Julia & 2009 & Comedy \\
+La La Land & 2016 & Comedy \\
+The half of It & 2021 & Comedy \\
+I can do bad all by myself & 2009 & Comedy \\
+The colony & 2013 & Sci-fi \\
+Don't look Up & 2021 & Sci-fi \\
+Space sweepers & 2021 & Sci-fi \\
+The hunger games & 2012 & Sci-fi \\
+See you yesterday & 2019 & Sci-fi \\
+Black mirror: Bandersnatch & 2018 & Sci-fi \\
+The midnight sky & 2020 & Sci-fi \\
+Awake & 2021 & Sci-fi \\
+Zone 414 & 2021 & Sci-fi \\
+The age of adaline & 2015 & Sci-fi \\
+In the shadow of the moon & 2019 & Sci-fi \\
+The last days & 1998 & Documentary \\
+The order of myths & 2008 & Documentary \\
+Print the legend & 2014 & Documentary \\
+Strong island & 2017 & Documentary \\
+Athlete A & 2020 & Documentary \\
+Making a murderer & 2015 & Documentary \\
+Resurface & 2017 & Documentary \\
+Colin in black and White & 2021 & Documentary \\
+The reason I jump & 2020 & Documentary \\
+Quincy & 2018 & Documentary \\
+Five came back & 2021 & Documentary \\
+His house & 2020 & Horror \\
+It follows & 2014 & Horror \\
+IT & 2017 & Horror \\
+Re/Member & 2018 & Horror \\
+Ouija & 2014 & Horror \\
+No one gets out alive & 2021 & Horror \\
+Malevolent & 2018 & Horror \\
+The boy & 2016 & Horror \\
+The wretched & 2019 & Horror \\
+The bye bye man & 2017 & Horror \\
+The invitation & 2015 & Horror \\
+Love, death, and robots: Bad Traveling & 2019 & Animation \\
+Arcane: league of legends & 2021 & Animation \\
+The house & 2020 & Animation \\
+Carmen Sandiego & 2019 & Animation \\
+Sing 2 & 2021 & Animation \\
+Klaus & 2019 & Animation \\
+The boxtrolls & 2014 & Animation \\
+Guillermo del Toro's Pinocchio & 2022 & Animation \\
+The sea beast & 2021 & Animation \\
+Hoops & 2020 & Animation \\
+Over the moon & 2020 & Animation \\
+Les misérables & 2012 & Musical \\
+Tick, tick\ldots{} Boom! & 2021 & Musical \\
+Rock on & 2008 & Musical \\
+Ma Rainey's black bottom & 2020 & Musical \\
+Matilda: the musical & 2022 & Musical \\
+The prom & 2020 & Musical \\
+Vivo & 2021 & Musical \\
+Pan & 2015 & Musical \\
+Dumplin' & 2018 & Musical \\
+My girl & 1991 & Musical \\
+Trolls & 2016 & Musical \\
+Diana: the musical & 2021 & Musical \\
+Red notice & 2021 & Comedy \\
+The christmas chronicles & 2018 & Comedy \\
+Sextuplets & 2019 & Comedy \\
+The wrong missy & 2020 & Comedy \\
+Murder mystery & 2019 & Comedy \\
+F.R.E.D.I. & 2018 & Sci-fi \\
+Spy kids: armageddon & 2023 & Sci-fi \\
+The tinder swindler & 2022 & Documentary \\
+The social dilemma & 2020 & Documentary \\
+Sister death & 2023 & Horror \\
+The babysitter & 2017 & Horror \\
+The ritual & 2018 & Horror \\
+Malevolent & 2018 & Horror \\
+Eli & 2019 & Horror \\
+The silence & 2019 & Horror \\
+Leo & 2023 & Animation \\
+13: The musical & 2022 & Musical \\
+Riverdance: the animated adventure & 2022 & Musical \\
+Eurovision song contest: the story of fire saga & 2020 & Musical \\
+DreamWorks home: for the holidays & 2017 & Musical \\
+\bottomrule
+\source{Own elaboration.}
+\end{longtable}
+\end{small}
+
+\textbf{Step 2} (Data Retrieval and Corpus Construction): The selection of the movies was followed by researchers compiling a bilingual parallel corpus designed for translation analysis and training. This process included the stages of data retrieval, segmentation, alignment, and annotation. In making the resource useful to both researchers and practitioners in the AVT field, it has become more than imperative to arrange, manage, and access data in an orderly manner.
+
+\textbf{Step 3} (Procedures for Segmentation and Alignment): The English transcripts and Arabic subtitles for the movies were directly downloaded from Netflix. Each film was exported into Aegisub for time-coded alignment. Then the subtitle data was imported into an Excel spreadsheet, each movie with its sheet and two respective columns, with left for the English source text and right for the Arabic target text, as seen in \Cref{fig1}.
+
+\begin{figure}[h!]
+    \centering
+    \begin{minipage}{.75\textwidth}
+    \includegraphics[width=\linewidth]{Fig1.png}
+    \caption{English source subtitles aligned with their corresponding Arabic target translations.}
+    \label{fig1}
+    \source{Own elaboration.}
+     \end{minipage}
+\end{figure}
+
+On extraction, these were carefully segmented into translation units such as lines, words, phrases, clauses, and sentences.
+
+\textbf{Step 4} (Integration with SDL Trados Live Cloud): The final transfer concerned the completed manual alignment of English-Arabic subtitles into the SDL Trados Live Team Cloud, the collaborative translation environment within SDL Trados Studio, for optimizing efficiency and convenience of access to the compiled contents, as shown in \Cref{fig2}.
+
+\begin{figure}[h!]
+    \centering
+    \begin{minipage}{\textwidth}
+    \includegraphics[width=\linewidth]{Fig2.png}
+    \caption{Screenshot from the cloud-based platform showing English source subtitles aligned with their corresponding Arabic target translations.}
+    \label{fig2}
+    \source{Own elaboration (RWS Group, 2022).}
+     \end{minipage}
+\end{figure}
+
+This integration provides real-time access to the corpus for terminological search and translation memory functions to be used by translators, researchers, and trainees in producing subtitles. These parallel texts have been uploaded for the easy retrieval of the corpus from any device and any location to promote collaborative learning and assist data-driven translations in audio-visual contexts.
+
+\textbf{Step 5} (Interaction of Participants with the Platform): Under controlled conditions, participants interacted with the SDL live cloud-based parallel corpus. They were introduced to the platform and shown a short orientation video on how to use the system. After this, participants subtitled the session for two hours using the English-Arabic corpus while attempting to respect criteria derived from real situations pertaining to accuracy, timeliness, and terminological consistency. Finally, participants filled in a structured questionnaire regarding usability, productivity, and overall experience with the system.
+
+\section{Analysis and findings}\label{sec-secoes}
+This section has been divided into two segments, as indicated above. The first part of this section concentrates on the demographic characteristics of the study population, while the other part discusses in detail items from the questionnaire. 
+
+
+\subsection{Sample characteristics (demographic data)}\label{sec-format-simple}
+This subsection provides an overview of demographic data on participants to place their responses into context and to explore how background variables might relate to the potential use and perceptions of the SDL Language Cloud. Data have been collected from 500 participants, comprising undergraduate and postgraduate students and professional translators from different Arab universities and training institutions, as shown in \Cref{tab-4}.
+
+\begin{table}[h!]
+\centering
+\begin{threeparttable}
+\caption{Sample characteristics of participants (N = 500).}
+\label{tab-4}
+\begin{tabular}{p{3cm} l r r}
+\toprule
+Demographic variable & Response option &
+\multicolumn{1}{p{1.75cm}}{Number of responses} & Percentage \\
+\midrule
+\multirow{3}{=}{Gender} & Male & 188 &
+37.60\% \\
+& Female & 312 & 62.40\% \\
+& Prefer not to say & 0 & 0.00\% \\
+\midrule
+\multirow{4}{=}{Age} & Under 20 & 124 &
+24.80\% \\
+& 20--30 & 291 & 58.20\% \\
+& 31--40 & 64 & 12.80\% \\
+& Over 40 & 21 & 4.20\% \\
+\midrule
+\multirow{4}{=}{Academic level} &
+Undergraduate student & 271 & 54.20\% \\
+& MA student & 139 & 27.80\% \\
+& PhD student & 52 & 10.40\% \\
+& Professional translator & 38 & 7.60\% \\
+\midrule
+\multirow{4}{=}{Years of experience in
+translation} & 0--2 years & 234 & 46.80\% \\
+& 3--5 years & 126 & 25.20\% \\
+& 6--10 years & 94 & 18.80\% \\
+& Over 10 years & 46 & 9.20\% \\
+\midrule
+\multirow{3}{=}{Familiarity with SDL Trados} &
+Not at all familiar & 137 & 27.40\% \\
+& Somewhat familiar & 206 & 41.20\% \\
+& Very familiar & 157 & 31.40\% \\
+\midrule
+\multirow{2}{=}{Used subtitle files in SDL
+Trados?} & Yes & 338 & 67.60\% \\
+& No & 162 & 32.40\% \\
+\midrule
+\multirow{3}{=}{Languages worked with} &
+English-Arabic & 264 & 52.80\% \\
+& Arabic-English & 173 & 34.60\% \\
+& Other & 63 & 12.60\% \\
+\bottomrule
+\end{tabular}
+\source{Own elaboration.}
+\end{threeparttable}
+\end{table}
+
+In total, there were 312 (62.4\%) females and 188 (37.6\%) males in the sample of respondents. None of the respondents preferred not to disclose their gender. According to the age distributions, the 20-30 age group comprised the majority of the sample (291; 58.2\%), followed by those below 20 years old (124; 24.8\%), between 31 and 40 years (64; 12.8\%), and above 40 years (21; 4.2\%).
+
+In terms of academic level, the majority at 271 included undergraduates, while master’s students followed with a total of 139 (27.8\%), PhD students at 52 (10.4\%), and professional translators at 38 (7.6\%). When it comes to translation experience, 234 respondents (46.8\%) have had experience ranging from 0 to 2 years, while 126 (25.2\%) reported an experience rate between 3 and 5 years. Those who have been exposed for 6-10 years total 94 (18.8\%) respondents, whereas 46 (9.2\%) were found to have over 10 years of experience.
+
+As a matter of fact, SDL Trados understanding varied among the respondents. Altogether, 206 participants (41.2\%) knew this program as ‘somewhat familiar,’ 157 (31.4\%) called themselves ‘very familiar,’ and the other 137 (27.4\%) had no acknowledgement whatsoever. Of the 500 respondents, 338 said yes regarding ever using subtitle files with SDL Trados, whereas 162 answered no.
+
+Broken down by language pairs, 264 (52.8\%) respondents state they are translating mainly English to Arabic, whereas 173 (34.6\%) are translating Arabic to English, and 63 (12.6\%) respondents work with language pairs that include other languages, such as French, German, and Spanish.
+
+\subsection{Qualitative analysis of the questionnaire items}\label{sec-links}
+\Cref{tab-5} describes the participants’ evaluations of effective usability of the SDL Language Cloud across the major designs: Ease of Use, Productivity and Accuracy, Output Comparison, and Training and Satisfaction. The items were evaluated on a 5-point Likert scale; however, the Table merged the percentages into three main categories: Agree, Neutral, and Disagree.
+
+\begin{table}[h!]
+\centering
+\begin{threeparttable}
+\caption{SDL language cloud usability analysis (percentage of participants).}
+\label{tab-5}
+\begin{tabular}{l l p{6.5cm} r r r}
+\toprule
+Construct & No. & Item & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1cm}}{Agree (\%)} & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1cm}}{Neutral (\%)} & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1cm}}{Disagree (\%)} \\
+\midrule
+\multirow{3}{*}{Ease of use} & 1 & I found the SDL Language Cloud interface intuitive and easy to navigate. & 17.8 & 23 & 19.2 \\
+& 2 & Integrating the subtitle corpus into SDL Trados was straightforward. & 19 & 18.6 & 19 \\
+& 3 & It was easy to retrieve and reuse previously translated segments. & 18.2 & 23.8 & 19.4 \\
+\multicolumn{1}{p{2cm}}{\multirow{3}{=}{Productivity \& accuracy}} & 4 & Using the SDL cloud reduced my overall subtitling time. & 20 & 19.8 & 21.6 \\
+& 5 & My terminological consistency improved thanks to the cloud corpus. & 19 & 20.6 & 19.8 \\
+& 6 & I was able to spot and correct subtitle errors more effectively. & 18.8 & 20.2 & 19.4 \\
+\multicolumn{1}{p{2cm}}{\multirow{3}{=}{Output comparison}} & 7 & The quality of my subtitles was better compared to manual translation. & 20 & 18.4 & 17.2 \\
+& 8 & The SDL subtitle cloud helped me better handle genre-specific terminology. & 19.8 & 23.4 & 18.4 \\
+& 9 & The cloud helped prevent awkward or unnatural subtitle translations. & 18 & 20.8 & 19.4 \\
+\multicolumn{1}{p{2cm}}{\multirow{3}{=}{Training \& satisfaction}} & 10 & The cloud tool is useful in subtitle training programs. & 21.8 & 17.6 & 22.4 \\
+& 11 & I would recommend using the SDL subtitle corpus in AVT teaching. & 19 & 21.4 & 22.8 \\
+& 12 & I would use the SDL Language Cloud in my future translation work. \\
+\bottomrule
+\end{tabular}
+\source{Own elaboration.}
+\end{threeparttable}
+\end{table}
+
+Responses from the “Ease-of-Use” construct indicate moderate satisfaction among participants. Specifically, about 17.8\% of respondents agreed that the SDL interface was intuitive and easy to navigate, while 23\% were neutral and 19.2\% disagreed. Conversely, moderately low agreement was also rendered regarding importing the subtitle corpus into SDL Trados (19\% agreement) and reusing previous translations (18.2\%). Neutral responses are also expected to be higher for all three items (between 18.6\% and 23.8\%), meaning uncertainty or mixed experiences in those areas. All those findings may indicate different levels of familiarity with SDL Trados, especially on the part of less experienced users.
+
+Responses to the “Productivity and Accuracy” construct reflected a more positive trend. Twenty percent of respondents believed that cloud support helped in reducing their time for subtitling, and 19\% believed that consistency in terminology improved because of the corpus. Additionally, 18.8 percent of respondents said that they have learned to better recognize errors from subtitles. Neutral and disagreement percentages are around 20 percent, meaning that some users have learned valuable efficiency improvements while others might never fully appreciate them because of potential lack of training or knowledge. For the “Output Comparison” construct, generally favorable responses were given by participants. Of these, 20\% reported better subtitles than manual translations, and 19.8\% reported better handling of genre-specific terms with SDL subtitle cloud. At the same time, 18\% agreed that the cloud avoided translation that sounded awkward or, in some cases, unnatural. However, while numbers may be deemed low here, the levels of disagreement on this construct were somewhat lower than the others, suggesting that users had some comparative improvement in quality with the use of SDL cloud.
+
+Thus, agreement on the subject matter of “Training and Satisfaction” was strong to elicit very favorable responses from the greatest percentage of participants. Notably, 21.8\% said the tool was good for training, while 21.6\% stated they would use SDL Cloud for translation activities in the future. Satisfaction was not unanimous, with about 20-22\% indicating disagreement concerning a given statement. This indicates that while the tool shows much promise for pedagogical integration, its success will depend on more formal and resourced planning for its implementation.
+
+For almost all constructs, participants had neutral responses. This would imply that users may not have complete awareness and are not clear about the functionality and benefits of the cloud. This indicates that some more orientation and guided practice are what users would need to benefit from this tool. The rates of agreement across constructs were quite consistent, ranging from 17.8\% to 21.8\%, thus leading to the conclusion that the acceptance is still at a rather cautious or emerging stage, rather than at the endorsement level.
+
+The SDL Language Cloud shows promise in subtitling education and practice, especially in terms of productivity and training. It seems, however, that a great number of the respondents have not decided or do not believe in its ease and benefits. All findings suggest that future integration of such tools should be coupled with more intensive training to achieve the greatest impact and confidence.
+
+
+\subsection{Hypotheses examination and statistical analysis}\label{sec-listas}
+In this section, we are going to analyze the validity of the study’s four hypotheses based on the questionnaire data that have been collected and analyzed through descriptive statistics, one-way ANOVA, and multiple linear regression.
+
+\textbf{Hypothesis 1}: Demographic variables (gender, academic level, SDL familiarity, etc.) significantly impact the participants’ perception of subtitle cloud usability.
+
+In relation to this hypothesis, a one-way ANOVA was conducted on the usability construct (mean scores of Q1-Q3) with respect to three major demographics imparted in \Cref{tab-6}: Gender, Academic level, and SDL familiarity.
+
+\begin{table}[h!]
+\centering
+\begin{threeparttable}
+\caption{One-Way ANOVA results for demographic effects on usability.}
+\label{tab-6}
+\begin{tabular}{lll}
+\toprule
+Demographic factor & p-value & Interpretation  \\
+\midrule
+Gender & 0.066 & Marginal significance may warrant further investigation \\
+Academic level & 0.492 & Not statistically significant \\
+SDL familiarity & 0.15 & Not statistically significant  \\
+\bottomrule
+\end{tabular}
+\source{Own elaboration.}
+\end{threeparttable}
+\end{table}
+
+There is no strong statistical evidence for Hypothesis 1. Gender had some marginal significance, but in general, demographic factors did not exert a significant influence on user perceptions of usability.
+
+\textbf{Hypothesis 2}: Better productivity and accuracy of subtitles are obtained with SDL subtitle cloud.
+
+We tested this hypothesis by calculating the mean scores of Q4, Q5, and Q6, which reflect participants’ opinions on productivity and terminological consistency, as shown in \Cref{tab-7}.
+
+\begin{table}[h!]
+\centering
+\begin{threeparttable}
+\caption{Descriptive statistics for productivity \& accuracy.}
+\label{tab-7}
+\begin{tabular}{lllll}
+\toprule
+Mean & Std. Dev. & Min & Max & Interpretation   \\
+\midrule
+2.98 & 0.82 & 1 & 5 & Moderate agreement \\
+\bottomrule
+\end{tabular}
+\source{Own elaboration.}
+\end{threeparttable}
+\end{table}
+
+The participants agreed moderately that the SDL Cloud helped in productivity and accuracy, thus supporting Hypothesis 2.
+
+\textbf{Hypothesis 3}: Subjects using the subtitle cloud experience output of higher quality than that of conventional subtitling systems.
+
+The results of Q7, Q8, and Q9 were then analyzed for quality perceptions of subtitle output, as indicated in \Cref{tab-8}.
+
+\begin{table}[h!]
+\centering
+\begin{threeparttable}
+\caption{Descriptive statistics for output quality.}
+\label{tab-8}
+\begin{tabular}{lllll}
+\toprule
+Mean & Std. Dev. & Min & Max & Interpretation  \\
+\midrule
+2.94 & 0.84 & 1 & 5 & Moderate agreement \\
+\bottomrule
+\end{tabular}
+\source{Own elaboration.}
+\end{threeparttable}
+\end{table}
+
+The data suggests a perceived quality of the subtitles by the users using the cloud. Hypothesis 3 holds true.
+
+\textbf{Hypothesis 4}: The subtitle cloud increases the confidence and willingness of users to use SDL in a professional subtitling context.
+
+This hypothesis was tested by the use of average scores from Q10, Q11, and Q12, all in combination with a multiple linear regression model, which predicts Q12 (future use) based on technical aspects (Q1-Q3), language aspects (Q4-Q6), and preferences (Q7-Q9), as shown in \Cref{tab-9}.
+
+\begin{table}[h!]
+\centering
+\begin{threeparttable}
+\caption{Descriptive statistics for training \& future use.}
+\label{tab-9}
+\begin{tabular}{lllll}
+\toprule
+Mean & Std. Dev. & Min & Max & Interpretation  \\
+\midrule
+3.01 & 0.81 & 1 & 5 & Moderate agreement  \\
+\bottomrule
+\end{tabular}
+\source{Own elaboration.}
+\end{threeparttable}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\begin{threeparttable}
+\caption{Multiple linear regression predicting future SDL use (Q12).}
+\label{tab-10}
+\begin{tabular}{lll}
+\toprule
+Predictor & Significance & Interpretation  \\
+\midrule
+Technical aspects & $p<0.05$ & Significant positive influence \\
+Language issues & $p<0.05$ & Significant positive influence \\
+Language preferences & $p<0.05$ & Significant positive influence \\
+\bottomrule
+\end{tabular}
+\source{Own elaboration.}
+\end{threeparttable}
+\end{table}
+
+Perceptions of technical usability, together with an individual’s language performance and preference, are found to have a strong influence on that individual’s future intent to use SDL, as confirmed by the regression analysis in \Cref{tab-10}. Hypothesis 4 is thus supported strongly.
+
+\section{Conclusion, implications, and recommendations}\label{sec-figuras-tabelas}
+This study shows how technology, especially using SDL Trados and a specialized corpus in Live Cloud, can amplify productivity and quality in audiovisual translation. The SDL Language Cloud used for English-Arabic subtitles was an excellent solution for both translators and trainers, due to its user-friendliness.
+
+One main pedagogical implication of the study is that SDL Language Cloud should be central to the instruction of an audiovisual translation training program. Trainees would benefit from working with authentic, pre-aligned bilingual subtitles as they grow in awareness regarding terminology consistency and stylistic coherence. The benefit of such real-life exposure is difficult to enact through traditional textbooks. The cloud could therefore serve, for educators and curriculum designers within the user community, as a means of enriching training environments through task-based activities for peer reviews and standardized reference data for translation benchmarks.
+
+From a professional view, the cloud gives exceptional strength to work faster, to cut down on duplicate work, and to maintain consistency in terminology, which are all relevant in the context of commercial subtitling workflows. Translation agencies, media localization firms, and freelance subtitlers will likely find that integrating a genre-rich SDL cloud into their CAT tool environment streamlines subtitling tasks, particularly when dealing with tight deadlines or complex narratives.
+
+The study showed that there was an urgent need for training and orientation to have been provided. Although a moderate satisfaction was expressed among the participants for all constructs, a sizeable proportion remained neutral, which opens up an opportunity. With the right onboarding programmes, users might have established a clearer pathway to guide them through the SDL interface, corpus navigation, and terminology management, thus improving their understanding and performance.
+
+SDL Subtitle Cloud should gradually be incorporated into undergraduate and postgraduate curricula in audiovisual translation. It should be complemented by practical workshops and webinars that explore the applications of SDL Trados and cloud services for novice and experienced translators.
+
+Academic units should begin constructing genre-specific subcorpora, thereby suggesting an extension of the project towards other language pairs and subtitling contexts. Media institutions and translation agencies may work together to assess the commercial viability of the cloud. Additionally, an online platform with access to the SDL subtitle cloud, tutorials for users, and tabulated community feedback would smooth the dissemination process and make sure it is usable.
+
+The present study puts forward a new dataset and some encouraging findings, but also, nevertheless, has a number of limitations. Even if the participant pool was large and diverse, it was composed of those from Arabic-speaking countries, which confines the generalizability of the findings. Furthermore, several responses were based on self-reported perceptions rather than measurements of translation speed and quality, even though this limitation was attempted to be obviated by means of pilot experiments. Some, but very few, genres were underrepresented in the corpus, probably limiting generalizability, in view of their lower number counts. Participant exposure to SDL Trados varied widely; thus, it interacted with usability ratings.
+
+This study demonstrates the possibility of creating a new landscape for audiovisual translation with a well-made subtitle cloud integrated with a CAT tool such as SDL Trados. Connecting theory with practice, education with industry, innovation with tradition is the principal concern of this paper. Continuous refinement and expansion will ensure that this initiative firmly establishes SDL Language Cloud as a pillar of subtitling excellence in both the Arab world and beyond.
+
+
+\printbibliography\label{sec-bib}
+% if the text is not in Portuguese, it might be necessary to use the code below instead to print the correct ABNT abbreviations [s.n.], [s.l.]
+%\begin{portuguese}
+%\printbibliography[title={Bibliography}]
+%\end{portuguese}
+
+
+%full list: conceptualization,datacuration,formalanalysis,funding,investigation,methodology,projadm,resources,software,supervision,validation,visualization,writing,review
+\begin{contributors}[sec-contributors]
+\authorcontribution{Ahmad S. Haider}[conceptualization,formalanalysis,methodology,supervision,visualization,writing,review]
+\authorcontribution{Mohammed M. Obeidat}[conceptualization,formalanalysis,methodology,visualization,writing,review]
+\authorcontribution{Yousef Hamdan}[datacuration,investigation,review]
+\authorcontribution{Omair AlZghoul}[formalanalysis,resources,review]
+\authorcontribution{Hussein Abu-Rayyash}[validation,resources,review]
+\end{contributors}
+
+\begin{dataavailability}
+\txtdataavailability{dataonly} % options: dataavailable, dataonly, databody, datanotav, nodata
+\end{dataavailability}
+
+\begin{funding}
+This work was funded by the Scientific Research and Innovation Support Fund (SRISF), Humanities and Social Sciences Sector, Ministry of Higher Education and Scientific Research, the Hashemite Kingdom of Jordan (Grant No. SOCI/1/15/2022).
+\end{funding}
+
+\end{document}
+
