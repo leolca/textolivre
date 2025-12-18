@@ -1,0 +1,443 @@
+% !TEX TS-program = XeLaTeX
+% use the following command:
+% all document files must be coded in UTF-8
+\documentclass[portuguese]{textolivre}
+% build HTML with: make4ht -e build.lua -c textolivre.cfg -x -u article "fn-in,svg,pic-align"
+\usepackage{nameref}
+
+\journalname{Texto Livre}
+\thevolume{19}
+%\thenumber{1} % old template
+\theyear{2026}
+\receiveddate{\DTMdisplaydate{2025}{7}{30}{-1}} % YYYY MM DD
+\accepteddate{\DTMdisplaydate{2025}{10}{8}{-1}}
+\publisheddate{\DTMdisplaydate{2025}{12}{18}{-1}}
+\corrauthor{Sandra Dutra Piovesan}
+\articledoi{10.1590/1983-3652.2026.60769}
+%\articleid{NNNN} % if the article ID is not the last 5 numbers of its DOI, provide it using \articleid{} commmand 
+% list of available sesscions in the journal: articles, dossier, reports, essays, reviews, interviews, editorial
+\articlesessionname{articles}
+\runningauthor{Flores, Irala e Piovesan} 
+%\editorname{Leonardo Araújo} % old template
+\sectioneditorname{Daniervelin Pereira~\orcid{0000-0003-1861-3609}}
+\layouteditorname{Saula Cecília~\orcid{0009-0006-3069-8480}}
+
+\title{Evidências sobre Inteligência Artificial e materiais instrucionais na educação: uma revisão de escopo}
+\othertitle{The role of Artificial Intelligence in developing instructional materials for education: a scoping review}
+% if there is a third language title, add here:
+%\othertitle{Artikelvorlage zur Einreichung beim Texto Livre Journal}
+
+\author[1]{Thiago Rodrigues Flores~\orcid{0009-0003-3763-2239}\thanks{Email: \href{mailto:thiagoflores.aluno@unipampa.edu.br}{thiagoflores.aluno@unipampa.edu.br}}}
+\author[1]{Valesca Brasil Irala~\orcid{0000-0001-6190-8440}\thanks{Email: \href{mailto:valescairala@unipampa.edu.br}{valescairala@unipampa.edu.br}}}
+\author[1]{Sandra Dutra Piovesan~\orcid{0000-0002-3175-867X}\thanks{Email: \href{mailto:sandrapiovesan@unipampa.edu.br}{sandrapiovesan@unipampa.edu.br}}}
+\affil[1]{Universidade Federal do Pampa, Programa de Pós-Graduação em Ensino, Bagé, RS, Brasil.}
+
+
+\addbibresource{article.bib}
+% use biber instead of bibtex
+% $ biber article
+
+% used to create dummy text for the template file
+\definecolor{dark-gray}{gray}{0.35} % color used to display dummy texts
+\usepackage{lipsum}
+\SetLipsumParListSurrounders{\colorlet{oldcolor}{.}\color{dark-gray}}{\color{oldcolor}}
+
+% used here only to provide the XeLaTeX and BibTeX logos
+\usepackage{hologo}
+
+% if you use multirows in a table, include the multirow package
+\usepackage{multirow}
+
+% provides sidewaysfigure environment
+\usepackage{rotating}
+
+% CUSTOM EPIGRAPH - BEGIN 
+%%% https://tex.stackexchange.com/questions/193178/specific-epigraph-style
+\usepackage{epigraph}
+\renewcommand\textflush{flushright}
+\makeatletter
+\newlength\epitextskip
+\pretocmd{\@epitext}{\em}{}{}
+\apptocmd{\@epitext}{\em}{}{}
+\patchcmd{\epigraph}{\@epitext{#1}\\}{\@epitext{#1}\\[\epitextskip]}{}{}
+\makeatother
+\setlength\epigraphrule{0pt}
+\setlength\epitextskip{0.5ex}
+\setlength\epigraphwidth{.7\textwidth}
+% CUSTOM EPIGRAPH - END
+
+% to use IPA symbols in unicode add
+%\usepackage{fontspec}
+%\newfontfamily\ipafont{CMU Serif}
+%\newcommand{\ipa}[1]{{\ipafont #1}}
+% and in the text you may use the \ipa{...} command passing the symbols in unicode
+
+% LANGUAGE - BEGIN
+% ARABIC
+% for languages that use special fonts, you must provide the typeface that will be used
+% \setotherlanguage{arabic}
+% \newfontfamily\arabicfont[Script=Arabic]{Amiri}
+% \newfontfamily\arabicfontsf[Script=Arabic]{Amiri}
+% \newfontfamily\arabicfonttt[Script=Arabic]{Amiri}
+%
+% in the article, to add arabic text use: \textlang{arabic}{ ... }
+%
+% RUSSIAN
+% for russian text we also need to define fonts with support for Cyrillic script
+\usepackage{fontspec}
+\setotherlanguage{russian}
+\newfontfamily\cyrillicfont{Times New Roman}
+\newfontfamily\cyrillicfontsf{Times New Roman}[Script=Cyrillic]
+\newfontfamily\cyrillicfonttt{Times New Roman}[Script=Cyrillic]
+%
+% in the text use \begin{russian} ... \end{russian}
+% LANGUAGE - END
+
+% EMOJIS - BEGIN
+% to use emoticons in your manuscript
+% https://stackoverflow.com/questions/190145/how-to-insert-emoticons-in-latex/57076064
+% using font Symbola, which has full support
+% the font may be downloaded at:
+% https://dn-works.com/ufas/
+% add to preamble:
+% \newfontfamily\Symbola{Symbola}
+% in the text use:
+% {\Symbola }
+% EMOJIS - END
+
+% LABEL REFERENCE TO DESCRIPTIVE LIST - BEGIN
+% reference itens in a descriptive list using their labels instead of numbers
+% insert the code below in the preambule:
+%\makeatletter
+%\let\orgdescriptionlabel\descriptionlabel
+%\renewcommand*{\descriptionlabel}[1]{%
+%  \let\orglabel\label
+%  \let\label\@gobble
+%  \phantomsection
+%  \edef\@currentlabel{#1\unskip}%
+%  \let\label\orglabel
+%  \orgdescriptionlabel{#1}%
+%}
+%\makeatother
+%
+% in your document, use as illustraded here:
+%\begin{description}
+%  \item[first\label{itm1}] this is only an example;
+%  % ...  add more items
+%\end{description}
+% LABEL REFERENCE TO DESCRIPTIVE LIST - END
+
+
+% add line numbers for submission
+%\usepackage{lineno}
+%\linenumbers
+
+\begin{document}
+\maketitle
+
+\begin{polyabstract}
+\begin{abstract}
+Com a popularização e o desenvolvimento das ferramentas de inteligência artificial, inúmeras maneiras de integrá-la à educação surgiram. Como ilustração, a possibilidade de criação de materiais didáticos personalizados e voltados aos contextos particulares de cada indivíduo. Levando isso em consideração, o presente estudo tem como objetivo identificar e analisar os benefícios e as estratégias de aplicação da IA no desenvolvimento de materiais didáticos. Dessa forma, foi realizada uma revisão de escopo a fim de mapear aspectos importantes sobre o tema. Após a aplicação do protocolo de inclusão e exclusão, 28 artigos foram selecionados para fazer parte deste estudo. A partir da análise dos resultados, percebeu-se algumas tendências em comum entre os estudos analisados, como a motivação da utilização da IA para criar o material didático e a ferramenta mais utilizada.
+
+\keywords{Material didático\sep Inteligência Artificial\sep Criação de material didático\sep Tecnologias educacionais}
+\end{abstract}
+
+\begin{english}
+\begin{abstract}
+Due to the popularization and development of artificial intelligence tools, a wide variety of ways to integrate AI into education have emerged. A key example is the ability to create personalized instructional materials tailored to the specific contexts of each individual. With this in mind, the present study aims to identify and analyze the benefits and application strategies of AI in the development of instructional materials. To this end, a scoping review was conducted to map important aspects of the topic. Following the application of inclusion and exclusion criteria, 28 articles were selected for this study. The analysis of the results revealed common trends among the reviewed studies, such as the motivation for using AI to create instructional materials and the most frequently used tools.
+
+\keywords{Instructional materials\sep Artificial intelligence\sep Instructional material development\sep Educational technologies}
+\end{abstract}
+\end{english}
+% if there is another abstract, insert it here using the same scheme
+\end{polyabstract}
+
+\section{Introdução}\label{sec-intro}
+Com o avanço das tecnologias e o desenvolvimento das ferramentas de inteligência artificial (IA), foi possível a criação de diversas maneiras de automatizar processos que anteriormente eram realizados de forma manual. Nesse cenário, discutir o uso da IA em contextos educacionais torna-se cada vez mais necessário, considerando que essa tecnologia já é amplamente empregada em diversas áreas do conhecimento como Engenharia, Direito e entretenimento \cite{pereira2024}.
+
+Por definição, a inteligência artificial se refere à capacidade de sistemas computacionais imitarem processos cognitivos humanos e, em determinados casos, até mesmo superá-los \cite{moorhouse2024}. Na área da educação, a inteligência artificial já desempenha diversos papéis relacionados ao processo educativo e também no âmbito da administração pedagógica. Diversos sistemas educacionais utilizam ferramentas de IA para analisar os dados dos alunos e também examinar o desempenho escolar dos mesmos e desenvolver formas de melhorá-lo \cite{santos2024}.
+
+Do mesmo modo, torna-se possível a utilização das IAs para o desenvolvimento de materiais didáticos para o ensino de diversas áreas do conhecimento. Para \textcite{santos2024}, a Inteligência Artificial possibilita uma grande capacidade de personalização de atividades e adequação a diversos contextos e tipos de aprendizagem. Em adição, \textcite{alves2023} define material didático como todo material que foi desenvolvido com o propósito de gerar o aprendizado ou com o propósito de ensinar. No entanto, este trabalho abordará outras terminologias relacionadas e correlatas a materiais didáticos, pois durante a busca de artigos e trabalhos que falam sobre o tema, não há uma convenção sobre qual termo deve ser utilizado para cada contexto.
+
+Apesar do crescente interesse no tema, percebe-se uma lacuna na literatura no que diz respeito a uma sistematização das tendências e abordagens recentes para o uso de IA na criação de materiais didáticos. Diante disso, a presente pesquisa busca responder à seguinte questão: Quais são as tendências disponíveis na literatura internacional recente sobre o uso da inteligência artificial no desenvolvimento de materiais didáticos em contextos educacionais? O objetivo, portanto, é identificar e analisar os benefícios e as estratégias de aplicação da IA no desenvolvimento de materiais didáticos. Para apresentar os resultados desta investigação, o trabalho foi estruturado em quatro seções principais: \nameref{sec-intro}, \nameref{sec-metodologia}, \nameref{sec-analise} e \nameref{sec-conclusao}.
+
+
+\section{Metodologia}\label{sec-metodologia}
+Este estudo configura-se como uma revisão de escopo \textit{(scoping review)}, cuja definição é mapear, rapidamente, os conceitos mais importantes do tema em questão, as principais fontes e tipos de evidências disponíveis \cite{arksey2005}. A pesquisa foi conduzida através da estrutura metodológica PRISMA-ScR \textit{(Preferred Reporting Items for Systematic reviews and Meta-Analyses extension for Scoping Reviews)}, posteriormente aprimorada pelas diretrizes do Joanna Briggs Institute \cite{peters2020}. Esta metodologia é amplamente utilizada com a finalidade de explorar campos de pesquisa que estão em desenvolvimento, identificar lacunas através do mapeamento da literatura obtida, abranger uma maior variedade de tipos de estudo, avaliar conceitos e definições, entre outros.
+
+Levando isso em consideração, a presente revisão consiste em 6 etapas: 1) definição da pergunta e objetivos de pesquisa; 2) criação de uma \textit{string} de busca que abrangesse todos os elementos principais para alcançar artigos que respondam a pergunta de pesquisa; 3) criação de um protocolo de inclusão e exclusão para os trabalhos encontrados; 4) mapeamento em duas bases de dados; 5) tratamento dos dados obtidos e 6) apresentação dos dados.
+
+Em um primeiro momento, foi definida a questão de pesquisa: ``Quais são as evidências disponíveis sobre o uso da inteligência artificial no desenvolvimento e na eficácia de materiais instrucionais em contextos educacionais?''. Em sequência, foram definidas as palavras-chave e a criação da string de busca para as bases de dados: (``instructional materials'' OR ``educational resources'' OR ``teaching materials'' OR ``learning materials'') AND (``artificial intelligence'' OR ``AI'') AND (``education'' OR ``educational settings'' OR ``teaching'' OR ``learning'').
+
+A inclusão dos trabalhos, conforme mostra a Tabela \ref{tab-1}, restringiu-se a artigos que abordam o uso da inteligência artificial no desenvolvimento ou na eficácia de materiais didáticos. Buscou-se ênfase em artigos que envolvam professores, estudantes ou desenvolvedores de materiais instrucionais, em contexto de educação formal.
+
+%--- código da tabela 1 ---%
+\begin{table}[h]
+\centering
+\begin{threeparttable}
+\caption{Critérios de inclusão e exclusão.}\label{tab-1}
+\begin{tabular}{p{2.5cm} p{5.5cm} p{5.4cm}}
+    \toprule
+Critérios & Inclusão & Exclusão \\
+    \midrule
+        População & Artigos que envolvam professores, estudantes ou desenvolvedores de materiais instrucionais. & Artigos que não envolvam estudantes, professores ou desenvolvedores de materiais instrucionais. \\
+        Conceito & Excluir estudos que abordam tecnologias digitais em geral (sem detalhar IA) ou que focam apenas em uso de plataformas sem vínculo com materiais didáticos & Artigos que mencionam IA ou materiais instrucionais de forma superficial, sem foco claro no desenvolvimento ou eficácia. \\
+        Contexto & Estudos que abordem o uso da inteligência artificial no desenvolvimento ou na eficácia de materiais instrucionais/didáticos/recursos/ de ensino/educacionais. & Estudos que falam de inteligência artificial em contextos não formais ou centrados na educação corporativa. \\
+        Tipo de estudo & Artigos & Resumos de conferência, editoriais, cartas ao editor, teses e dissertações, anais de eventos, artigos de revisão, teóricos e ensaios \\
+        Acesso aberto ao texto completo & Disponível & Indisponível \\
+        \bottomrule
+\end{tabular}
+\source{Autoria própria.}
+\end{threeparttable}
+\end{table}
+
+O processo de avaliação dos estudos selecionados ocorreu conforme o diagrama Prisma ilustrado na Figura \ref{fig-1}. Em primeiro lugar, os 162 artigos identificados nas bases de dados analisadas foram colocados em tabelas separadas por base e, em seguida, foram analisados individualmente a partir de seus títulos e resumos. Nessa primeira etapa, antes da triagem, não foram excluídos nenhum dos registros, assim, o número inicial de 162 estudos se manteve.
+
+%--- código da figura 1 ---%
+\begin{figure}[h!]
+\centering
+\begin{minipage}{.85\textwidth}
+\includegraphics[width=\textwidth]{Imagens/image1.png}
+\caption{Protocolo Prisma para avaliação dos estudos.}
+\label{fig-1}
+\source{Autoria própria.}
+\end{minipage}
+\end{figure}
+
+Em sequência, foi realizada a leitura do título e do resumo de cada artigo e, a partir dessa ação, conclui-se que 109 artigos foram descartados por não apresentarem elementos que atendessem ao objetivo desta revisão. Do total de artigos excluídos nesta etapa, 92 focaram apenas no uso de plataformas de IA, mas sem o vínculo com materiais instrucionais; 17 eram outros tipos de trabalho distintos de artigos, por fim não houve nenhum registro de artigos duplicados ou de acesso restrito. É importante mencionar que se a relevância de um trabalho não estava clara a partir da breve leitura do título e resumo, o mesmo foi considerado ``adequado'' nessa etapa inicial para que fosse realizada sua leitura na íntegra junto com os outros trabalhos.
+
+Dos 53 restantes, foi aplicado o protocolo de inclusão e exclusão novamente após a leitura completa de cada um dos trabalhos. Desses, 25 foram eliminados, em sua maioria por não contemplarem o tema de ``materiais didáticos'' ou ``inteligência artificial'' juntos, dando prioridade a apenas um dos dois e/ou tratando algum dos termos de forma pouco aprofundada. Dessa forma, apenas 28 estudos foram incluídos na revisão, após as etapas descritas anteriormente. Por fim, os estudos incluídos foram postos em uma tabela e adicionadas manualmente mais colunas para obtenção de dados mais específicos sobre cada um dos trabalhos analisados. Esse método foi decidido em razão de uma melhor compreensão e comparação dos dados.
+
+
+\section{Análise de dados}\label{sec-analise}
+A presente seção apresenta a análise dos 28 estudos que foram selecionados a partir da aplicação dos critérios de inclusão e exclusão estabelecidos na metodologia. Dessa forma, foi realizada a criação de categorias temáticas para agrupar os trabalhos de acordo com várias óticas: país de origem, idioma, objetivo do estudo, implicações educacionais, IAs mais utilizadas, materiais desenvolvidos e área do conhecimento.
+
+Em primeiro lugar, foram identificados os países e no total, foram 18 países diferentes entre os estudos analisados. A Indonésia foi o país mais recorrente, aparecendo em cinco estudos. Em seguida, destacam-se China (quatro estudos), Rússia e Vietnã (três estudos cada), além da Índia e dos Estados Unidos (dois estudos cada). Os demais países foram mencionados uma única vez: Taiwan, Equador, Japão, Tailândia, Arábia Saudita, Emirados Árabes Unidos, Marrocos, França, Malásia, Polônia e Paraguai. Cabe mencionar que alguns estudos contaram com colaborações de pesquisadores/universidades de países diferentes, então foram contabilizados mais de um país para um mesmo estudo. Com relação ao idioma, dos 28 trabalhos analisados, observou-se um predomínio do inglês, pois 22 dos 28 estavam nessa língua. Em sequência, houve dois estudos em russo e apenas um estudo para cada um dos seguintes idiomas: espanhol, polonês, tuvano e indonésio.
+
+Na sequência, ao serem classificadas as áreas dos estudos, decidiu-se separá-las pelas três grandes áreas de conhecimento da CAPES \cite{capes2025}. Dessa forma, 21 estudos alinharam-se à área de Humanidades, 5 a Ciências da Vida, e apenas 3 às Exatas, Tecnológicas e Multidisciplinares. A partir disso, ilustrou-se a predominância dos trabalhos analisados que utilizam de ferramentas de IA para desenvolver materiais didáticos.
+
+Quanto às ferramentas de inteligência artificial identificadas nos estudos, conforme ilustra a Figura \ref{fig-2}, notou-se a predominância do \textit{Chat GPT}, que foi mencionado 11 vezes, evidenciando sua ampla adoção no contexto educacional. Entretanto, uma grande quantidade de outras ferramentas também foram mencionadas: como o \textit{Gemini} e o \textit{Co-Pilot}, citadas 3 vezes cada, \textit{Google Bard} e \textit{Claude}, 2 vezes cada. Outras alternativas foram citadas apenas uma vez como: \textit{D-ID Studio, Diffit, GPTZero, AI Writing Check, Fictitius, DetectGPT, CopyLeaks, DeepSeek, Llama-2, ChatPDF, Speech Synthesis AI, Crayion, Freepik Pikaso} e \textit{Pixlr}. Em dois casos, os autores não mencionam a ferramenta utilizada. Esse panorama revela uma grande diversidade de ferramentas de IA disponíveis, mostrando a predominância dos modelos de linguagem generativos, como o \textit{ChatGPT}.
+
+%--- código da figura 2 ---%
+\begin{figure}[h!]
+\centering
+\begin{minipage}{.75\textwidth}
+\includegraphics[width=\textwidth]{Imagens/image2.png}
+\caption{Ferramentas de IA utilizadas nos estudos analisados.}
+\label{fig-2}
+\source{Autoria própria.}
+\end{minipage}
+\end{figure}
+
+Diversos materiais criados com inteligência artificial foram empregados pelos estudos, destacando uma ampla tipologia. Entre os tipos mais frequentes, estão os materiais instrucionais, planos de aula, textos para leitura e interpretação, exercícios de lacunas além de questões discursivas e objetivas. Também foram identificadas produções como resumos, rubricas de avaliação, códigos e exemplos práticos, cursos na plataforma \textit{Moodle, e-books} e ferramentas de avaliação automatizadas. Além disso, alguns estudos utilizaram a geração de voz por IA, imagens, e recursos gráficos criados por meio de plataformas assistidas por inteligência artificial.
+
+Dessa forma, os dados mostram que há uma grande versatilidade para a criação de materiais didáticos, que atendem a diferentes demandas educacionais, sendo elas no planejamento, na avaliação e na execução das práticas de ensino.
+
+Quanto à metodologia dos estudos, os artigos foram divididos de acordo com suas abordagens. Dessa forma, a Tabela \ref{tab-2} mostra os que se caracterizam por metodologia mista. A partir dessa divisão, serão analisados os objetivos e implicações educacionais de cada um dos trabalhos.
+
+%--- código da tabela 2 ---% 
+\begin{table}[h!]
+\centering
+\small
+\begin{threeparttable}
+    \caption{Estudos de metodologia mista.}
+    \label{tab-2}
+    \begin{tabular}{p{1cm} p{6cm} p{4cm} p{2cm}}
+        \toprule
+        Artigo & Título & Autores & País \\
+        \midrule
+        D-24 & ``Integration of Generative Artificial Intelligence in Higher Education: Best Practices'' & Cordero, Jorge; Torres-Zambrano, Jonathan; Cordero-Castillo, Alison \citeyear{cordero2024}& Equador \\
+        D-70 & ``The Effectiveness of the Integration of ChatGPT into Flipped Classrooms from Teachers’ and Learners’ Perspectives'' & Dung, Le Quang \citeyear{dung2024}& Vietnã \\
+        D-72 & ``Investigating How Generative AI Can Create Personalized Learning Materials Tailored to Individual Student Needs'' & Binhammad, Mohammad Hassan Yousif; Azzam, Othman; Laila, Abuljadayel; Al, Mheiri Huda; Muna, Alkaabi; Mohammad, Almarri \citeyear{binhammad2024}& Arábia Saudita/Emirados Árabes \\
+        D-90 & ``Assessing Quality of Scenario-Based Multiple-Choice Questions in Physiology: Faculty-Generated vs. ChatGPT-Generated Questions among Phase I Medical Students'' & Chauhan, Archana; Khaliq, Farah; Nayak, Kirtana Raghurama \citeyear{chauhan2025}& Índia \\
+        D-97 & ``Positive Impacts of Chat GPT on English Teachers'' & Thanh, Ta Thi; Loan, Nguyen Thanh \citeyear{thanh2024}& Vietnã \\
+        D-101 & ``AI-Based Learning Media ``Toori'' (Dance Cartoon) to Increase Elementary School Students’ Interest in Learning Dance Arts'' & Prayoga, Viona Regina; Nurharini, Atip \citeyear{prayoga2024}& Indonésia \\
+        \bottomrule
+    \end{tabular}
+    \source{Autoria própria.}
+\end{threeparttable}
+\end{table}
+
+Com relação aos artigos que apresentam metodologia mista, no que se refere aos objetivos dos estudos, criou-se três categorias para agrupá-los e verificar qual a maior incidência das motivações dos trabalhos, sendo elas: personalização, otimização e adaptação de material didático (Objetivo 1); implementação sistêmica da IA (Objetivo 2); e impacto e eficácia da IA na aprendizagem (Objetivo 3). Pertencem à categoria Objetivo 1 os artigos que focam na customização e adaptação do material didático, criando ou adaptando materiais já existentes. A categoria Objetivo 2 enquadra os trabalhos que focam em implementar as ferramentas de IA para além do material didático, ou seja, utilizando ela em distintos momentos pedagógicos. Ademais, na categoria Objetivo 3, foi contabilizada a quantidade de estudos que avaliam o impacto e/ou a eficácia da implementação de trabalhos com o uso de IA na aprendizagem de estudantes.
+
+Em seguida, a organização dessa classificação se deu da seguinte forma:
+
+\begin{itemize}
+\item Personalização, otimização e adaptação de material didático: D-101, D-72;
+\item Implementação sistêmica da IA: D-24;
+\item Impacto e eficácia da IA na aprendizagem: D-97, D-90, D-70.
+\end{itemize}
+
+A partir disso, conclui-se que, no que tange os objetivos dos estudos analisados com metodologia mista, a distribuição foi variada, pois dois artigos se adequam como Objetivo 1, apenas um na Objetivo 2 e três na Objetivo 3, demonstrando uma heterogeneidade em seus objetivos.
+
+De maneira similar, criaram-se categorias para agrupar as implicações educacionais de cada um dos estudos, a fim de encontrar convergências nos seus achados. Dessa forma, as categorias foram nomeadas conforme seus pontos mais fortes: melhoria da aprendizagem e engajamento do aluno (Implicação 1); apoio ao educador e otimização da prática pedagógica (Implicação 2); e desafios, limitações e considerações para a implementação (Implicação 3). Por conseguinte, os trabalhos distribuíram-se da seguinte maneira:
+
+\begin{itemize}
+\item Melhoria da aprendizagem e engajamento do aluno: D-72, D-97 e D-101;
+\item Apoio ao educador e otimização da prática pedagógica: D-97;
+\item Desafios, limitações e considerações para a implementação: D-24, D-70 e D-90.
+\end{itemize}
+
+Com relação às implicações educacionais, a distribuição se concentrou na Implicação 1 e Implicação 3, cada uma com três trabalhos, e apenas um trabalho se adequou como Implicação 3. Ou seja, os trabalhos que possuem metodologia mista trazem maiores contribuições nas áreas de melhoria da aprendizagem e engajamento do aluno, ao mesmo tempo que discorrem sobre suas possíveis limitações e desafios para a implementação dos materiais didáticos.
+
+No entanto, vale ressaltar que o estudo D-97 apareceu duas vezes em razão de suas contribuições abarcarem mais de uma finalidade, auxiliando na otimização da prática pedagógica, ao mesmo tempo que levanta desafios e limitações para a implementação dos materiais.
+
+Na Tabela \ref{tab-3} serão analisados os trabalhos com metodologia qualitativa, os quais, somados, totalizam treze trabalhos. Serão utilizadas as mesmas categorias já apresentadas anteriormente para classificar os objetivos dos trabalhos e suas implicações educacionais.
+
+%--- código da tabela 3 ---%
+\begin{table}[h!]
+\centering
+\small
+    \begin{threeparttable}
+    \caption{Estudos de metodologia qualitativa.}
+    \label{tab-3}
+    \begin{tabular}{p{1cm} p{5cm} p{4cm} p{2.5cm}}
+        \toprule
+        Artigo & 
+        Título & Autores & País \\
+        \midrule
+        D-12 & ``Pendampingan Pengembangan Bahan Ajar berbasis Artificial Intelligence'' & Ahmad, Arimuliani; Khulaifiyah; Rugaiyah \citeyear{ahmad2024}& Indonésia \\
+        D-18 & ``Integrating Artificial Intelligence into the Arabic Language Teaching Plan at Higher Education'' & Samin, Saproni Muhammad; Osman, Rahmah Ahmad \citeyear{samin2024}& Indonésia \\
+        D-33 & ``Research and Practice of Artificial Intelligence-Based Hybrid Teaching of College English'' & Hu, Fengyue \citeyear{hu2024}& China \\
+        D-49 & ``Artificial Intelligence Supporting Independent Student Learning: An Evaluative Case Study of ChatGPT and Learning to Code'' & Hartley, Kendall; Hayak, Merav; Ko, Un Hyeok \citeyear{hartley2024}& Estados Unidos \\
+        D-67 & ``Developing a chatbot in quantities, denomination, and measurement: an artificial intelligence-based teaching materials'' & Setyaningrum, Vidya; Erlina, Erlina; Thongsan, Nuchsara Choksuansup \citeyear{setyaningrum2023}& Indonésia e Tailândia \\
+        D-102 & ``Evaluating AI-Generated Language as Models for Strategic Competence in English Language Teaching'' & Nguyen, Phuong-Anh \citeyear{nguyen2024}& Vietnam \\
+        S-6 & ``Investigating EFL teachers’ use of generative AI to develop reading materials: A practice and perception study'' & Xin, Jieting Jerry \citeyear{xin2024}& China \\
+        S-13 & ``Potencial affordances of generative AI in language education: demonstration and an evaluative framework'' & Pack, Austin; Maloney, Jeffrey \citeyear{pack2023}& EUA \\
+        S-19 & ``The educational affordances and challenges of generative AI in Global Englishes-oriented materials development and implementation: A critical ecological perspective'' & Lo, Alfred W.T. \citeyear{lo2025}& China \\
+        S-20 & ``Evaluation of AI-generated reading comprehension materials for Arabic language teaching'' & Allaithy, Ahmed; Zaki, Mai \citeyear{allaithy2025}& Emirados Árabes Unidos \\
+        S-24 & ``D-ID Studio: Empowering Language Teaching With AI Avatars'' & Wang, Chenghao; Zou, Bin \citeyear{wang2025}& China \\
+        S-42 & ``Guana IA Project: innovation in teaching endangered languages; [Projeto Guaná IA: inovação no ensino de línguas em risco]; [Proyecto Guaná IA: innovación en la enseñanza de la lengua en riesgo'' & Ortiz, Derlis; Lacerda de Sá, Ruben; Trigo, Luis; Pichel, José \citeyear{ortizcoronel2024}& Paraguai \\
+        S-45 & ``AI-Generated Images as a Teaching Tool in Foreign Language Acquisition'' & Vigna-Taglianti, Jacopo \citeyear{vignataglianti2024}& Rússia \\
+        \bottomrule
+    \end{tabular}
+    \source{Autoria própria.}
+\end{threeparttable}
+\end{table}
+
+A partir da análise feita, levando em consideração os objetivos, foi possível alocar os trabalhos nas 3 categorias, cuja distribuição ocorreu da seguinte forma: oito trabalhos tinham objetivos alinhados ao Objetivo 1, dois correspondiam ao Objetivo 2 e quatro estudos na categoria Objetivo 3.
+
+\begin{itemize}
+\item Personalização, otimização e adaptação de material didático: D-12, D-67, D-102, S-13, S-19, S-20, S-24 e S-45;
+\item Implementação sistêmica da IA: S-42 e D-18;
+\item Impacto e eficácia da IA na aprendizagem: D-18, D-33, D-49 e S-6.
+\end{itemize}
+
+O estudo D-18 foi classificado em duas categorias por abordar simultaneamente aspectos relacionados aos objetivos 2 e 3.
+
+Ao que se refere às implicações educacionais, a distribuição deu-se de maneira quase uniforme, pois sete trabalhos se adequaram à categoria Implicação 1 e cinco nas categorias Implicação 2 e Implicação 3.
+
+\begin{itemize}
+\item Melhoria da aprendizagem e engajamento do aluno: D-33, D-49, D-67, D-102, S-24, S-42 e S-45;
+\item Apoio ao educador e otimização da prática pedagógica: D-12, D-102, S-6, S-13 e S-24;
+\item Desafios, limitações e considerações para a implementação: D-12, D-102, S-6, S-13 e S-24.
+\end{itemize}
+
+Dessa forma, os estudos qualitativos analisados demonstram uma concentração significativa em abordagens voltadas à personalização, otimização, adaptação de materiais didáticos, impacto e eficácia da IA no aprendizado (Objetivo 1 e 2), com menor presença de investigações sobre a implementação sistêmica da IA (Objetivo 3). Ademais, observa-se uma distribuição relativamente equilibrada entre as implicações educacionais, com ênfase na melhoria da aprendizagem e no engajamento do aluno, mas também com atenção ao apoio ao educador e às limitações enfrentadas na prática.
+
+A presença de estudos alocados em múltiplas categorias (como D-18, D-102, S-13 e S-24) reforça o caráter abrangente das abordagens qualitativas, que tendem a explorar os aspectos pedagógicos, institucionais e funcionais do uso da inteligência artificial na produção de materiais didáticos.
+
+Por fim, a Tabela \ref{tab-4} mostra os nove trabalhos de natureza quantitativa que serão analisados a partir das categorias citadas para enquadrar seus objetivos e implicações educacionais.
+
+%--- código da tabela 4 ---%
+\begin{table}[h!]
+\centering
+\begin{threeparttable}
+    \caption{Estudos de metodologia quantitativa.}
+    \label{tab-4}
+    \begin{tabular}{p{1cm} p{6cm} p{4cm} p{1.5cm}}
+        \toprule
+   Artigo & Título & Autores & País \\
+        \midrule
+        D-1 & ``The Effectiveness of Applying Artificial Intelligence in Sick Children’s Communication'' & Huang, Hsin-Shu; Lee, Bih-O \citeyear{huang2024}& Taiwan \\
+        D-28 & ``Application of generative artificial intelligence in the methodical work of a university teacher: development of test materials'' & Pugach, Olga I.; Startseva, Natalia V. \citeyear{pugach2024}& Rússia \\
+        D-42 & ``Evaluating AI-Personalized Learning Interventions in Distance Education'' & Vijayakumar, Selvaraj; Panwale, Sajida Bhanu \citeyear{vijayakumar2025}& India \\
+        D-51 & ``Enhancing Sustainable AI-Driven Language Learning: Location-Based Vocabulary Training for Learners of Japanese'' & Yang, Liuyi; Chen, Sinan; Li, Jialong \citeyear{yang2025}& Japão \\
+        D-89 & ``Effectiveness of an Adaptive Learning Chatbot on Students’ Learning Outcomes Based on Learning Styles'' & Kaiss, Wijdane; Mansouri, Khalifa; Poirier, Franck \citeyear{kaiss2023}& Marrocos e França \\
+        D-98 & ``Personalization of Learning: Machine Learning Models for Adapting Educational Content to Individual Learning Styles'' & Villegas-Ch, William; García-Ortiz, Joselin; Sánchez-Viteri, Santiago \citeyear{villegas2024}& Malásia \\
+        D-111 & ``Developing E-worksheet-based TPACK model for Junior High School Students in English Language Learning Context'' & Meldia, Putri; Melani, Melyann; Kardena, Absharini; Roza, Veni \citeyear{meldia2024}& Indonésia \\
+        S-26 & ``The linguistic and didactic potential of ChatGPT in foreign language teaching'' & Iakovleva O. \citeyear{iakovleva2024}& Polônia \\
+        S-28 & ``Using artificial intelligence to develop a machine translation system and teaching resources in the Tuvan language'' & Novikova M.L.; Novikov P.N. \citeyear{hobnkoba2024}& Rússia \\
+        \bottomrule
+    \end{tabular}
+    \source{Autoria própria.}
+\end{threeparttable}
+\end{table}
+A análise dos objetivos permitiu a alocação dos estudos nas três categorias estabelecidas. Seis estudos foram classificados como Objetivo 1, nenhum estudo foi identificado para Objetivo 2 e três estudos foram alocados no Objetivo 3.
+
+\begin{itemize}
+\item Personalização, otimização e adaptação de material didático: D-1, D-28, D-51, D-98, D-111 e S-28;
+\item Implementação sistêmica da IA: nenhum;
+\item Impacto e eficácia da IA na aprendizagem: D-42, D-89 e S-26.
+\end{itemize}
+
+Com base na análise das implicações educacionais, sete estudos foram classificados como Implicação 1, dois como Implicação 2 e nenhum foi alocado na categoria Implicação 3.
+
+\begin{itemize}
+    \item Melhoria da aprendizagem e engajamento do aluno: D-1, D-42, D-51, D-89, D-98, D-111 e S-28;
+\item Apoio ao educador e otimização da prática pedagógica: D-28 e S-26;
+\item Desafios, limitações e considerações para a implementação: nenhum.
+\end{itemize}
+
+Portanto, os dados revelam que, com relação aos estudos de caráter quantitativo, uma concentração significativa se categoriza com foco na personalização, otimização e adaptação de material didático (Objetivo 1), totalizando seis dos nove trabalhos analisados. Por outro lado, nenhum estudo foi classificado na categoria de implementação sistêmica da IA (Objetivo 2), o que indica uma lacuna importante na literatura quanto ao uso da inteligência artificial em larga escala ou de forma institucionalizada no desenvolvimento de materiais didáticos. Na terceira categoria, impacto e eficácia da IA na aprendizagem (Objetivo 3), foram reunidos três estudos, evidenciando um interesse crescente em compreender os efeitos da IA na aprendizagem, ainda que em menor escala.
+
+No que se refere às implicações educacionais, observou-se um predomínio de trabalhos voltados à ``melhoria da aprendizagem e engajamento do aluno'' (Implicação 1), presentes em sete dos nove estudos. A categoria ``apoio ao educador e otimização da prática pedagógica'' (Implicação 2) esteve representada em apenas dois estudos, enquanto nenhuma publicação foi classificada como pertencente à categoria de ``desafios e limitações para a implementação da IA'' (Implicação 3).
+
+Como resultado, a análise comparativa entre os estudos qualitativos, quantitativos e de abordagem mista revelam tendências distintas quanto aos objetivos investigados e às implicações educacionais relatadas. De modo geral, a categoria Objetivo 1 foi a mais recorrente, especialmente entre os estudos qualitativos e quantitativos, demonstrando um foco predominante na customização de recursos pedagógicos com apoio da inteligência artificial. Em contrapartida, a categoria Objetivo 2 apresentou baixa representação em todos os grupos metodológicos, o que evidencia uma lacuna significativa no que se refere à adoção da IA em escala sistemática, ou seja, em diferentes partes do processo de ensino-aprendizagem ou em políticas educacionais. A categoria Objetivo 3 foi mais presente nos estudos quantitativos e mistos, sugerindo uma inclinação dessas abordagens para mensurar resultados e efeitos concretos no desempenho discente.
+
+Em relação às implicações educacionais, os três grupos metodológicos demonstraram ênfase na categoria Implicação 1, com maior incidência nos estudos qualitativos e mistos. As categorias Implicação 2 e Implicação 3 estiveram mais evidentes nos estudos qualitativos e mistos, revelando que essas abordagens tendem a apresentar uma visão mais crítica e contextualizada sobre a aplicação da IA. Essa diferença sugere que os estudos quantitativos focam mais nos efeitos diretos sobre a aprendizagem, enquanto os qualitativos e mistos exploram, de forma mais ampla, os impactos sobre o ambiente educacional como um todo.
+
+Assim, os resultados evidenciam a predominância de uma abordagem centrada no aluno, devido à grande possibilidade de personalização, mas também apresentam como lacuna um espaço que demonstra a necessidade de ampliar as investigações sobre a perspectiva docente, os desafios institucionais e os aspectos sistêmicos da implementação da inteligência artificial no desenvolvimento de materiais didáticos. Isso significa que a IA e as pesquisas que recentemente derivam de seu uso nesse campo tendem a investir na compreensão positiva desse processo, com menos atenção aos desdobramentos institucionais, mas claramente mais direcionadas aos benefícios individuais que lhe são decorrentes (sem muita atenção aos seus efeitos sociais).
+
+Ainda da perspectiva docente, é válido considerar que o desenho de atividades personalizadas – uma das principais vantagens do uso da IA na educação – não é uma habilidade historicamente universalizada na formação de professores, já que, tradicionalmente, docentes foram se tornando meros consumidores de materiais didáticos produzidos por outros ao longo das últimas décadas de massificação do ensino – notadamente, de forma predominante, os materiais produzidos pelos autores consagrados de livros didáticos.
+
+A IA apresenta um momento de virada de chave incomparável a nenhuma outra mudança tecnológica recente no campo educativo. Por um lado, há que se observar com cautela quando não são apresentados desafios e limitações (como ocorre em muitas pesquisas revisadas), mas, por outro lado, mesmo quando eles são reconhecidos não há grande visibilidade ou interpretações fundamentadas sobre isso de forma extensiva. Tal panorama reforça a importância de ampliação de abordagens metodológicas integradas e críticas, vindo a gerar um entendimento mais amplo do papel da IA na educação nos tempos atuais, especialmente com ênfase em desdobramentos institucionais específicos.
+
+\section{Conclusão}\label{sec-conclusao}
+Com o avanço e desenvolvimento acelerado da inteligência artificial, ela se torna uma grande aliada na planificação e desenvolvimento do trabalho pedagógico docente, possibilitando a criação de materiais didáticos em distintos formatos e com um grande potencial de personalização. Levando isso em consideração, o presente trabalho propôs uma revisão de escopo, com o objetivo de identificar as tendências sobre os benefícios da IA no desenvolvimento de materiais instrucionais em contextos educacionais.
+
+Após o processo de inclusão e exclusão dos trabalhos localizados com a string de busca em duas bases de dados \textit{(Scopus} e \textit{Dimensions)}, chegou-se a um resultado total de 28 trabalhos incluídos para compor o \textit{corpus} da análise. Na sequência, com os dados obtidos, foram criadas categorias para analisá-los. Dessa forma, verificou-se quais eram os idiomas em que os trabalhos foram escritos, de que país vinham, de qual área do conhecimento pertenciam, objetivos, implicações educacionais, quais foram as ferramentas de IA mais utilizadas e materiais desenvolvidos.
+
+Observou-se que, embora os trabalhos venham de distintos países, o maior consenso é em relação ao idioma, pois a maior parte está escrito em inglês. Grande parte dos estudos incluídos nesta revisão pertence à área do conhecimento das humanidades e têm caráter qualitativo. Com relação aos objetivos dos estudos analisados, foi possível perceber que a categoria ``Personalização, otimização e adaptação de material didático'' foi a mais presente, indicando que a IA tem um papel significativo no que concerne à customização de materiais. Essa constatação indica que a IA torna o trabalho docente menos demandante e facilita seu planejamento, principalmente pela otimização do tempo.
+
+Ao analisar as implicações, verificou-se uma distribuição, relativamente equilibrada, entre as três categorias criadas, o que sugere que a IA tem trazido, em alguma medida, impactos na educação. Esses impactos se dão através da melhoria do engajamento do aluno, otimização do tempo do educador ou mesmo através das 
+reflexões críticas dos atores sobre a sua implementação.
+
+No que tange aos materiais desenvolvidos com IA, não há um consenso sobre um formato de material didático que é mais utilizado, porém são citados alguns como: \textit{E-books}, resumos, voz criada com IA, planos de aula, rubricas, entre outros. Além disso, para a geração desses materiais, a IA mais mencionada foi o \textit{Chat GPT}, evidenciando que é a mais popular entre as inteligências artificiais para auxiliar no desenvolvimento e criação do material didático, ainda que haja outras IAs específicas para esse fim, as quais ainda não estão popularizadas entre os docentes.
+
+Além das tendências metodológicas e pedagógicas observadas, os dados revelam implicações amplas para a educação e para a sociedade. A adoção de inteligência artificial na criação e desenvolvimento de materiais didáticos pode contribuir para o seu uso mais democrático, através de materiais personalizados, assistindo a diferentes tipos de perfis de estudantes e contextos socioculturais.
+
+Entretanto, essa expansão fomenta discussões éticas, formativas e estruturais, especialmente ao que se refere à formação docente, ao letramento digital crítico e ao risco de dependência tecnológica. Tais fatores, indicam que o impacto da IA na educação ultrapassa o ambiente escolar, reverberando em mudanças sociais mais amplas – como o acesso equitativo a tecnologias e a necessidade de políticas públicas que regulamentem seu uso para fins educacionais de forma ética.
+
+No entanto, este estudo apresenta algumas limitações. A análise foi restrita a duas bases de dados, o que pode ter excluído trabalhos relevantes de outras regiões ou plataformas. Além disso, a \textit{string} de busca utilizada influenciou diretamente os resultados obtidos. Estudos que mencionaram a IA de forma superficial ou sem relação direta com materiais didáticos foram excluídos, o que também impactou o escopo final da revisão.
+
+Por fim, cabe destacar que foi encontrada uma lacuna em comum nos trabalhos analisados: não há acordo sobre o termo empregado com relação aos materiais didáticos, pois os autores denominam como material instrucional, material de ensino, de aprendizagem, recurso educacional ou utilizam várias definições para se referir ao mesmo material. Além de não entrarem em consenso, também não trazem definições para que outros pesquisadores possam se debruçar sobre os conceitos adotados. Tal inconsistência aponta para a necessidade de estudos futuros que investiguem e consolidem conceitualmente esse campo.
+
+Dessa forma, sugere-se que pesquisas futuras tenham como foco a consolidação conceitual do que se entende por ``material didático'', seja quando alinhada à Inteligência Artificial, seja de maneira mais ampla, com a finalidade de padronizar ou definir o conceito e seus correlatos, tanto para fins investigativos quanto pedagógicos. Por fim, explorar a eficácia desses materiais gerados com IA em diferentes áreas do conhecimento é essencial para compreender as diferenças de seus impactos na educação.
+
+
+\begingroup
+\linespread{0.99}\selectfont
+\printbibliography\label{sec-bib}
+\endgroup
+
+% if the text is not in Portuguese, it might be necessary to use the code below instead to print the correct ABNT abbreviations [s.n.], [s.l.]
+%\begin{portuguese}
+%\printbibliography[title={Bibliography}]
+%\end{portuguese}
+
+
+%full list: conceptualization,datacuration,formalanalysis,funding,investigation,methodology,projadm,resources,software,supervision,validation,visualization,writing,review
+\begin{contributors}[sec-contributors]
+\authorcontribution{Thiago Rodrigues Flores}[investigation,methodology,writing]
+\authorcontribution{Valesca Brasil Irala}[conceptualization,supervision,review]
+\authorcontribution{Sandra Dutra Piovesan}[conceptualization,supervision,resources,review]
+\end{contributors}
+
+\begin{dataavailability}
+\txtdataavailability{databody} % options: dataavailable, dataonly, databody, datanotav, nodata
+\end{dataavailability}
+
+
+\end{document}
+
