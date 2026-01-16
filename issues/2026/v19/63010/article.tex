@@ -1,0 +1,639 @@
+% !TEX TS-program = XeLaTeX
+% use the following command:
+% all document files must be coded in UTF-8
+\documentclass[spanish]{textolivre}
+% build HTML with: make4ht -e build.lua -c textolivre.cfg -x -u article "fn-in,svg,pic-align"
+
+\journalname{Texto Livre}
+\thevolume{19}
+%\thenumber{1} % old template
+\theyear{2026}
+\receiveddate{\DTMdisplaydate{2025}{11}{24}{-1}} % YYYY MM DD
+\accepteddate{\DTMdisplaydate{2025}{12}{10}{-1}}
+\publisheddate{\DTMdisplaydate{2026}{1}{16}{-1}}
+\corrauthor{Salvador Gutiérrez Molero}
+\articledoi{10.1590/1983-3652.2026.63010}
+%\articleid{NNNN} % if the article ID is not the last 5 numbers of its DOI, provide it using \articleid{} commmand 
+% list of available sesscions in the journal: articles, dossier, reports, essays, reviews, interviews, editorial
+\articlesessionname{articles}
+\runningauthor{Gutiérrez Molero y Gutiérrez Rivero} 
+%\editorname{Leonardo Araújo} % old template
+\sectioneditorname{Daniervelin Pereira~\orcid{0000-0003-1861-3609}}
+\layouteditorname{Leonardo Araújo~\orcid{0000-0003-3884-2177}}
+
+\title{Conocimientos y habilidades digitales en relación con la comunicación lingüística y Conocimiento del Medio Natural, Social y Cultural: análisis correlacional y perfiles estudiantiles en 6.º de Primaria}
+\othertitle{Conhecimentos e habilidades digitais relacionados com a comunicação linguística e o Conhecimento do Meio Natural, Social e Cultural: análise correlacional e perfis dos alunos do 6º ano do ensino básico}
+\othertitle{Digital knowledge and skills in relation to linguistic communication and Knowledge of the Natural, Social, and Cultural Environment: correlational analysis and student profiles in 6th grade primary school}
+% if there is a third language title, add here:
+%\othertitle{Artikelvorlage zur Einreichung beim Texto Livre Journal}
+
+\author[1]{Salvador Gutiérrez Molero~\orcid{0000-0003-2895-6154}\thanks{Email: \href{mailto:salvador.gutierrezmolero@gm.uca.es}{salvador.gutierrezmolero@gm.uca.es}}}
+\author[1]{Antonio Gutiérrez Rivero~\orcid{0000-0001-6223-2390}\thanks{Email: \href{mailto:antoniogutierrez.rivero@uca.es}{antoniogutierrez.rivero@uca.es}}}
+\affil[1]{Universidad de Cádiz, Facultad de Ciencias de la Educación, Departamento de Didáctica de la Lengua y la Literatura, Cádiz, España.}
+
+\addbibresource{article.bib}
+% use biber instead of bibtex
+% $ biber article
+
+% used to create dummy text for the template file
+\definecolor{dark-gray}{gray}{0.35} % color used to display dummy texts
+\usepackage{lipsum}
+\SetLipsumParListSurrounders{\colorlet{oldcolor}{.}\color{dark-gray}}{\color{oldcolor}}
+
+% used here only to provide the XeLaTeX and BibTeX logos
+\usepackage{hologo}
+
+% if you use multirows in a table, include the multirow package
+\usepackage{multirow}
+
+% provides sidewaysfigure environment
+\usepackage{rotating}
+
+% CUSTOM EPIGRAPH - BEGIN 
+%%% https://tex.stackexchange.com/questions/193178/specific-epigraph-style
+\usepackage{epigraph}
+\renewcommand\textflush{flushright}
+\makeatletter
+\newlength\epitextskip
+\pretocmd{\@epitext}{\em}{}{}
+\apptocmd{\@epitext}{\em}{}{}
+\patchcmd{\epigraph}{\@epitext{#1}\\}{\@epitext{#1}\\[\epitextskip]}{}{}
+\makeatother
+\setlength\epigraphrule{0pt}
+\setlength\epitextskip{0.5ex}
+\setlength\epigraphwidth{.7\textwidth}
+% CUSTOM EPIGRAPH - END
+
+% to use IPA symbols in unicode add
+%\usepackage{fontspec}
+%\newfontfamily\ipafont{CMU Serif}
+%\newcommand{\ipa}[1]{{\ipafont #1}}
+% and in the text you may use the \ipa{...} command passing the symbols in unicode
+
+% LANGUAGE - BEGIN
+% ARABIC
+% for languages that use special fonts, you must provide the typeface that will be used
+% \setotherlanguage{arabic}
+% \newfontfamily\arabicfont[Script=Arabic]{Amiri}
+% \newfontfamily\arabicfontsf[Script=Arabic]{Amiri}
+% \newfontfamily\arabicfonttt[Script=Arabic]{Amiri}
+%
+% in the article, to add arabic text use: \textlang{arabic}{ ... }
+%
+% RUSSIAN
+% for russian text we also need to define fonts with support for Cyrillic script
+% \usepackage{fontspec}
+% \setotherlanguage{russian}
+% \newfontfamily\cyrillicfont{Times New Roman}
+% \newfontfamily\cyrillicfontsf{Times New Roman}[Script=Cyrillic]
+% \newfontfamily\cyrillicfonttt{Times New Roman}[Script=Cyrillic]
+%
+% in the text use \begin{russian} ... \end{russian}
+% LANGUAGE - END
+
+% EMOJIS - BEGIN
+% to use emoticons in your manuscript
+% https://stackoverflow.com/questions/190145/how-to-insert-emoticons-in-latex/57076064
+% using font Symbola, which has full support
+% the font may be downloaded at:
+% https://dn-works.com/ufas/
+% add to preamble:
+% \newfontfamily\Symbola{Symbola}
+% in the text use:
+% {\Symbola }
+% EMOJIS - END
+
+% LABEL REFERENCE TO DESCRIPTIVE LIST - BEGIN
+% reference itens in a descriptive list using their labels instead of numbers
+% insert the code below in the preambule:
+%\makeatletter
+%\let\orgdescriptionlabel\descriptionlabel
+%\renewcommand*{\descriptionlabel}[1]{%
+%  \let\orglabel\label
+%  \let\label\@gobble
+%  \phantomsection
+%  \edef\@currentlabel{#1\unskip}%
+%  \let\label\orglabel
+%  \orgdescriptionlabel{#1}%
+%}
+%\makeatother
+%
+% in your document, use as illustraded here:
+%\begin{description}
+%  \item[first\label{itm1}] this is only an example;
+%  % ...  add more items
+%\end{description}
+% LABEL REFERENCE TO DESCRIPTIVE LIST - END
+
+
+% add line numbers for submission
+%\usepackage{lineno}
+%\linenumbers
+
+
+\newcounter{rowcount}
+
+\begin{document}
+\maketitle
+
+\begin{polyabstract}
+\begin{abstract}
+La importancia de la competencia digital en Educación Primaria, junto con la competencia en comunicación lingüística (CCL), radica en su papel transversal para acceder al conocimiento y favorecer aprendizajes significativos en todas las áreas curriculares, entre ellas, en Conocimiento del Medio Natural, Social y Cultural (CMNSYC). Por este motivo, se plantea una investigación cuyo objetivo es analizar en qué medida las percepciones que tienen los estudiantes sobre sus conocimientos y habilidades digitales repercuten en sus percepciones acerca de la competencia en comunicación lingüística en la asignatura de CMNSYC. Para ello, se empleó una metodología cuantitativa, no experimental y correlacional, aplicada a 24 estudiantes de 6.º de Educación Primaria de un centro de la provincia de Cádiz, utilizando dos cuestionarios validados: uno sobre CCL en la asignatura de CMNSYC, y otro sobre conocimientos y habilidades digitales. Los resultados muestran que el alumnado percibe niveles medios en competencia digital (conocimientos=2.92/4; habilidades=2.88/4) y una percepción moderada de su CCL en CMNSYC (6.33/10); pero no se hallaron correlaciones significativas entre competencias y ni tampoco en cuanto al sexo de los estudiantes, aunque sí una correlación fuerte entre conocimiento y habilidad digital. Además, el análisis de conglomerados identificó tres perfiles: estudiantes con baja percepción digital, pero percepción aceptable de CCL en CMNSYC, estudiantes con alta percepción digital y baja-media percepción de CCL en CMNSYC, y estudiantes con percepción digital media, pero CCL en CMNSYC alta. A modo de conclusión, las percepciones sobre competencia digital no se relacionan directamente con las percepciones sobre CCL en CMNSYC, y los perfiles revelan patrones diversos que no responden a ninguna relación entre variables.
+
+\keywords{Competencia digital \sep Comunicación \sep Escuela primaria \sep Cuestionario \sep Percepción}
+\end{abstract}
+
+\begin{portuguese}
+\begin{abstract}
+A importância da competência digital no Ensino Fundamental, juntamente com a competência em comunicação linguística (CCL), reside em seu papel transversal para acessar o conhecimento e promover aprendizagens significativas em todas as áreas curriculares, entre elas, Conhecimento do Meio Natural, Social e Cultural (CMNSYC). Por esse motivo, propõe-se uma investigação cujo objetivo é analisar em que medida as percepções que os alunos têm sobre seus conhecimentos e habilidades digitais repercutem em suas percepções sobre a competência em comunicação linguística na disciplina de CMNSYC. Para isso, foi utilizada uma metodologia quantitativa, não experimental e correlacional, aplicada a 24 alunos do 6º ano do Ensino Fundamental de uma escola da província de Cádiz, utilizando dois questionários validados: um sobre CCL na disciplina de CMNSYC e outro sobre conhecimentos e habilidades digitais. Os resultados mostram que os alunos percebem níveis médios de competência digital (conhecimentos = 2,92/4; habilidades = 2,88/4) e uma percepção moderada de sua CCL em CMNSYC (6,33/10); mas não foram encontradas correlações significativas entre competências e nem em relação ao sexo dos alunos, embora tenha sido encontrada uma forte correlação entre conhecimento e habilidade digital. Além disso, a análise de conglomerados identificou três perfis: alunos com baixa percepção digital, mas percepção aceitável de CCL em CMNSYC, alunos com alta percepção digital e percepção baixa-média de CCL em CMNSYC, e alunos com percepção digital média, mas CCL em CMNSYC alta. Em conclusão, as percepções sobre competência digital não estão diretamente relacionadas às percepções sobre CCL em CMNSYC, e os perfis revelam padrões diversos que não respondem a nenhuma relação entre variáveis. Além disso, a análise de conglomerados identificou três perfis: alunos com baixa percepção digital, mas percepção aceitável de CCL em CMNSYC, alunos com alta percepção digital e percepção baixa-média de CCL em CMNSYC, e alunos com percepção digital média, mas CCL em CMNSYC alta. Em conclusão, as percepções sobre competência digital não estão diretamente relacionadas às percepções sobre CCL em CMNSYC, e os perfis revelam padrões diversos que não respondem a nenhuma relação entre variáveis.
+
+\keywords{Competência digital \sep Comunicação \sep Ensino fundamental \sep Questionário \sep Percepção}
+\end{abstract}
+\end{portuguese}
+
+\begin{english}
+\begin{abstract}
+The importance of digital competence in primary education, together with linguistic communication competence (LCC), lies in its cross-curricular role in accessing knowledge and promoting meaningful learning in all areas of the curriculum, including knowledge of the natural, social and cultural environment (NSCE). For this reason, a study was conducted to analyse the extent to which students' perceptions of their digital knowledge and skills affect their perceptions of linguistic communication competence in the subject of Natural, Social and Cultural Environment. To this end, a quantitative, non-experimental and correlational methodology was used, applied to 24 sixth-year primary school students at a school in the province of Cádiz, using two validated questionnaires: one on LCC in the subject of Knowledge of the Natural, Social and Cultural Environment, and another on digital knowledge and skills. The results show that students perceive average levels of digital competence (knowledge = 2.92/4; skills = 2.88/4) and a moderate perception of their LSC in NSCE (6.33/10); however, no significant correlations were found between competences or between the gender of the students, although there was a strong correlation between digital knowledge and skills. Furthermore, cluster analysis identified three profiles: students with low digital perception but acceptable perception of CCL in NSCE, students with high digital perception and low-medium perception of CCL in NSCE, and students with medium digital perception but high CCL in NSCE. In conclusion, perceptions of digital competence are not directly related to perceptions of CCL in NSCE, and the profiles reveal diverse patterns that do not respond to any relationship between variables.
+
+\keywords{Digital competence \sep Communication \sep Primary school \sep Questionnaire \sep Perception}
+\end{abstract}
+\end{english}
+% if there is another abstract, insert it here using the same scheme
+\end{polyabstract}
+
+\section{Introducción}\label{sec-intro}
+Desde el currículo vigente en España e instancias supranacionales como la Unión Europea se promueve el aprendizaje por competencias, conviviendo con la tradicional división de los saberes que se estudian en la escuela en las clásicas asignaturas. La investigación educativa también propone que los procesos de enseñanza y aprendizaje vayan más allá del saber compartimentado en dichas asignaturas y que se busquen conexiones entre ellas \cite{longa_lopez2021bibliografia}.
+
+Unido a lo anterior, hay que tener en cuenta el papel que cumple la lengua en la escuela con una doble función: al ser objeto de estudio y al mismo tiempo el vehículo para aprender los contenidos de todas las demás materias. Ese carácter transversal la convierte en una de las materias principales del currículo, ya que además de aprender cuestiones relativas al funcionamiento de la lengua, a través del lenguaje se comunican y negocian los conocimientos de cada disciplina. Por ello, la tendencia actual debería ser promover la competencia comunicativa desde un perfil transdisciplinar.
+
+Los currículos tanto a nivel nacional como en el entorno europeo insisten en que la competencia comunicativa debe contribuir a una enseñanza transversal en la que se contribuye a la adquisición de otras competencias clave \cite{lomloe2020}. Ese “carácter transversal y de medio de transmisión en el contexto socioeducativo” va unido a “su carácter funcional, instrumental adecuado a sus contenidos implicados en usos y dominios” como definen \textcite[p. 33]{mendoza_lopez_martos1996didactica} cuando se refieren a la didáctica de la lengua y la literatura. Ese carácter transversal que posee la lengua y que le hace estar presente en cualquier manifestación del ser humano nos lleva a la idea de transdisciplinariedad, ya que el dominio de las destrezas lingüísticas, es decir, comunicativas implica el poder tener acceso a los saberes y habilidades que se adquieren en cualquier otra área del currículo escolar. Por otro lado, la transversalidad y transdisciplinariedad implican que la lengua se convierte en un instrumento fundamental que interviene en cualquier actividad escolar ya que tenemos que preguntarnos para qué se lee, para qué se escribe o se interactúa oralmente. Un ejemplo de ello sería la importancia de la comprensión escrita y oral en el abordaje de la resolución de un problema matemático \cite{rodriguez_dominguuez2016dificultades,sastre_boubee_rey_delorenzi2008comprension}. Finalmente, la lengua también posee un carácter funcional, ya que nos permite acceder a textos que se dan en diferentes situaciones comunicativas y que están relacionados con las diferentes actividades académicas, por ejemplo, las instrucciones que se puedan dar en una clase o un texto expositivo de cualquier materia en un libro de texto. La propia investigación en didáctica de la lengua demanda que se incluya el uso de la lengua en el currículum como instrumento fundamental para aprender “en todas las etapas educativas, en todas las áreas y en todos los formatos” \cite{campos_perez2010leer}. El marco curricular español actual donde se propone un aprendizaje competencial se constituye como un contexto ideal para que se integre la enseñanza de la lengua en las áreas no lingüísticas del currículo. Además, desde el currículum se propone la integración de instrumentos de evaluación lingüística en las áreas no lingüísticas \cite{lomloe2020}.
+
+Con este enfoque de aprendizaje globalizado y transdisciplinar se puede vincular el concepto de literacidad o \textit{literacy} \cite{cassany2005a_critica,cassany2005b_literacidad} que aporta a la lectura y escritura los usos sociales y críticos de la lengua en distintos contextos y formatos. La literacidad crítica enfatiza la comprensión de los usos comunicativos, el uso de las fuentes y la producción con propósitos comunicativos concretos que son fundamentales para aprender en cualquier área y para ser un ciudadano crítico en general. A ello hay que añadir la complejidad del mundo actual con nuevas formas de acceder a los contenidos \cite{sandooval_zanotto2022literacidad}. No se trata, por tanto, solo de aprender a leer, escribir, hablar y escuchar, sino hacerlo de forma que nos permita acceder al conocimiento y nos convierta en ciudadanos críticos, conscientes de nuestros deberes y derechos y capaces de extrapolar ese conocimiento a diferentes ámbitos.
+
+Existen diferentes metodologías y enfoques de la enseñanza relacionados con la lengua que favorecen esta idea de que la lengua se convierta en motor de aprendizaje de otras materias. Entre ellos podemos destacar el enfoque AICLE (Aprendizaje Integrado de Contenidos y Lenguas Extranjeras) y las propuestas \textit{reading to learn}.
+
+En el caso del enfoque AICLE, la lengua en este caso extranjera se convierte en instrumento de y objetivo de aprendizaje, tal como indicamos con anterioridad al considerar la transversalidad de la lengua. Combinar el aprendizaje de una lengua que al mismo tiempo se convierte en vehículo de aprendizaje de otro contenido enriquece mucho el proceso de aprendizaje de una y otra área ya que puede permitir avances significativos en tareas de comprensión lectora o incrementando la riqueza léxica o del dominio de la complejidad lingüística, entre otros \cite{ruiz_de_zarobe2008clil}. Y, aunque el enfoque AICLE puede ser un modelo muy interesante, también se puede decir que hay dificultades para su implantación sostenible a largo plazo \cite{alegre2021aprendizaje}. El modelo \textit{reading to learn} (R2L), por otro lado, se propone desarrollar la alfabetización a partir de los géneros discursivos presentes en la escuela por medio de las habilidades lingüísticas escritas \cite{rose_acevedo2017leer}. Se trata de un modelo que ofrece beneficios a la formación del alumnado, pero que exige de una compenetración por parte de los agentes participantes en el proceso \cite{rose_acevedo2017leer} y adecuación de los materiales didácticos que generalmente no están preparados para acomodarse a este tipo de metodologías \cite{blecua2017readingtolearn}. Existe, por tanto, una preocupación en la investigación educativa para paliar las dificultades que generan en el aprendizaje de los escolares la falta de destrezas lingüísticas \cite{longa_lopez2021bibliografia} que se traduce en diferentes propuestas y muchos retos por afrontar para poder garantizar una enseñanza de calidad y equitativa.
+
+Otro aspecto transversal en la escuela es el uso de la tecnología y el desarrollo de la alfabetización mediática. Cuando hablamos del uso de la tecnología por parte de los escolares debemos tener en cuenta los conceptos de conocimiento y habilidades digitales. El primero de ellos se entiende como el saber necesario para comprender qué es la tecnología y cómo funciona: comprensión de conceptos básicos como \textit{hardware}, \textit{software}, redes, etc., conocimiento de la información digital, sobre el funcionamiento de las plataformas, conocer los derechos y deberes de los usuarios, así como los riesgos que su uso entraña, etc. Es decir, el conocimiento que debe tener un usuario acerca de la tecnología. Cuando hablamos de habilidades digitales englobamos en ellas las de tipo instrumental como el manejo de \textit{software} y todo tipo de artefactos digitales, las habilidades encaminadas a la búsqueda y gestión de la información, para crear contenidos digitales, para gestionar la seguridad en el uso de la tecnología, etc. La adquisición tanto de los conocimientos y de las habilidades digitales nos lleva a alcanzar la competencia digital que, al igual que la competencia en comunicación lingüística supone una competencia transversal fundamental para ser ciudadanos críticos y responsables del siglo XXI \cite{area_guarro2012alfabetizacion,cabero_llorente2008alfabetizacion}. El alumnado que actualmente cursa los estudios obligatorios previos a la universidad está muy influido por el uso de la tecnología pues desde que nacieron han naturalizado el vivir en contacto con artefactos digitales y no han conocido cómo era el mundo sin ellos. Además de ello, hay que tener en cuenta que la destreza que manejan en el uso de la tecnología no siempre se manifiesta en un buen uso en tareas escolares que requieren su manejo \cite{colas_conde_reyes2017competencias,iglesias_martin_hernandez2023competencia}. Asimismo, existen entornos desfavorecidos donde el acceso a la tecnología no se produce de la misma manera que en otros con más medios. En ese sentido, algunas investigaciones apuntan a una correlación entre un entorno familiar donde existe un fácil acceso a la tecnología y donde también se promueve la lectura y un desarrollo de las destrezas digitales \cite{lopez_sanchez_garcia_valcarcel2021competencia,martinez_gewerc_rodriguez2019competencia,bonelo_llorent2023docente}. Asimismo, parece haber también una correlación en la destreza digital por parte de las niñas en la escuela, frente a los varones que demuestran tener una familiaridad mayor en el uso de la tecnología fuera de la escuela que no se traduce de la misma manera en ella \cite{colas_conde_reyes2017competencias,martinez_gewerc_rodriguez2019competencia}. Por último, se constata según las investigaciones que el alumnado con formación específica en el ámbito digital obtiene mejores resultados \cite{baeza2022competencia} y también se refleja en los centros que integran las TIC en sus prácticas docentes \cite{depablos_colas_conde_reyes2017predictivas}. Por ello, entendemos que se hace necesario promover una alfabetización mediática que suponga una rentabilidad en el aprendizaje de las materias escolares.
+
+La formación de los docentes se enfrenta a retos relacionados con la integración de la competencia en comunicación lingüística y la competencia digital en el aprendizaje de otras materias. Entre esos retos uno de los principales es el dotar a los docentes de las competencias didácticas necesarias para integrar en otros aprendizajes el desarrollo de estas. Su formación constituye uno de los aspectos fundamentales de todas estas propuestas y que evidencian la necesidad de crear un tercer espacio educativo \cite{cabero2020universidades,cremades_maqueda_onieva2016whatsapp,florido_gutierrez_romero2025formacion,gutierrezcabello2017tercerespacio} donde la colaboración universidad-escuela genere un beneficio mutuo que ofrezca a los docentes las herramientas necesarias para mejorar los resultados de los escolares. También supone una labor de concienciación para los docentes en su formación inicial para reconocer de qué manera se contribuye desde la competencia comunicativa a los logros en otras materias. Por ello, existen necesidades de formación inicial y continua en este ámbito, así como el diseño de recursos y materiales de apoyo \cite{bustos2024habilidades}.
+
+En general, se puede hablar de que integrar el desarrollo de las destrezas comunicativas y la competencia digital en otras áreas del currículo tiene beneficios tales como la mejora de la comprensión de los conceptos, la mejora de las habilidades metacognitivas, de la motivación, etc. Se propone, en resumen, el desarrollo de la competencia comunicativa contando con el apoyo estratégico de los recursos didácticos TIC \cite{arnao_gamonal2016competencia}. Al mismo tiempo hay retos que hay que afrontar como la necesidad de coordinación entre áreas para identificar los objetivos lingüísticos de cada área, la ya mencionada necesidad de formación de los docentes y el diseño de recursos y materiales transdisciplinares y de evaluación conjunta apropiados para promover la mejora de las destrezas comunicativas en pos de una mejora del rendimiento global \cite{garcia_luelmo_vinuesa_izquierdo2025aicle,martin_martinez2014escritura}. Todo ello nos lleva a la demanda de que el currículo se adapte a las necesidades reales de la sociedad \cite{bonelo_llorent2023docente}.
+
+Considerando lo anterior, este estudio se propone como objetivo general analizar en qué medida las percepciones que tienen los estudiantes sobre sus conocimientos y habilidades digitales repercuten en sus percepciones acerca de la competencia en comunicación lingüística (CCL) en la asignatura de Conocimiento del Medio Natural, Social y Cultural (CMNSYC). A partir de este objetivo general se desglosan los siguientes objetivos específicos:
+
+OE1: Analizar las posibles correlaciones entre las variables analizadas y el sexo de los participantes.
+
+OE2: Identificar perfiles estudiantiles en cuanto a las percepciones de las variables analizadas.
+
+\section{Metodología}\label{sec-normas}
+La presente investigación, siguiendo a Hernández-Sampieri y Mendoza (2018), se ha realizado a través de una metodología cuantitativa, de carácter no experimental y de tipo correlacional, debido a que el objetivo general consiste en analizar en qué medida las percepciones que tienen los estudiantes sobre sus conocimientos y habilidades digitales repercuten en sus percepciones acerca de la competencia en comunicación lingüística (CCL) en la asignatura de Conocimiento del Medio Natural, Social y Cultural (CMNSYC).
+
+\subsection{Contexto y participantes}\label{sec-conduta}
+El estudio se ha llevado a cabo en un centro educativo de la provincia de Cádiz. Es un centro de Educación Infantil y Primaria que posee únicamente una línea. Asimismo, los participantes han sido 24 estudiantes de 6.º de Primaria (\Cref{fig1}). El motivo de seleccionar este centro escolar radica en la idea de \textcite{rodriguez_gil_garcia1999metodologia} de disponer de fácil acceso.
+
+\begin{figure}[h!]
+    \centering
+    \begin{minipage}{0.65\linewidth}
+    \includegraphics[width=\linewidth]{Figura 1.png}
+    \caption{Distribución de los participantes por sexo.}
+    \label{fig1}
+    \source{Elaboración propia.}
+    \end{minipage}
+\end{figure}
+
+En la misma dirección, la selección de los participantes se estableció a través de un muestreo por conveniencia no probabilístico, puesto que de este modo se seleccionan aquellos sujetos más accesibles y aprovechables \cite{mcmillan_schumacher2025investigacion}.
+
+\subsection{Procedimiento}\label{sec-formato}
+La investigación se realizó mediante la aplicación de dos cuestionarios en 6.º de Educación Primaria de un centro educativo de la Comunidad Autónoma Andaluza. En primer lugar, durante el mes de enero se facilitó el documento informativo al centro escolar para que lo trasladará a las familias y obtener el consentimiento informado. Este mismo mes se pasó el Cuestionario 1. En segundo lugar, durante el mes de abril se volvió a enviar al centro el documento informativo para las familias y se pasó el Cuestionario 2. En dichos documentos informativos se especifica que la participación es anónima y voluntaria, cumpliendo así la declaración de Helsinki.
+
+Una vez obtenidas las respuestas de los estudiantes se procedió con la realización de las pruebas estadísticas (\Cref{fig2}) mediante el \textit{software} R (4.5.1.) y SPSS.
+
+\begin{figure}[h!]
+    \centering
+    \begin{minipage}{0.75\linewidth}
+    \includegraphics[width=\linewidth]{Figura 2.png}
+    \caption{Fases de la investigación.}
+    \label{fig2}
+    \source{Elaboración propia.}
+    \end{minipage}
+\end{figure}
+
+\subsection{Instrumentos}\label{sec-fmt-manuscrito}
+La recogida de información se ha realizado a través de dos instrumentos. En primer lugar, se ha utilizado el cuestionario (Cuestionario 1) realizado por \textcite{gutierrezmolero_heredia_romo2025a}. Este cuestionario está validado con un alfa de Cronbach de .884 que garantiza su validez y fiabilidad. De este primer cuestionario, teniendo en consideración al objetivo general de la investigación, se ha utilizado únicamente la dimensión 2 “La competencia comunicativa en la asignatura de CMNSYC”, la cual la conforman 8 ítems (\Cref{tbl1}) que se responden mediante una escala Likert del 1 al 10.
+
+\begin{table}[h!]
+\centering
+\small
+\begin{threeparttable}
+\caption{Dimensión e ítems empleados del primer cuestionario.}
+\label{tbl1}
+\begin{tabular}{p{3cm} p{9cm}}
+\toprule
+Bloque & Ítems \\
+\midrule
+\multirow{8}{=}{La competencia comunicativa en
+
+la asignatura de CMNSYC} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  La asignatura me enseña a redactar textos para expresar mi opinión y
+  conocimiento
+\end{enumerate}
+\end{minipage} \\
+& \begin{minipage}[t]{\linewidth}\raggedright
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\item
+  En la asignatura leo diversos tipos de textos sobre la naturaleza, la
+  sociedad y cultura
+\end{enumerate}
+\end{minipage} \\
+& \begin{minipage}[t]{\linewidth}\raggedright
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\item
+  La asignatura me ayuda a comprender e interpretar textos
+\end{enumerate}
+\end{minipage} \\
+& \begin{minipage}[t]{\linewidth}\raggedright
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\item
+  La asignatura me permite compartir de manera oral mis ideas sobre lo
+  que hemos aprendido con la clase
+\end{enumerate}
+\end{minipage} \\
+& \begin{minipage}[t]{\linewidth}\raggedright
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{4}
+\item
+  La asignatura me enseña a interpretar las ideas que escucho para
+  entender el mundo que me rodea
+\end{enumerate}
+\end{minipage} \\
+& \begin{minipage}[t]{\linewidth}\raggedright
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{5}
+\item
+  La asignatura me ayuda a organizar mis ideas y conocimientos para
+  comunicarlos de forma clara
+\end{enumerate}
+\end{minipage} \\
+& \begin{minipage}[t]{\linewidth}\raggedright
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{6}
+\item
+  La asignatura me enseña a usar la comunicación para expresar mis
+  emociones y gestionar mis pensamientos
+\end{enumerate}
+\end{minipage} \\
+& \begin{minipage}[t]{\linewidth}\raggedright
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{7}
+\item
+  Con las actividades de la asignatura, aprendo a respetar las emociones
+  y opiniones de mis compañeros al comunicarme con ellos
+\end{enumerate}
+\end{minipage} \\
+\bottomrule
+\end{tabular}
+\source{\textcite{gutierrezmolero_heredia_romo2025a}.}
+\end{threeparttable}
+\end{table}
+
+En segundo lugar, se ha empleado el cuestionario (Cuestionario 2) realizado en \textcite{bastarrachea2023competencia} citado por \textcite{gutierrezmolero_heredia_romo2025b}. Este cuestionario ha sido validado con un alfa de Cronbach de .936, lo cual garantiza su validez y fiabilidad. Debido a la finalidad de la investigación, se han considerado exclusivamente las dimensiones 1 “Conocimientos” y 2 “Habilidades”. Estas dimensiones hacen referencia a las percepciones que tienen los estudiantes sobre sus conocimientos y habilidades en el uso de las tecnologías. La primera dimensión la componen 15 ítems y la segunda dimensión 20 ítems (\Cref{Tab2}). Además, las respuestas se registran a través de una escala Likert de 1 a 4.
+
+
+% Reset counter for a new list
+\setcounter{rowcount}{0}
+\begin{small}
+\begin{longtable}{
+    @{}>{\raggedright\arraybackslash}p{0.2\textwidth}@{}
+    >{\stepcounter{rowcount}\therowcount. }>{\raggedright\arraybackslash}p{0.8\textwidth}@{}
+    }
+\caption{Dimensión e ítems empleados del segundo cuestionario.}
+\label{Tab2}
+\\
+\toprule
+Bloque & \multicolumn{1}{l}{Ítems} \\
+\midrule
+\multirow{15}{=}{Conocimientos} & Cómo funcionan algunos dispositivos electrónicos como los teléfonos,
+  los ordenadores y las tabletas \\
+ & Algunos problemas técnicos de los dispositivos electrónicos (batería
+   baja, sin conexión a internet, no funciona la cámara, etc.) \\
+ & Qué tipo de información puedes conseguir en internet \\
+ & Estrategias de estudio en internet que permitan mejorar tu aprendizaje \\
+ & Sitios en internet o aplicaciones para hacer tus propios recursos digitales (presentaciones, vídeos, dibujos, etc.) \\
+ & Editar una imagen (captura de pantalla, recortar, girar) \\
+ & La creación de recursos a través de crear vídeos o grabar audios \\
+ & Qué aplicaciones necesitas para participar en videoconferencias (Zoom, Meet) \\
+ & Cómo participar en una videoconferencia (encender la cámara, pedir turno, compartir pantalla, usar emoticonos, etc.) \\
+ & Del uso de plataformas educativas como ClassRoom para subir tus tareas \\
+ & Cómo funcionan los chats en línea, foros, blogs y wikis \\
+ & Cómo funciona el almacenamiento en la nube \\
+ & Qué son los derechos de autor, las licencias y los materiales restringidos \\
+ & Los riesgos y amenazas del internet \\
+ & Las normas de comportamiento en internet \\
+\midrule
+\multirow{20}{=}{Habilidades} & Entrar a internet a través de dispositivos digitales (teléfono, ordenador, tabletas, etc.) \\
+ & Identificar un problema técnico sencillo y puedo identificar qué lo resolvería \\
+ & Identificar las palabras clave para encontrar información sobre un tema \\
+ & Utilizar los recursos digitales más adecuados para crear un vídeo sobre algún tema tratado en clase \\
+ & Crear recursos digitales (presentaciones, vídeos, dibujos, etc.) en diferentes sitios web y aplicaciones \\
+ & Trabajar de forma colaborativa en entornos digitales con mis compañeros \\
+ & Crear una presentación digital animada (Canva, Power Point, Prezi, etc.) añadiendo texto, imágenes y efectos visuales (movimiento al pasar de diapositiva, gif, etc.) \\
+ & Utilizar chats (WhatsApp) para hablar con mis compañeros y organizar el trabajo en grupo \\
+ & Identificar páginas web, blogs y bases de datos para buscar información sobre un tema \\
+ & Navegar en internet a través de páginas web, blogs, bases de datos \\
+ & Elaborar un cuestionario en línea (Google Forms) para conocer la opinión de mis compañeros sobre un tema \\
+ & Responder a un cuestionario en línea (Google Forms) \\
+ & Participar en un foro online para intercambiar opiniones con mis compañeros \\
+ & Utilizar el almacenamiento basado en la nube (Dropbox o Google Drive) para compartir material con mis compañeros de grupo \\
+ & Resolver problemas al almacenar el material en la nube (Dropbox o Google Drive) \\
+ & Identificar el símbolo que indica si una imagen está protegida por licencia y, por tanto, no se puede utilizar sin el permiso del autor \\
+ & Detectar riesgos y amenazas (enlaces engañosos) en internet  \\
+ & Encontrar páginas web, blogs y bases de datos adaptadas a mis necesidades y a lo que necesita mi clase \\
+ & Valorar páginas web, blogs y bases de datos más apropiadas para conseguir información según mis necesidades \\
+ & Plantear normas de comportamiento útiles para trabajar en grupo online \\
+\bottomrule
+\end{longtable}
+\end{small}
+
+% \begin{table}[htbp]
+%     \small
+%     \centering
+%     \begin{threeparttable}
+%     \caption{Dimensión e ítems empleados del segundo cuestionario.}
+%     \label{Tab2}
+%     \begin{tabular}{
+%     @{}>{\raggedright\arraybackslash}p{0.2\textwidth}@{}
+%     p{0.8\textwidth}@{}}
+% \toprule
+% Bloque & Ítems \\
+% \midrule
+% \vfill Conocimientos \vfill &
+% \begin{minipage}[t]{\linewidth}\raggedright
+% \begin{enumerate}
+% \def\labelenumi{\arabic{enumi}.}
+% \item
+%   Cómo funcionan algunos dispositivos electrónicos como los teléfonos,
+%   los ordenadores y las tabletas
+% \item
+%   Algunos problemas técnicos de los dispositivos electrónicos (batería
+%   baja, sin conexión a internet, no funciona la cámara, etc.)
+% \item
+%   Qué tipo de información puedes conseguir en internet
+% \item
+%   Estrategias de estudio en internet que permitan mejorar tu aprendizaje
+% \item
+%   Sitios en internet o aplicaciones para hacer tus propios recursos
+%   digitales (presentaciones, vídeos, dibujos, etc.)
+% \item
+%   Editar una imagen (captura de pantalla, recortar, girar)
+% \item
+%   La creación de recursos a través de crear vídeos o grabar audios
+% \item
+%   Qué aplicaciones necesitas para participar en videoconferencias (Zoom,
+%   Meet)
+% \item
+%   Cómo participar en una videoconferencia (encender la cámara, pedir
+%   turno, compartir pantalla, usar emoticonos, etc.)
+% \item
+%   Del uso de plataformas educativas como ClassRoom para subir tus tareas
+% \item
+%   Cómo funcionan los chats en línea, foros, blogs y wikis
+% \item
+%   Cómo funciona el almacenamiento en la nube
+% \item
+%   Qué son los derechos de autor, las licencias y los materiales
+%   restringidos
+% \item
+%   Los riesgos y amenazas del internet
+% \item
+%   Las normas de comportamiento en internet
+% \end{enumerate}
+% \end{minipage} \\
+% \midrule
+% \vfill Habilidades \vfill &
+% \begin{minipage}[t]{\linewidth}\raggedright
+% \begin{enumerate}
+% \def\labelenumi{\arabic{enumi}.}
+% \setcounter{enumi}{15}
+% \item
+%   Entrar a internet a través de dispositivos digitales (teléfono,
+%   ordenador, tabletas, etc.)
+% \item
+%   Identificar un problema técnico sencillo y puedo identificar qué lo
+%   resolvería
+% \item
+%   Identificar las palabras clave para encontrar información sobre un
+%   tema
+% \item
+%   Utilizar los recursos digitales más adecuados para crear un vídeo
+%   sobre algún tema tratado en clase
+% \item
+%   Crear recursos digitales (presentaciones, vídeos, dibujos, etc.) en
+%   diferentes sitios web y aplicaciones
+% \item
+%   Trabajar de forma colaborativa en entornos digitales con mis
+%   compañeros
+% \item
+%   Crear una presentación digital animada (Canva, Power Point, Prezi,
+%   etc.) añadiendo texto, imágenes y efectos visuales (movimiento al
+%   pasar de diapositiva, gif, etc.)
+% \item
+%   Utilizar chats (WhatsApp) para hablar con mis compañeros y organizar
+%   el trabajo en grupo
+% \item
+%   Identificar páginas web, blogs y bases de datos para buscar
+%   información sobre un tema
+% \item
+%   Navegar en internet a través de páginas web, blogs, bases de datos
+% \item
+%   Elaborar un cuestionario en línea (Google Forms) para conocer la
+%   opinión de mis compañeros sobre un tema
+% \item
+%   Responder a un cuestionario en línea (Google Forms)
+% \item
+%   Participar en un foro online para intercambiar opiniones con mis
+%   compañeros
+% \item
+%   Utilizar el almacenamiento basado en la nube (Dropbox o Google Drive)
+%   para compartir material con mis compañeros de grupo
+% \item
+%   Resolver problemas al almacenar el material en la nube (Dropbox o
+%   Google Drive)
+% \item
+%   Identificar el símbolo que indica si una imagen está protegida por
+%   licencia y, por tanto, no se puede utilizar sin el permiso del autor
+% \item
+%   Detectar riesgos y amenazas (enlaces engañosos) en internet
+% \item
+%   Encontrar páginas web, blogs y bases de datos adaptadas a mis
+%   necesidades y a lo que necesita mi clase
+% \item
+%   Valorar páginas web, blogs y bases de datos más apropiadas para
+%   conseguir información según mis necesidades
+% \item
+%   Plantear normas de comportamiento útiles para trabajar en grupo online
+% \end{enumerate}
+% \end{minipage} \\
+% \bottomrule
+% \end{tabular}
+% \source{\textcite{bastarrachea2023competencia} utilizado en \textcite{gutierrezmolero_heredia_romo2025b}.}
+% \end{threeparttable}
+% \end{table}
+
+
+\section{Resultados}\label{sec-modelo}
+En un primer momento, desde un análisis descriptivo, se quisieron quiso analizar las percepciones que tenían los estudiantes sobre su competencia digital, habilidad digital y la competencia comunicativa en la asignatura de Conocimiento del Medio Natural, Social y Cultural. Para ello, se analizan las medias de cada una de las dimensiones (\Cref{tbl3}), teniendo en consideración que en “Conocimiento digital” y “Habilidad digital” las medias se calculan sobre 4, y en la dimensión “Competencia en comunicación lingüística en la asignatura de Conocimiento del Medio Natural, Social y Cultural” la media es sobre 10, debido a la escala Likert realizada en cada cuestionario.
+
+\begin{table}[h!]
+\small
+\centering
+\begin{threeparttable}
+\caption{Medias de cada una de las dimensiones.}
+\label{tbl3}
+\begin{tabular}{p{4cm} p{3cm} p{3cm}}
+\toprule
+& Media & Desviación Típica \\
+\midrule
+Conocimiento digital & 2.92 sobre 4 & 0.54 \\
+Habilidad digital & 2.88 sobre 4 & 0.58 \\
+Competencia en comunicación lingüística en la asignatura de Conocimiento
+del Medio Natural, Social y Cultural & 6.33 sobre 10 & 1.53 \\
+\bottomrule
+\end{tabular}
+\source{Elaboración propia.}
+\end{threeparttable}
+\end{table}
+
+Los datos demuestran que los estudiantes perciben que tienen conocimientos y habilidades digitales moderadas, ya que la media es de 2.92 y 2.88, respectivamente dentro de la una escala del 1 al 4. Es cierto que no se perciben como ciudadanos competentes a pesar de pertenecer a la denominada, según \textcite{mccrindle2023generation}, generación Alfa, la cual es la primera que realmente ha estado en contacto con el mundo digital desde su nacimiento, y que, además, fueron claramente influidos por la pandemia causada por la COVID-19. En cuanto a la Competencia en Comunicación Lingüística en la asignatura de Conocimiento del Medio Natural, Social y Cultural presenta una media de 6.33 sobre 10. Esto refleja que los alumnos parecen tener una percepción positiva para comprender, expresarse y comunicarse en la asignatura CMNSYC, a pesar de la mayor dispersión de los resultados.
+
+A continuación, atendiendo a nuestros objetivos, se calcularon las correlaciones de Pearson de estas tres variables. En este caso se observa que hay una correlación fuerte entre las variables digitales (conocimiento y habilidad digital), puesto que r es 0.83, y según \textcite{hernandez_sampieri_fernandez_baptista2014metodologia}, un valor de $r>0.70$ se considera correlación fuerte. Además, según estos mismos autores, esa correlación es muy significativa, pues $p(0.00)<0.01$. Sin embargo, no ocurre lo mismo con la variable CCL en CMNSYC, ya que como se puede observar en las \Cref{fig3,fig4}, no hay una correlación fuerte con lo digital (con la habilidad ni con respecto al conocimiento) y tampoco es significativa, puesto que como indican \textcite{hernandez_sampieri_fernandez_baptista2014metodologia}, si $p>0.05$ no hay relación entre las variables y la hipótesis de la investigación se rechaza y se acepta nula. En definitiva, considerando ambos diagramas de dispersión que no muestran un patrón claro entre la habilidad y el conocimiento digital y la CCL, y el valor de $p>0.05$, se puede determinar que la correlación de Pearson no es significativa y que, por tanto, no se puede establecer que exista una relación entre las variables habilidad y conocimiento digital y la CCL en CMNSYC.
+
+\begin{figure}[h!]
+    \centering
+    \begin{minipage}{0.48\linewidth}
+    \includegraphics[width=\linewidth]{figura3.pdf}
+    \caption{Diagrama de dispersión entre la habilidad digital y la CCL.}
+    \label{fig3}
+    \source{Elaboración propia a partir del \textit{software} R (4.5.1.).}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.48\linewidth}
+    \includegraphics[width=\linewidth]{figura4.pdf}
+    \caption{Diagrama de dispersión entre el conocimiento digital y la CCL.}
+    \label{fig4}
+    \source{Elaboración propia a partir del \textit{software} R (4.5.1.).}
+    \end{minipage}
+\end{figure}
+
+En un análisis más profundo, a través de Pearson se quisieron analizar las correlaciones entre el sexo y las variables relacionadas con la competencia digital y la competencia en comunicación lingüística (CCL) en la asignatura de Conocimiento del Medio Natural, Social y Cultural (CMNSYC) (\Cref{tbl4}).
+
+\begin{table}[h!]
+\small
+\centering
+\begin{threeparttable}
+\caption{Análisis de correlaciones en función del sexo.}
+\label{tbl4}
+\begin{tabular}{p{3cm} p{4cm} p{4cm}}
+\toprule
+& Conocimiento digital- Competencia en comunicación lingüística en la
+asignatura del Medio Natural, Social y Cultural & Habilidad
+digital-Competencia en comunicación lingüística en la asignatura del
+Medio Natural, Social y Cultural \\
+\midrule
+Niño & -0.388 & -0.057 \\
+Niña & -0.136 & -0.037 \\
+\bottomrule
+\end{tabular}
+\source{Elaboración propia.}
+\end{threeparttable}
+\end{table}
+
+En el caso de los niños, la relación entre Conocimiento digital y CCL en la asignatura de CMNSYC es negativa ($r=-0.388$), lo que según \textcite{evans1996statistics,cohen1998statistical} se sitúa entre una correlación débil y moderada al ser $r>\pm 0.30$. Esto sugiere que, al aumentar la percepción de conocimiento digital se tiende a disminuir ligeramente la percepción en CCL en CMNSYC, aunque al no alcanzar significatividad estadística debe interpretarse con cierta cautela.
+
+En cuanto a la segunda correlación entre habilidad digital y CCL en CMNSYC, la correlación es prácticamente nula según los criterios establecidos por \textcite{evans1996statistics,cohen1998statistical}, pues $r=0.057$, es decir, r es $<\pm 0.20$.
+
+Con respecto a las niñas, tanto la correlación entre conocimiento digital y CCL en CMNSYC ($r=-136$) como la correlación entre habilidad digital y CCL en CMNSYC ($r=-0.037$) se consideran en un rango muy bajo o prácticamente inexistente, es decir, una correlación nula al ser $r<\pm 0.20$, indicando así, una que no existe relación entre las variables analizadas y el sexo de los participantes.
+
+En definitiva, los resultados sugieren que no existe una correlación significativa entre la competencia digital percibida por los estudiantes y la CCL en CMNSYC percibida por los mismos. Las correlaciones se han presentado débiles y negativas en los niños y prácticamente inexistentes y negativas en las niñas. Por tanto, al no haberse alcanzado la significatividad estadística no se puede establecer relaciones entre ninguna variable y el sexo de los estudiantes.
+
+Ahora bien, con el fin de identificar patrones de percepción entre los participantes, se ha llevado a cabo un análisis de conglomerados a través del algoritmo K-means, empleando como variables las puntuaciones de las 3 dimensiones (Conocimiento digital, habilidad digital y CCL en CMNSYC). Para ello, previamente se tipificaron las variables con el objetivo de garantizar que todas contribuyeran del mismo modo al agrupamiento.
+
+En primer lugar, el criterio del “codo” (within-cluster sum of squares) sugirió que la manera óptima de agrupar patrones de percepción era mediante tres clústeres que representen los distintos perfiles de los estudiantes. La \Cref{fig5} representa la distribución de los estudiantes según el plano factorial determinado por las dos primeras dimensiones que representan de manera conjunta el 94.5 \% de la varianza (Dim 1=61.4 \% y Dim 2= 33.1 \%).
+
+\begin{figure}[h!]
+    \centering
+    \begin{minipage}{0.65\linewidth}
+    \includegraphics[width=\linewidth]{Figura 5.pdf}
+    \caption{Perfiles identificados.}
+    \label{fig5}
+    \source{Elaboración propia a partir del \textit{software} R (4.5.1.).}
+    \end{minipage}
+\end{figure}
+
+Con respecto a la \Cref{fig5}, se presentan los tres perfiles identificados.
+
+En primer lugar, el perfil 1 lo conforman 10 de los 24 participantes (41.67 \%). Este perfil está compuesto por aquellos estudiantes que tienen bajas percepciones en cuanto a sus conocimientos y habilidades digitales, pero que sí se perciben como competentes medios con respecto a la competencia en comunicación lingüística en CMNSYC. En otras palabras, este perfil lo componen los estudiantes que no se perciben como competentes en el ámbito digital, pero sí se perciben como competentes aceptables a la hora de comunicarse en CMNSYC.
+
+En segundo lugar, el perfil 2 está compuesto por 5 participantes (20.83 \%). El segundo perfil agrupa a los estudiantes que tienen percepciones digitales (conocimiento y habilidad) más altas, pero que, sin embargo, muestran percepciones medias y bajas en cuanto a la CCL en CMNSYC. A modo de síntesis, son aquellos estudiantes que muestran una autoconfianza alta en lo respectivo a lo digital, pero que no se ve reflejada esta confianza en la percepción de la CCL en CMNSYC.
+
+Por último, el perfil 3 lo establecen 9 estudiantes (37.5 \%). Este perfil se caracteriza por ser estudiantes con niveles medios en percepción de conocimiento y habilidad digital, pero con una percepción más alta de la CCL en CMNSYC. Por tanto, este perfil se destaca al tener una percepción más favorable en cuanto al aspecto comunicativo en CMNSYC, sin la necesidad de percibir niveles altos en cuanto a la competencia digital.
+
+A modo de conclusión, lo resultados muestran que la percepción relacionada con la competencia digital no está relacionada directamente con la percepción de la CCL en CMNSYC, puesto que aquellos estudiantes que se percibían como más competentes en el ámbito digital no eran quienes ser percibían con mayor CCL en CMNSYC. Esto coincide con los análisis correlacionales presentados en las \Cref{fig3,fig4}, y en la \Cref{tbl4}.
+
+\section{Conclusión}\label{sec-organizacao}
+La presente investigación ha permitido analizar el papel que desempeñan las percepciones sobre los conocimientos y habilidades digitales en relación con la competencia en comunicación lingüística (CCL) en la asignatura de Conocimiento del Medio Natural Social y Cultural (CMNSYC). En este sentido, desde un enfoque metodológico cuantitativo, no experimental y correlacional se ha contribuido a la identificación de perfiles estudiantiles de 6.º de Educación Primaria en función de las percepciones mostradas sobre las tres variables analizadas. De este modo, el estudio aporta hallazgos relevantes que permiten comprender la complejidad de la alfabetización digital en los entornos educativos formales y del desarrollo de la CCL desde las áreas no lingüísticas.
+
+En primer lugar, el estudio identifica la ausencia de relación entre la competencia digital (conocimientos y habilidades) y la CCL en CMNSYC. Este primer hallazgo sobre las percepciones de los estudiantes sobre sus conocimientos y habilidades digitales y la falta de correlación significativa con las percepciones sobre la CCL en la asignatura de CMNSYC puede resultar contraintuitivo, puesto que cada vez más, los currículos internacionales y nacionales fomentan el desarrollo de ciudadanos competentes, tanto en lo analógico como en lo referente a lo digital, es decir, las leyes educativas cada vez promueven más el desarrollo de ciudadanos bialfabetizados \cite{wolf2020lector}, sin embargo, a pesar de lo contraintuitivo e inesperado de la falta de correlación, sí coincide con investigaciones previas que han señalado que el acceso a la tecnología no garantiza el desarrollo paralelo de competencias digitales ni de competencias comunicativas, pero sí que la tecnología puede actuar como mediadora para el desarrollo de la competencia comunicativa \cite{velandia_samaca_castro2019competencia}.
+
+Con respecto a lo anterior, es destacable la pertinencia de investigar en este campo, ya que la propia legislación educativa vigente en España, la Ley Orgánica 3/2020, de 29 de diciembre, por la que se modifica la Ley Orgánica 2/2006, de 3 de mayo, de Educación \cite{lomloe2020}, resalta en su preámbulo que se require de un enfoque que aborde la comprensión integral del impacto personal y social de la tecnología, de sus diferencias en cuanto al sexo, de una reflexión ética acerca de la relación entre las personas y  las tecnologías, y del desarrollo de la competencia digital de los estudiantes.
+
+En la misma línea, la LOMLOE resalta que “la Ley insiste en la necesidad de tener en cuenta el cambio digital que se está produciendo en nuestras sociedades y que forzosamente afecta a la actividad educativa. El desarrollo de la competencia digital no supone solamente el dominio de los diferentes dispositivos y aplicaciones. El mundo digital es un nuevo hábitat donde la infancia y la juventud viven cada vez más: en él aprenden, se relacionan, consumen, disfrutan de su tiempo libre. Con el objetivo de que el sistema educativo adopte el lugar que le corresponde en el cambio digital, se incluye la atención al desarrollo de la competencia digital de los y las estudiantes de todas las etapas educativas, tanto a través de contenidos específicos como en una perspectiva transversal, y haciendo hincapié en la brecha digital de género” \cite[p. 122.871]{lomloe2020}. Por tanto, considerando las indicaciones de la normativa actual, esta investigación ha permitido aportar información sobre la competencia digital que poseen los estudiantes y cómo esta se relaciona o no con otra competencia transversal como es la CCL, analizando también las diferencias en cuanto al género para identificar posibles brechas de género.
+
+Ahora bien, partiendo de cómo los estudiantes perciben sus conocimientos y habilidades digitales se ha obtenido que se perciben como moderadamente competentes al obtener puntuaciones media de 2.92 sobre 4 y 2.88 sobre 4, respectivamente. Estos resultados coinciden con las investigaciones previas que indican un nivel medio de competencia digital en estudiantes de la generación alfa \cite{baeza2022competencia,paredes_freitas_sanchez2019competencia}. Del mismo modo, los estudiantes perciben de manera moderada el dominio de la CCL en CMNSYC (6.33 sobre 10). Sin embargo, como se mencionó anteriormente, estas variables no tienen correlación, lo que sugiere que la alfabetización digital y comunicativa se desarrollan de manera independiente en el contexto educativo analizado, algo que coincide con la investigación de \textcite{delmoral_villalustre_neira2017storytelling}, en la que se sugiere que, aunque la alfabetización digital y la comunicativa se desarrollen juntas en determinadas actividades, su desarrollo no es completamente paralelo pues en algunos casos los estudiantes mejoran más las habilidades comunicativas que las habilidades digitales, y viceversa.
+
+En relación con lo anterior, esta falta de correlación cuenta con el respaldo de estudios que destacan que el aprendizaje digital y comunicativo dependen más del andamiaje pedagógico que de la familiaridad con las herramientas tecnológicas, por lo que no existe una transferencia automática entre alfabetización digital y desarrollo de la competencia en comunicación lingüística, ya sea en áreas lingüísticas o no lingüísticas, ambos aspectos requieren estrategias concretas y específicas \cite{cabero_llorente2008alfabetizacion,sole2012estrategias}.
+
+En consonancia con la LOMLOE, que insta a identificar posibles brechas de género, el análisis correlacional tampoco arroja diferencias significativas entre niños y niñas en cuanto a la percepción del conocimiento y habilidad digital y la CCL en CMNSYC. No obstante, se encuentran investigaciones previas que reflejan una mayor familiaridad instrumental de lo digital en niños y un mejor uso en lo académico en niñas \cite{martinez_gewerc_rodriguez2019competencia,regueira_alonso2022genero}, aunque el número limitado de participantes ha podido influir en los resultados, lo que refuerza la necesidad de ampliar los participantes y contextos.
+
+Con respecto a la identificación de perfiles, el análisis de conglomerados ha ofrecido un aporte destacable para la literatura científica, ya que identifica tres perfiles estudiantiles en función de cómo perciben sus conocimientos y habilidades digitales y la CLL en CMNSYC. Es destacable que estos perfiles no siguen patrones lineales entre variables. El primer perfil lo conforman estudiantes que se perciben con baja competencia digital, pero CCL media en CMNSYC. El segundo perfil son aquellos estudiantes que se perciben con una alta competencia digital, pero CCL media-baja. Por último, el tercer perfil lo componen los estudiantes que perciben una competencia digital media y una CCL alta.
+
+La identificación de estos perfiles y cómo se distribuyen rompe con la idea de que un mayor dominio digital provoca una mayor capacidad comunicativa en la asignatura de CMNSYC. En relación con esto, estudios previos exponen que los estudiantes pueden manejar correctamente los recursos tecnológicos en contextos ociosos, pero no necesariamente en tareas académicas, y los perfiles identificados confirman esta contraposición entre el uso instrumental de la tecnología y la CCL en una disciplina curricular \cite{colas_conde_reyes2017competencias,iglesias_martin_hernandez2023competencia}. En este sentido, es destacable el perfil 2, pues son estudiantes con una alta autopercepción de su competencia digital, pero media-baja CCL, lo que puede reforzar la idea del “falso nativo digital”, ya que la familiaridad con la tecnología no es equivalente a la competencia digital, por lo que pueda darse el caso de que los estudiantes al estar familiarizados con la tecnología sobreestimen sus competencias \cite{granado2019exclusion}.
+
+Acerca de las limitaciones se identifica el tamaño de la muestra y la limitación geográfica, pues al ser participantes de un único centro de la provincia de Cádiz, los resultados no se pueden extrapolar a otros contextos. Además, al ser una investigación con un diseño transversal se identifican los perfiles estudiantiles en un momento determinado y no se analiza la evolución de estos perfiles. Por ello, se plantean como prospectivas de la investigación la ampliación del número de participantes y de los contextos geográficos que permitan la extrapolación de resultados, y la inclusión de diseños longitudinales que permitan analizar la progresión de los perfiles estudiantiles identificados en función de sus percepciones en competencia digital y en CCL en CMNSYC. Además, sería prevé realizar estudios que analicen el conocimiento didáctico de los maestros en formación de recursos y estrategias para promover ambas competencias desde la transversalidad.  
+
+A modo de conclusión, la investigación ha evidenciado que la percepción de los conocimientos y habilidades digitales no predice la percepción de la CCL en la asignatura de CMNSYC, que no existen diferencias estadísticamente significativas en cuanto al sexo, y que los estudiantes presentan tres perfiles que no siguen relación alguna entre dimensiones.
+
+
+\printbibliography\label{sec-bib}
+% if the text is not in Portuguese, it might be necessary to use the code below instead to print the correct ABNT abbreviations [s.n.], [s.l.]
+%\begin{portuguese}
+%\printbibliography[title={Bibliography}]
+%\end{portuguese}
+
+
+%full list: conceptualization,datacuration,formalanalysis,funding,investigation,methodology,projadm,resources,software,supervision,validation,visualization,writing,review
+\begin{contributors}[sec-contributors]
+\authorcontribution{Salvador Gutiérrez Molero}[conceptualization,datacuration,formalanalysis,investigation,methodology,software,writing,review]
+\authorcontribution{Antonio Gutiérrez Rivero}[conceptualization,formalanalysis,investigation,writing,review]
+\end{contributors}
+
+\begin{dataavailability}
+\txtdataavailability{databody} % options: dataavailable, dataonly, databody, datanotav, nodata
+\end{dataavailability}
+
+
+\end{document}
+
