@@ -1,0 +1,593 @@
+% !TEX TS-program = XeLaTeX
+% use the following command:
+% all document files must be coded in UTF-8
+\documentclass[english]{textolivre}
+% build HTML with: make4ht -e build.lua -c textolivre.cfg -x -u article "fn-in,svg,pic-align"
+
+\journalname{Texto Livre}
+\thevolume{19}
+%\thenumber{1} % old template
+\theyear{2026}
+\receiveddate{\DTMdisplaydate{2025}{9}{1}{-1}} % YYYY MM DD
+\accepteddate{\DTMdisplaydate{2025}{11}{4}{-1}}
+\publisheddate{\DTMdisplaydate{2026}{1}{29}{-1}}
+\corrauthor{Andresa Sartor-Harada}
+\articledoi{10.1590/1983-3652.2026.61543}
+%\articleid{NNNN} % if the article ID is not the last 5 numbers of its DOI, provide it using \articleid{} commmand 
+% list of available sesscions in the journal: articles, dossier, reports, essays, reviews, interviews, editorial
+\articlesessionname{articles}
+\runningauthor{Sartor-Harada and Ulloa-Guerra} 
+%\editorname{Leonardo Araújo} % old template
+\sectioneditorname{Daniervelin Pereira~\orcid{0000-0003-1861-3609}}
+\layouteditorname{Leonardo Araujo~\orcid{0000-0003-3884-2177}}
+
+\title{Teachers and Artificial Intelligence: uses and training needs in Latin American higher education}
+\othertitle{Professores e Inteligência Artificial: usos e necessidades de formação no ensino superior latino-americano}
+% if there is a third language title, add here:
+%\othertitle{Artikelvorlage zur Einreichung beim Texto Livre Journal}
+
+\author[1]{Andresa Sartor-Harada~\orcid{0000-0003-2045-7502}\thanks{Email: \href{mailto:andresa.sartor@unir.net}{andresa.sartor@unir.net}}}
+\author[1]{Oscar Ulloa-Guerra~\orcid{0000-0002-9505-7768}\thanks{Email: \href{mailto:oscar.ulloa@unir.net}{oscar.ulloa@unir.net}}}
+\affil[1]{Universidad Internacional de La Rioja, La Rioja, Spain.}
+
+\addbibresource{article.bib}
+% use biber instead of bibtex
+% $ biber article
+
+% used to create dummy text for the template file
+\definecolor{dark-gray}{gray}{0.35} % color used to display dummy texts
+\usepackage{lipsum}
+\SetLipsumParListSurrounders{\colorlet{oldcolor}{.}\color{dark-gray}}{\color{oldcolor}}
+
+% used here only to provide the XeLaTeX and BibTeX logos
+\usepackage{hologo}
+
+% if you use multirows in a table, include the multirow package
+\usepackage{multirow}
+
+% provides sidewaysfigure environment
+\usepackage{rotating}
+
+% CUSTOM EPIGRAPH - BEGIN 
+%%% https://tex.stackexchange.com/questions/193178/specific-epigraph-style
+\usepackage{epigraph}
+\renewcommand\textflush{flushright}
+\makeatletter
+\newlength\epitextskip
+\pretocmd{\@epitext}{\em}{}{}
+\apptocmd{\@epitext}{\em}{}{}
+\patchcmd{\epigraph}{\@epitext{#1}\\}{\@epitext{#1}\\[\epitextskip]}{}{}
+\makeatother
+\setlength\epigraphrule{0pt}
+\setlength\epitextskip{0.5ex}
+\setlength\epigraphwidth{.7\textwidth}
+% CUSTOM EPIGRAPH - END
+
+% to use IPA symbols in unicode add
+%\usepackage{fontspec}
+%\newfontfamily\ipafont{CMU Serif}
+%\newcommand{\ipa}[1]{{\ipafont #1}}
+% and in the text you may use the \ipa{...} command passing the symbols in unicode
+
+% LANGUAGE - BEGIN
+% ARABIC
+% for languages that use special fonts, you must provide the typeface that will be used
+% \setotherlanguage{arabic}
+% \newfontfamily\arabicfont[Script=Arabic]{Amiri}
+% \newfontfamily\arabicfontsf[Script=Arabic]{Amiri}
+% \newfontfamily\arabicfonttt[Script=Arabic]{Amiri}
+%
+% in the article, to add arabic text use: \textlang{arabic}{ ... }
+%
+% RUSSIAN
+% for russian text we also need to define fonts with support for Cyrillic script
+% \usepackage{fontspec}
+% \setotherlanguage{russian}
+% \newfontfamily\cyrillicfont{Times New Roman}
+% \newfontfamily\cyrillicfontsf{Times New Roman}[Script=Cyrillic]
+% \newfontfamily\cyrillicfonttt{Times New Roman}[Script=Cyrillic]
+%
+% in the text use \begin{russian} ... \end{russian}
+% LANGUAGE - END
+
+% EMOJIS - BEGIN
+% to use emoticons in your manuscript
+% https://stackoverflow.com/questions/190145/how-to-insert-emoticons-in-latex/57076064
+% using font Symbola, which has full support
+% the font may be downloaded at:
+% https://dn-works.com/ufas/
+% add to preamble:
+% \newfontfamily\Symbola{Symbola}
+% in the text use:
+% {\Symbola }
+% EMOJIS - END
+
+% LABEL REFERENCE TO DESCRIPTIVE LIST - BEGIN
+% reference itens in a descriptive list using their labels instead of numbers
+% insert the code below in the preambule:
+%\makeatletter
+%\let\orgdescriptionlabel\descriptionlabel
+%\renewcommand*{\descriptionlabel}[1]{%
+%  \let\orglabel\label
+%  \let\label\@gobble
+%  \phantomsection
+%  \edef\@currentlabel{#1\unskip}%
+%  \let\label\orglabel
+%  \orgdescriptionlabel{#1}%
+%}
+%\makeatother
+%
+% in your document, use as illustraded here:
+%\begin{description}
+%  \item[first\label{itm1}] this is only an example;
+%  % ...  add more items
+%\end{description}
+% LABEL REFERENCE TO DESCRIPTIVE LIST - END
+
+
+% add line numbers for submission
+%\usepackage{lineno}
+%\linenumbers
+
+\begin{document}
+\maketitle
+
+\begin{polyabstract}
+\begin{abstract}
+This study explores Latin American university teachers’ perspectives on the pedagogical integration of artificial intelligence (AI), particularly ChatGPT, within higher education contexts. Drawing on a mixed-methods approach, data were collected from 130 participants through a validated survey instrument and follow-up semi-structured interviews. The findings reveal a generally positive attitude toward AI as a pedagogical support tool, particularly for automating routine tasks and generating educational content. However, the study also identifies critical tensions—including epistemic insecurity, ethical concerns, and limited digital pedagogical training—which hinder deeper, reflective use. Participants emphasize the urgent need for professional development opportunities that promote critical algorithmic literacy, and not merely tool proficiency. This research highlights the importance of situating AI integration within ethical, contextualized, and socially responsive frameworks in teacher education. It calls for systemic efforts to rethink teacher training programs so that they empower educators to navigate and critically engage with AI in ways that support equitable and human-centered learning environments.
+
+\keywords{Higher education \sep Artificial Intelligence \sep University teaching \sep Teacher training \sep Latin America}
+\end{abstract}
+
+\begin{english}
+\begin{abstract}
+Este estudo explora as perspectivas dos professores universitários latino-americanos sobre a integração pedagógica da inteligência artificial (IA), particularmente o ChatGPT, em contextos de ensino superior. Com base em uma abordagem de métodos mistos, os dados de 130 participantes foram coletados por meio de um instrumento de pesquisa validado e entrevistas semiestruturadas de acompanhamento. Os resultados revelam uma atitude geralmente positiva em relação à IA como ferramenta de apoio pedagógico, particularmente para automatizar tarefas rotineiras e gerar conteúdo educacional. No entanto, o estudo também identifica tensões críticas — incluindo insegurança epistêmica, preocupações éticas e treinamento pedagógico digital limitado — que impedem um uso mais profundo e reflexivo. Os participantes enfatizam a necessidade urgente de oportunidades de desenvolvimento profissional que promovam a alfabetização algorítmica crítica, e não apenas a proficiência na ferramenta. Esta pesquisa destaca a importância de situar a integração da IA em estruturas éticas, contextualizadas e socialmente responsivas na formação de professores. O estudo convoca esforços sistêmicos para repensar os programas de formação de professores para que capacitem os educadores a navegar e se envolver criticamente com a IA de maneiras que apoiem ambientes de aprendizagem equitativos e centrados no ser humano.
+
+\keywords{Ensino superior \sep Inteligência Artificial \sep Ensino universitário \sep Formação de professores \sep América Latina}
+\end{abstract}
+\end{english}
+% if there is another abstract, insert it here using the same scheme
+\end{polyabstract}
+
+\section{Introduction}\label{sec-intro}
+The emergence of generative artificial intelligence (AI) in the field of education has profoundly reconfigured debates on the teaching role, the nature of knowledge, and pedagogical models in higher education. Tools such as ChatGPT, Copilot, or DALL-E have ceased to be objects of technological curiosity and have become everyday instruments in planning, evaluation, and didactic mediation \cite{MiaoHolmes2021BeyondDisruption,HolmesBialikFadel2019AIEducation}. This transformation raises urgent questions not only about the pedagogical efficacy and utility of AI but also about its ethical, epistemological, and political implications.
+
+Globally, governments and educational institutions are promoting initiatives to incorporate AI into teaching and learning processes, both as a tool to personalize education and to foster critical digital citizenship \cite{UNESCO2023GenerativeAI,OECD2022HarnessingAI}. However, multiple researchers have warned that this adoption cannot be reduced to a technocratic or instrumental process; it requires an understanding of the social structures, algorithmic biases, and pedagogical tensions that AI introduces in educational environments \cite{Selwyn2019RobotsTeachers,Perrotta2024PlugAndPlayEducation}.
+
+In the field of AI literacy, numerous studies highlight the need to prepare teachers and students not only to operate technologies but also to critically analyze their functioning, their impact on autonomy, and their contribution to more inclusive and just forms of knowledge \cite{LongMagerko2020AILiteracy,YimWegerif2024TeachersAI}. Nevertheless, teacher training efforts in AI have been fragmented and uneven, especially in regions of the Global South such as Latin America, where digital infrastructure conditions, educational policies, and institutional cultures present particular challenges \cite{Cobo2016InnovacionPendiente,ReyesAvelloMartinez2021DigitalLiteracy}.
+
+Despite the growing number of publications on educational AI, a significant gap remains in understanding how Latin American university teachers experience this transformation: what practices are they developing with AI? What opportunities and risks do they perceive? What structural and formative aspects condition their pedagogical agency in the face of these technologies? These questions are particularly relevant when considering that meaningful AI integration requires not only technical competencies but also critical algorithmic literacy \cite{WilliamsonEynon2020HistoricalThreads}.
+
+This study is situated at this intersection between technological innovation and educational justice. Through a mixed approach with Latin American university teachers in postgraduate training programs, we analyze their beliefs, uses, challenges, and training needs in relation to AI. Unlike technocentric approaches, this research adopts a situated view, which understands technology as a social phenomenon, traversed by power relations, institutional contexts and worldviews.
+
+\subsection{General objective}\label{sec-normas}
+The study seeks to explore the perceptions, practices and training needs of Latin American university teachers in relation to the use of artificial intelligence in their teaching contexts.
+
+\subsection{Specific objectives}\label{sec-conduta}
+
+\begin{itemize}
+    \item To identify the beliefs and attitudes of teachers regarding the use of AI in higher education.
+    \item To analyze current experiences and strategies for incorporating AI into teaching practice.
+    \item To examine the training and professional development needs for a critical and contextualized integration of these technologies.
+\end{itemize}
+
+This article aims to provide empirical evidence and critical reflection for the design of more inclusive, ethical, and relevant teacher training policies that respond to the contemporary challenges of higher education, which are being transformed by automation, the datification of knowledge, and the dispute over the meanings of education.
+
+\subsection{Artificial Intelligence in education: conceptual foundations and emerging trends}\label{sec-fmt-manuscrito}
+Artificial Intelligence (AI) refers to systems designed to perform tasks that typically require human intelligence, such as language understanding, learning, and problem-solving \cite{RussellNorvig2010AIMA,Harada2025InnovacionIAUniversidad}. Its growing integration in education—referred to as Artificial Intelligence in Education (AIED)—is transforming pedagogical approaches, administrative processes, and classroom interactions \cite{LuckinHolmes2016IntelligenceUnleashed,XuOuyang2022AIinSTEM}. At the higher education level, tools such as ChatGPT, Copilot, and automated feedback systems are being increasingly adopted as part of instructional strategies and academic support.
+
+Yet, AI in education is not merely a neutral technological advancement. It embodies specific epistemological and political assumptions \cite{Selwyn2019RobotsTeachers,WilliamsonEynon2020HistoricalThreads}. Scholars warn that AI can reinforce technocratic and efficiency-oriented models of education, potentially marginalizing pedagogical practices grounded in humanistic, situated, and relational learning \cite{WilliamsonBayneShay2020Datafication,Perrotta2024PlugAndPlayEducation}. In this sense, understanding AIED demands a dual lens that sees its potential for personalization and democratization, and its risks of automation, surveillance, and depersonalization.
+
+Moreover, a growing body of research positions AI literacy as a critical 21st-century competence, comparable to traditional literacy and numeracy \cite{LongMagerko2020AILiteracy,KandlhoferEtAl2016AICSeducation}. AI literacy is defined as the ability to understand, critically evaluate, and interact with AI systems in a manner that is both ethical and informed. As AI becomes ubiquitous in educational and professional settings, developing these literacies becomes essential for both students and educators.
+
+
+\subsection{Educators’ perceptions of AI: opportunities, ambivalences, and barriers}\label{sec-formato}
+Existing literature reveals that educators hold ambivalent views on AI in the classroom. While many recognize its potential to support administrative efficiency, enhance lesson planning, and personalize student learning, they also express concerns regarding its impact on critical thinking, creativity, and academic integrity \cite{HolmesBialikFadel2019AIEducation,KaratasEricokTanrikulu2025CurriculumAI}. These concerns are especially pronounced in contexts where teachers face limited institutional support, insufficient training, or unclear pedagogical frameworks for integrating responsible AI \cite{BarbuSbughea2024AIEducationTrends,YueJongNg2024TPACKAI}.
+
+In Latin America, these ambivalences are shaped by persistent structural inequalities in infrastructure, digital literacy, and access to professional development \cite{Cobo2016InnovacionPendiente,ReyesAvelloMartinez2021DigitalLiteracy,Harada2025InnovacionIAUniversidad}. University professors, in particular, often face a paradox: the growing pressure to innovate using AI tools, coupled with the absence of clear guidelines or critical training to do so. This leads to a fragmented adoption of AI, heavily reliant on individual initiative and shaped by epistemic uncertainty.
+
+Furthermore, several studies indicate that educators’ lack of confidence and understanding of AI’s inner workings is a critical barrier to its meaningful use \cite{SchiavoBusinaroZancanaro2024AIAcceptance,MaiEtAl2022GeospatialFoundationModel}. This knowledge gap underscores the importance of AI teacher education programs that extend beyond surface-level tool familiarity to a deeper, more comprehensive engagement with ethical and pedagogical considerations.
+
+
+\subsection{Critical algorithmic literacy as professional competence}\label{sec-modelo}
+
+In response to these challenges, scholars increasingly advocate for the inclusion of critical algorithmic literacy in teacher education \cite{WilliamsonBayneShay2020Datafication,AkgunGreenhow2022AIK12Ethics}. This concept encompasses three core dimensions:
+
+\begin{itemize}
+    \item Technical literacy, or knowing how to operate AI tools.
+    \item Epistemological literacy, or understanding the assumptions, limits, and consequences of algorithmic decision-making.
+    \item Ethical literacy, or assessing when, why, and under what conditions it is appropriate to use such tools in educational contexts \cite{Williamson2020HiddenArchitecture}.
+\end{itemize}
+
+This aligns with a transdisciplinary approach to AI literacy education, where educators are not just passive users of AI systems but critical agents capable of interrogating and reimagining their educational use \cite{ChiuSanusi2024AILiteracy}. For example, arts-based and collaborative learning pedagogies are being explored to facilitate age-appropriate, culturally relevant, and ethically aware engagement with AI \cite{YueJongNg2024TPACKAI,EvangelidisEtAl2024AIArtEducation}. These approaches challenge the techno-solutionist view that technological adoption inherently equals educational improvement \cite{BulathwelaEtAl2024AIEducationInequality}.
+
+From this perspective, teaching with and about AI becomes a space for political and ethical formation, particularly relevant in higher education, where students are developing their civic and professional identities. Therefore, algorithmic literacy must be framed not only as a functional skill but as a critical pedagogical practice embedded in larger questions of equity, agency, and social justice.
+
+\subsection{Teacher professional development in the AI era: between technological integration and critical agency}\label{sec-organizacao}
+Traditional models of teacher professional development—centered on updating content knowledge or acquiring discrete technical skills—are insufficient in the age of AI. The complex and evolving nature of AI demands a reconfiguration of what it means to be a teacher: not just a knowledge transmitter, but a reflective practitioner navigating the socio-technical landscape of automated decision-making \cite{ZawackiRichterEtAl2019AIHigherEd,Shah2023AIFutureEducation}.
+
+Frameworks such as TPACK (Technological Pedagogical Content Knowledge) and TAM (Technology Acceptance Model) have been utilized to investigate teachers’ competencies and attitudes toward AI \cite{KoehlerMishra2009TPACK,Davis1989TAM,ChaipidechEtAl2022TPACKAI}. While TPACK highlights the intersections of disciplinary knowledge, pedagogy, and technology, TAM focuses on perceived usefulness and ease of use as key determinants of technology adoption. However, critics argue that these models must be expanded to include dimensions of critical consciousness, social influence, and facilitating conditions \cite{VenkateshEtAl2011UTAUTContinuance,SharmaSingh2024AIUTAUT}, especially in under-resourced and structurally unequal settings, such as many higher education systems in Latin America.
+
+Teacher agency in this context is the ability to not only choose or reject tools but also to shape the terms and conditions of their integration. As such, professional development programs must:
+
+\begin{itemize}
+    \item Promote ethical reflection on the implications of AI for educational justice.
+    \item Foster communities of practice and collaborative inquiry among educators \cite{GalanRodriguezEtAl2025ActitudesIA}.
+    \item Encourage educators to co-create pedagogical strategies grounded in local needs and values \cite{Cobo2016InnovacionPendiente,DilekBaranAleman2025AILiteracy}.
+\end{itemize}
+
+This shift repositions educators not as passive adopters of innovation, but as critical designers of pedagogical futures—a particularly urgent task in the face of growing automation, standardization, and commodification of educational processes.
+
+\subsection{Integrative Theoretical Models: TPACK and UTAUT in understanding teachers’ adoption of AI}\label{sec-organizacao-latex}
+Two of the most widely used theoretical frameworks to analyze technology adoption and pedagogical integration among teachers are the TPACK model and the Unified Theory of Acceptance and Use of Technology (UTAUT). Both models provide complementary perspectives for understanding how educators engage with AI tools in higher education, particularly in relation to their pedagogical design, perceived usefulness, and contextual constraints.
+
+The TPACK model \cite{KoehlerMishra2009TPACK} expands on \posscite{Shulman1986ThoseWhoUnderstand} concept of pedagogical content knowledge by incorporating a technological dimension. It posits that effective technology integration requires the dynamic interaction among three knowledge domains: Content Knowledge (CK), Pedagogical Knowledge (PK), and Technological Knowledge (TK). The intersection of these domains results in an integrated understanding that allows teachers to design meaningful and contextually appropriate learning experiences. Empirical studies have demonstrated that teachers with well-developed TPACK are more capable of adapting AI tools—such as automated feedback systems or intelligent tutoring platforms—to their disciplinary and pedagogical goals \cite{NingEtAl2024AITPACK,ChaipidechEtAl2022TPACKAI}. However, developing TPACK competencies requires sustained professional learning opportunities, institutional support, and reflective practice \cite{ZawackiRichterEtAl2019AIHigherEd}.
+
+The UTAUT model \cite{VenkateshEtAl2003UTAUT,VenkateshEtAl2011UTAUTContinuance} synthesizes earlier models of technology acceptance (e.g., TAM and TRA) into a comprehensive framework that explains users’ behavioral intention to adopt technology. It identifies four key determinants: Performance Expectancy, Effort Expectancy, Social Influence, and Facilitating Conditions. These factors are moderated by variables such as age, gender, experience, and voluntariness of use. In educational contexts, UTAUT has been widely employed to examine how teachers’ perceptions of AI tools’ usefulness and ease of use, as well as institutional culture and peer norms, affect their adoption behaviors \cite{TeoNoyes2014UTAUTPreserviceTeachers,SharmaSingh2024AIUTAUT}.
+
+Recent studies have proposed UTAUT2, an extended version that includes additional constructs such as Hedonic Motivation and Habit \cite{VenkateshThongXu2012ConsumerUTAUT}, which are particularly relevant for understanding the affective and habitual aspects of AI use among educators. For example, positive emotional engagement with AI applications can enhance teachers’ willingness to experiment with new pedagogical strategies, whereas institutional constraints may hinder sustained adoption \cite{SchiavoBusinaroZancanaro2024AIAcceptance}.
+
+Integrating TPACK and UTAUT offers a holistic analytical lens for studying teachers’ relationships with AI: TPACK addresses the knowledge-based and pedagogical integration dimension, while UTAUT focuses on behavioral and contextual determinants of adoption. Combining these perspectives allows for a richer understanding of how teachers develop professional agency in technologically mediated environments—an issue particularly salient in Latin American higher education, where digital divides, institutional inertia, and resource limitations influence teachers’ engagement with innovation \cite{ReyesAvelloMartinez2021DigitalLiteracy,Cobo2016InnovacionPendiente}.
+
+\section{Methodology}\label{sec-titulo}
+
+\subsection{Research design}\label{sec-autores}
+This study employs an exploratory sequential mixed design \cite{CreswellPlanoClark2017MixedMethods}, which combines quantitative and qualitative methods to understand the perceptions, practices and training needs of university teachers regarding the use of AI in higher education settings in Latin America. This methodological strategy was chosen for its ability to generate an integrated understanding of the phenomenon, allowing for the analysis of general trends through questionnaires and to deepen the meanings through qualitative interviews.
+
+From the quantitative approach, data were collected through an adapted structured questionnaire, with the aim of identifying patterns of use, attitudes, perceived risks and training gaps. Subsequently, semi-structured interviews were conducted to explore in greater depth the experiences, tensions and expectations around AI in teaching.
+
+The theoretical framework guiding the study design is dual:
+
+\begin{itemize}
+    \item The UTAUT model \cite{VenkateshEtAl2011UTAUTContinuance} allows us to analyze the factors affecting intention to use technologies, including performance expectancy, effort expectancy, social influence, and facilitating conditions.
+    \item The TPACK model \cite{KoehlerMishra2009TPACK}, which enriches interpretation by considering the type of teaching knowledge needed to integrate technology pedagogically.
+\end{itemize}
+
+Both models were used both to design instruments and to guide the analysis and interpretation of the findings.
+
+\subsection{Participants and sampling}\label{sec-idioma}
+To achieve the research objectives, participant selection was carried out in two stages. In the first stage, corresponding to the administration of the questionnaire, a non-probabilistic purposive sampling strategy with self-selection was employed. An open invitation was distributed through institutional mailing lists and professional academic networks to university teachers in Colombia, Mexico, Peru, and Ecuador \cite{PattonMcKeggWehipeihana2015DevelopmentalEvaluation}.
+
+In addition to this initial criterion, participants were required to be currently enrolled in a postgraduate program in university teaching and to have previous experience with AI technologies. This ensured a consistent level of professional expertise and commitment to improving educational practice.
+
+The final sample consisted of 130 university teachers. Participation was voluntary and based on informed consent.
+
+In the second stage, corresponding to the qualitative phase, a non-probabilistic purposive subsample of 18 participants was intentionally selected from the pool of 130 survey respondents to enrich and deepen the quantitative data obtained from the questionnaire.
+
+To ensure diversity and the richness of testimonies, participants were selected to represent different levels of AI usage (low, medium, and high), types of institutions (public and private universities), and disciplinary fields (education, social sciences, humanities, engineering, health, and natural sciences).
+
+
+\subsection{Data collection instruments}\label{sec-resumo}
+
+\subsubsection{CPDUChatGPT Questionnaire}
+The questionnaire used was an adapted version of the Questionnaire for Teachers: Perceptions on the Use of ChatGPT in Higher Education (CPDUChatGPT), originally developed by \textcite{OrellanaEtAl2025ChatGPTPerception}. The adaptation included:
+
+\begin{itemize}
+    \item Review by experts in higher education and emerging technologies.
+    \item Lexical and semantic adjustments to ensure relevance in Latin American contexts.
+    \item Pilot test with 15 teachers, the results of which were used to refine ambiguous items.
+\end{itemize}
+
+The questionnaire was structured in 23 Likert-type items (1 = Strongly disagree, 5 = Strongly agree), distributed in three dimensions:
+
+\begin{itemize}
+    \item Use of ChatGPT in the university classroom.
+    \item Perceptions about benefits and risks of AI.
+    \item Training needs for critical integration.
+\end{itemize}
+
+Internal consistency analysis yielded acceptable reliability coefficients (Cronbach’s α = 0.83 for the total scale; subscale alphas ranging from 0.78 to 0.86). Construct validity was verified through exploratory factor analysis (EFA), confirming the three-dimensional structure aligned with the theoretical framework derived from TPACK and UTAUT.
+
+Descriptive analysis of the responses revealed moderate levels of AI use (M = 3.1, SD = 0.9), positive perceptions of its potential (M = 3.8, SD = 0.7), and high recognition of training needs (M = 4.5, SD = 0.6). These findings informed the development of the qualitative interview guide, ensuring that the subsequent phase deepened emerging issues such as ethical concerns, pedagogical integration, and institutional barriers.
+
+\subsubsection{Semi-structured interviews}\label{sec-secoes}
+An interview guide comprising 10 open-ended questions (Appendix \ref{apx-longtable}) was designed, drawing inspiration from previous studies on AI integration in education \cite{YueJongNg2024TPACKAI,CaberoAlmenaraEtAl2023DigCompEdu}. Interviews were conducted via video call, with an average duration of 40 minutes. The sessions were recorded with informed consent, transcribed verbatim and sent to the participants for validation (member checking).
+
+Data collection procedures included:
+
+\begin{enumerate}
+    \item Distribution of the questionnaire using Google Forms, with individual access and without collecting personal identifiers.
+    \item Preliminary analysis of quantitative results with SPSS.
+    \item Selection of participants for interviews based on their level of AI use and disciplinary diversity.
+    \item Conduction of interviews using Zoom or Meet, focusing on experiences, barriers, ethical dilemmas, and training needs.
+    \item Triangulation of data by cross-comparison of quantitative and qualitative findings.
+\end{enumerate}
+
+\subsection{Ethical aspects}\label{sec-format-simple}
+The ethics committee of the coordinating institution approved the study. All participants signed an electronic informed consent form, which guaranteed confidentiality, anonymity, and the right to withdraw at any time. The ethical principles established by the Declaration of Helsinki and national standards for educational research were adhered to.
+
+\subsection{Data analysis}\label{sec-links}
+
+\subsubsection{Quantitative analysis}\label{sec-outras-estr}
+Descriptive statistics (means, frequencies, standard deviations) were applied using SPSS. Bivariate correlations between variables, such as positive perception, experience with AI, and the need for training, were also explored to inform questions in the qualitative phase.
+
+\subsubsection{Qualitative analysis}\label{sec-listas}
+The thematic analysis method of \textcite{BraunClarke2006ThematicAnalysis} was applied, with the following phases:
+
+\begin{enumerate}
+    \item Familiarization with the data.
+    \item Initial open coding.
+    \item Axial coding and grouping by categories.
+    \item Definition of themes.
+    \item Review and validation through inter-rater comparison and participant validation.
+\end{enumerate}
+
+To ensure transparency and methodological rigor, the coding process followed both inductive and deductive logics. Initially, open codes were generated inductively from participants’ narratives, capturing recurring ideas and patterns. These codes were then reviewed and clustered into axial categories, which were contrasted with the analytical dimensions derived from the UTAUT and TPACK frameworks. To enhance reliability, two independent researchers conducted parallel codings, reaching a Cohen’s Kappa coefficient of 0.82. Discrepancies were resolved through discussion until full agreement was achieved. Additionally, the emerging thematic map was shared with three participants for feedback and conceptual validation.
+
+Atlas.ti software was used to support coding. The emerging categories were subsequently aligned with the dimensions of the UTAUT model to strengthen the interpretative framework.
+
+\section{Findings}\label{sec-figuras-tabelas}
+This section presents the findings organized around the main axes that emerged from the analysis of quantitative and qualitative data. Statistical frequencies are combined with textual quotations from the interviews, which allows us to offer an integrated, coherent, and rich reading of the phenomenon. Through this triangulation, structural tensions, emerging practices, and formative horizons around the use of AI in Latin American university education are identified.
+
+
+What is the current level of use of AI tools in university teaching practice? (\Cref{fig1}).
+
+\begin{figure}[h!]
+\centering
+\begin{minipage}{0.80\textwidth}
+\includegraphics[width=\textwidth]{Fig1.png}
+\caption{University faculty use of generative AI tools.}
+\label{fig1}
+\source{Own elaboration.}
+\end{minipage}
+\end{figure}
+
+\begin{flushleft} \textbf{Theme 1: Initial exploration and sporadic use}
+
+The quantitative analysis reveals that 67\% of teachers have used generative AI tools at least once, with ChatGPT being the most used tool. However, only 22\% report frequent use, defined as once a week or more. This gap indicates an exploratory use, driven more by curiosity than by a systematic integration into pedagogical practices.
+
+“I tried it to design rubrics and correct texts, but I do not feel confident to use it on a regular basis in my classes” (Humanities teacher). \hfill \break
+
+\textbf{Theme 2: Instrumental functionality vs. pedagogical integration}
+
+The reported uses are concentrated on instrumental functions, such as writing objectives, grammar review, and questionnaire design. Only a minority reported using it in direct didactic activities with students.
+
+“AI helps me prepare my classes faster, but I don’t know if that improves the teaching itself” (Social sciences teacher). \hfill \break
+
+\textbf{Theme 3: Increasing dependence of students}
+
+Teachers point out that some students use AI to solve tasks mechanically, without appropriation of the content. This worries those who perceive a dissonance between technological efficiency and deep learning.
+
+“My students became dependent. I ask them for a reflection and they give me impeccable texts, but they cannot explain” (Engineering teacher).
+
+Question 2: How do university teachers perceive the benefits and risks of using AI in education? \hfill \break
+
+\textbf{Theme 4: Positive assessment with ethical reservations}
+
+Seventy-six percent of teachers believe that AI can improve teaching if used in conjunction with pedagogical criteria. Interviews highlight efficiency in creating materials, personalizing learning, and automating repetitive tasks (\Cref{fig2}).
+
+\begin{figure}[h!]
+\centering
+\begin{minipage}{0.80\textwidth}
+\includegraphics[width=\textwidth]{Fig2.png}
+\caption{Ethical concerns about AI in education.}
+\label{fig2}
+\source{Own elaboration.}
+\end{minipage}
+\end{figure}
+
+“It is an opportunity to focus more on the human and less on the bureaucracy of teaching” (Health sciences professor).
+
+However, this assessment coexists with ethical concerns: 82\% express concern about learner autonomy, and 68\% fear encouraging plagiarism or technological dependence.
+
+“I feel that AI forces us to rethink what learning really means. It’s not just doing homework, it’s constructing meaning” (Education teacher). \hfill \break
+
+\textbf{Theme 5: Perception of deprofessionalization}
+
+A recurring concern is the possible erosion of the teaching role as curator of knowledge and pedagogical guide.
+
+“If everything is done by the machine, what role is left for us as trainers?” (Social sciences teacher).
+
+Question 3: What formative needs do teachers identify to integrate AI critically and effectively? \hfill \break
+
+\textbf{Theme 6: Structural training gap}
+
+Eighty-nine percent of teachers state that they have not received formal training on the pedagogical use of AI. This absence is presented as a structural obstacle to progress in technological appropriation. Most express an urgent need for professional training beyond superficial technical use.
+
+“I want to understand what is behind these tools, how they work and how they relate to knowledge” (Engineering teacher). \hfill \break
+
+\textbf{Theme 7: Demand for critical training}
+
+The demand for training is not limited to operational competencies. Ninety-two percent of respondents expressed interest in training with a critical approach, focusing on ethics, epistemology, and pedagogical design in the context of AI.
+
+“We don’t need tutorials, we need spaces for reflection, where we can think about how to educate with these technologies” (Social sciences teacher).
+
+The most requested topics include:
+
+\begin{itemize}
+    \item Automated assessment and its pedagogical validity.
+    \item Design of activities with AI.
+    \item Ethical dilemmas and responsible use.
+    \item Critical algorithmic literacy (\Cref{fig3}).
+\end{itemize}
+
+\begin{figure}[h!]
+\centering
+\begin{minipage}{0.80\textwidth}
+\includegraphics[width=\textwidth]{Fig3.png}
+\caption{Training needs for AI integration.}
+\label{fig3}
+\source{Own elaboration.}
+\end{minipage}
+\end{figure}
+
+Question 4: What structural and institutional conditions hinder or encourage AI integration? \hfill \break
+
+\textbf{Theme 8: Insufficient enabling conditions}
+
+Several participants expressed a lack of institutional support and clear policies. Many stated that exploration with AI is self-taught and not part of planned institutional strategies.
+
+“Here we use AI because we want to, not because the university encourages it. There are no guidelines, no incentives, no training” (Education teacher). \hfill \break
+
+\textbf{Theme 9: Inequality in access and innovation}
+
+Gaps are identified between private and public institutions, as well as between disciplines. Some careers have environments that are more open to innovation, while others face bureaucratic barriers and little investment in educational technology.
+
+“In my faculty we are still fighting for projectors. Talking about AI sounds like science fiction” (Humanities teacher). \hfill \break
+
+\textbf{Theme 10: Institutional culture resistance to change}
+
+Some faculty members perceive a cultural resistance to the use of AI, expressed by both colleagues and managers, who associate the technology with superficiality, the replacement of human functions, or a threat to academic quality.
+
+“I have heard colleagues say that using AI is ‘cheating,’ as if it cannot be used critically” (Health sciences professor). \end{flushleft}
+
+\subsection{Synthesis and triangulation of findings}\label{sec-quotesandfootnotes}
+The data show a constant tension between the pedagogical potential of AI and the challenges presented by its responsible integration. While a majority of teachers recognize its benefits and demand training, legitimate fears related to ethics, autonomy, and pedagogical sense also emerge.
+
+The triangulation reveals a clear pattern: the intention to use it is high, but institutional conditions, lack of critical training, and ethical ambivalence limit its effective implementation. This observation aligns with what has been noted in similar contexts in the Global South \cite{YimWegerif2024TeachersAI,Shah2023AIFutureEducation}, where technological innovation is often shaped by structural inequalities.
+
+\section{Discussion}\label{sec-equacao}
+
+\subsection{Artificial Intelligence as an emerging pedagogical dilemma in Latin American universities}
+
+The results of this study allow us to identify a structural ambivalence in the relationship between Latin American university teachers and artificial intelligence. On the one hand, its potential to enrich teaching and learning processes through automation, content generation, and personalized feedback is recognized. On the other hand, ethical, epistemological, and pedagogical concerns arise from its unregulated or decontextualized use, which has also been documented in recent research \cite{Selwyn2019RobotsTeachers,Knox2020AIChina,MiaoHolmes2021BeyondDisruption}.
+
+This tension is not limited to a resistance to change, but reflects a deeper conflict about the meaning of educating in algorithmic times. As \textcite{YimWegerif2024TeachersAI} point out, AI in education raises not only instrumental issues but also questions of agency, legitimacy of knowledge, and conditions of teacher and student subjectification.
+
+Teachers perceive that, although AI can alleviate the operational burden, its uncritical use could promote a culture of dependency, impoverish students’ cognitive competencies, and blur formative processes that require dialogue, uncertainty, and divergent thinking. This view aligns with \posscite{Perrotta2024PlugAndPlayEducation} findings on the risk of teacher deprofessionalization in contexts of technological adoption without pedagogical orientation.
+
+\subsection{Training gaps and the challenge of critical literacy}\label{sec-codigos}
+One of the most compelling findings of this study is the cross-cutting demand for teacher training in AI. Ninety-two percent of the participants expressed interest in training processes that focused not only on technical skills, but also on ethical, political, and pedagogical frameworks to critically understand the role of these technologies in teaching.
+
+This suggests that the gap is not merely technical, but epistemological and political. As \textcite{WilliamsonEynon2020HistoricalThreads} have argued, authentic algorithmic literacy requires teachers to understand how algorithms are configured, the biases they reproduce, the corporate interests that drive them, and the effects they have on knowledge production.
+
+From this approach, the TPACK model is limited if it is not articulated with a critical perspective on the power of technology in teaching processes. Meaningful integration of AI requires knowing how to use it, as well as asking what its purpose is, with what formative objectives, and under what structural conditions.
+
+
+\subsection{Institutional conditions and structural inequalities}\label{sec-contributors-expl}
+Qualitative data indicate that the critical appropriation of AI depends not only on individual teachers’ willingness but also on institutional conditions, including training policies, access to infrastructure, school culture, and technical and pedagogical support. This structural dimension has also been highlighted by studies in Global South contexts \cite{Shah2023AIFutureEducation,Cobo2016InnovacionPendiente}, where emerging technologies can reproduce pre-existing inequalities.
+
+Particularly relevant to this study is the context of Latin American teachers working in university systems that are often precarious, characterized by digital divides, rigid curricula, and limited autonomy for pedagogical innovation. In this context, AI does not appear as a magical solution, but as a new territory of pedagogical, cultural, and political dispute.
+
+\subsection{Implications for educational policy and teacher education}\label{sec-conclusao}
+
+This study identifies concrete lines of action for educational institutions, policy makers, and teacher educators in higher education:
+
+\begin{itemize}
+    \item Redesign continuing teacher education to include critical AI literacy as a structural axis, integrating technical, pedagogical, ethical, and sociopolitical dimensions.
+    \item Promote clear institutional frameworks for AI use that protect authorship, data privacy, and teacher autonomy, avoiding unregulated implementation.
+    \item Develop interdisciplinary communities of practice where teachers can experiment, reflect, and build collective knowledge on the integration of emerging technologies.
+    \item Strengthen public policies for technological equity, guaranteeing access, connectivity, and support in all regions, especially in public institutions and marginalized areas.
+    \item Incorporate the teachers’ perspective in the design of AI tools and policies, recognizing their situated experience and active role in the configuration of teaching-learning processes.
+\end{itemize}
+
+\subsection{Limitations of the study}
+
+This study has some limitations that should be considered when interpreting the results:
+
+\begin{itemize}
+    \item The sample is composed exclusively of teachers linked to graduate programs, which may imply a bias toward profiles with greater cultural capital and innovative disposition.
+    \item The data are based on self-reports (questionnaires and interviews), which could imply a certain degree of social desirability or perception bias.
+    \item The analysis focuses on perceptions and does not include direct observation of teaching practices or longitudinal study of the actual use of AI in classroom contexts.
+    \item The regional focus, centered on Latin America, limits generalization to other cultural or institutional contexts, although it provides situational depth and relevance.
+\end{itemize}
+
+Future studies could incorporate ethnographic methods, analysis of actual classroom practices, or comparative studies across regions and educational levels.
+
+\section{Conclusions}
+
+This study contributes to understanding how Latin American university teachers position themselves in the face of the advance of artificial intelligence in higher education. Through a mixed approach, the research identified ambivalent values, critical formative needs, and epistemological tensions that shape their experience with generative technologies, such as ChatGPT.
+
+Far from a technophobic rejection or naïve acceptance, the findings reveal that teachers require frameworks of meaning, spaces for reflection, and institutional support to integrate AI in an ethical, contextualized, and pedagogically sound manner.
+
+Critical algorithmic literacy is proposed as the structuring axis of teachers’ professional development in digital times. This not only implies teaching how to use tools, but also how to understand their logics, question their biases, design meaningful practices, and make educational decisions with critical awareness.
+
+Integrating AI in higher education cannot be a technocratic response. It must become an opportunity to revalue the teaching agency, rethink the curriculum, democratize access to knowledge, and renew the commitment to a more just, humanizing, and situated education for the challenges of the 21st century.
+
+\printbibliography\label{sec-bib}
+% if the text is not in Portuguese, it might be necessary to use the code below instead to print the correct ABNT abbreviations [s.n.], [s.l.]
+%\begin{portuguese}
+%\printbibliography[title={Bibliography}]
+%\end{portuguese}
+
+
+%full list: conceptualization,datacuration,formalanalysis,funding,investigation,methodology,projadm,resources,software,supervision,validation,visualization,writing,review
+\begin{contributors}[sec-contributors]
+\authorcontribution{Andresa Sartor Harada}[conceptualization,datacuration,formalanalysis,investigation,methodology,writing,review]
+\authorcontribution{Oscar Ulloa Guerra}[methodology,investigation,formalanalysis,supervision,review]
+\end{contributors}
+
+
+\begin{dataavailability}
+\txtdataavailability{dataonly} % options: dataavailable, dataonly, databody, datanotav, nodata
+\end{dataavailability}
+
+\appendix 
+\section{SEMI-STRUCTURED INTERVIEW GUIDE}\label{apx-longtable}
+
+\raggedright Study: Perceptions and training needs of Latin American university teachers on the use of AI in education
+
+Suggested duration: 30-45 minutes
+
+Participants: Subsample of 15-20 teachers who have answered the questionnaire
+
+
+\textbf{Block 1: Experiences and context.}
+
+\begin{enumerate}
+    \item Have you ever used an artificial intelligence tool in your teaching practice? Which one and for what purpose?
+    \item How would you describe your current level of familiarity with AI in the educational context?
+\end{enumerate}
+
+\textbf{Block 2: Perceptions and Beliefs}
+
+\begin{enumerate}[resume]
+    \item What are your thoughts on the use of tools like ChatGPT in university teaching?
+    \item What potential benefits do you see in integrating AI into your classes?
+    \item What do you consider to be the most important risks or challenges of using AI in education?
+\end{enumerate}
+ 
+\textbf{Block 3: Teaching practice}
+
+\begin{enumerate}[resume]
+    \item Could you share a concrete experience in which you have used (or considered using) AI in your teaching?
+    \item Have you observed changes in the way students interact with knowledge or with your classes since these tools became available?
+\end{enumerate}
+
+\textbf{Closing}
+
+\begin{enumerate}[resume]
+    \item Is there anything else you would like to share about your experience or expectations regarding the use of AI in your teaching?
+\end{enumerate}
+
+INFORMED CONSENT FOR RESEARCH PARTICIPATION
+
+Title of the study:
+
+Teachers and Artificial Intelligence: Uses, Dilemmas, and Training Needs in Latin American Higher Education
+
+Responsible researcher:
+
+[Full name]
+
+[Institutional e-mail].
+
+Description of the study:
+
+You are being invited to participate in research that aims to explore the perceptions, experiences and training needs of Latin American university teachers in relation to the use of artificial intelligence (AI) in higher education. Your participation is voluntary and consists of completing a questionnaire and, optionally, participating in an interview.
+
+Confidentiality:
+
+All information provided will be treated confidentially. Your identity will not be disclosed in any publication, and data will not be shared with third parties.
+
+Risks and benefits:
+
+There are no physical or psychological risks associated with this research. It is hoped that your participation will contribute to a better understanding of teaching practices in contexts of technological transformation.
+
+Consent:
+
+\begin{itemize}
+    \item I have been informed of the objectives, procedures and conditions of this study.
+    \item I understand that my participation is voluntary and that I may withdraw at any time.
+    \item I agree to participate in this study and authorize the anonymous use of the information provided.
+\end{itemize}
+
+Participant’s name:
+
+Signature:
+
+Date:
+
+
+\end{document}
+
