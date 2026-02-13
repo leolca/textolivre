@@ -1,0 +1,672 @@
+% !TEX TS-program = XeLaTeX
+% use the following command:
+% all document files must be coded in UTF-8
+\documentclass[portuguese]{textolivre}
+% build HTML with: make4ht -e build.lua -c textolivre.cfg -x -u article "fn-in,svg,pic-align"
+
+\journalname{Texto Livre}
+\thevolume{19}
+%\thenumber{1} % old template
+\theyear{2026}
+\receiveddate{\DTMdisplaydate{2025}{6}{5}{-1}} % YYYY MM DD
+\accepteddate{\DTMdisplaydate{2025}{10}{3}{-1}}
+\publisheddate{\DTMdisplaydate{2026}{2}{13}{-1}}
+\corrauthor{Marcia Izabel Fugisawa Souza}
+\articledoi{10.1590/1983-3652.2026.59514}
+%\articleid{NNNN} % if the article ID is not the last 5 numbers of its DOI, provide it using \articleid{} commmand 
+% list of available sesscions in the journal: articles, dossier, reports, essays, reviews, interviews, editorial
+\articlesessionname{articles}
+\runningauthor{Pierozzi Junior et al.} 
+%\editorname{Leonardo Araújo} % old template
+\sectioneditorname{Daniervelin Pereira~\orcid{0000-0003-1861-3609}}
+\layouteditorname{Saula Cecília~\orcid{0009-0006-3069-8480}}
+
+\title{Geotecnologias no Pantanal: produção científica, aplicações técnicas e desafios socioambientais}
+\othertitle{Geotechnologies in the Pantanal: scientific production, technical applications and socio-environmental challenges}
+% if there is a third language title, add here:
+%\othertitle{Artikelvorlage zur Einreichung beim Texto Livre Journal}
+
+\author[1]{Ivo Pierozzi Junior~\orcid{0000-0002-4979-1013}\thanks{Email: \href{mailto:ivo.pierozzi@embrapa.br}{ivo.pierozzi@embrapa.br}}}
+\author[1]{Márcia Izabel Fugisawa Souza~\orcid{0000-0002-6194-9354}\thanks{Email: \href{mailto:marcia.fugisawa@embrapa.br}{marcia.fugisawa@embrapa.br}}}
+\author[1]{João dos Santos Vila da Silva~\orcid{0000-0003-3973-9745}\thanks{Email: \href{mailto:joao.vila@embrapa.br}{joao.vila@embrapa.br}}}
+\author[1]{Magda Cruciol~\orcid{0009-0001-7380-8882}\thanks{Email: \href{mailto:magda.cruciol@embrapa.br}{magda.cruciol@embrapa.br}}}
+\author[1]{Luiz Manoel Silva Cunha~\orcid{0000-0003-4579-2104}\thanks{Email: \href{mailto:luiz.cunha@embrapa.br}{luiz.cunha@embrapa.br}}}
+\affil[1]{Embrapa Agricultura Digital, Campinas, SP, Brasil.}
+
+\addbibresource{article.bib}
+% use biber instead of bibtex
+% $ biber article
+
+% used to create dummy text for the template file
+\definecolor{dark-gray}{gray}{0.35} % color used to display dummy texts
+\usepackage{lipsum}
+\SetLipsumParListSurrounders{\colorlet{oldcolor}{.}\color{dark-gray}}{\color{oldcolor}}
+
+% used here only to provide the XeLaTeX and BibTeX logos
+\usepackage{hologo}
+
+% if you use multirows in a table, include the multirow package
+\usepackage{multirow}
+
+% provides sidewaysfigure environment
+\usepackage{rotating}
+
+% CUSTOM EPIGRAPH - BEGIN 
+%%% https://tex.stackexchange.com/questions/193178/specific-epigraph-style
+\usepackage{epigraph}
+\renewcommand\textflush{flushright}
+\makeatletter
+\newlength\epitextskip
+\pretocmd{\@epitext}{\em}{}{}
+\apptocmd{\@epitext}{\em}{}{}
+\patchcmd{\epigraph}{\@epitext{#1}\\}{\@epitext{#1}\\[\epitextskip]}{}{}
+\makeatother
+\setlength\epigraphrule{0pt}
+\setlength\epitextskip{0.5ex}
+\setlength\epigraphwidth{.7\textwidth}
+% CUSTOM EPIGRAPH - END
+
+% to use IPA symbols in unicode add
+%\usepackage{fontspec}
+%\newfontfamily\ipafont{CMU Serif}
+%\newcommand{\ipa}[1]{{\ipafont #1}}
+% and in the text you may use the \ipa{...} command passing the symbols in unicode
+
+% LANGUAGE - BEGIN
+% ARABIC
+% for languages that use special fonts, you must provide the typeface that will be used
+% \setotherlanguage{arabic}
+% \newfontfamily\arabicfont[Script=Arabic]{Amiri}
+% \newfontfamily\arabicfontsf[Script=Arabic]{Amiri}
+% \newfontfamily\arabicfonttt[Script=Arabic]{Amiri}
+%
+% in the article, to add arabic text use: \textlang{arabic}{ ... }
+%
+% RUSSIAN
+% for russian text we also need to define fonts with support for Cyrillic script
+% \usepackage{fontspec}
+% \setotherlanguage{russian}
+% \newfontfamily\cyrillicfont{Times New Roman}
+% \newfontfamily\cyrillicfontsf{Times New Roman}[Script=Cyrillic]
+% \newfontfamily\cyrillicfonttt{Times New Roman}[Script=Cyrillic]
+%
+% in the text use \begin{russian} ... \end{russian}
+% LANGUAGE - END
+
+% EMOJIS - BEGIN
+% to use emoticons in your manuscript
+% https://stackoverflow.com/questions/190145/how-to-insert-emoticons-in-latex/57076064
+% using font Symbola, which has full support
+% the font may be downloaded at:
+% https://dn-works.com/ufas/
+% add to preamble:
+% \newfontfamily\Symbola{Symbola}
+% in the text use:
+% {\Symbola }
+% EMOJIS - END
+
+% LABEL REFERENCE TO DESCRIPTIVE LIST - BEGIN
+% reference itens in a descriptive list using their labels instead of numbers
+% insert the code below in the preambule:
+%\makeatletter
+%\let\orgdescriptionlabel\descriptionlabel
+%\renewcommand*{\descriptionlabel}[1]{%
+%  \let\orglabel\label
+%  \let\label\@gobble
+%  \phantomsection
+%  \edef\@currentlabel{#1\unskip}%
+%  \let\label\orglabel
+%  \orgdescriptionlabel{#1}%
+%}
+%\makeatother
+%
+% in your document, use as illustraded here:
+%\begin{description}
+%  \item[first\label{itm1}] this is only an example;
+%  % ...  add more items
+%\end{description}
+% LABEL REFERENCE TO DESCRIPTIVE LIST - END
+
+
+% add line numbers for submission
+%\usepackage{lineno}
+%\linenumbers
+
+\begin{document}
+\maketitle
+
+\begin{polyabstract}
+\begin{abstract}
+Este artigo analisou a produção científica sobre o uso de geotecnologias no bioma Pantanal, com base nos trabalhos publicados em revistas e nos anais do Simpósio de Geotecnologias no Pantanal (GeoPantanal) entre 2006 e 2021. O objetivo foi identificar tendências, lacunas e padrões voltados à conservação, gestão e monitoramento do bioma, considerando o papel do evento como catalisador de conhecimento. A metodologia incluiu revisão contextual da literatura, mapeamento conceitual e análise de redes semânticas. Os resultados mostraram a evolução temática, o perfil dos autores e instituições e a relação entre a ciência produzida e os desafios socioambientais da região. Conclui-se que as geotecnologias são fundamentais para o monitoramento ambiental e a formulação de políticas públicas. O artigo destacou a importância dos eventos técnico-científicos na socialização do conhecimento e propõe estratégias para fortalecer a articulação entre pesquisa, gestão territorial e políticas públicas, com ênfase em abordagens integradas e interdisciplinares.
+
+\keywords{Conservação ambiental\sep Monitoramento ambiental\sep Sensoriamento remoto\sep Gestão ambiental}
+\end{abstract}
+
+\begin{english}
+\begin{abstract}
+This article analyzed the scientific production on geotechnologies in the Pantanal biome, based on papers published in journals and in the proceedings of the Symposium on Geotechnologies in the Pantanal (GeoPantanal) from 2006 to 2021. It aims to identify trends, gaps, and patterns in research focused on the conservation, management, and monitoring of the biome, recognizing the symposium as a key knowledge platform. The methodology included a contextual literature review, conceptual mapping, and semantic network analysis. Results highlight the thematic evolution, the profiles of authors and institutions, and the connection between scientific output and socio-environmental challenges. The study concluded that geotechnologies are essential for environmental monitoring and for informing public policy. It underscores the importance of scientific events in sharing knowledge and suggests strategies to strengthen integration between research, territorial management, and policy, advocating for interdisciplinary and integrated approaches to address the complex dynamics of the Pantanal biome.
+
+\keywords{Environmental conservation\sep Environmental monitoring\sep Remote sensing\sep Environmental management}
+\end{abstract}
+\end{english}
+% if there is another abstract, insert it here using the same scheme
+\end{polyabstract}
+
+\section{Introdução}\label{sec-intro}
+O Pantanal é reconhecido mundialmente por sua biodiversidade singular, sua dinâmica hidrológica sazonal e sua relevância sociocultural e ecológica. Esse conjunto de características tem despertado crescente interesse da comunidade científica, de gestores públicos e de ambientalistas, especialmente diante dos impactos das mudanças climáticas e da intensificação das pressões antrópicas sobre seus ecossistemas. Essa vasta planície alagável, com 138.183 $km^2$, integra a Bacia do Alto Paraguai (BAP), que abrange 361.666 $km^2$ distribuída entre os estados de Mato Grosso (48,1\%) e Mato Grosso do Sul (51,9\%), além de porções da Bolívia e do Paraguai \cite{silva1998}. Salienta-se ainda, que esta planície encontra-se inserida no Bioma Pantanal com cerca de 150.988 $km^2$ \cite{ibge2019}.
+
+A biodiversidade singular do Pantanal, que abriga uma rica variedade de espécies vegetais e animais \cite{alho2008}, encontra-se sob ameaças devido à degradação das áreas de planalto que alimentam hidrologicamente o bioma. A expansão da agricultura intensiva e da pecuária, a construção de barragens e outras formas de uso do solo têm alterado o regime hidrológico natural, comprometendo os ciclos de cheia e seca que sustentam os serviços ecossistêmicos \cite{brasil2021, cunha2009}. Nas últimas três décadas, a ausência de planejamento ambiental contribuiu para a expansão desordenada das atividades agropecuárias, a contaminação por mercúrio decorrente da mineração e a supressão da vegetação nativa sem adoção de medidas adequadas de conservação. Esses fatores têm acelerado o assoreamento dos rios, ampliando o risco de inundações e afetando tanto a biodiversidade quanto a economia regional \cite{embrapa2024}.
+
+Os impactos dessas transformações comprometem serviços ecossistêmicos essenciais, como o fornecimento de água doce, a produção de alimentos, a regulação climática, o controle de inundações, a polinização e o turismo ecológico -- fundamentais para o equilíbrio ambiental global e para o bem-estar das comunidades locais.
+
+Apesar da crescente produção científica sobre o Pantanal, ainda se carece de análises sistematizadas que revelem, ao longo do tempo, como esse conhecimento tem sido construído, quais lacunas persistem e de que forma as geotecnologias vêm sendo aplicadas na abordagem dos desafios ambientais do bioma. Tal lacuna motivou o presente estudo, cujo objetivo é analisar a produção científica sobre o uso de geotecnologias no bioma Pantanal, com foco nos trabalhos apresentados no GeoPantanal entre 2006 e 2021. Busca-se, com isso, identificar padrões temáticos, redes de colaboração e lacunas no conhecimento, contribuindo para o fortalecimento da articulação entre ciência, políticas públicas e estratégias de conservação ambiental.
+
+A questão norteadora desta investigação é: quais tendências, lacunas e padrões podem ser identificados na produção científica sobre geotecnologias no Pantanal, a partir da análise longitudinal dos anais do GeoPantanal (2006-2021)?
+
+A originalidade da abordagem reside na utilização da trajetória de um evento técnico-científico como base empírica para a análise da paisagem científica. Adota-se uma metodologia integrada que combina princípios da Engenharia da Informação, análise de redes e uso de ferramentas de inteligência artificial para sistematizar e interpretar o conhecimento gerado em um recorte temático e territorial específico. Esse exercício de gestão do conhecimento difere das abordagens tradicionalmente utilizadas em revisões de literatura científica, ao evidenciar o valor agregado pelas tecnologias de informação e comunicação (TICs) -- incluindo a inteligência artificial -- na organização e visualização de dados e padrões científicos.
+
+Segundo \textcite[p. 128]{irigaray2017}, ``[...] a despeito da expressa previsão constitucional, esse conjunto de ecossistemas, à semelhança das demais áreas úmidas existentes no Brasil, segue legalmente desprotegido e enfrenta alguns desafios para sua conservação''. Ao longo dos anos, centenas de artigos científicos, teses, dissertações e livros foram publicados sobre o Pantanal, abordando uma ampla gama de temas voltados à conservação e ao uso sustentável do bioma. Além disso, diversas instituições de pesquisa e ensino, nacionais e internacionais, vêm se dedicando ao enfrentamento dos complexos desafios ecológicos, sociais e econômicos dessa região \cite{irigaray2020}.
+
+No âmbito da Embrapa, desde 1994, têm sido realizados estudos sobre múltiplas problemáticas associadas ao bioma, com ênfase no uso do solo, erosão, padrões pluviométricos, impactos de pesticidas, transporte de sedimentos, hidrologia, saúde da vegetação, qualidade da água, ictiofauna e implicações socioeconômicas \cite{embrapa2024}. Diante da complexidade crescente dos desafios enfrentados pelo Pantanal, as geotecnologias consolidam-se como ferramentas estratégicas para o mapeamento, o monitoramento e a análise da dinâmica ambiental da região, oferecendo suporte técnico-científico à gestão territorial e à formulação de estratégias de conservação.
+
+Nesse contexto, o GeoPantanal, realizado bienalmente desde 2006, tem se consolidado como um importante fórum para o debate técnico-científico sobre o uso de geotecnologias no bioma. Contudo, ainda são incipientes os estudos que investigam, de forma longitudinal, a trajetória e os impactos desse evento técnico-científico como indutor da construção da paisagem científica associada ao uso de geotecnologias no Pantanal. O presente artigo busca preencher essa lacuna.
+
+\section{O GeoPantanal e a construção da paisagem científica}
+Desde sua criação em 2006, o Simpósio de Geotecnologias no Pantanal tem se consolidado como um dos principais fóruns técnico-científicos dedicados à aplicação de geotecnologias na região do Pantanal. Realizado bienalmente em diferentes cidades da região, o evento promove o intercâmbio entre pesquisadores, profissionais, estudantes, gestores públicos e representantes da sociedade civil interessados no monitoramento ambiental, na gestão territorial e na conservação dos recursos naturais do bioma.
+
+\subsection{Histórico e objetivos do evento}
+O GeoPantanal surgiu com o objetivo de articular esforços científicos e técnicos voltados à compreensão e preservação do Pantanal por meio do uso de geotecnologias. Ao longo de suas edições, tem oferecido uma programação diversificada, incluindo palestras, mesas-redondas, \textit{workshops}, apresentações orais e sessões de pôsteres. Essa estrutura favorece a troca de experiências, a divulgação de resultados de pesquisa e o fortalecimento de redes de colaboração entre instituições de pesquisa, universidades, órgãos públicos e organizações da sociedade civil.
+
+\subsection{Diversidade temática e contribuições científicas}
+As temáticas abordadas nos simpósios refletem a natureza interdisciplinar dos desafios enfrentados pelo Pantanal e abrangem um amplo espectro de áreas do conhecimento. As principais categorias temáticas identificadas incluem:
+
+\begin{itemize}
+\item Cartografia, Sistemas e Sensores
+\item Fauna e Vegetação
+\item Geologia, Geomorfologia e Solos
+\item Meteorologia, Clima e Recursos Hídricos
+\item Planejamento e Análise Ambiental
+\item Turismo e Saúde
+\item Uso da Terra e Educação Ambiental
+\end{itemize}
+
+Além da diversidade temática, destaca-se a atuação de pesquisadores pioneiros, autores de referência e especialistas cujas contribuições impulsionaram o avanço científico e tecnológico na área de geotecnologias aplicadas ao bioma. O simpósio tem desempenhado papel estratégico na consolidação de um campo de conhecimento próprio e na disseminação de práticas metodológicas e tecnológicas adaptadas às especificidades do Pantanal.
+
+\subsection{Impactos na produção científica e na gestão territorial}
+A análise longitudinal dos anais do evento revela sua importância como canal de difusão de conhecimento e como catalisador de inovações voltadas ao estudo e à preservação do Pantanal. Os trabalhos apresentados ao longo das edições contribuíram significativamente para o mapeamento do uso e cobertura da terra, da topografia e dos recursos hídricos, assim como para a investigação de dinâmicas ecológicas, mudanças climáticas, riscos ambientais e processos de degradação.
+
+Os debates técnicos promovidos pelo GeoPantanal também têm influenciado práticas de planejamento ambiental, formulação de políticas públicas e desenvolvimento de ferramentas para gestão territorial sustentável. A articulação entre ecologia, engenharia, geografia, informática e ciências sociais tem resultado em publicações científicas e técnicas de referência, ampliando o alcance e o impacto do evento.
+
+Nesse sentido, o GeoPantanal não apenas reflete a evolução do conhecimento técnico-científico sobre o Pantanal, como também participa ativamente da construção da paisagem científica voltada à conservação ambiental do bioma. A compreensão dessa trajetória contribui para identificar padrões de produção, lacunas temáticas e oportunidades emergentes de pesquisa, além de fortalecer conexões entre ciência, políticas públicas e governança territorial.
+
+
+\section{Métodos}\label{sec-metodos}
+A compreensão da \textit{paisagem científica} -- entendida aqui como o conjunto dinâmico de temas, autores, instituições, metodologias e tendências que conformam determinada área do conhecimento -- exige uma estratégia metodológica que vá além da simples quantificação da produção. Neste estudo, essa paisagem foi analisada com base nos trabalhos apresentados nas sete edições do GeoPantanal, realizadas entre 2006 e 2021.
+
+A abordagem metodológica foi estruturada em três etapas complementares, articulando técnicas de mapeamento científico, análise de redes e princípios da Engenharia da Informação. Essas etapas estão sintetizadas na Tabela \ref{tab-1} e descritas a seguir.
+
+Revisão contextual da literatura, com foco na fundamentação teórica do estudo, abrangendo temas como geotecnologias, conservação ambiental e dinâmicas socioambientais do Pantanal. Essa etapa foi realizada por meio de pesquisa bibliográfica em artigos e relatórios científicos, visando a estruturação conceitual da análise.
+
+Mapeamento científico da produção técnica apresentada nos anais dos simpósios, a partir da organização dos metadados dos artigos (autores, instituições, palavras-chave, títulos e resumos), com o objetivo de identificar padrões temáticos, redes de coautoria e vínculos institucionais. Os dados foram organizados em planilhas eletrônicas, permitindo a construção de uma base estruturada por autor, instituição e temática.
+
+Análise semântica e de redes, com base nos textos completos dos anais. Foram utilizadas ferramentas computacionais como o VOSviewer e a inteligência artificial (ChatGPT 4.0) para geração de mapas conceituais e de coautoria, elaboração de vocabulário técnico padronizado e categorização temática. Os resultados esperados incluíram a identificação de padrões e lacunas na produção, bem como a sistematização do vocabulário empregado.
+
+\subsection{Pré-processamento e normalização do corpus}
+Foram realizados os seguintes procedimentos: (i) remoção de duplicatas; (ii) correção ortográfica e padronização de nomes próprios/instituições; (iii) remoção de \textit{stopwords} (PT/EN) e termos de função; (iv) lematização (PT/EN) para reduzir variação morfológica; (v) harmonização de topônimos (por exemplo, ``Mato Grosso do Sul''/``MS''); (vi) exclusão de termos genéricos e ruído técnico; (vii) definição de frequência mínima de 5 ocorrências por termo; e (viii) aplicação de \textit{layout} LinLog/\textit{modularity} no VOSviewer para \textit{clustering}.
+
+%--- código da tabela 1 ---%
+\begin{table}[h!]
+\centering
+\small
+\begin{threeparttable}
+\caption{Fluxo metodológico sintetizado com as três etapas complementares de análise da paisagem científica construída pelos Simpósios GeoPantanal (2006-2021).}
+\label{tab-1}
+\begin{tabular}{p{4cm}p{5cm}p{4cm}}
+\toprule
+Etapa & Descrição & Detalhes\\
+\midrule
+1. Revisão das literaturas & Fundamentação teórica sobre geotecnologias e conservação & Fontes: Artigos científicos \\
+2. Mapeamento científico & Metadados dos artigos GeoPantanal 2006-2021 & Ferramenta: Planilhas \\
+3. Análise semântica e de redes & Mapas conceituais e redes VOSviewer e IA (ChatGPT 4.0) & Resultados: Padrões, redes, vocabulário \\
+\bottomrule
+\end{tabular}
+\source{Os autores.}
+\end{threeparttable}
+\end{table}
+
+A Tabela \ref{tab-1} sintetiza o percurso metodológico adotado, com três etapas interligadas de análise. Para complementar essa visualização, a Tabela \ref{tab-2} detalha cada uma das etapas, indicando suas respectivas fontes de dados, ferramentas utilizadas e os principais resultados esperados.
+
+%--- código da tabela 2 ---%
+\begin{table}[h!]
+\centering
+\small
+\caption{Estrutura detalhada do quadro metodológico apresentado na Tabela \ref{tab-1}, com as três etapas complementares de análise da paisagem científica construída pelos Simpósios GeoPantanal (2006–2021).}\label{tab-2}
+\begin{tabular}{p{2cm} p{3cm} p{2.5cm} p{2.5cm} p{2.5cm}}
+\toprule
+Etapa & Descrição & Fonte de Dados & Ferramentas & Resultados Esperados \\
+\midrule
+1. Revisão da literatura & Revisão teórica sobre geotecnologias aplicadas à conservação ambiental do Pantanal & Artigos e relatórios científicos & Pesquisa bibliográfica & Definição da base conceitual do estudo \\
+
+2. Mapeamento científico & Organização e análise dos metadados dos artigos apresentados nos Simpósios GeoPantanal (2006–2021) & Anais GeoPantanal (2006–2021) & Planilhas eletrônicas & Criação de uma base de dados estruturada por autor, instituição e tema \\
+
+3. Análise semântica e de redes & Geração de mapas conceituais e de coautoria; identificação do vocabulário técnico e categorias temáticas & Textos completos dos anais & VOSviewer e IA (ChatGPT 4.0) & Identificação de padrões, redes, lacunas e vocabulário técnico relevante \\
+\bottomrule
+\end{tabular}
+\source{Os autores.}
+\end{table}
+
+\subsection{Critérios de seleção e \textit{corpus} analisado}
+O \textit{corpus} deste estudo foi composto por todos os artigos completos publicados nos anais do Simpósio de Geotecnologias no Pantanal, abrangendo o período de 2006 a 2021. Foram excluídos resumos simples, apresentações sem texto completo, a fim de garantir a consistência, comparabilidade e completude necessárias para as análises semântica e relacional.
+
+\subsection{Ferramentas e técnicas empregadas}
+A organização preliminar dos metadados -- como títulos, autores, instituições, palavras-chave e resumos -- foi realizada em planilhas eletrônicas estruturadas. A etapa seguinte consistiu no uso do \textit{software} VOSviewer, amplamente validado para estudos de mapeamento científico, com as seguintes funcionalidades:
+
+\begin{enumerate}[label=\alph*)]
+\item mapeamento de coocorrência de termos em títulos, palavras-chave e resumos;
+\item identificação e visualização de redes de coautoria e afiliações institucionais;
+\item agrupamento temático \textit{(clustering)} com base em algoritmo de similaridade;
+\item parâmetros aplicados no VOSviewer;
+\item frequência mínima de ocorrência de termos;
+\item coeficiente de similaridade para relações entre autores e termos;
+\item algoritmo de \textit{clustering} para identificação de núcleos temáticos e semânticos.
+\end{enumerate}
+
+
+\subsection{Justificativa da abordagem}
+Optou-se pela revisão contextual da literatura, conforme proposto por \textcite{cooper1998}, em lugar da revisão sistemática tradicional. Essa abordagem demonstrou-se mais flexível e adaptável à análise de conteúdo oriundo de eventos técnico-científicos, favorecendo:
+
+\begin{enumerate}[label=\alph*)]
+    \item a identificação de tendências e recorrências temáticas ao longo das edições;
+    \item o mapeamento das tecnologias e estratégias metodológicas adotadas;
+    \item a detecção de lacunas e áreas emergentes na produção científica sobre o Pantanal.
+\end{enumerate}
+
+\subsection{Engenharia da Informação e representação do conhecimento}
+A terceira etapa baseou-se nos princípios da Engenharia da Informação, conforme metodologia desenvolvida pelo Grupo de Pesquisa em Computação Científica, Engenharia da Informação e Automação da Embrapa Agricultura Digital \cite{pierozzi2020}. Essa abordagem buscou estruturar e qualificar a informação, por meio das seguintes subetapas:
+
+\begin{itemize}
+    \item Construção de \textit{corpora} textuais: \textit{Corpus} geral com todos os artigos completos das sete edições; \textit{Corpora} específicos por edição, para análise longitudinal e comparativa.
+    
+    \item Geração de mapas conceituais:
+Aplicação do VOSviewer\footnote{A ferramenta de visualização de paisagens científicas VOSviewer, que transforma textos em redes semânticas, pode ser utilizada baixando o aplicativo (\url{https://www.vosviewer.com/download}), acessando a versão web (\url{https://app.vosviewer.com/}), ou ainda por meio da ferramenta gratuita disponível em: \url{https://nocodefunctions.com/cowo/semantic_networks_tool.html}.} para visualização de conceitos, \textit{clusters} e relações entre termos.
+
+\item Análise qualitativa de dados \cite{dey2003}: Delimitação do domínio de conhecimento: Geotecnologias no Pantanal; Representações em redes conceituais (relações causais, hierárquicas, parte-todo); Categorização semântica e relacional de conceitos.
+
+\item Elaboração de vocabulário controlado: Geração a partir de termos concorrentes e coocorrentes mais frequentes nos textos, com foco em padronização terminológica.
+
+\item Aplicação de inteligência artificial (IA):\footnote{Ferramentas de inteligência artificial (IA) gratuitas, como as disponíveis em \url{https://chatgpt.com/}, \url{https://gemini.google.com/app} e \url{https://typeset.io/} (SciSpace), foram utilizadas para a criação de lógicas e representações inteligentes dos temas abordados no GeoPantanal.} Uso supervisionado da ferramenta ChatGPT 4.0 (OpenAI)\footnote{\url{https://chat.open.ai}.}, para apoio na geração de descritores, categorização temática e identificação de autoridades, conceitos-chave e toponímias. Nenhuma decisão analítica foi delegada à IA.
+\end{itemize}
+
+\subsection{Considerações éticas e de supervisão}
+O uso de inteligência artificial foi restrito ao apoio linguística e categorial, com supervisão integral pelos autores. As decisões analíticas, interpretativas e inferenciais foram realizadas de forma autonôma, assegurando a responsabilidade autoral e a integridade científica do trabalho.
+
+\section{Resultados e discussão}
+A análise da produção científica apresentada nos Simpósios GeoPantanal, realizados entre 2006 e 2018, revela um panorama diversificado e abrangente das aplicações de geotecnologias no estudo e gestão do bioma. Os resultados demonstram um interesse crescente por tecnologias voltadas ao monitoramento ambiental, ao planejamento territorial e à conservação dos recursos naturais do Pantanal.
+
+Para gerar os resultados apresentados nesta seção, os metadados dos artigos foram organizados em planilhas estruturadas contendo informações como títulos, palavras-chave, resumos, autores e instituições. Em seguida, aplicaram-se filtros para garantir a consistência e a padronização dos termos. Esses dados foram processados no \textit{software} VOSviewer, utilizando o método de coocorrência de termos extraídos dos resumos, com um limiar mínimo de cinco ocorrências por termo e aplicação do algoritmo de \textit{clustering} de LinLog/\textit{modularity-based}. As visualizações resultantes expressam agrupamentos conceituais relevantes e seus vínculos semânticos.   
+
+
+\subsection{Mapeamento conceitual e paisagem científica do GeoPantanal}
+A Figura \ref{fig-1} apresenta a paisagem científica do GeoPantanal, compreendida como uma representação visual do \textit{corpus} principal -- ou seja, os textos reunidos de todas as edições do evento, conforme descrito na seção \hyperref[sec-metodos]{Métodos}. O conceito de paisagem científica é aqui compreendido como a representação simbólica e visual da organização do conhecimento científico, refletindo padrões de produção, estrutura de tópicos, redes de colaboração e tendências temáticas. Essa abordagem tem sido adotada em estudos de cienciometria e análise de domínio para evidenciar o desenvolvimento de áreas de pesquisa \cite{borner2003, vaneck2014}.
+
+Nesse contexto, as narrativas e os discursos registrados em linguagem natural são transformados em um espaço conceitual unificado. Os conceitos centrais são mapeados em suas relações com outros termos, possibilitando sua visualização em uma estrutura tridimensional.
+
+Essa visualização é baseada em métricas de redes, como frequência e coocorrência de termos. Em outras palavras, o mapeamento conceitual refere-se ao conhecimento produzido sobre determinado domínio científico, no qual, ao mencionar o conceito X, frequentemente estão implicados também os conceitos W, Y, Z, A, B, C, entre outros, que compõem o campo semântico analisado.
+
+Na Figura \ref{fig-1}, os conceitos aparecem representados por esferas de diferentes cores e tamanhos, rotuladas com os termos correspondentes. O tamanho das esferas reflete medidas ponderadas de frequência, coocorrência e métricas de rede, como centralidade e grau de conexão. A distribuição espacial das esferas é determinada por um algoritmo de processamento de linguagem natural (PLN), integrada ao \textit{software} VOSviewer.
+
+As cores das esferas representam subagrupamentos conceituais \textit{(clusters)}, organizados a partir de temáticas recorrentes, áreas disciplinares, nomes de autoridades científicas, fenômenos ambientais, processos de análise, entre outros eixos temáticos identificados nos textos.
+
+%--- codigo da fig 1 ---%
+\begin{figure}[h!]
+\centering
+\begin{minipage}{.80\textwidth}
+\includegraphics[width=\textwidth]{Imagens/image1.jpg}
+\caption{Tela do VOSviewer com a configuração utilizada para representar o espaço conceitual dos eventos do GeoPantanal entre 2006 e 2019.}
+\label{fig-1}
+\source{Os autores.}
+\end{minipage}
+\end{figure}
+
+Nessa paisagem -- espaço conceitual -- observa-se que o termo `pantanal' é o mais recorrente e apresenta maior coocorrência com outros termos. Com o uso de ferramentas de Processamento de Linguagem Natural (PLN), como o concordanciador (Figura \ref{fig-2}), é possível identificar as frases em que esse termo aparece, permitindo distinguir os diferentes contextos em que é empregado -- como região geográfica, bioma, área alagada, entre outros.
+
+%--- codigo da figura 2 ---% 
+\begin{figure}[h!]
+\centering
+\begin{minipage}{.85\textwidth}
+\includegraphics[width=\textwidth]{Imagens/image2.jpg}
+\caption{Concordanciador (ferramenta Voyant Tools$^4$): identificação dos contextos do termo `pantanal' no \textit{corpus} dos artigos apresentados nos eventos do GeoPantanal.}
+\label{fig-2}
+\source{Os autores.}
+\notes{$^4$ \url{https://voyant-tools.org/}.}
+\end{minipage}
+\end{figure}
+
+Da mesma forma, outros termos com alta frequência e coocorrência no espaço conceitual, como `bacia', `análise', `mato grosso', `imagens', `brasil' e `mapeamento', também apresentam múltiplos sentidos e vínculos com diferentes áreas temáticas. Eles podem estar relacionados a métodos de análise de dados, geotecnologias utilizadas, fenômenos ambientais ou prática agropecuárias, conforme os contextos em que aparecem.
+
+A análise da paisagem científica do GeoPantanal é fundamental para compreender a abrangência e a profundidade do conhecimento produzido sobre o bioma. Essa abordagem -- ancorada na gestão do conhecimento -- baseia-se na modelagem conceitual dos principais tópicos, áreas disciplinares e temáticas identificadas nos trabalhos apresentados ao longo de quase duas décadas de evento.
+
+Além da representação conceitual em formato textual (terminologias), são geradas visualizações gráficas que evidenciam a distribuição e os arranjos entre os conceitos, apresentando grafos de relações e medidas de frequência e coocorrência, o que permite uma representação integrada e inteligível do conteúdo analisado.
+
+O GeoPantanal é um evento centrado na análise do bioma Pantanal, utilizando geotecnologias aplicadas à análise de dados e ao monitoramento ambiental. A partir da modelagem conceitual dos domínios de conhecimento, a paisagem científica surge como uma síntese visual das temáticas abordadas. Essas temáticas incluem fenômenos geoambientais, processos produtivos, tecnologias aplicadas e políticas públicas associadas.
+
+A modelagem conceitual das geotecnologias no GeoPantanal representa uma inovação metodológica. Ela contribui para ampliar a compreensão sobre o bioma e apoiar sua gestão, ao fornecer uma leitura integrada das dinâmicas ambientais. Essa abordagem interdisciplinar promove o desenvolvimento de instrumentos analíticos que facilitam o acesso e a interpretação do conhecimento por diferentes públicos -- pesquisadores, gestores e sociedade civil.
+
+\subsubsection{Taxonomia temática do GeoPantanal}
+A taxonomia temática do GeoPantanal, apresentada na Tabela \ref{tab-3}, organiza e sistematiza os principais tópicos abordados nos artigos publicados desde a primeira edição do evento, em 2006. Essa estrutura hierárquica permite visualizar a diversidade de assuntos tratados, desde questões geossocioambientais até aspectos agrícolas, climáticos, tecnológicos e educacionais. Com isso, reflete-se a complexidade e a natureza interdisciplinar das pesquisas desenvolvidas.
+
+%--- codigo da tabela 3 ---%
+\begin{small}
+\begin{longtable}{p{4.6cm} p{3.5cm} p{5.5cm}}
+\caption{Estrutura temática do GeoPantanal segundo a taxonomia das áreas de estudo e aplicação.}\label{tab-3} \\
+
+\toprule
+Categoria & Subcategoria & Subsubcategoria \\
+\midrule
+\endfirsthead
+
+\endhead
+
+\bottomrule
+\source{Os autores.}
+\endlastfoot
+
+Geografia e Geoprocessamento & Geografia & Bioma Pantanal. Bioma Cerrado. Pantanal Brasileiro. \\
+ & Geoprocessamento & Sensoriamento remoto. Cartografia. Análise espacial. Modelagem espacial. \\
+
+\addlinespace[0.5em]
+
+Recursos naturais e Meio ambiente & Recursos hídricos & Bacias Hidrográficas. Nascentes. Inundação. \\
+ & Solos e Relevo & Erosão. Relevo. Vulnerabilidade natural. \\
+ & Vegetação & Floresta. Vegetação do Pantanal. Fragilidade ambiental. \\
+
+\addlinespace[0.5em]
+
+Agricultura e Desenvolvimento rural & Atividades rurais & Bovinos. Agricultura. Uso da Terra. \\
+ & Desenvolvimento rural & Gestão de propriedades. Cadastro rural. Impactos da agricultura. \\
+
+\addlinespace[0.5em]
+
+Clima e Fenômenos atmosféricos & Precipitação e Chuvas & Distribuição espacial de chuvas. Variabilidade temporal das chuvas. Seca. Estiagem. \\
+ & Evapotranspiração & Balanço hídrico. Efeito estufa. Mudanças climáticas. \\
+
+\addlinespace[0.5em]
+
+Tecnologia e Aplicações & Sensoriamento remoto & Satélites AVHRR NOAA, CBERS, MODIS. \\
+ & Análise de dados geoespaciais & Análise multitemporal. Análise espectral. Mapeamento com imagens de satélite. \\
+
+\addlinespace[0.5em]
+
+Educação ambiental e Engajamento comunitário & Educação ambiental & Ensino de geografia do ambiente. Conscientização sobre o meio ambiente. Projeto de educação ambiental. \\
+ & Engajamento comunitário & Participação em projetos ambientais. Suporte comunitário para a conservação. \\
+
+\end{longtable}
+\end{small}
+
+
+A estrutura taxonômica organiza as principais áreas temáticas identificadas nas produções do GeoPantanal, agrupadas em categoria, subcategorias e subsubcategorias. A classificação foi elaborada com base na análise qualitativa dos metadados dos artigos e nas visualizações do VOSviewer, aplicando princípios da Engenharia da Informação para garantir coerência semântica e representatividade dos eixos de pesquisa.
+
+\subsubsection{Processos analíticos de pesquisa e seus contextos}
+Nesta seção, exploram-se os métodos e técnicas de análise empregados nas pesquisas apresentadas no GeoPantanal, com ênfase na categoria Tecnologia e Aplicações, especialmente nas áreas de Análise de Dados Geoespaciais e Sensoriamento Remoto. As análises combinam geoprocessamento e interpretação de imagens de satélite para caracterizar dinâmicas ambientais e padrões de uso e cobertura da terra no Pantanal, fornecendo base para decisões de gestão e conservação.
+
+Tipos de análise geoespacial:
+\begin{itemize}
+    \item Análises e modelagem espaciais: análise ambiental, espacial e espaço-temporal; modelagem espacial; modelos digitais de elevação (DEM); Índice de Vegetação por Diferença Normalizada (NDVI); mistura espectral.
+\item Sensoriamento remoto e processamento de imagens: processamento de imagens; sensores Landsat e Radar; classificação de imagens; dados dos satélites MODIS e SRTM.
+\end{itemize}
+
+\subsubsection{Impactos e riscos socioeconômicos evidenciados na paisagem científica do GeoPantanal}
+As análises revelam que o avanço das geotecnologias amplia a capacidade de diagnóstico e monitoramento das dinâmicas ambientais em regiões de fronteira, como o Pantanal, contribuindo para fortalecer estratégias de governança territorial e políticas de conservação integradas.
+
+Esta seção apresenta as principais inferências derivadas dos estudos e resultados divulgados ao longo das edições do GeoPantanal desde 2006. A análise organiza o conhecimento por recortes regionais, com destaque para as cinco sub-regiões -- Cáceres e Poconé (Mato Grosso), Nabileque, Nhecolândia e Miranda (Mato Grosso do Sul) -- e para a região da Bacia do Rio Negro, também no MS.
+
+As investigações analisam, entre outros aspectos, os efeitos das práticas agropecuárias sobre o ambiente pantaneiro, com ênfase nos impactos relacionados ao uso da terra, à disponibilidade e qualidade dos recursos hídricos, bem como à vulnerabilidade ambiental. A análise busca compreender as interações entre os recursos naturais, o meio ambiente e o desenvolvimento rural, considerando suas implicações para a sustentabilidade do ecossistema do Pantanal.
+
+Para esta análise, foram identificados no mapeamento conceitual, 14 indicadores agroambientais e 14 indicadores socioeconômicos (Tabela \ref{tab-4}), os quais foram correlacionados com os diversos temas discutidos nos trabalhos do GeoPantanal.
+
+%--- codigo da tabela 4 ---%
+\begin{table}[h!]
+\begin{threeparttable}
+\small
+\centering
+\caption{Conjunto de 28 indicadores -- 14 agroambientais e 14 socioeconômicos -- identificados no mapeamento conceitual e utilizados para correlacionar impactos ambientais e riscos socioeconômicos nas sub-regiões do Pantanal (Cáceres e Poconé/MT; Nabileque, Nhecolândia, Miranda e Bacia do Rio Negro/MS), com base nas evidências acumuladas nas edições do GeoPantanal (2006–2021).}\label{tab-4}
+\begin{tabular}{p{4cm} p{8.4cm}}
+\toprule
+Indicadores agroambientais & Indicadores socioeconômicos \\
+\midrule
+1. Biodiversidade & Acesso a serviços básicos (saúde, educação, saneamento) \\
+2. Biomassa & Atividades econômicas (agricultura, pecuária, turismo) \\
+3. Cobertura vegetal & Conservação ambiental \\
+4. Degradação do solo & Educação \\
+5. Disponibilidade de água & Índice de Desenvolvimento Humano (IDH) \\
+6. Erosão & Infraestrutura \\
+7. Evapotranspiração & População rural \\
+8. Hidrogeografia & População urbana \\
+9. NDVI & Produção agrícola \\
+10. Padrões de chuva & Produção pecuária \\
+11. Qualidade da água & Propriedades rurais \\
+12. Qualidade do solo & Renda per capita \\
+13. Temperatura & Taxa de desemprego \\
+14. Uso da terra & Tecnologia agrícola \\
+\bottomrule
+\end{tabular}
+\source{Os autores.}
+\end{threeparttable}
+\end{table}
+
+
+A Tabela \ref{tab-5} sintetiza a distribuição espacial dos principais impactos ambientais e riscos socioeconômicos nas diferentes sub-regiões do Pantanal. Observa-se que Cáceres e Poconé (MT) concentram maior incidência de pressões associadas ao uso da terra e à expansão agropecuária, enquanto Nhecolândia, Miranda e Rio Negro (MS) apresentam maior vulnerabilidade hídrica e processos de degradação do solo. Já a região do Nabileque se destaca por menor intensidade de impactos ambientais diretos, mas maior fragilidade socioeconômica, marcada por limitações de infraestrutura e de acesso a serviços básicos.
+
+%--- codigo da tabela 5 ---%
+\begin{small}
+\begin{longtable}{p{2.5cm} p{5.5cm} p{5.5cm}}
+
+\caption{Impactos ambientais e riscos socioeconômicos em sub-regiões de Mato Grosso e Mato Grosso do Sul.}\label{tab-5} \\
+
+\toprule
+Sub-região & Impactos ambientais & Riscos socioeconômicos \\
+\midrule
+\endfirsthead
+
+\endhead
+
+\bottomrule
+\source{Os autores.}
+\endlastfoot
+
+Cáceres (MT) &
+Degradação do solo: aumento da erosão e perda de fertilidade do solo devido às práticas agrícolas inadequadas.
+
+Poluição hídrica: contaminação de corpos d’água por agroquímicos e sedimentos.
+&
+Desemprego rural: desemprego sazonal devido à dependência de atividades agrícolas.
+
+Baixa renda: renda per capita reduzida em áreas rurais, afetando a qualidade de vida.
+\\
+
+\addlinespace[1ex]
+
+Poconé (MT) &
+Desmatamento: perda de cobertura vegetal nativa para a expansão agrícola e pecuária.
+
+Degradação do solo: erosão do solo e perda de nutrientes, afetando a produtividade agrícola.
+&
+Educação insuficiente: falta de acesso adequado à educação, limitando oportunidades de desenvolvimento.
+
+Infraestrutura precária: infraestrutura insuficiente para suportar o desenvolvimento econômico sustentável.
+\\
+
+\addlinespace[1ex]
+
+Nabileque (MS) &
+Alteração do regime hidrológico: mudanças nos padrões de inundação devido a atividades humanas.
+
+Degradação do solo: práticas de manejo inadequadas levando à degradação da terra.
+&
+Propriedades rurais pequenas: fragmentação de terras dificultando a viabilidade econômica das atividades agrícolas.
+
+Tecnologia agrícola limitada: uso limitado de tecnologia moderna, afetando a produtividade.
+\\
+
+\addlinespace[1ex]
+
+Nhecolândia (MS) &
+Erosão: perda de solo fértil devido à má gestão da terra.
+
+Qualidade da água: deterioração da qualidade da água devido ao uso de agroquímicos.
+&
+Desemprego: falta de empregos alternativos fora da agricultura e pecuária.
+
+Serviços básicos insuficientes: acesso limitado a serviços como saúde e saneamento.
+\\
+
+\addlinespace[1ex]
+
+Miranda (MS) &
+Degradação da qualidade da água: poluição dos recursos hídricos afetando a biodiversidade aquática.
+
+Desertificação: risco de desertificação devido ao manejo inadequado da terra.
+&
+Renda baixa: baixa renda per capita em comunidades rurais.
+
+Infraestrutura insuficiente: falta de infraestrutura adequada para suportar o desenvolvimento sustentável.
+\\
+
+\addlinespace[1ex]
+
+Rio Negro (MS) &
+Degradação de habitat: perda de habitat natural devido ao desmatamento e alterações no uso da terra.
+
+Mudanças na biodiversidade: impactos negativos sobre a biodiversidade local.
+&
+Baixo IDH: índice de desenvolvimento humano reduzido, refletindo em baixa qualidade de vida.
+
+Migração urbana: migração de populações rurais para áreas urbanas em busca de melhores condições de vida.
+\\
+
+\end{longtable}
+\end{small}
+
+A correlação entre os indicadores agroambientais e socioeconômicos reforça a complexidade das dinâmicas territoriais pantaneiras, evidenciando distintos padrões de resiliência e vulnerabilidade que refletem a interação entre fatores econômicos, ambientais e institucionais.
+
+Esses resultados fundamentam a discussão apresentada a seguir, voltada às tendências e desafios emergentes no uso de geotecnologias aplicadas à conservação e ao desenvolvimento sustentável do bioma Pantanal.
+
+\subsubsection{Soluções metodológicas e tecnológicas para apoio à tomada de decisão e a políticas públicas derivadas do conhecimento desenvolvido no GeoPantanal}
+Os resultados demonstram como as soluções tecnológicas e metodológicas derivadas do GeoPantanal consolidam um elo direto entre ciência e políticas públicas, viabilizando ações de monitoramento e gestão ambiental baseadas em evidências.
+
+Além disso, observa-se que os eventos científicos, como o GeoPantanal, desempenham um papel estruturante na criação de redes colaborativas, facilitando o intercâmbio de dados, métodos e experiências entre diferentes instituições e áreas do conhecimento.
+
+A Tabela \ref{tab-6} reorganiza e sintetiza a produção científica do GeoPantanal, destacando as soluções metodológicas e tecnológicas propostas com o objetivo de subsidiar a tomada de decisão e a formulação de políticas públicas. Essas soluções reforçam a importância de uma abordagem integrada e orientada por dados para promover decisões mais eficazes e sustentáveis na região do Pantanal.
+
+%--- codigo da tabela 6 ---%
+\begin{table}[h!]
+\small
+\centering
+\caption{Soluções metodológicas, tecnológicas e propostas de políticas públicas.}\label{tab-6}
+\begin{tabular}{p{5cm} p{9cm}}
+\toprule
+Soluções Metodológicas & Exemplos \\
+\midrule
+Análise espacial e temporal & Aplicação de técnicas para monitorar alterações na paisagem e no uso da terra. \\
+Modelagem ambiental & Modelos preditivos de impactos em diferentes cenários de uso da terra e de dinâmicas de inundação e seus efeitos sobre a biodiversidade. \\
+Geoprocessamento & Integração e análise de dados geoespaciais via Sistema de Informação Geográfica (SIG), uso de cartografia temática para planejamento do uso do solo e identificação de áreas de risco. \\
+Sensoriamento remoto & Monitoramento de grandes áreas com imagens de satélite de alta frequência; extração de informações relevantes por meio do processamento digital de imagens. \\
+Análise multicritério & Apoio à tomada de decisão considerando fatores ambientais e socioeconômicos; aplicação em estudos de viabilidade e formulação de políticas públicas. \\
+\midrule
+Soluções Tecnológicas & Exemplos \\
+\midrule
+Plataformas de monitoramento ambiental & Desenvolvimento de sistemas \textit{on-line} para visualização de dados; criação de alertas precoces para eventos extremos como secas e inundações. \\
+Uso de drones & Coleta de dados de alta resolução em áreas remotas; mapeamento de uso do solo e monitoramento da biodiversidade. \\
+Tecnologias de \textit{Big Data} & Análise de grandes volumes de dados geoespaciais; integração de imagens de satélite, sensores terrestres e dados socioeconômicos. \\
+Infraestrutura de Dados Espaciais (IDE) & Implementação de sistemas colaborativos para compartilhamento e integração de dados e ferramentas analíticas entre instituições. \\
+\midrule
+Propostas de Políticas Públicas & Exemplos \\
+\midrule
+Conservação e Gestão Sustentável & Incentivos para a recuperação de áreas degradadas e para uso de práticas agrícolas de baixo impacto. \\
+Planejamento territorial & Planos de uso da terra baseados em dados geoespaciais; zoneamento ecológico-econômico orientando o desenvolvimento sustentável. \\
+Educação ambiental & Programas de capacitação em geotecnologias para gestores e comunidades; campanhas de conscientização sobre conservação ambiental. \\
+Gestão de recursos hídricos & Políticas para gestão integrada das bacias hidrográficas, considerando variabilidade hidrológica e cenários climáticos futuros. \\
+\bottomrule
+\end{tabular}
+\source{Os autores.}
+\end{table}
+
+
+\subsection{Desafios e perspectivas futuras}
+Apesar dos avanços significativos alcançados nos últimos anos, a aplicação de geotecnologias ao estudo e à gestão do Pantanal ainda enfrenta desafios substanciais. A escassez de recursos financeiros, a limitada disponibilidade de dados de alta qualidade e a fragmentação entre as bases de dados dificultam a consolidação de uma abordagem integrada de monitoramento e planejamento territorial.
+
+Nesse contexto, torna-se imprescindível:
+
+\begin{enumerate}[label=\alph*)]
+\item investir na formação de recursos humanos especializados, ampliando a capacidade técnica local;
+\item desenvolver e adaptar novas tecnologias, compatíveis com as especificidades do bioma;
+\item promover a cooperação interinstitucional, reunindo pesquisadores, gestores públicos e representantes da sociedade civil em ações conjuntas. Outro desafio importante está na articulação entre ciência, políticas públicas e atores locais. Os resultados do GeoPantanal evidenciam a necessidade de traduzir o conhecimento técnico-científico em linguagem acessível e orientada para a ação. Isso inclui a criação de mecanismos de diálogo com comunidades locais, gestores públicos e formuladores de políticas, para garantir a aplicação prática das soluções propostas;
+\item promover a cooperação entre os países limítrofes ao Pantanal -- Bolívia, Paraguai e Brasil -- visando à melhoria da gestão integrada desse ecossistema transfronteiriço.
+\end{enumerate}
+
+A integração de múltiplas fontes de informação e o fortalecimento de sistemas de apoio à decisão com base em geotecnologias pode viabilizar uma gestão mais eficiente, participativa e sustentável do Pantanal. Tal abordagem é essencial para assegurar a conservação da biodiversidade e a manutenção dos serviços ecossistêmicos que sustentam as populações humanas e os sistemas naturais da região.
+
+Perspectivas futuras incluem o fortalecimento da cooperação entre países que compartilham o bioma Pantanal -- como Bolívia e Paraguai --, a adoção de modelos preditivos para monitoramento climático e o desenvolvimento de Infraestruturas de Dados Espaciais regionais. Tais iniciativas podem ampliar o alcance dos estudos e consolidar redes de pesquisa sul-americanas voltadas à sustentabilidade do Pantanal.
+
+
+\section{Conclusão}
+As análises longitudinais do GeoPantanal permitem observar a consolidação de uma comunidade científica especializada e cooperativa, capaz de produzir conhecimento aplicado e apoiar políticas públicas voltadas à conservação e ao desenvolvimento sustentável do bioma.
+
+Entre as oportunidades futuras, destacam-se o uso de inteligência artificial e modelos preditivos para aprimorar o monitoramento ambiental, a integração de dados climáticos e socioeconômicos e o fortalecimento das redes regionais de pesquisa e inovação.
+
+O GeoPantanal se consolida, assim, como um laboratório vivo de inovação metodológica, científica e tecnológica, contribuindo para a construção de uma governança socioambiental mais inclusiva e resiliente.
+
+Ao longo de suas edições, o Simpósio de Geotecnologias no Pantanal consolidou-se como um evento estratégico para o desenvolvimento e a disseminação do conhecimento técnico-científico voltado ao bioma Pantanal. O uso crescente de geotecnologias tem permitido o mapeamento e o monitoramento de diversas dimensões desse ecossistema, gerando um acervo valioso de dados que subsidia políticas públicas, estratégias de conservação e ações de manejo sustentável.
+
+No campo metodológico, o GeoPantanal tem desempenhado papel fundamental na disseminação de avanços em análise espacial, modelagem ambiental e geoprocessamento. Essas abordagens ampliaram a compreensão das dinâmicas do Pantanal -- como a variação da cobertura vegetal, os ciclos de inundação e os impactos das atividades humanas --, fornecendo bases concretas para a formulação de políticas públicas fundamentadas em evidências.
+
+Sob a perspectiva tecnológica, destaca-se o uso intensivo de sensoriamento remoto, com a aplicação de imagens de satélite (como Landsat e MODIS), \textit{
+drones} e ferramentas de Big Data. Essas tecnologias têm elevado a capacidade de monitoramento e gestão ambiental do Pantanal, permitindo respostas mais ágeis a eventos extremos e ampliando o acesso a informações estratégicas por gestores públicos e comunidades locais.
+
+Do ponto de vista epistemológico, o GeoPantanal tem contribuído para a construção de novos paradigmas na ciência ambiental, promovendo a integração entre geociências, biologia, agronomia e ciências sociais. Essa abordagem interdisciplinar tem fortalecido uma compreensão mais holística do bioma, aprofundando a análise das interações entre natureza e sociedade e ampliando as possibilidades de uma gestão sustentável e adaptativa.
+
+As contribuições do GeoPantanal também se estendem à prática, com aplicações diretas em projetos de conservação, zoneamento ecológico-econômico, políticas de gestão hídrica e ações de educação ambiental. Além disso, o evento tem desempenhado papel relevante na capacitação técnica de profissionais e na formação de redes colaborativas entre instituições de pesquisa, órgãos públicos e sociedade civil.
+
+Diante das ameaças crescentes impostas pelas mudanças climáticas – como secas severas e queimadas de grande escala -- é fundamental que próximas edições do GeoPantanal integrem essa agenda de forma estruturada, fortalecendo a gestão adaptativa e estimulando estratégias de mitigação e resiliência.
+
+Recomenda-se também o fortalecimento da integração interdisciplinar, incentivando a participação de pesquisadores de diversas áreas -- como ecologia, economia, sociologia, antropologia e ciências ambientais -- para enriquecer a compreensão das complexas dinâmicas do Pantanal.
+
+A paisagem científica construída pelo GeoPantanal oferece:
+
+\begin{itemize}
+    \item a) um panorama abrangente das geotecnologias aplicadas ao bioma, evidenciando avanços, lacunas e desafios da produção científica;
+\item b) uma análise crítica dos impactos dessas tecnologias na conservação e na gestão territorial;
+\item c) subsídios valiosos para orientar agendas futuras de pesquisa e políticas públicas voltadas ao desenvolvimento sustentável da região.
+\end{itemize}
+
+Em síntese, o GeoPantanal tem cumprido papel central na articulação entre ciência, tecnologia e gestão ambiental, consolidando-se como referência entre os eventos científicos comprometidos com a sustentabilidade do bioma. Seu êxito contínuo reafirma a importância da colaboração interdisciplinar e da inovação no enfrentamento dos desafios ambientais contemporâneos e futuros.
+
+
+
+\section*{Declaração de uso de inteligência artificial}
+Os autores declaram que utilizaram a ferramenta de inteligência artificial ChatGPT 4.0 (OpenAI) para auxiliar na redação, na revisão linguística e na elaboração de resumo e \textit{abstract} deste artigo. O uso da ferramenta foi cuidadosamente supervisionado, cabendo exclusivamente aos autores a responsabilidade pela precisão, integridade, originalidade e qualidade do conteúdo apresentado.
+
+
+\printbibliography\label{sec-bib}
+% if the text is not in Portuguese, it might be necessary to use the code below instead to print the correct ABNT abbreviations [s.n.], [s.l.]
+%\begin{portuguese}
+%\printbibliography[title={Bibliography}]
+%\end{portuguese}
+
+
+%full list: conceptualization,datacuration,formalanalysis,funding,investigation,methodology,projadm,resources,software,supervision,validation,visualization,writing,review
+\begin{contributors}[sec-contributors]
+\authorcontribution{Ivo Pierozzi Junior}[conceptualization,datacuration,formalanalysis,methodology,visualization]
+\authorcontribution{Márcia Izabel Fugisawa Souza}[conceptualization,datacuration,formalanalysis,methodology,supervision,review]
+\authorcontribution{João dos Santos Vila da Silva}[conceptualization,formalanalysis,validation,review]
+\authorcontribution{Magda Cruciol}[conceptualization,review]
+\authorcontribution{Luiz Manoel Silva Cunha}[conceptualization,review]
+\end{contributors}
+
+\begin{dataavailability}
+\txtdataavailability{databody} % options: dataavailable, dataonly, databody, datanotav, nodata
+\end{dataavailability}
+
+
+\end{document}
+
