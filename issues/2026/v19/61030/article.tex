@@ -1,0 +1,596 @@
+% !TEX TS-program = XeLaTeX
+% use the following command:
+% all document files must be coded in UTF-8
+\documentclass[portuguese]{textolivre}
+% build HTML with: make4ht -e build.lua -c textolivre.cfg -x -u article "fn-in,svg,pic-align"
+
+\usepackage[most]{tcolorbox}
+
+\journalname{Texto Livre}
+\thevolume{19}
+%\thenumber{1} % old template
+\theyear{2026}
+\receiveddate{\DTMdisplaydate{2025}{8}{11}{-1}} % YYYY MM DD
+\accepteddate{\DTMdisplaydate{2025}{10}{28}{-1}}
+\publisheddate{\DTMdisplaydate{2026}{3}{5}{-1}}
+\corrauthor{Vinicius Villani Abrantes}
+\articledoi{10.1590/1983-3652.2023.61030}
+%\articleid{NNNN} % if the article ID is not the last 5 numbers of its DOI, provide it using \articleid{} commmand 
+% list of available sesscions in the journal: articles, dossier, reports, essays, reviews, interviews, editorial
+\articlesessionname{dossier}
+\runningauthor{Cavalcante et al.} 
+%\editorname{Leonardo Araújo} % old template
+\sectioneditorname{Francis Arthuso Paiva~\orcid{0000-0002-9083-3342}}
+\layouteditorname{Saula Cecília~\orcid{0009-0006-3069-8480}}
+
+\title{Inteligência artificial e produção de trabalhos acadêmicos na universidade}
+\othertitle{Artificial Intelligence and the production of academic papers at university}
+% if there is a third language title, add here:
+%\othertitle{Artikelvorlage zur Einreichung beim Texto Livre Journal}
+
+\author[1]{Ana Alzira Maia Machado Cavalcante~\orcid{0009-0002-8712-2256}\thanks{Email: \href{mailto:anaalzira@ufmg.br}{anaalzira@ufmg.br}}}
+\author[1]{Pedro Rodrigues Barbosa~\orcid{0009-0001-2845-3461}\thanks{Email: \href{mailto:pedrorodriguesb173@gmail.com}{pedrorodriguesb173@gmail.com}}}
+\author[1]{Vinicius Villani Abrantes~\orcid{0000-0003-3850-2834}\thanks{Email: \href{mailto:viniciusabrantes@ufmg.br}{viniciusabrantes@ufmg.br}}}
+\author[1]{Carla Viana Coscarelli~\orcid{0000-0003-2655-4426}\thanks{Email: \href{mailto:ccoscarelli@ufmg.br}{ccoscarelli@ufmg.br}}}
+\author[1]{Luana Lopes Amaral~\orcid{0000-0002-4290-1208}\thanks{Email: \href{mailto:luanalopes@ufmg.br}{luanalopes@ufmg.br}}}
+
+\affil[1]{Universidade Federal de Minas Gerais, Faculdade de Letras, Belo Horizonte, MG, Brasil.}
+
+
+\addbibresource{article.bib}
+% use biber instead of bibtex
+% $ biber article
+
+% used to create dummy text for the template file
+\definecolor{dark-gray}{gray}{0.35} % color used to display dummy texts
+\usepackage{lipsum}
+\SetLipsumParListSurrounders{\colorlet{oldcolor}{.}\color{dark-gray}}{\color{oldcolor}}
+
+% used here only to provide the XeLaTeX and BibTeX logos
+\usepackage{hologo}
+
+% if you use multirows in a table, include the multirow package
+\usepackage{multirow}
+
+% provides sidewaysfigure environment
+\usepackage{rotating}
+
+% CUSTOM EPIGRAPH - BEGIN 
+%%% https://tex.stackexchange.com/questions/193178/specific-epigraph-style
+\usepackage{epigraph}
+\renewcommand\textflush{flushright}
+\makeatletter
+\newlength\epitextskip
+\pretocmd{\@epitext}{\em}{}{}
+\apptocmd{\@epitext}{\em}{}{}
+\patchcmd{\epigraph}{\@epitext{#1}\\}{\@epitext{#1}\\[\epitextskip]}{}{}
+\makeatother
+\setlength\epigraphrule{0pt}
+\setlength\epitextskip{0.5ex}
+\setlength\epigraphwidth{.7\textwidth}
+% CUSTOM EPIGRAPH - END
+
+% to use IPA symbols in unicode add
+%\usepackage{fontspec}
+%\newfontfamily\ipafont{CMU Serif}
+%\newcommand{\ipa}[1]{{\ipafont #1}}
+% and in the text you may use the \ipa{...} command passing the symbols in unicode
+
+% LANGUAGE - BEGIN
+% ARABIC
+% for languages that use special fonts, you must provide the typeface that will be used
+% \setotherlanguage{arabic}
+% \newfontfamily\arabicfont[Script=Arabic]{Amiri}
+% \newfontfamily\arabicfontsf[Script=Arabic]{Amiri}
+% \newfontfamily\arabicfonttt[Script=Arabic]{Amiri}
+%
+% in the article, to add arabic text use: \textlang{arabic}{ ... }
+%
+% RUSSIAN
+% for russian text we also need to define fonts with support for Cyrillic script
+% \usepackage{fontspec}
+% \setotherlanguage{russian}
+% \newfontfamily\cyrillicfont{Times New Roman}
+% \newfontfamily\cyrillicfontsf{Times New Roman}[Script=Cyrillic]
+% \newfontfamily\cyrillicfonttt{Times New Roman}[Script=Cyrillic]
+%
+% in the text use \begin{russian} ... \end{russian}
+% LANGUAGE - END
+
+% EMOJIS - BEGIN
+% to use emoticons in your manuscript
+% https://stackoverflow.com/questions/190145/how-to-insert-emoticons-in-latex/57076064
+% using font Symbola, which has full support
+% the font may be downloaded at:
+% https://dn-works.com/ufas/
+% add to preamble:
+% \newfontfamily\Symbola{Symbola}
+% in the text use:
+% {\Symbola }
+% EMOJIS - END
+
+% LABEL REFERENCE TO DESCRIPTIVE LIST - BEGIN
+% reference itens in a descriptive list using their labels instead of numbers
+% insert the code below in the preambule:
+%\makeatletter
+%\let\orgdescriptionlabel\descriptionlabel
+%\renewcommand*{\descriptionlabel}[1]{%
+%  \let\orglabel\label
+%  \let\label\@gobble
+%  \phantomsection
+%  \edef\@currentlabel{#1\unskip}%
+%  \let\label\orglabel
+%  \orgdescriptionlabel{#1}%
+%}
+%\makeatother
+%
+% in your document, use as illustraded here:
+%\begin{description}
+%  \item[first\label{itm1}] this is only an example;
+%  % ...  add more items
+%\end{description}
+% LABEL REFERENCE TO DESCRIPTIVE LIST - END
+
+
+% add line numbers for submission
+%\usepackage{lineno}
+%\linenumbers
+
+\begin{document}
+\maketitle
+
+\begin{polyabstract}
+\begin{abstract}
+A popularização da inteligência artificial (IA) traz benefícios para a ciência e melhora a produtividade em tarefas cotidianas. Porém, nem sempre a substituição de uma tarefa manual traz benefícios, como em atividades escolares. Refletimos aqui sobre o uso da IA para a produção de trabalhos acadêmicos por universitários, levantando as questões principais: Qual o impacto do uso de IAs que geram textos na escrita acadêmica de estudantes da graduação? Como identificar textos produzidos por IA nos trabalhos acadêmicos? Que estratégias podem ser usadas para criar atividades em disciplinas de graduação que exijam participação ativa dos estudantes, evitando a dependência de ferramentas de IA? Para responder a essas questões, são utilizadas informações obtidas em atividades realizadas em três turmas de uma disciplina de leitura e produção de textos acadêmicos da Universidade Federal de Minas Gerais. Nas análises dessas atividades, são indicadas características comuns aos textos produzidos por IA e também são apontados caminhos para a proposição de atividades que sejam desafiadoras e que dificultem a substituição da produção escrita pela solicitação à IA. Refletimos, ainda, sobre questões éticas e sobre o que pode levar estudantes a usarem uma IA para fazer um trabalho acadêmico. Espera-se que esses resultados ajudem professores a lidar com os avanços da IA no contexto universitário.
+
+\keywords{Universidade\sep Texto acadêmico\sep Inteligência artificial\sep Avaliação}
+\end{abstract}
+
+\begin{english}
+\begin{abstract}
+The popularization of artificial intelligence (AI) brings benefits to science and improves the productivity of everyday tasks. However, replacing a manual task does not always bring benefits, as in school activities. Here, we reflect on the use of AI for the production of academic work by university students, raising the main questions: What is the impact of the use of AIs that generate texts on the academic writing of undergraduate students? How can we identify texts produced by AI in their academic work? What strategies can be used to create activities in undergraduate courses that require active student participation, avoiding dependence on AI tools? To answer these questions, we use information obtained from activities carried out in three classes of a course on reading and producing academic texts at the Federal University of Minas Gerais. In the analysis of these activities, common characteristics of AI-generated texts are identified, and ways to propose challenging activities that make it difficult to replace written production with AI requests are also pointed out. We also reflect on ethical issues and on what may lead students to use AI to do academic work. It is hoped that these results will help teachers deal with advances in AI in the university context.
+
+
+\keywords{University\sep Academic text\sep Artificial intelligence\sep Assessment}
+\end{abstract}
+\end{english}
+% if there is another abstract, insert it here using the same scheme
+\end{polyabstract}
+
+\section{Considerações iniciais}
+A Inteligência Artificial (ou IA; também conhecida como LLM\footnote{Os termos ``IA'' ou ``Inteligência Artificial'' são conceitos amplos que englobam diversas abordagens. A sigla ``LLM'' refere-se a \textit{Large Language Models} (em português: Modelos de Linguagem de Grande Escala). É um tipo de inteligência artificial que usa redes neurais para compreender, gerar e processar linguagem humana. Esses modelos são treinados em grandes volumes de texto, o que permite que eles aprendam padrões, sintaxe e até mesmo nuances semânticas da linguagem. ``LLM'' se refere especificamente a um tipo de modelo de IA voltado para processamento e geração de linguagem natural, como o ChatGPT e o GPT-4 \cite{rodrigues2023}.}) está cada vez mais presente no nosso cotidiano \cite{carvalho2021, faceli2021}. Em algumas situações, a aplicação de IA é explicitamente promovida, como diferencial em produtos e serviços. Em outras, ela opera nos bastidores, integrada a sistemas que usamos diariamente sem notar \cite{carvalho2021}, como filtros de spam ou algoritmos que personalizam recomendações de filmes e séries em plataformas de streaming. Essa presença discreta reflete como a IA é projetada para tornar nossas interações com a tecnologia mais práticas e personalizadas, normalmente sem demandar nossa atenção. Apesar disso, sua influência levanta questões importantes sobre transparência, privacidade e a dependência crescente dessas tecnologias no cotidiano \cite{carvalho2021}.
+
+No contexto universitário, um problema importante é o uso de ferramentas de IA por estudantes para a geração de textos em trabalhos acadêmicos. Discutiremos, então, a ampliação da utilização dessas ferramentas nas universidades, apresentando subsídios para debates e propostas de atividades que incentivem a transparência e a honestidade no uso desse recurso, destacando esse uso como apoio, e não como substituto do esforço intelectual. Procuramos mostrar o impacto que as ferramentas de IA geram, principalmente, na produção de textos de graduandos. Para isso, buscamos responder e encorajar outras pesquisas a responderem: Qual o impacto do uso de IAs que geram textos no processo de escrita acadêmica de estudantes da graduação? Como identificar textos produzidos por IA em trabalhos acadêmicos desses estudantes? Que estratégias podem ser usadas para criar atividades em disciplinas de graduação que exijam participação ativa, interpretação e originalidade dos estudantes, evitando a dependência de ferramentas de IA?
+
+Trabalhamos com os dados de três das turmas (TOL 1, 2 e 3) da disciplina Oficina de Língua Portuguesa: Leitura e Produção de Textos (doravante Oficina), ofertada pela Faculdade de Letras, da Universidade Federal de Minas Gerais (UFMG), no primeiro semestre de 2024.\footnote{Este estudo não requer aprovação do Comitê de Ética em Pesquisa, pois analisa atividades realizadas ao longo do semestre na disciplina, com o intuito exclusivamente de ensino, sem finalidade de pesquisa científica (Resolução Nº 510, de 07 de abril de 2016, do Conselho Nacional de Saúde). O material aqui analisado foi construído para alunos de graduação, com o objetivo de desenvolver habilidades de letramento acadêmico, sem envolver procedimentos ou intervenções que exigiriam a análise ética por parte de um comitê de ética em pesquisa.} A Oficina é uma disciplina a distância que tem como público estudantes iniciantes na graduação da UFMG de diferentes cursos e áreas do conhecimento. A disciplina busca desenvolver o letramento acadêmico dos estudantes e, para isso, propõe durante o semestre letivo, o desenvolvimento, em etapas, de uma pesquisa científica. Com base na pesquisa proposta aos estudantes, eles são envolvidos em atividades de compreensão e produção de gêneros textuais acadêmicos \cite{coscarelli2017}, o que inclui: (i) a busca por referencial teórico, (ii) a elaboração e análise de resenha e resumo de materiais científicos e projeto de pesquisa, (iii) a coleta e a análise de dados, e (iv) a elaboração de relatório final e apresentação oral.
+
+Por ser uma disciplina de produção textual acadêmica, um dos principais desafios dos estudantes é produzir textos complexos, como projeto de pesquisa e resenha, que muitas vezes são novidade para eles. Nos últimos anos, com a expansão e popularização das ferramentas de IA, que conseguem gerar textos com alto nível de complexidade, temos notado que alguns alunos recorrem a essas tecnologias para produzir seus trabalhos, o que levanta questões sobre a autonomia e a autenticidade na produção acadêmica.
+
+Este artigo está organizado em três seções principais, seguidas das considerações finais. A primeira seção explora a produção de trabalhos acadêmicos e o impacto do uso de IA nesse contexto, incluindo a percepção dos estudantes da Oficina sobre o uso dessas tecnologias. A segunda apresenta a percepção dos estudantes sobre a própria disciplina, considerando suas experiências e reflexões, e mostra características do uso de IA na produção de trabalhos acadêmicos desses estudantes. Por fim, a terceira propõe estratégias para a detecção do uso de IA em trabalhos acadêmicos e sugere caminhos para a elaboração de atividades que desafiem os estudantes e que não são facilmente realizadas por essas ferramentas.
+
+\section{A produção de trabalhos acadêmicos e o uso de Inteligência Artificial (IA)}\label{sec-2}
+A IA tem se aproximado cada vez mais do cotidiano, especialmente por meio de aplicativos que interagem com os usuários de forma semelhante à linguagem humana \cite{rodrigues2023, carvalho2021}. Tanto a produção de IA quanto a literatura relacionada ao tema têm crescido, acompanhadas por sua ampla aplicação em diversos contextos. Embora diversos estudos destaquem o potencial da IA para o desenvolvimento em escala mundial, outros, como \textcite{cortiz2024}, \textcite{almeida2024} e \textcite{carvalho2021}, alertam para o risco do seu uso em várias esferas sociais.
+
+A geração de textos por IA tem se tornado cada vez mais comum em diversos contextos \cite{carvalho2021}, desde a produção de artigos acadêmicos até a redação de conteúdos jornalísticos e empresariais \cite{rodrigues2023}. De acordo com o  \textcite{digital2024}, no Digital Education Council Global AI Student Survey (2024), 86\% dos estudantes universitários afirmam utilizar ferramentas de IA em seus estudos, sendo que 54\% dos estudantes as utilizam pelo menos uma vez por semana. O ChatGPT é a ferramenta mais utilizada, de acordo com o relatório, com 66\% dos alunos recorrendo a ela.
+
+No nosso contexto acadêmico, o uso dessas ferramentas para geração de textos tem se mostrado crescente. A Oficina é voltada para estudantes iniciantes na graduação, embora também conte com alunos em etapas mais avançadas da formação, com foco no desenvolvimento de habilidades de compreensão e produção de textos de gêneros acadêmicos. Durante o semestre, os alunos desenvolvem uma breve pesquisa, incluindo busca por referencial teórico, leitura e elaboração de resenhas, análise de dados, entre outras etapas \cite{coscarelli2017}. A cada semestre, um tema de pesquisa diferente é proposto aos estudantes.
+
+Para a oferta do primeiro semestre de 2024, o tema da pesquisa dos estudantes foi ``Formas de Pesquisa e Fontes de Informação'', sendo assim, as discussões sobre uso de IA atravessaram as reflexões acerca da temática selecionada. Uma etapa das atividades propostas na Oficina foi um questionário respondido anonimamente pelos estudantes, que integrou o percurso metodológico da investigação proposta a eles.
+
+O questionário, uma das atividades de pesquisa que seria desenvolvida pelos alunos nas etapas seguintes do semestre, contou com 174 respostas nas turmas TOL1, TOL2 e TOL3. Esse questionário abordou itens relacionados a autoria, como uso de fontes de pesquisa, além das percepções sobre o uso de IA. Os resultados obtidos foram (ver \Cref{tab-1,tab-2}):
+
+%--- codigo da tabela 1 ---%
+\begin{table}[h!]
+\centering
+\begin{threeparttable}
+\caption{Uso de IA para busca de informação.}\label{tab-1}
+\begin{tabular}{lcc}
+\toprule
+Você já usou inteligência artificial para buscar informação? & Sim & Não \\
+\midrule
+TOL 1 & 29 & 23 \\
+TOL 2 & 43 & 25 \\
+TOL 3 & 47 & 7 \\
+TOTAL & 119 & 55 \\
+\bottomrule
+\end{tabular}
+\source{Dos autores.}
+\end{threeparttable}
+\end{table}
+
+%--- codigo da tabela 2 ---%
+\begin{table}[h!]
+\centering
+\begin{threeparttable}
+\caption{Uso de IA para a produção de trabalhos acadêmicos.}\label{tab-2}
+\begin{tabularx}{\linewidth}{Xlll}
+\toprule
+Você já usou inteligência artificial para produzir algum texto ou trabalho acadêmico? & Sim & Sim, parcialmente & Não \\
+\midrule
+TOL 1 & 5 & 16 & 31 \\
+TOL 2 & 1 & 28 & 39 \\
+TOL 3 & 1 & 27 & 26 \\
+TOTAL & 7 & 71 & 96 \\
+\bottomrule
+\end{tabularx}
+\source{Dos autores.}
+\end{threeparttable}
+\end{table}
+
+
+Quando questionados sobre a busca de informações, expressão que carrega um sentido amplo, 68,39\% dos alunos afirmaram já ter utilizado IA para essa função. Entender as ferramentas de IA, como o ChatGPT, como fontes de informação pode ser problemático, já que ``não há controle quanto à veracidade, ética e senso comum em suas respostas'' \cite[p. 6]{rodrigues2023}. Uma das questões-problema elencadas por \textapud[p. 249-250]{Kaufman2022DesmistificandoIA}[p. 5]{rodrigues2023} é a falta de neutralidade, ou enviesamento, das informações apresentadas por essas ferramentas. Um dos papéis centrais do letramento acadêmico é ir além do ensino-aprendizagem da forma dos gêneros acadêmicos, portanto deve desenvolver nos estudantes a habilidade de acessar, selecionar e utilizar criticamente fontes confiáveis de informação \cite{amaral2025}.
+
+Mesmo com a popularização dessas ferramentas e com a informação de que a maioria dos alunos já utilizou essas novas tecnologias com o intuito de buscar informação, os dados mostram que poucos estudantes, apenas 7 (4\%), utilizaram IA para a produção integral de trabalhos acadêmicos, embora 71 (40,8\%) fizeram uso parcial dessas ferramentas para esse fim.
+
+O questionário também contou com perguntas discursivas, que exploravam os motivos pelos quais os alunos usaram ou não IA e o que eles pensavam sobre ela. A Tabela \ref{tab-3} apresenta os motivos que levaram os estudantes a usar a IA na produção de seus trabalhos, mas considera também aqueles que mencionaram a utilização dela por motivos não acadêmicos.
+
+%--- codigo da tabela 3 ---%
+\begin{table}[h!]
+\centering
+\begin{threeparttable}
+\caption{Motivos que levaram os alunos a usar IA.}\label{tab-3}
+\begin{tabularx}{\linewidth}{Xllll}
+\toprule
+ & TOL 1 & TOL 2 & TOL 3 & TOTAL \\
+\midrule
+Buscar referências & 1 & 2 & 1 & 4 \\
+Correção textual (pontuação, ortografia, concordância etc.) e normatização & 2 & 8 & 6 & 16 \\
+Iniciar e dinamizar o processo de pesquisa e de produção & 6 & 7 & 10 & 23 \\
+Praticidade e otimização de tempo & 6 & 6 & 6 & 18 \\
+Produção (parcial ou integral) de textos & 4 & 3 & 4 & 11 \\
+Outros motivos (curiosidade, uso para lazer e outras razões não especificadas) & 5 & 5 & 1 & 11 \\
+TOTAL & 24 & 31 & 28 & 83$^*$ \\
+\bottomrule
+\end{tabularx}
+\source{Dos autores.}
+\notes{$^*$ Embora, como mostrado na Tabela \ref{tab-2}, 78 alunos tenham admitido o uso de IAs para a produção de trabalhos acadêmicos, nas respostas discursivas, alguns alunos mencionaram formas de uso dessas ferramentas para motivos que não têm relação com os estudos acadêmicos, resultando em 83 alunos que afirmaram já terem usado IA, número mostrado na Tabela \ref{tab-3}. O uso das produções textuais como exemplos neste artigo foi autorizado por seus autores.}
+\end{threeparttable}
+\end{table}
+
+Nessas respostas, o uso parcial é justificado pelos alunos para iniciar as pesquisas e torná-las mais dinâmicas (23 alunos), para correção gramatical e ortográfica (16 alunos) e pela praticidade e otimização do tempo (18 alunos). Com relação a esse último motivo, um estudante respondeu que usa por ser mais fácil, mas que não se orgulha disso. Outras respostas chamaram atenção. Um dos alunos da TOL 1 respondeu que entendia as IAs como ferramentas válidas para ``apoiar o processo de escrita'' como organizar ideias e revisar textos. Ele afirmou não confiar completamente no que é dito pelas IAs, mencionando a importância de revisar e conferir a autenticidade das informações apresentadas. Ao que parece, há um consenso implícito de que o uso para finalidades de apoio ao processo de escrita é mais aceito do que para a produção completa, por causar uma otimização do tempo. Ainda assim, vale problematizar: o trabalho de revisar o texto, fazer correção gramatical, organizar as ideias, entre outras questões, também não é uma etapa do processo de escrita que deve contar com a experiência do autor?
+
+Em texto sobre a influência das IAs na educação, publicado no dossiê Educação em Análise, \textcite{pimenta2024} questionam: ``ainda existe lugar para o sujeito na escrita?''. Embora entendam que as IAs possam ser ferramentas que podem ser utilizadas na escrita acadêmica, os autores defendem o ato de escrita não apenas como atividade educacional, mas como uma forma de expressão. Segundo eles, ``o uso da tecnologia em nossos atos não pode apagar nossa condição de sujeitos e nossa experiência'' \citeyear[p. 606]{pimenta2024}. Pensando nisso, a escrita de textos que se encaixam excessivamente dentro de modelos, a partir das correções e adequações feitas pelas IAs, pode ser uma ameaça à própria individualidade.
+
+Essa questão apareceu nas respostas dos alunos para os motivos que os levaram a não usar IA para produção de trabalhos acadêmicos. Por serem respostas discursivas, elas foram agrupadas de forma esquemática, conforme o conteúdo, em quatro possibilidades (Tabela \ref{tab-4}): não saber usar ou ter desinteresse na ferramenta; desconfiança nessa tecnologia, que agrupa os alunos que demonstraram não confiar totalmente no que é fornecido pela IA; questões relacionadas à ética, englobando alunos que mencionaram a palavra ética ou o fato de ser algo correto ou não; e, por fim, questões relacionadas a plágio, autoria e responsabilidade, que reúne as respostas que mencionaram preocupações sobre o desconhecimento acerca de conteúdo plagiado, a dificuldade de definir autoria e a responsabilidade de produzir seus próprios trabalhos acadêmicos.
+
+%--- codigo da tabela 4 ---%
+\begin{table}[h!]
+\centering
+\begin{threeparttable}
+\caption{Motivos que levaram os alunos a não usar IA.}\label{tab-4}
+\begin{tabular}{lcccc}
+\toprule
+ & TOL 1 & TOL 2 & TOL 3 & TOTAL \\
+\midrule
+Desconfiança nessa tecnologia & 4 & 9 & 7 & 20 \\
+Questões relacionadas a plágio, autoria e responsabilidade & 7 & 9 & 12 & 28 \\
+Questões relacionadas a ética & 3 & 4 & 1 & 8 \\
+Não sabe usar ou não tem interesse & 11 & 12 & 6 & 29 \\
+Total: & 25 & 34 & 26 & 85$^*$ \\
+\bottomrule
+\end{tabular}
+\source{Dos autores.}
+\notes{$^*$ Como informado na Tabela \ref{tab-2}, 96 alunos responderam, na questão fechada, não terem usado IAs para a produção de trabalhos acadêmicos; desse número, apenas 85 apresentaram, na questão discursiva, os motivos para essa situação, que estão elencados na Tabela \ref{tab-4}.}
+\end{threeparttable}
+\end{table} 
+
+Fora o desinteresse e o desconhecimento acerca dessas ferramentas, questões relacionadas a plágio, autoria e responsabilidade individual foram as razões mais mencionadas, aparecendo 27 vezes entre os 85 alunos que responderam a essa pergunta. Essas temáticas foram tratadas anteriormente pela disciplina em um fórum de discussão (que será apresentado na Seção \ref{sec-4}), o que pode ter tornado os alunos mais cientes deste debate. Com relação a isso, um aluno respondeu explicitamente não usar as IAs para não ser acusado de plágio, o que indica que o plágio pode ser, além de uma preocupação com a ética, também uma preocupação relacionada às notas ou à reputação no ambiente acadêmico.
+
+A desconfiança nas capacidades dessas tecnologias também se fez muito presente: 19 vezes. Como exemplo: um aluno escreveu que não considera os textos produzidos por IA como confiáveis e de qualidade. À frente mostraremos, a partir da análise de trabalhos gerados por IA, que essas ferramentas podem inventar dados, referências e informações, além de impossibilitarem o rastreamento das fontes de informação \cite{moraes2013}, o que torna a desconfiança bastante compreensível.
+
+Os dados da Oficina apresentados aqui e as demais informações do relatório \textcite{digital2024} indicam uma adoção significativa destas tecnologias no ambiente acadêmico, refletindo a crescente integração da IA como suporte para aprendizado e produtividade. No entanto, há questões problemáticas que precisam ser consideradas em relação ao uso destas tecnologias, especialmente na produção de trabalhos acadêmicos pelos estudantes. Sabemos que:
+
+\begin{quote}
+    [...] a máquina reconhece os padrões e cria relações entre os dados coletados. E respondendo à nossa pergunta que intitula esse item -- Por que IA agora? – compartilhamos da concepção de \textcite[p.6]{Kaufman2022DesmistificandoIA}, quando afirma que a busca por Inteligência Artificial ``[...] depende de avanços não só na capacidade de extrair padrões de grandes massas de dados, mas também na capacidade de receber instruções complexas no tempo''. (...). Nesse prisma, \textbf{são os comportamentos e as práticas sociais que contribuem para as inovações das máquinas, mesmo que cada dia estejam se desenvolvendo em uma velocidade que não podemos acompanhar minuciosamente, daí a necessidade de um olhar crítico e ético que contribua para uma melhoria social e menos desigual}. \cite[p. 4, grifo nosso]{rodrigues2023}.
+\end{quote}
+
+Assim, um dos principais problemas do uso das IAs é a propensão dessas ferramentas para gerar informações falsas. Como modelos estatísticos de linguagem, as IAs não têm compreensão semântica ou epistêmica sobre o que estão produzindo \cite{rodrigues2023}. Consequentemente, podem inventar dados, referências e citações, o que compromete a fidedignidade acadêmica dos textos gerados \cite{moraes2013}. Outro problema relevante é a possibilidade de plágio \cite{silveira2021, moraes2013}.\footnote{Segundo \textcite{simoes2012}, o plágio no ambiente acadêmico, dentre outras razões, ocorre devido à facilidade de acesso, à falta de ética dos alunos e à impunidade. O autor ainda enfatiza que o plágio é incompatível com o meio universitário e defende a necessidade de políticas institucionais voltadas para esse problema. O plágio é, primordialmente, uma questão ética, ressaltando a importância da Universidade, em seu papel educativo, na promoção de pesquisas científicas que abordem a integridade ética. Quando nos curvamos para o atual contexto do uso dos mecanismos de IA, filiamo-nos ao entendimento de \textcite[p. 7-8]{silveira2021} de que a ``[...] Universidade deve ter a preocupação constante com a formação academicamente qualificada, mas também com a formação ética dos alunos, uma vez que essa formação reflete na postura e conduta dos futuros profissionais nos aspectos sociais. Nesse sentido, é importante destacar o papel da Universidade para lidar com a questão do plágio, da ética e da integridade na pesquisa no ambiente acadêmico'', principalmente, com o uso de IA na produção do conhecimento.} Como as tecnologias de IA não fornecem informações precisas sobre as fontes utilizadas para gerar os textos, é difícil verificar a originalidade do conteúdo \cite{moraes2013}. Além disso, a falta de transparência na origem dos dados utilizados pela IA impossibilita a rastreabilidade das informações, tornando o uso dessas ferramentas um risco ético para pesquisadores e estudantes.
+
+A repetição de padrões textuais também é uma questão crítica \cite{rodrigues2023}. Modelos de IA tendem a gerar textos com construções semelhantes, levando à produção de conteúdo padronizado e pouco original \cite{levshina2024,Gray2024ChatGPTContamination}, o que pode gerar trabalhos muito semelhantes feitos por alunos diferentes sobre os mesmos assuntos. Isso pode ser um problema, especialmente no meio acadêmico, por ser um fator determinante para a construção pessoal, ética e crítica \cite{carvalho2021}. Os modelos de IA frequentemente utilizam frases padronizadas que reduzem a criatividade e a singularidade das produções textuais, além de reduzir a diversidade estilística dos trabalhos \cite{rodrigues2023, carvalho2021}.
+
+Por fim, em um contexto de ensino-aprendizagem na universidade, é necessário refletir sobre em que medida o uso de ferramentas de IA pode prejudicar o desenvolvimento das habilidades alvo dos trabalhos acadêmicos em questão, a exemplo da capacidade argumentativa dos estudantes, da busca crítica por informações confiáveis e da autonomia da produção textual, no caso de uma disciplina de produção de textos acadêmicos.
+
+\section{Trabalhos acadêmicos gerados por IA: os padrões que se repetem
+}\label{sec-3}
+Feitas essas considerações sobre a percepção dos alunos em relação às IAs, com destaque para suas opiniões e experiências com essas tecnologias na produção de trabalhos acadêmicos, analisamos nesta seção os padrões recorrentes nos textos gerados por essas ferramentas. Levando em consideração as experiências de avaliação de atividades da disciplina, exemplificamos situações ocorridas no percurso da Oficina em relação ao uso dessas tecnologias. Também exploramos a avaliação da disciplina pelos graduandos, considerando seus \textit{feedbacks} e impressões. Por fim, examinamos as características específicas dos textos produzidos por IA durante a Oficina, identificando aspectos que diferenciam essas produções das escritas humanas.
+
+A Oficina, por contar com 500 alunos matriculados por semestre realizando as mesmas atividades, permite observar variados padrões de escrita, a evolução dos alunos em suas produções e, mais recentemente, aproximações entre textos de alunos distintos e variações evidentes da escrita de textos diferentes dos mesmos alunos. Algumas dessas questões podem ser atribuídas ao uso de IA na produção textual. A partir dessa análise, no segundo semestre de 2024, identificamos 17 trabalhos na Oficina produzidos com a utilização de IA. Esses trabalhos distribuem-se entre os gêneros resenha acadêmica (5 trabalhos), projeto de pesquisa (8 trabalhos) e relatório de pesquisa (4 trabalhos). É um número baixo de trabalhos e que se reflete nos dados do questionário apresentado na Seção \ref{sec-2}. Como mencionado, apenas 7 alunos dos 174 respondentes nas três turmas analisadas admitiram o uso de ferramentas de IA para a produção de trabalhos completos.
+
+Mesmo assim, destacamos que essa forma de uso, para a produção de trabalhos completos, é apenas uma entre as muitas listadas: uso para correção gramatical e ortográfica, uso para estruturar o texto, uso para buscar referências, entre outros exemplos. Por isso, os vestígios do uso de IA aparecem diluídos na escrita das atividades dos alunos. Usos parciais não serão analisados nesta seção, principalmente por serem praticamente imperceptíveis.
+
+Os 17 trabalhos analisados aqui foram totalmente produzidos com a utilização de IA e foram assim diagnosticados através de sua leitura atenta e, especialmente, por análise comparativa. Apresentamos exemplos que comparam diferentes atividades de um mesmo aluno. A linguagem empregada no fórum de apresentação (1), por exemplo, se diferencia da linguagem utilizada na produção do projeto ou relatório (2):
+
+\begin{quote}
+    (1) \textit{Olá, meu nome é (aluno), faço (curso), tenho (idade), sou de (cidade). Iniciei minha trajetória acadêmica em (ano) no (curso) em (ano) fiz a reopção pra (curso) e sou completamente apaixonado com meu curso. Minha expectativa com essa disciplina é desenvolver minha habilidade em produção de texto para me ajudar tanto na faculdade quanto na minha vida profissional (...).}
+\end{quote}
+
+\begin{quote}
+    (2) \textit{A investigação pretende contribuir para o desenvolvimento de métodos de investigação digital mais eficazes e promover uma compreensão mais crítica e profunda da informação. As aplicações práticas deste modelo podem beneficiar educadores, pesquisadores e estudantes, promovendo processos investigativos mais flexíveis e precisos.}
+\end{quote}
+
+As duas escritas configuram gêneros distintos, o que explicaria também suas diferentes formas, mas nos parece que o estilo pessoal não é o mesmo nos dois textos. Embora em ambos os textos faltem conexões entre as ideias, o segundo não apresenta falhas sintáticas de truncamento ou justaposição, como o primeiro. Além disso, no excerto (2), mesmo se tratando da recuperação das ideias na conclusão, percebe-se a falta de desenvolvimento dos períodos, com considerações muito genéricas. O trecho (3), a seguir, mostra uma terceira atividade desse aluno, que, mesmo se aproximando da escrita acadêmica, destoa do estilo de escrita presente no trecho (2). Além disso, o trecho (3) apresenta alguns pequenos desvios gramaticais e demonstra maior conhecimento do assunto sendo tratado, trazendo maior nível de detalhamento e menor vagueza das ideias apresentadas em comparação ao texto em (2).
+\begin{quote}
+    (3) \textit{Por estagiar em uma empresa (...), em que os funcionários são submetidos a exames admissionais, periódicos e demissionais, uma vez que são expostos a ruídos e utilização de produtos químicos, desenvolvi grande interesse em futuramente fabricar produtos químicos (...) e desde então as condições da submissão destes para os trabalhadores passar a ser de grande relevância para mim. Desta forma, este artigo me mostrou que talvez protetores auriculares não sejam suficientes para evitar riscos à saúde dos trabalhadores, uma vez que apresentou porcentagem significativa na proporção de perda auditiva ocupacional no profissional (...).}
+\end{quote}
+
+Consideramos, nesta análise, portanto, que os textos (1) e (3) são autorais do estudante, enquanto o texto (2) foi produzido por uma IA. Nessa lógica, a mesma ausência de conexão vista no trecho (2), como se os períodos fossem construídos isoladamente e justapostos em sequência, é notada em vários dos outros trabalhos produzidos por IA de outros estudantes. Um exemplo é o texto (4), trecho de um projeto de pesquisa:
+
+\begin{quote}
+    (4) \textit{A realização de pesquisas acadêmicas é um elemento fundamental na formação de estudantes universitários. A qualidade das fontes de informação utilizadas nesses trabalhos é crucial para garantir a veracidade e a relevância dos resultados obtidos. Este estudo concentra-se na qualidade das fontes de informação utilizadas pelos estudantes da Universidade Federal de Minas Gerais (UFMG).}
+\end{quote}
+
+Além dessa característica de estilo, expressões e itens lexicais se repetem. A expressão ``\textit{insights} valiosos'' e algumas variações, como ``\textit{insights} relevantes'', por exemplo, aparecem em 6 dos 17 trabalhos analisados, sendo usadas nos mesmos contextos.
+
+De uma forma geral, os trabalhos que identificamos como escritos por alguma IA não apresentam desvios de natureza gramatical, mas há neles inconsistências de ordem semântica, sendo estas as primeiras características relevantes a serem listadas nesta seção. Lembramos que a correção gramatical e, de forma geral, o ``melhoramento'' dos textos, foi mencionada pelos alunos como motivo para uso de IA no processo de escrita, como mostramos na Seção \ref{sec-2}.
+
+Outra característica encontrada nos textos gerados por IA é a incoerência na construção das referências. Na unidade 2 da Oficina, a qual denominamos “Conhecendo pesquisas”, os graduandos têm a oportunidade de refletir sobre a relevância de saber articular suas ideias com as de outros autores, citando adequadamente as informações que buscam em fontes diversas. Especificamente na avaliação 5, intitulada ``Formas de citação e plágio acadêmico'', os estudantes são conscientizados sobre as consequências do plágio e aprendem a construir adequadamente citações e referências seguindo os padrões da Associação Brasileira de Normas Técnicas (ABNT). Entretanto, quando analisamos as produções dos discentes identificadas como produzidas por IA, percebemos diversas inconsistências importantes. Algumas referências são apresentadas incompletas e fora das normas da ABNT, como nos exemplos em (5):
+
+\begin{quote}
+(5) \textit{GIL, A. C. (2007). Como elaborar projetos de pesquisa. Atlas. \newline
+GERHARDT, T. E., \& Silveira, D. T. (2009). Métodos de pesquisa. UFRGS}
+\end{quote}
+
+Chamam a atenção também as referências estrangeiras mencionadas no relatório de pesquisa que sequer apareceram no projeto de pesquisa, ou que não foram citadas no corpo do texto. As referências apresentadas abaixo seguem um padrão de organização que, além de não satisfazer as normas da ABNT, revelam lacunas em relação à articulação com a temática da pesquisa. Nota-se também a utilização frequente do símbolo ``\&", que não é comum quando referenciamos um texto dentro dos padrões acadêmicos brasileiros.
+
+\begin{quote}
+(6) \textit{Bar-Ilan, J., Haustein, S., Peters, I., Priem, J., Shema, H., \& Terliesner, J. (2018). Beyond citations: Scholars' visibility on the social Web. Scientometrics, 97(3), 807-832. \newline
+Field, A. (2018). Discovering Statistics Using IBM SPSS Statistics (5th ed.). Sage Publications.
+}
+\end{quote}
+
+Observando referências como essas, acreditamos que os estudantes não teriam tempo hábil para realizar muitas leituras estrangeiras como indicam nos seus trabalhos, haja vista o fato de muitos deles considerarem difícil conciliar as tarefas da Oficina com outras atividades, como mostraremos à frente. Alguns estudantes chegaram a citar 15 trabalhos em suas referências, a maioria em língua inglesa, sem qualquer menção a eles no corpo do texto.
+
+Além disso, mesmo em referências que seguem os padrões da ABNT, encontramos contradição no que tange à atribuição de autoria dos textos citados pelos alunos. Um exemplo claro ocorreu na atividade de produção da resenha acadêmica. O texto a ser resenhado pelos estudantes nessa atividade era o artigo ``A leitura em múltiplas fontes: um processo investigativo''\footnote{Texto resenhado: Coscarelli, Carla Viana. A leitura em múltiplas fontes: um processo investigativo. \textit{Ens. Tecnol. R.}, v. 1, n. 1, p. 67-79, 2017. Disponível em: \url{https://www.researchgate.net/publication/336596288_A_leitura_em_multiplas_fontes_um_processo_investigativo}. Acesso em 14 nov. 2025.}, de autoria de Carla Viana Coscarelli, publicado em 2017. Uma das resenhas produzidas por IA atribuiu a autoria do artigo a João Silva e Maria Pereira, apontando como veículo de publicação o periódico Revista de Educação. Outra atribuiu o texto a José da Silva e sua publicação ao periódico Revista de Estudos em Educação.
+
+\begin{quote}
+(7) \textit{SILVA, João; PEREIRA, Maria. A leitura em múltiplas fontes: um processo investigativo. \textbf{Revista de Educação}, São Paulo, v. 25, n. 2, p. 123-145, 2024. \newline
+SILVA, José da. A leitura em múltiplas fontes: um processo investigativo. Revista de Estudos em Educação, v. 12, n. 3, p. 45-67, 2023.}
+\end{quote}
+
+Além da atribuição incoerente de autoria ao texto de Carla Coscarelli, nos demais 15 trabalhos analisados, os autores J. Silva e M. Pereira aparecem em duas referências falsas (ou seja, que não correspondem a trabalhos de fato publicados):
+
+\begin{quote}
+(8) \textit{Pereira, M. (2019). Competências informacionais e o uso de fontes confiáveis na pesquisa acadêmica. Journal of Information Literacy, 13(1), 72-89. \newline
+Ribeiro, M., \& Silva, J. (2019). Confiabilidade das fontes de informação e a qualidade da pesquisa acadêmica. Perspectivas em Ciência da Informação, 24(1), 112-130.}
+\end{quote}
+
+Há várias outras referências a textos que não conseguimos localizar, o que nos leva a concluir que parte das referências apresentadas parecem ter sido ``inventadas'' pelas IAs utilizadas pelos alunos (note-se a ausência de disponibilização do \textit{link} de acesso aos artigos). Nas resenhas, também verificamos a utilização da expressão ``os autores'' para se referir à autora do texto resenhado.
+
+\begin{quote}
+(9) \textit{Os autores enfatizam a importância de estratégias de leitura que envolvam comparar, contrastar e relacionar informações para construir a compreensão intertextual.}
+\end{quote}
+
+Constatamos, portanto, como uma importante característica dos trabalhos acadêmicos produzidos por IA: a ocorrência de citações e referências falsas e inconsistentes.
+
+É fundamental considerar também a fuga ao que foi proposto na Oficina em termos de metodologia. No primeiro semestre de 2024, a coleta de dados para a pesquisa que seria realizada durante a disciplina foi feita por meio de um questionário, com 10 questões (fechadas e abertas). O questionário abordava as formas de pesquisa e fontes de informação utilizadas pelos estudantes; os respondentes foram os próprios alunos de cada turma. Entretanto, nos 17 trabalhos diagnosticados como produzidos por IA, a metodologia é descrita de forma bastante diferente daquela usada na disciplina, como os exemplos a seguir mostram.
+
+\begin{quote}
+(10) \textit{Para atingir nossos objetivos, adotaremos uma abordagem mista, combinando métodos quantitativos e qualitativos. Serão realizados levantamentos, análises de conteúdo e entrevistas com especialistas.}
+\\
+\\
+(11) \textit{Em seguida, será conduzida uma pesquisa de campo, envolvendo a aplicação de questionários estruturados e entrevistas semiestruturadas a profissionais e especialistas atuantes em diversas áreas do conhecimento.}
+\\
+\\
+(12) \textit{Procedimento: Selecione um grupo de participantes (educadores, pesquisadores, estudantes). Treine os participantes para usar as ferramentas e estratégias desenvolvidas. (...). Procedimentos: Aplicação de questionários para coletar percepções e }feedback\textit{ dos participantes. Condução de entrevistas semiestruturadas para aprofundar a compreensão das experiências dos participantes.}
+\end{quote}
+
+Os percursos metodológicos propostos fogem às condições de pesquisa da disciplina. Alguns são elaborados demais, envolvendo processos com os quais não trabalhamos, como a entrevista com especialistas, que se repete em diferentes trabalhos. Esses exemplos demonstram um uso não crítico de IA na produção dos trabalhos acadêmicos, isto é, sem que os estudantes tenham avaliado se o resultado obtido por eles atende aos comandos da atividade e às orientações do professor. Esses trabalhos, portanto, apesar de apresentarem um texto bem escrito do ponto de vista da correção gramatical, costumam não ser coerentes e não cumprir o que foi solicitado na tarefa.
+
+Outra característica observada nos trabalhos produzidos por IA é a forma como são distribuídos em tópicos ou seções frequentemente desprovidos de conteúdo e, em alguns casos, substituídos por uma definição da função daquela parte do gênero. Essa característica pode ser facilmente visualizada nas resenhas acadêmicas e também na seção de metodologia dos projetos e relatórios, já apresentada nos exemplos de (10) a (12). Em todas as resenhas feitas por IA analisadas, mesmo que o texto seja curto, de até duas páginas, há uma divisão em pelo menos quatro seções ou tópicos, com subtítulos que pouco variam: a apresentação do texto resenhado; pontos positivos do texto; pontos negativos do texto; avaliação final e recomendação. Essas seções, porém, não apresentam o conteúdo que se espera de uma resenha. A questão do conteúdo semântico do texto pode ser retomada aqui. Os trechos de resenhas abaixo mostram vagueza e falta de especificidade na avaliação da obra resenhada; os nomes das seções em que os trechos aparecem são mantidos nos trechos a seguir para exemplificação.
+
+\begin{quote}
+(13) \textit{Pontos Positivos: \newline
+A autora utiliza uma base teórica robusta para embasar suas argumentações, o que confere credibilidade e profundidade ao texto. (...)}
+
+\smallskip
+
+\textit{Pontos Negativos:\newline
+Embora as estratégias propostas sejam úteis, o artigo carece de exemplos práticos ou estudos de caso que ilustrem a aplicação dessas estratégias no dia a dia. (...).}
+\\
+\\
+(14) \textit{Crítica\newline
+O artigo apresenta uma discussão relevante sobre a leitura em múltiplas fontes, mas algumas limitações podem ser apontadas:\newline
+Metodologia: Embora a autora apresente uma análise detalhada, a metodologia utilizada poderia ser mais abrangente. A inclusão de estudos quantitativos e qualitativos diversificados poderia fortalecer os argumentos apresentados.}
+\end{quote}
+
+No caso das seções de metodologia de projetos e relatórios, é comum observarmos a definição de conceitos metodológicos, ao invés da descrição da forma como a pesquisa será ou foi feita, como no exemplo a seguir:
+
+\begin{quote}
+(15) \textit{Metodologia\newline
+A metodologia da pesquisa incluirá a Revisão de Literatura: Será realizada uma análise crítica da literatura existente sobre metodologias de pesquisa e fontes de informação, focando em estudos de caso e artigos relevantes.}
+\end{quote}
+
+Também no projeto de pesquisa e no relatório é possível observar a segmentação excessiva do texto, como no seguinte exemplo:
+
+\begin{quote}
+(16) \textit{Tema: A Intersecção entre Inteligência Artificial (IA), Leitura em Múltiplas Fontes e Confiabilidade da Informação na Era Digital\newline
+Objeto de Estudo: A influência da IA na forma como os usuários acessam, processam e avaliam informações provenientes de múltiplas fontes (...). \newline
+Problema: A explosão da informação na era digital, aliada à proliferação de notícias falsas e desinformação, exige novas habilidades para a navegação crítica e responsável no ambiente informacional online.}
+\end{quote}
+
+Apesar de considerarmos que o uso de IA na produção de trabalhos acadêmicos na Oficina seja baixo, com base no número de trabalhos que identificamos e também nos dados apresentados na Seção \ref{sec-2}, é relevante refletirmos sobre as motivações que levam os estudantes a recorrer a essas ferramentas, já mencionadas também na Seção \ref{sec-2}. Como uma forma de aprimorar continuamente a disciplina, ao final de cada semestre, é disponibilizado aos alunos um questionário anônimo de avaliação da disciplina. Nele, os alunos podem responder o que acharam das atividades, do ritmo das tarefas, além de sugerir formas de melhora da disciplina. Considerando o uso de IA para a produção de texto, buscamos, nessas respostas, refinar nosso entendimento sobre os motivos que levaram os alunos a optarem pelo uso dessas tecnologias. No primeiro semestre de 2024, 165 alunos responderam à avaliação.
+
+Um ponto que chama a atenção é que 28\% dos alunos respondentes, isto é, quase um terço, acharam o ritmo da disciplina muito acelerado. Foram quinze atividades, nem todas exigiam uma produção textual extensa. Vale ressaltar, porém, que, por causa da greve docente que aconteceu durante esse período, o cronograma de atividades sofreu alterações, o que pode ter afetado a experiência de alguns alunos na disciplina (ver Tabela \ref{tab-5}).
+\newpage
+%--- codigo da tabela 5 ---%
+\begin{table}[h!]
+\centering
+\begin{threeparttable}
+\caption{Opinião dos alunos sobre o ritmo da disciplina.}\label{tab-5}
+\begin{tabular}{llll}
+\toprule
+O ritmo do curso foi: & Bom & Lento & Muito acelerado \\
+\midrule
+TOL 1 & 36 & 6 & 12 \\
+TOL 2 & 26 & 2 & 20 \\
+TOL 3 & 45 & 4 & 14 \\
+TOTAL & 107 & 12 & 46 \\
+\bottomrule
+\end{tabular}
+\source{Dos autores.}
+\end{threeparttable}
+\end{table}
+
+Embora a maioria dos alunos respondentes (107) tenha considerado o ritmo do curso bom, em outra pergunta, 40\% dos alunos afirmaram ter achado a quantidade de tarefas por semana grande (ver Tabela \ref{tab-6}).
+
+%--- codigo da tabela 6 ---%
+\begin{table}[h!]
+\centering
+\begin{threeparttable}
+\caption{Opinião dos alunos sobre a quantidade de tarefas por semana.}\label{tab-6}
+\begin{tabular}{llll}
+\toprule
+Para você, a quantidade de tarefas por semana foi: & Grande & Suficiente & Pequena \\
+\midrule
+TOL 1 & 18 & 34 & 2 \\
+TOL 2 & 25 & 22 & 1 \\
+TOL 3 & 23 & 40 & 0 \\
+TOTAL & 66 & 96 & 3 \\
+\bottomrule
+\end{tabular}
+\source{Dos autores.}
+\end{threeparttable}
+\end{table}
+
+Nas respostas discursivas, a sobrecarga também foi mencionada. Um aluno mencionou que fazer a disciplina foi quase como fazer um segundo trabalho de conclusão de curso, por causa do tempo que despendia para a produção das atividades, que ele considerou elevado. Outro aluno mencionou que o excesso de atividades atrapalhava conciliar com outras atividades acadêmicas, situação que justificaria o rendimento baixo e as produções ``medianas''.
+
+Nesse sentido, chamam a atenção outras questões levantadas pelos alunos nas respostas discursivas:
+
+\begin{quote}
+\textit{``Aprendi menos do que gostaria pois era sempre uma correria para entregar as coisas no prazo, não consegui conciliar o bastante com outros estudos do meu curso.''
+\\
+\\
+``Apesar de achar a matéria muito importante, acredito que o cronograma da matéria bate de frente com o cronograma do curso muitas vezes, principalmente para quem trabalha, isso torna os prazos de entrega muito apertados, prejudicando o desempenho na matéria.''}
+\end{quote}
+
+A partir dessas observações, acreditamos que o fato de os graduandos terem de conciliar a disciplina com outras demandas pessoais e do ambiente acadêmico pode levar alguns deles a optarem por um caminho ``mais fácil'' na realização das tarefas: o texto gerado por IA. A Oficina, ao disponibilizar atividades semanais, espera que os estudantes organizem o seu tempo para entregar as avaliações dentro do prazo. Todavia, parece que alguns discentes encontram barreiras que os impedem de se dedicar ao processo de leitura e de produção autoral dos textos acadêmicos, o que abre margem para a procura por alternativas que substituam o trabalho que deveria ser realizado de forma autêntica.
+
+Reiteramos, entretanto, que, apesar de nossos dados partirem de uma avaliação sobre a Oficina, que é uma disciplina online com carga horária de 60h, a sobrecarga, a alta cobrança e a falta de tempo para realização de atividades e trabalhos complexos parece ser uma realidade do contexto universitário e da vida moderna. Essas colocações dos estudantes surgem frente a um cenário em que estão sobrecarregados tanto na universidade quanto fora dela. Portanto, parece que, quando os estudantes estão com muitas demandas de outras disciplinas ou com muitas obrigações pessoais, não dispõem de tempo e de organização necessários para se dedicar aos trabalhos da Oficina. Isso afeta o processo de desenvolvimento das habilidades de compreensão e produção textual dos discentes no contexto universitário, principalmente quando priorizam a utilização de programas que geram textos em vez de trabalharem a produção textual como um processo autoral.
+
+Entendemos a autoria acadêmica e científica como um ato de responsabilidade, consciência e intencionalidade, inerente ao ser humano, classificando a IA, assim, como mera ferramenta auxiliar. A ética científica é o alicerce da credibilidade, exigindo honestidade, rigor e transparência de todos aqueles que produzem. \textcite{souza2025} propõem a ideia de ``tecnoética'', uma proposta voltada à reflexão crítica sobre o papel da tecnologia, exigindo que não apenas os pesquisadores, como também os estudantes mantenham o controle e a responsabilidade total sobre o conteúdo gerado.
+
+Filiamo-nos a \textcite{souza2025}, principalmente, ao destacarem a necessidade de usar a IA para ampliar o pensamento humano, não substituir, estimulando a autonomia intelectual. A responsabilidade intelectual exige que o pesquisador mantenha domínio total sobre o conteúdo, atuando como curador ético e intelectual para validar e interpretar criticamente a saída da IA.
+
+Ainda dentro desse ponto, sabemos que existe uma tensão em como a facilidade e conveniência do uso instrumental da IA (seja para tradução, síntese ou revisão) podem, sutilmente, minar ou desumanizar o processo de construção da autoria e do pensamento crítico.
+
+\section{Como identificar o uso de Inteligência Artificial e produzir atividades que exijam autoria do estudante}\label{sec-4}
+Nesta seção, espera-se, a partir das experiências vivenciadas no âmbito da Oficina, elencar algumas formas de identificar quando um trabalho acadêmico foi produzido por IA, além de apresentar possibilidades para o desenvolvimento de atividades, na graduação, que exijam participação ativa, interpretação e originalidade dos estudantes, evitando a dependência ou facilidade no uso de ferramentas de IA.
+
+Entendemos que é impossível desconsiderar os impactos que as IAs que geram textos já têm na forma como os graduandos realizam suas atividades de pesquisa e de produção acadêmica. Essa tecnologia já faz parte do cotidiano desses alunos, como mostramos na Seção \ref{sec-2}, e, por isso, é preciso que adaptemos nossas formas de avaliar para acompanhar esses avanços. Ao mesmo tempo, não podemos também nos render ao seu uso acrítico, dispensando a importância dos processos cognitivos envolvidos na produção autoral de trabalhos acadêmicos, que são importantes para o desenvolvimento de diferentes habilidades dos estudantes, necessárias à sua futura atividade profissional.
+
+É válido ressaltar, ainda, que enviar o texto de um aluno para uma IA e perguntar se tal trabalho foi gerado por ela não é uma forma precisa de buscar pela autoria, mas já existem algumas ferramentas na internet que, supostamente, fazem essa busca a partir da análise de padrões de escrita e informam uma porcentagem aproximada da produção feita por IA. Neste artigo, porém, buscaremos ilustrar meios de identificar a suspeita do uso de IA na produção textual de alunos sem o uso dessas ferramentas, mas de acordo com a observação das características desses trabalhos.
+
+A partir das características apresentadas dos textos analisados na Seção \ref{sec-3}, argumentamos que um trabalho acadêmico universitário pode ser identificado como produzido por IA a partir da observação de algumas ou todas as características a seguir:
+
+\begin{itemize}
+    \item O estilo do trabalho diverge do estilo de escrita do estudante em outras produções;
+\item O trabalho não tem qualquer erro de digitação ou gramática (concordância, pontuação, ortografia etc.);
+\item O trabalho utiliza palavras muito específicas que se repetem em textos de diferentes alunos para falar dos mesmos tópicos, a exemplo de ``\textit{insights} valiosos'' nas resenhas analisadas;
+\item Apesar de não apresentar problemas gramaticais e ortográficos, o trabalho é superficial em conteúdo, apresenta afirmações excessivamente genéricas e vagas, apresenta problemas de coerência ou não se aprofunda no assunto que deve tratar;
+\item O trabalho se compõe de frases justapostas, sem apresentar diferentes marcas coesivas;
+\item O trabalho define exageradamente os tópicos e subtítulos das seções, sem explicar em detalhes o assunto em questão ou sem aprofundar nas análises e discussões; pode também ser excessivamente esquemático e com mais seções do que o esperado para o gênero, a exemplo de resenhas curtas com quatro ou mais seções;
+\item O trabalho foge ao tema ou tangencia o tema, não cumprindo a tarefa que foi pedida pelo professor;
+\item Apresenta citações e referências incoerentes ou falsas.
+\end{itemize}
+
+Esses critérios podem ser utilizados pelo professor universitário para diagnosticar textos em caso de suspeita de uso de IA para a produção completa de trabalhos acadêmicos.
+
+Frente a esse cenário de inovação tecnológica que em pouco tempo já modificou tanto o processo de escrita acadêmica dentro das universidades, é necessário buscar alternativas não somente para o diagnóstico desse uso, mas também para evitá-lo. Assim, é necessário formular atividades e avaliações que exijam participação ativa, interpretação e originalidade dos estudantes e que dificultem o uso de IA na produção acadêmica. O objetivo da criação desse tipo de atividade é duplo: primeiro, há ainda questões éticas incipientes sobre IA na produção textual que precisam ser abordadas; e, ainda, pode ser interessante, do ponto de vista pedagógico, que certas atividades sejam de fato produzidas pelos  
+graduandos, com a finalidade de desenvolver certas habilidades, como a autonomia de escrita, por exemplo. A seguir apresentamos algumas propostas para isso.
+
+A Oficina é ministrada em todos os semestres, por isso, a cada semestre são descobertos novos caminhos para torná-la mais condizente com um currículo acadêmico atualizado e com o perfil dos alunos matriculados nela. Uma primeira proposta que iniciamos no segundo semestre de 2023 e repetimos no primeiro semestre de 2024, base para a produção deste artigo, foi discutir o tema do uso da IA com os alunos no ambiente virtual. Acreditamos que esta atividade teve grande impacto para o baixo número de trabalhos produzidos completamente por IA e resultou na visão crítica dos estudantes sobre esse uso, refletida nas respostas ao questionário apresentadas na Seção \ref{sec-2}. Consideramos, portanto, que estar informado e discutir sobre esse assunto é fundamental no contexto universitário. A atividade que promove esse debate na Oficina, apresentada a seguir, é proposta na terceira semana do semestre, após a discussão sobre plágio e formas de citação.
+
+%--- codigo do quadro 1 ---%
+
+\begin{tcolorbox}[
+  colback=white,
+  colframe=black,
+  boxrule=0.6pt,
+  arc=0pt,
+  left=6pt,
+  right=6pt,
+  top=6pt,
+  bottom=6pt,
+  breakable,
+  title={Atividade de reflexão sobre uso de IA no ambiente universitário.
+Legenda: Trata-se da AV6 aplicada aos estudantes, na semana 3 da Oficina, em formato de fórum de discussão.}
+]
+
+\noindent \textbf{ O uso de IA na produção acadêmica em debate (3 pontos)} 
+\medskip \newline
+Você já deve ter ouvido falar de Inteligências Artificiais (IAs). Além de o termo ser usado para designar um campo de estudo multidisciplinar, também indica um conjunto de novas tecnologias que permitem realizar atividades avançadas de modo automatizado, como traduzir textos e analisar dados. Os sistemas de IA são conhecidos por aprender por meio da exposição a grandes quantidades de dados. Esse aprendizado geralmente envolve algoritmos, que são conjuntos de regras ou instruções que orientam o funcionamento da IA. Um exemplo de aplicação da IA é o Chat GPT, que ficou conhecido por ser uma interface simples de diálogo utilizada como fonte em consultas.
+
+As IAs apresentam muitas aplicações na universidade. Mas é necessário observar questões éticas quando falamos desse uso na pesquisa e na produção de textos. O professor Virgílio Almeida, que presidiu a comissão encarregada de regulamentar o uso de IA na UFMG, defende que esse tipo de ferramenta não seja proibido na universidade, mas regulamentado. No Relatório \underline{``Recomendações para o Uso de Ferramentas de Inteligência Artificial nas Atividades Acadêmicas} \underline{na UFMG''}, o professor, e toda a comissão, afirmam que é necessário:
+\medskip
+\begin{itemize}
+    \item \textit{Enfatizar a necessidade de transparência, explicando detalhadamente como a IA foi usada e refletindo criticamente sobre os riscos inerentes a esse uso, tais como: viés discriminatório, direitos autorais, privacidade e desinformação.
+\item Avaliar com cuidado os resultados produzidos por ferramentas de IA de modo a evitar resultados falsos ou enganosos.
+\item Tratar [a IA] como outras fontes de informação, citando, quando for o caso.
+\item Identificar em artigos e relatórios técnicos as etapas do processo de pesquisa realizadas com auxílio de IA.}
+\end{itemize}
+\bigskip
+A partir disso, \textbf{discuta com seus colegas como ferramentas de IA podem ser usadas na universidade, a partir das seguintes questões norteadoras:}
+\medskip
+\begin{enumerate}
+    \item As IAs podem ser consideradas fontes de informação confiáveis e seguras para a pesquisa acadêmica? Por quê?
+\item Qual é a sua opinião sobre a utilização de IA na elaboração de textos acadêmicos? Caso seja favorável, em que extensão e de que forma a IA deve ser empregada? Caso se oponha, de que maneira as universidades deveriam tratar o uso dessa tecnologia?
+\item O uso de IA na produção de textos acadêmicos pode ser enquadrado como plágio? Quem deve ser reconhecido como autor de um texto produzido totalmente ou parcialmente por uma IA?
+\item Quando usadas na pesquisa acadêmica, as IAs devem ser citadas como fonte ou referência bibliográfica em trabalhos acadêmicos?
+\end{enumerate}
+\end{tcolorbox}
+
+
+O objetivo da atividade é levar os estudantes à reflexão. Por isso, todos os que respondem às questões propostas são avaliados com a totalidade da pontuação da tarefa, independentemente do conteúdo das respostas.
+
+Além disso, na análise dos 17 trabalhos que fizeram uso de IA (5 resenhas, 8 projetos e 4 relatórios), conseguimos observar a prevalência do uso da IA em textos ou seções de textos que não exigiam do aluno uma criatividade propriamente dita. Um exemplo disso foi a atividade de resenha e o referencial teórico do projeto. Por outro lado, esse uso é dificultado em textos e trechos analíticos, que exigiam que o aluno, por si só, desenvolvesse o tema pedido pela disciplina de forma autoral, como a análise de dados no relatório de pesquisa. Nos parece uma evidência disso o fato de que o relatório foi o gênero com o menor número de trabalhos produzidos por IA.
+
+A partir dessa observação, apontamos que uma forma de promover a participação ativa, a interpretação e a originalidade dos estudantes, e inibir o uso dessas tecnologias é inserir os alunos em contextos únicos, singulares, em que eles precisem produzir trabalhos de forma autoral e argumentativa a partir de dados que não encontram em outros lugares. Uma forma de fazer isso é solicitar que os próprios alunos estejam envolvidos na produção do conhecimento e gerem os dados que servirão de base para a análise \cite{amaral2025}. É importante também não repetir temas e buscar a cada semestre renovar o que é cobrado dos alunos, pois, assim, a originalidade do contexto é mantida. Toda a Unidade 3 da Oficina, chamada de ``Planejando e fazendo uma pesquisa'', no primeiro semestre de 2024, foi voltada para o tema ``Formas de Pesquisa e Fontes de Informação''. A partir desse tema, os próprios estudantes geraram dados respondendo ao questionário brevemente apresentado na Seção \ref{sec-2}, que serviu de base para a produção do projeto de pesquisa e do relatório, além de outros gêneros. Tratam-se, assim, de dados únicos e singulares deste contexto, que não podem ser coletados de outra fonte e nem fabricados.
+
+É imprescindível, também, modificar as formas de avaliação. Em muitos casos, os textos produzidos por IA serão gramaticalmente perfeitos e apresentarão uma boa estruturação formal, o que poderá render ao aluno uma boa nota, caso os critérios de avaliação sejam esses. Isso não significa necessariamente que o trabalho esteja bem escrito e formalmente adequado, que está coerente, bem argumentado, que discute com profundidade o tema em questão, traz boas referências etc. Por isso, é preciso que o professor avalie os trabalhos acadêmicos de seus alunos de forma mais profunda, indo além da forma, e observando se esse trabalho realmente realiza o que foi solicitado, se aprofunda no tema, se cumpre as funções do gênero textual em que é produzido, se possui coerência e progressão temática relevantes, se traz discussões que não sejam comuns e repetitivas, se apresenta citações ou referências coerentes e relevantes. Em nossa experiência na Oficina, a avaliação da coerência do trabalho, com base na função do gênero, no conteúdo do texto e na forma, tem rendido bons resultados no desenvolvimento das habilidades de produção textual dos estudantes. Procuramos sempre valorizar as conquistas dos graduandos, entregando \textit{feedbacks} de avaliação construtivos e não acusativos ou punitivos, que mostrem para o estudante os limites éticos de uso de IA, sempre com possibilidade de reescrita e de reavaliação, além de direcioná-los para atividades em que podem treinar os conteúdos gramaticais nos quais demonstram ter mais dificuldades.
+
+Deixamos aqui registradas essas propostas de atividades para trabalhos acadêmicos na graduação como sugestões para professores universitários que desejam aprimorar suas avaliações e tornar os textos dos alunos mais autorais, exigindo deles maior autonomia de escrita, argumentação, busca de fontes de informação etc.
+
+\section{Considerações finais}
+Neste artigo, discutimos a utilização de ferramentas de inteligência artificial (IA) na produção de trabalhos acadêmicos de graduandos. Analisamos especificamente o contexto da Universidade Federal de Minas Gerais, porém, deixamos aqui alguns apontamentos que acreditamos serem potencialmente úteis para professores universitários em outros contextos. Sabemos que as IAs têm trazido inúmeros benefícios para a ciência, porém, problematizamos o seu uso no processo de escrita acadêmica de estudantes da graduação. Levantamos algumas questões sobre a autonomia e o estilo individual da escrita, assim como a subjetividade desse processo, que parecem se perder com o uso da IA, além da perda dos objetivos de ensino-aprendizagem dos trabalhos acadêmicos em disciplinas universitárias. Mostramos que essa questão é importante devido ao uso que graduandos fazem de ferramentas de IA, que tende a aumentar à medida que essas tecnologias ficam mais conhecidas e mais robustas.
+
+Com esse questionamento em mente, analisamos 17 textos que diagnosticamos como tendo sido produzidos por IA na disciplina Oficina de Língua Portuguesa: Leitura e Produção de Textos, levantando a partir deles as seguintes características: o estilo do trabalho diverge do estilo de escrita do estudante em outras produções; o trabalho não tem qualquer erro de digitação ou gramática; o trabalho utiliza palavras muito específicas que se repetem; o trabalho é superficial em conteúdo, apresenta problemas de coerência ou não se aprofunda no assunto que deve tratar; o trabalho se compõe de frases justapostas, sem apresentar diferentes marcas coesivas; o trabalho define exageradamente os tópicos e subtítulos, sem explicar em detalhes o assunto em questão ou sem aprofundar nas análises e discussões; o trabalho foge ao tema ou tangencia o tema, não cumprindo a tarefa que foi pedida pelo professor; o trabalho apresenta citações e referências incoerentes ou falsas.
+
+Por fim, com base em nossa experiência na Oficina, propusemos estratégias para criar atividades em disciplinas de graduação que exijam participação ativa, interpretação e originalidade dos estudantes, evitando a dependência de ferramentas de IA. Primeiro, propusemos a divulgação de informações e a ampla discussão sobre esse assunto com os estudantes. Em segundo lugar, propusemos atividades capazes de inserir os alunos em contextos únicos, singulares, em que eles precisem produzir trabalhos de forma autoral e argumentativa a partir de dados que não encontram em outros lugares. Para isso, os estudantes devem estar envolvidos na produção do conhecimento e gerar os dados que servirão de base para as suas próprias análises.
+
+Lembramos que a IA já domina o ambiente universitário e que há várias formas de utilizá-la para fazer trabalhos acadêmicos, como os próprios graduandos relatam: a minoria usa para produzir textos completos, outros usam para organizar as ideias iniciais, alguns usam para corrigir e ``melhorar'' os próprios textos, para traduzir, organizar dados, buscar informações etc. Na nova era tecnológica que vivenciamos, o bom uso, ético e adequado, dessas ferramentas, tanto para busca de informações quanto para a produção textual faz parte do letramento acadêmico, indispensável na vivência universitária de qualquer estudante \cite{amaral2025}. Sendo assim, não faz sentido a proibição do uso dessa tecnologia -- uma vez que essa não seria uma abordagem realista, além de ser ingênua -- mas é necessário que os alunos desenvolvam habilidades para fazerem uso delas de forma ética, crítica, inteligente, responsável e transparente, respeitando, além disso, as regras de seu uso estabelecidas pelas instituições das quais participa.
+
+Ainda é possível detectar, em muitos casos, quando o texto ou parte dele foi produzido por IA, mas não sabemos por quanto tempo isso será possível, uma vez que a evolução desses programas para versões cada vez melhores tem sido rápida. Esperamos, no entanto, que os nossos estudantes sejam capazes de usar essas tecnologias como suporte, mas que não se sintam forçados a usar essas tecnologias por não se sentirem competentes para a produção de textos e para a geração de conteúdo. Isso seria um problema grave, pois sem esse domínio, como poderiam avaliar uma produção feita pela IA?
+
+Essas e muitas outras questões, algumas delas apontadas neste artigo, merecem ser acompanhadas, pesquisadas e discutidas. Esperamos que os resultados apresentados aqui possam ajudar professores a refletir sobre alguns aspectos levantados e a encontrar formas de lidar com os avanços da IA no contexto universitário.
+\printbibliography\label{sec-bib}
+% if the text is not in Portuguese, it might be necessary to use the code below instead to print the correct ABNT abbreviations [s.n.], [s.l.]
+%\begin{portuguese}
+%\printbibliography[title={Bibliography}]
+%\end{portuguese}
+
+
+%full list: conceptualization,datacuration,formalanalysis,funding,investigation,methodology,projadm,resources,software,supervision,validation,visualization,writing,review
+\begin{contributors}[sec-contributors]
+\authorcontribution{Ana Alzira Maia Machado Cavalcante}[datacuration,formalanalysis,validation,investigation,methodology,writing]
+\authorcontribution{Pedro Rodrigues Barbosa}[datacuration,investigation,writing]
+\authorcontribution{Vinicius Villani Abrantes}[datacuration,investigation,methodology,validation,writing]
+\authorcontribution{Carla Viana Coscarelli}[conceptualization,investigation,projadm,review]
+\authorcontribution{Luana Lopes Amaral}[conceptualization,investigation,projadm,review]
+\end{contributors}
+
+\begin{funding}
+A equipe de monitoria da Oficina de Língua Portuguesa: Leitura e Produção de Textos é apoiada financeiramente, por meio de bolsas de monitoria, pela Pró-reitoria de Graduação da UFMG e pela diretoria da Faculdade de Letras da UFMG.
+\end{funding}
+
+\section*{Agradecimentos}
+Agradecemos aos estudantes matriculados na disciplina Oficina de Língua Portuguesa: Leitura e Produção de Textos no primeiro semestre de 2024 por gentilmente autorizarem a utilização de suas produções escritas para a realização da pesquisa publicada neste artigo. Agradecemos o apoio financeiro da Pró-reitoria de Graduação da UFMG e da Faculdade de Letras da UFMG.
+
+\begin{dataavailability}
+\txtdataavailability{datanotav} % options: dataavailable, dataonly, databody, datanotav, nodata
+\end{dataavailability}
+
+
+
+
+\end{document}
+
