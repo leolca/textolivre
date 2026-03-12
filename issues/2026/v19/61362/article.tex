@@ -1,0 +1,456 @@
+% !TEX TS-program = XeLaTeX
+% use the following command:
+% all document files must be coded in UTF-8
+\documentclass[english]{textolivre}
+% build HTML with: make4ht -e build.lua -c textolivre.cfg -x -u article "fn-in,svg,pic-align"
+
+\journalname{Texto Livre}
+\thevolume{19}
+%\thenumber{1} % old template
+\theyear{2026}
+\receiveddate{\DTMdisplaydate{2025}{8}{28}{-1}} % YYYY MM DD
+\accepteddate{\DTMdisplaydate{2025}{11}{13}{-1}}
+\publisheddate{\DTMdisplaydate{2026}{3}{11}{-1}}
+\corrauthor{João Carlos Sousa}
+\articledoi{10.1590/1983-3652.2026.61362}
+%\articleid{NNNN} % if the article ID is not the last 5 numbers of its DOI, provide it using \articleid{} commmand 
+% list of available sesscions in the journal: articles, dossier, reports, essays, reviews, interviews, editorial
+\articlesessionname{articles}
+\runningauthor{Sousa} 
+%\editorname{Leonardo Araújo} % old template
+\sectioneditorname{Daniervelin Pereira~\orcid{0000-0003-1861-3609}}
+\layouteditorname{Saula Cecília~\orcid{0009-0006-3069-8480}}
+
+\title{Between algorithms and editorial routines: trust in the UN and European public opinion}
+\othertitle{Entre algoritmos e rotinas editoriais: confiança na ONU e opinião pública europeia}
+% if there is a third language title, add here:
+%\othertitle{Artikelvorlage zur Einreichung beim Texto Livre Journal}
+
+\author[1,2]{João Carlos Sousa~\orcid{0000-0003-3884-2177}\thanks{Email: \href{mailto:joao.carlos.sousa@iscte-iul.pt}{joao.carlos.sousa@iscte-iul.pt}}}
+\affil[1]{Instituto Universitario de Lisboa, Centro de Investigação e Estudos de Sociologia, Lisboa, Portugal.}
+\affil[2]{Instituto Politécnico de Santarém, Escola Superior Agrária de Santarém, Quinta do Galinheiro, Santarém, Portugal.}
+
+\addbibresource{article.bib}
+% use biber instead of bibtex
+% $ biber article
+
+% used to create dummy text for the template file
+\definecolor{dark-gray}{gray}{0.35} % color used to display dummy texts
+\usepackage{lipsum}
+\SetLipsumParListSurrounders{\colorlet{oldcolor}{.}\color{dark-gray}}{\color{oldcolor}}
+
+% used here only to provide the XeLaTeX and BibTeX logos
+\usepackage{hologo}
+
+% if you use multirows in a table, include the multirow package
+\usepackage{multirow}
+
+% provides sidewaysfigure environment
+\usepackage{rotating}
+
+% CUSTOM EPIGRAPH - BEGIN 
+%%% https://tex.stackexchange.com/questions/193178/specific-epigraph-style
+\usepackage{epigraph}
+\renewcommand\textflush{flushright}
+\makeatletter
+\newlength\epitextskip
+\pretocmd{\@epitext}{\em}{}{}
+\apptocmd{\@epitext}{\em}{}{}
+\patchcmd{\epigraph}{\@epitext{#1}\\}{\@epitext{#1}\\[\epitextskip]}{}{}
+\makeatother
+\setlength\epigraphrule{0pt}
+\setlength\epitextskip{0.5ex}
+\setlength\epigraphwidth{.7\textwidth}
+% CUSTOM EPIGRAPH - END
+
+% to use IPA symbols in unicode add
+%\usepackage{fontspec}
+%\newfontfamily\ipafont{CMU Serif}
+%\newcommand{\ipa}[1]{{\ipafont #1}}
+% and in the text you may use the \ipa{...} command passing the symbols in unicode
+
+% LANGUAGE - BEGIN
+% ARABIC
+% for languages that use special fonts, you must provide the typeface that will be used
+% \setotherlanguage{arabic}
+% \newfontfamily\arabicfont[Script=Arabic]{Amiri}
+% \newfontfamily\arabicfontsf[Script=Arabic]{Amiri}
+% \newfontfamily\arabicfonttt[Script=Arabic]{Amiri}
+%
+% in the article, to add arabic text use: \textlang{arabic}{ ... }
+%
+% RUSSIAN
+% for russian text we also need to define fonts with support for Cyrillic script
+% \usepackage{fontspec}
+% \setotherlanguage{russian}
+% \newfontfamily\cyrillicfont{Times New Roman}
+% \newfontfamily\cyrillicfontsf{Times New Roman}[Script=Cyrillic]
+% \newfontfamily\cyrillicfonttt{Times New Roman}[Script=Cyrillic]
+%
+% in the text use \begin{russian} ... \end{russian}
+% LANGUAGE - END
+
+% EMOJIS - BEGIN
+% to use emoticons in your manuscript
+% https://stackoverflow.com/questions/190145/how-to-insert-emoticons-in-latex/57076064
+% using font Symbola, which has full support
+% the font may be downloaded at:
+% https://dn-works.com/ufas/
+% add to preamble:
+% \newfontfamily\Symbola{Symbola}
+% in the text use:
+% {\Symbola }
+% EMOJIS - END
+
+% LABEL REFERENCE TO DESCRIPTIVE LIST - BEGIN
+% reference itens in a descriptive list using their labels instead of numbers
+% insert the code below in the preambule:
+%\makeatletter
+%\let\orgdescriptionlabel\descriptionlabel
+%\renewcommand*{\descriptionlabel}[1]{%
+%  \let\orglabel\label
+%  \let\label\@gobble
+%  \phantomsection
+%  \edef\@currentlabel{#1\unskip}%
+%  \let\label\orglabel
+%  \orgdescriptionlabel{#1}%
+%}
+%\makeatother
+%
+% in your document, use as illustraded here:
+%\begin{description}
+%  \item[first\label{itm1}] this is only an example;
+%  % ...  add more items
+%\end{description}
+% LABEL REFERENCE TO DESCRIPTIVE LIST - END
+
+
+% add line numbers for submission
+%\usepackage{lineno}
+%\linenumbers
+
+\begin{document}
+\maketitle
+
+\begin{polyabstract}
+\begin{abstract}
+This research analyzes the determinants of European public opinion trust in the UN in the context of war and informational disorder. It proposes a model that integrates three dimensions: informational, heuristic, and identity/polarizing, and an institutional indicator: perception of press freedom. The analysis is based on data from Eurobarometer 98.2 and uses PCA and binary logistic regression. The results indicate that trust in the media is the most robust predictor, confirming the importance of credibility heuristics. Radio and press usage have small but consistent effects, while digital media reveal an ambivalent and statistically null impact. Participation in online political debates is positively associated with trust, as well as with the perception of press freedom. The study highlights the link between public opinion, media, and institutional trust, offering guidelines for policies on informational integrity and media literacy.
+
+\keywords{Trust\sep Public opinion\sep Media\sep UN\sep Misinformation}
+\end{abstract}
+
+\begin{portuguese}
+\begin{abstract}
+A presente pesquisa analisa os determinantes da confiança da opinião pública europeia na ONU em contexto de guerra e desordem informacional. Propõe-se um modelo que integra três dimensões: informacional, heurística e identitária/polarizadora, e um indicador institucional: perceção de liberdade da imprensa. A análise baseia-se em dados do Eurobarómetro 98.2, e recorre à ACP e à regressão logística binária. Os resultados indicam que a confiança nos media é o preditor mais robusto, confirmando a importância das heurísticas de credibilidade. O uso de rádio e imprensa tem efeitos pequenos, mas consistentes, enquanto os media digitais revelam impacto ambivalente e estatisticamente nulo. A participação em debates políticos online associa-se positivamente à confiança, bem como à perceção de liberdade da imprensa. O estudo evidencia a articulação entre opinião pública, media e confiança institucional, oferecendo orientações para políticas de integridade informacional e literacia mediática.
+
+\keywords{Confiança\sep Opinião pública\sep Media\sep ONU\sep Desinformação}
+\end{abstract}
+\end{portuguese}
+% if there is another abstract, insert it here using the same scheme
+\end{polyabstract}
+
+\section{Introduction}\label{sec-intro}
+Russia’s invasion of Ukraine in February 2022 intensified pre-existing trends in the European public sphere: the reconfiguration of news distribution \cite{benson2025}, the centrality of algorithmic curation \cite{gandini2025}, declining trust \cite{sousa2022, carvalho2025} and news avoidance \cite{bleyersimon2025}, as well as the professionalization and transnational expansion of manipulation operations \cite{woolley2018, sousa2025} and informational interference \cite{chan2024}. In this environment, trust in multilateral organizations, particularly the United Nations (UN), becomes a barometer of the quality of information signals and the normative performance of democracies under stress, in a hybrid ecosystem contested by professional media and platforms \cite{chadwick2017}.
+
+In sociological terms, institutional trust refers to a relational commitment under vulnerability: citizens attribute capacity, probity, and orientation toward the public interest to an entity with decision-making power \cite{mayer1995, levi2000}. In contexts of high complexity and scarce attention, such a bet operates through credibility heuristics dependent on available mediations, such as the reputation of sources, signs of editorial independence, and verification routines. Communication research shows that agenda-setting, framing, and priming guide attention, interpretive frameworks, and criteria for evaluating actors and policies \cite{mccombs1972, entman1993}. In parallel, platform architectures, including algorithmic feeds, virality dynamics, and participation interfaces, actively shape what becomes visible, credible, and socially rewarded, thereby conditioning both the circulation of information and the formation of political attitudes and trust. In this way, they redistribute visibility and reconfigure the costs of entry into public debate, with ambivalent effects on trust \cite{gillespie2018}. Add to this the differential diffusion of false information, which is faster and more widespread, especially in politics, reshaping the effectively accessible information menu \cite{vosoughi2018}.
+
+Despite this collection, a comparative gap remains in the post-2022 period, at the individual level and in the EU-27 space: there is a lack of an integrated demonstration that, firstly, discriminates between the relative weight of the use of traditional sources (radio and press) and the use of digital sources in the formation of judgments about the UN, controlling trust in the media as a heuristic; secondly, clarifies the meaning of the link between participation in online political debates and trust, informational integration/civic efficacy versus incivility/polarization; and thirdly, addresses the perception of press freedom as an institutional indicator of the informational environment in which these judgments are produced.
+
+This diagnosis raises the research question: to what extent, and through what informational, heuristic, and institutional dimensions, is the media ecology that emerged during the war in Ukraine associated with European trust in the UN? The overall objective is to quantify and interpret these associations, incorporating the perception of press freedom as an indicator of the institutional climate. The purpose is twofold: to refine theoretical explanations about the mechanisms linking the media landscape and trust in the context of war, and to inform policies on informational integrity and media literacy in the European space. Empirically, the analysis focuses on the EU-27 in the winter of 2022-2023 (Standard Eurobarometer 98.2), that is, roughly one year after Russia’s invasion of Ukraine. Rather than an up-to-date snapshot, the article treats this conjuncture as a distinct phase in which Europeans reassessed the UN under conditions of war and informational disorder.
+
+\section{Theoretical framework}
+Public perception and judgment of multilateral organizations, in a context of information overload, cannot be explained simply by the amount of media exposure, but rather by the mediated quality of information, the available credibility shortcuts, and the institutional climate that regulates news circulation.
+
+In the contemporary hybrid ecosystem, such criteria are activated by distinct mediated dimensions and framed by an institutional indicator: the perception of press freedom, which indicates editorial autonomy and checks and balances and, therefore, anchors inferences \cite{norris2011}.
+
+The plausibility of this framework is reinforced by evidence of differential diffusion of false information, which is faster and more widespread, especially in politics, reconfiguring the composition of information that is effectively accessible \cite{giusti2021, barnard2024}. Therefore, it is not enough to measure ``how much'' is consumed, but also who mediates, how it is presented, and under what rules it circulates. This is where the institutional indicator comes in: the perception of press freedom synthesizes expectations about editorial independence and checks and balances, conditioning the efficiency of credibility shortcuts and the impact of media routines \cite{tallberg2019}. This leads to the testable implication that guides the study: varying the source, mediated credibility, and institutional indicators should systematically vary trust in the UN.
+
+\subsection{Institutional trust and legitimacy of international organizations}
+Taking the definition of trust as established, it is necessary to translate the triad of competence, integrity and benevolence to the level of international organizations (IOs). Following Easton’s \citeyear{easton1975} distinction, specific support refers to contingent assessments of performance, whereas diffuse support denotes more stable reservoirs of loyalty. Trust in IOs thus depends not only on perceived outputs, but also on legitimacy, understood as the adequacy of decisions to shared norms and values \cite{suchman1995managing}.
+
+Empirical research shows that citizens’ confidence in organizations such as the UN is shaped by performance evaluations, procedural fairness, and value alignment. People are more likely to trust IOs when they see them as effective in addressing cross-border problems and broadly consistent with their own normative expectations \cite{tallberg2019, dellmuth2020}. Survey-based studies also find that trust in IOs is linked to domestic legitimacy beliefs: individuals who trust national institutions and display higher levels of social trust tend to extend confidence to international organizations, whereas more skeptical citizens are also more critical of IOs \cite{schlipphak2015}. Public trust in the UN thus emerges at the intersection between performance evaluations, patterns of social and political trust, and expectations about global governance.
+
+Within this framework, the triad proposed by \textcite{mayer1995} gains operational relevance: competence as the ability to coordinate aid, monitor violations, and mobilize collective commitments \cite{keohane2009democracy}; integrity as the consistent application of foundational norms; and benevolence as the protection of civilians and mitigation of inequalities. These qualities reduce uncertainty under conditions of asymmetric information, but they are not directly observable by citizens.
+
+Journalistic routines, news framing, and algorithmic mediations structure how signs of competence, integrity, and benevolence are projected and interpreted in the international public sphere \cite{stromback2014, thomass2025}. Trust in the UN, as in the case of the North Atlantic Treaty Organization (NATO) \cite{sousa2024}, derives not only from ``what it does'' but also from how these mediated signals are filtered and made sense of by citizens.
+
+
+\subsection{Informational mediations: agenda, attributes, and evaluation criteria}
+The informational perspective is based on the premise that public opinion is not formed in a vacuum, but through mediation mechanisms that guide attention, relevant attributes, and judgment criteria. Agenda-setting theory has shown that the media do not tell people ``What to think'', but rather what to think about \cite{mccombs1972}. The evolution towards attribute agenda-setting \cite{su2024, almakaty2025} has shown that the selection of attributes shapes the way citizens evaluate actors and institutions \cite{mccombs2000}. Framing, in turn, provides interpretive narratives that structure meaning (``defense of the Charter'' versus ``paralysis of the Council''), while priming activates specific criteria in the evaluation of institutional performance \cite{entman1993, scheufele1999, chong2007}.
+
+The distinction between traditional and digital sources is decisive. Radio and print media, anchored in editorial routines and fact-checking, tend to offer thematic coherence and professional gatekeeping standards, which stabilize evaluation criteria and reinforce substantive attributes of competence and integrity \cite{shoemaker2009}. In digital ecosystems, however, algorithmic curation and engagement metrics redistribute attention in a volatile manner, favoring episodic and competing narratives that can unanchor inferences and amplify noise \cite{silva2025}.
+
+Thus, the informational dimension acts not only through the quantity of exposure, but also through the quality of mediations: the attributes highlighted and the dominant frames determine whether the UN is evaluated by signs of impartiality and effectiveness, or rather by narratives of obstruction and political capture. We therefore test the following hypotheses:
+
+\begin{itemize}
+    \item H1a -- More frequent use of radio and print media is positively associated with trust in the UN, as it favors substantive criteria of competence and integrity.
+    \item H1b -- More frequent use of digital sources has an ambivalent effect on trust in the UN, depending on the balance between professional journalism and engagement incentives that volatilize evaluation criteria.
+\end{itemize}
+
+
+\subsection{Heuristics of credibility and trust in the media}
+In an ecosystem of information overload, where the speed of news exceeds attention spans \cite{fan2021}, citizens find it difficult to process all information flow analytically. They therefore resort to heuristic shortcuts \cite{dale2015} that act as plausibility filters. The MAIN model identifies four central dimensions: modality, agency, interactivity, and navigability, which structure such judgments \cite{sundar2008}. In convergence, persuasion theories distinguish central processing from heuristic processing, demonstrating that peripheral cues, such as verification seals, prominent position in the feed, or social proof metrics, operate as indicators of credibility, reducing cognitive costs and stabilizing inferences \cite{petty1986}.
+
+In this context, trust in the media acquires a particular status, as it functions as a second-order heuristic, a systemic priority on the reliability of the information ecosystem. High levels of trust transfer to content and actors, making public acceptance of attributes of competence, integrity, and benevolence associated with international organizations more likely. Conversely, low levels of trust induce skepticism, idiosyncratic verification, and selective consumption of information, often guided by confirmation bias \cite{tsfati2003, kohring2007}.
+
+In contexts of war, the decisions of the Security Council (UN) are not directly experienced by citizens. They are mediated by credibility indicators dependent on the heuristics attributed to the media system. When these heuristics are robust, the attributes highlighted by the informational dimension -- competence, integrity, and benevolence -- gain evaluative traction; when they are fragile, narratives of double standards and low verifiability proliferate, eroding institutional trust \cite{oreskes2019}.
+
+\begin{itemize}
+    \item H2 -- In conditions of uncertainty and informational noise, higher levels of trust in the media are positively associated with trust in the UN, as they function as a heuristic shortcut that transfers systemic credibility to the substantive attributes activated by news coverage.
+\end{itemize}
+
+\subsection{Identity, polarization, and digital incivility}
+In politicized and emotionally intense environments, the reception of information is structured by identity affiliations and the intensification of affective cleavages. Selective exposure theory shows that citizens tend to seek messages that are congruent with their predispositions, avoiding cognitive dissonance \cite{stroud2010}. When confronted with contrary information, motivated processing mechanisms are activated: dissonant messages are subjected to severe scrutiny, generating counterarguments and reinforcing pre-existing attitudes \cite{taber2006}.
+
+The phenomenon of hostile media adds an additional step, namely that the same content is reinterpreted as biased against the group itself, fueling suspicion and eroding systemic trust \cite{vallone1985}. The most recent research shows that exposure to divergent perspectives does not guarantee moderation; on the contrary, in many cases, it accentuates affective polarization, that is, the intensification of the emotional distance between political groups \cite{iyengar2019, bail2018}. However, under conditions of deliberative exposure, when norms of civility and mutual recognition prevail, there is potential to reinforce tolerance and open space for institutional trust \cite{mutz2006, gidron2020}.
+
+In this context, participation in digital political debates takes on an ambivalent character. On the one hand, it can constitute an arena for deliberative integration, where the circulation of diverse perspectives under rules of civility promotes trust in the UN. On the other hand, it can also degenerate into adversarial confrontation \cite{oliveira2025}, reinforcing exclusive identities and eroding levels of trust.
+
+\begin{itemize}
+    \item H3 -- Participation in digital political debates is associated with trust in the UN, but its theoretical effect is ambivalent: it can reinforce trust when it supports cross-exposure and norms of civility or erode it when it is dominated by incivility and polarizing logic.
+\end{itemize}
+
+
+
+\subsection{Platform architectures and informational disorder}
+The contemporary information ecosystem is based on three structural features: algorithmic curation, virality, and closed messaging apps, whose opacity limits public scrutiny \cite{wolfsfeld2016}. These mechanisms redistribute salience and credibility, privileging the logic of engagement over criteria of verifiability. As empirically demonstrated, fake news circulates more quickly than real news, especially in politics \cite{vosoughi2018}.
+
+The so-called information disorder, which combines misinformation, disinformation, and misinformation, accentuates this vulnerability \cite{wardle2017}. In the European space, coordinated foreign information manipulation and interference (FIMI) operations systematically exploit such vulnerabilities, spreading narratives about the war in Ukraine \cite{eeas2024}.
+
+Added to this is the effect of platform resets: the secondary role of news, the centrality of short videos, and greater opacity in recommendation systems. By redefining the gateways to the public sphere \cite{antonelli2025}, these changes generate heterogeneity of trust and encourage news avoidance \cite{reuters2024}. Thus, the impact of digital platforms is not linear. On the one hand, it can diversify points of view and increase exposure to professional journalism, but it can also volatilize evaluation criteria and favor low-credibility content. Given this context, we define the following hypothesis:
+
+\begin{itemize}
+    \item H4 -- Dependence on digital platforms for access to news is ambivalently associated with trust in the UN, potentially reinforcing it when it increases contact with pluralistic journalism, or alternatively weakening it when algorithmic incentives favor content with low verifiability.
+\end{itemize}
+
+\subsection{Freedom of the press perceived as an institutional indicator}
+The perception of press freedom serves as an institutional indicator of editorial autonomy and the existence of checks and balances. More than an individual indicator, it translates into a collective reading of the media system’s ability to resist political and economic pressures, ensuring routines of verification and professional independence \cite{stromback2014}. When this indicator is strong, citizens infer the existence of a reliable information environment, in which news and analysis circulate under standards of pluralism and scrutiny. Conversely, signs of fragile freedom fuel expectations of capture or instrumentalization, eroding the credibility of the information ecosystem.
+
+At the level of international organizations, independent and pluralistic mediation reinforces the likelihood of positive assessments based on procedures and results. Conversely, mediation marked by pressure or bias stimulates cynical readings of legitimacy and impartiality \cite{dellmuth2020}. Thus, the perception of press freedom acts as a first-order shortcut, signaling the institutional robustness of the media environment and conditioning the interpretation of the attributes of competence, integrity, and benevolence of IOs.
+
+\begin{itemize}
+    \item H5 -- Higher levels of perceived press freedom are associated with greater trust in the UN, functioning as institutional reinforcement that amplifies the effect of trust in the media and stabilizes the available evaluation criteria.
+\end{itemize}
+
+
+\subsection{Integration of dimensions and institutional indicator: the conceptual model}
+The theoretical framework outlined converges on a central proposition that trust in the UN is produced by the confluence of three mediated dimensions --informational, heuristic, and identity/polarizing --modulated by an institutional indicator issued by the perception of press freedom. Each dimension acts in a distinct but interdependent manner. The informational dimension defines which attributes of the UN -- competence, integrity, benevolence -- enter the field of public opinion and with what prominence. The heuristic dimension determines the weight given to these clues, based on a prior trust in the media that reduces cognitive costs. The identity/polarizing dimension filters and reinterprets content according to affiliations, affections, and norms of interaction, sometimes promoting deliberative integration, sometimes accentuating antagonism and incivility. The perception of press freedom, in turn, provides the context indicator, that is, when robust, it anchors inferences and increases the plausibility of assessments based on procedures and results, or antagonistically, when fragile, it anchors criteria, amplifying noise and cynicism.
+
+The logical chain suggests that systematic changes in patterns of media use (traditional vs. digital), trust in the media, participation in digital debates, and perceptions of press freedom should generate predictable variations in trust in the UN. More editorial routines and greater trust reinforce the weight of substantive attributes, or alternatively, competitive digital environments and hostile interactions increase evaluative volatility, and finally, greater perceived press freedom raises the standard of available public credibility.
+
+\subsection{Theoretical synthesis and transition to operationalization}
+The theoretical path undertaken converges on a central thesis based on the premise that trust in the UN results from the interaction between three mediated dimensions (informational, heuristic, and identity/polarizing), articulated by an institutional indicator provided by the perception of press freedom. Each dimension acts on the same evaluation criteria (competence, integrity, benevolence), but through different mechanisms: the informational dimension defines the salience of attributes, the heuristic dimension regulates the weight given to these clues through trust in the media, and the identity/polarizing dimension filters their processing according to affiliations and norms of interaction. Press freedom, in turn, allows inferences to be made about the stability or fragility of public opinion judgments.
+
+%--- codigo da figura 1 ---% 
+\begin{figure}[h!]
+\centering
+\begin{minipage}{.75\textwidth}
+\includegraphics[width=\textwidth]{Imagens/image1.png}
+\caption{Research Model.}
+\label{fig-1}
+\source{Own elaboration.}
+\end{minipage}
+\end{figure}
+
+Figure \ref{fig-1} summarizes the research model. At the center is trust in the UN, surrounded by four media-related dimensions: an informational dimension linked to patterns of news use, a heuristic dimension based on media trust, an identity/polarizing dimension associated with online political engagement, and an institutional shortcut grounded in perceived press freedom. Hypotheses H1a-H5 specify the expected associations between each of these dimensions and trust in the UN. In the next section, this conceptual framework is translated into measurable indicators and tested empirically.
+
+\section{Methodological strategy}
+The specter of war has returned to Europe, but now under a media ecosystem very different from the one that existed throughout the 20th century, dominated by traditional media such as radio or television. With the invasion of Ukraine by Russia in February 2022 and after more than a year of conflict, it is important to understand how European public opinion looks at institutions, such as the UN, which, being multilateral, have a fundamental mediating role in a context of war. To understand how the media contribute to a public opinion that is confident in the role of the UN and its ability to mediate the conflict, we built a methodological strategy that we consider multistage, by making use of: Principal Component Analysis (PCA) and Logistic Regression \cite{carvalho2017, maroco2010}. The analysis does not allow for causal inference or for estimating contextual effects, as country-level variables (media system, government composition and political polarization) are not included.
+
+For the effective operationalization of the research, we consider six groups of variables: trust in the media; use of media; participation in digital social networks; national media freedom; and sociodemographic variables (gender, age, and education) (independent variables); and trust in the UN (dependent variable). The data are drawn from Standard Eurobarometer 98.2 (ZA 7953; fieldwork 12 January-6 February 2023) \cite{europeancommission2023}. This wave, which captures the first year of the war in Ukraine, was deliberately chosen to analyze how, in that specific conjuncture, media use and media trust were associated with Europeans’ confidence in the UN.
+
+Ethical and data protection requirements were ensured by using secondary, fully anonymized micro-data from Standard Eurobarometer 98.2, collected by the European Commission in compliance with the GDPR; no additional ethical approval was required.
+
+\subsection{Participants}
+The sample, which gives empirical support to the research, is made up of 26,461 respondents, distributed across the 27 Member States of the European Union (EU). Periodically, the European Commission, through Eurostat, promotes questionnaires to measure European public opinion on various subjects. The sample is random probabilistic, guaranteeing the representativeness of the existing heterogeneity in the European continent and its citizens. The WEIGHT EU27B (NO UK) weighter was activated to guarantee the proportionality of the 27 national samples.
+
+\subsection{Measures and indicators}
+This section describes the indicators and composite variables used to operate the concepts and dimensions discussed in the literature review.
+
+\subsubsection{Trust in the media}
+Dichotomous items measure trust in the media: 1 - tend not to trust and 2 - tend to trust, after inverting the scales to make them more readable.
+
+\subsubsection{Media use}
+Seven items measure Media use: Television; Radio; Written press; TVNet; Podcast; News on the Internet; and Digital Social Networks. The seven items that measure media use have the following scale: 1 - Never; 2 - Less frequency; 3 - Two to three times a month; 4 - About once a week; 5 - Two or three times a week; 6 - Every day or almost every day. They should be treated as quantitative variables. A Principal Component Analysis (PCA) was performed to identify potential associations (\Cref{tab-1}).
+
+%--- codigo da tabela 1 ---%
+\begin{table}[h!]
+\centering
+\begin{threeparttable}
+\caption{Loadings of the variables in the two dimensions PCA.}\label{tab-1}
+\begin{tabular}{p{5cm} p{2cm} p{2cm}}
+\toprule
+ & \multicolumn{2}{c}{Components} \\
+\cmidrule(lr){2-3}
+ & 1 & 2 \\
+\midrule
+Television & -.340 & .558 \\
+TVNet & \textbf{.697} & .094 \\
+Radio & .152 & \textbf{.765} \\
+Podcast & \textbf{.694} & .067 \\
+Press & .128 & \textbf{.733} \\
+Internet News & \textbf{.778} & .065 \\
+Digital Social Networks & \textbf{.763} & -.134 \\
+\bottomrule
+\end{tabular}
+\source{Own elaboration based on Eurobarometer 2023 (98.2 ZA 7953).}
+\notes{Extraction method: Principal Component Analysis.\newline
+Rotation method: Varimax with Kaiser Normalization.\newline
+a. The rotation converged in 3 iterations.}
+\end{threeparttable}
+\end{table} 
+
+The results of PCA suggest the existence of two dimensions that distinguish the uses of traditional media, on the one hand, and the uses of digital media. Based on PCA, we created a composite indicator of digital media use by aggregating TVNet, podcasts, internet news, and digital social networks ($\alpha = 0.729$), interpreting it as a broad digital pattern rather than evidence about any single format. Although the loadings also suggested a possible ``traditional media'' component combining radio and press, the reliability of this pair was insufficient ($\text{Spearman-Brown} = 0.493$) \cite{kline2011}, so these two variables are kept as separate predictors in the model. Television displays an ambiguous pattern, with a negative loading on the digital component and a moderate loading on the traditional one. Rather than forcing it into any composite, we opted to exclude it from the indices to preserve their internal consistency and interpretability, while acknowledging that television remains central in European news ecologies and deserves specific analysis in future research.
+
+\subsubsection{Political debate on digital social networks}
+The measurement of citizen engagement in online debates on politics is done by two indicators: Keeping Abreast and Have your say. These two items have the following scales: 1 - Totally disagree; 2 - Tends to disagree; 3 - Tends to agree; 4 - Totally agree. The two indicators have a strong reliability ($\text{Spearman-Brown} = 0.810$) \cite{kline2011}.
+
+\subsubsection{Media free from pressure}
+Another indicator related to the media apparatus concerns the freedom of the national media. To that extent, a National Media: Free from Political/Community Pressure indicator is considered, which is measured as follows: 1 - No, not at all; 2 - No, not really; 3 - Yes, to some extent; 4 - Yes after reversal.
+
+\subsubsection{Social and demographic characterization}
+Three variables of social and demographic characterization were considered and play a control role: gender (0-male and 1-female) age and education with 1 - up to 15 years; 2 - 16-19 years, and 3 - 20 years or more.
+
+\subsubsection{Confidence in the UN (dependent variable)}
+Trust in the UN is operationalized as a categorical variable with two categories (``1 - tend not to trust'' and ``2 - tend to trust'', after inversion). Given its dichotomous nature, we estimate a binary logistic regression model. Multilevel logistic models would in principle be suitable for cross-national survey data, but our research questions focus on individual-level mechanisms rather than cross-level interactions, and we do not include country-level covariates. For reasons of parsimony and interpretability, we therefore opted for a single-level logistic model and treat the absence of contextual variables as a limitation.
+
+\subsection{Analysis model}
+%--- codigo da figura 2 ---%
+\begin{figure}[h!]
+\centering
+\begin{minipage}{.80\textwidth}
+\includegraphics[width=\textwidth]{Imagens/image2.png}
+\caption{Analysis Model.}
+\label{fig-2}
+\source{Own elaboration.}
+\end{minipage}
+\end{figure}
+Considering the initial research model, there are some changes to be registered, compared to the initial data, namely with the construction of composite indicators. The final version of the model contains an indicator of trust in the media. In terms of media use, the analysis model integrates radio use, written press uses, and a composite indicator of digital media use resulting from the aggregation of: TVNet; podcast; internet news; digital social networks. Integration into debates and conversations of a political nature on digital social networks is also part of the model, with a composite variable based on two initial items: Keeping Abreast; Have your say. Finally, the perception of freedom of the press in relation to political and other powers also has a place in the analysis model that we are going to test (cf. Figure \ref{fig-2}).
+
+
+
+
+\section{Results}
+In total, the model comprises a total of 26,461 participants from the 27 EU Member States. In Table \ref{tab-2}, we can see some descriptive statistics of the various variables that make up the model, such as the mean and standard deviation, in addition to the reliability statistics of the composite variables.
+
+In this way, it is observed that 52\% of respondents are women. The average age is approximately 50 years (sd 18.69), and it is the youngest who trust the UN the most. Regarding schooling, the participants are on average between 16 and 19 years old (sd 2.41), and the higher the level of education, the greater the probability of trusting the UN.
+
+%--- codigo da tabela 2 ---%
+\begin{table}[h!]
+\centering
+\begin{threeparttable}
+\caption{Descriptive statistics, reliability, and correlation of the variables.}\label{tab-2}
+\scriptsize
+\begin{tabular}{p{2.6cm} p{0.5cm} p{0.5cm} p{0.7cm} p{0.7cm} p{0.7cm} p{0.7cm} p{0.7cm} p{0.7cm} p{0.7cm} p{0.7cm} p{0.5cm}}
+\toprule
+Variables & Mean & SD & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 \\
+\midrule
+1 – Gender$^1$ & .52 &  &  &  &  &  &  &  &  &  &  \\
+2 – Age & 49.99 & 18.69 & .060* &  &  &  &  &  &  &  &  \\
+3 – Education & 2.41 & 0.86 & -.050* & -.501* &  &  &  &  &  &  &  \\
+4 – Trust in media & 1.40 & .49 & .011* & .018* & .074* &  &  &  &  &  &  \\
+5 – Media use – Radio & 4.26 & 1.93 & -.060* & .124* & -.033* & .066* &  &  &  &  &  \\
+6 – Media use – Written Press & 3.18 & 1.93 & -.062* & .197* & .003 & .102** & .328* &  &  &  &  \\
+7 – Media use – Digital Media$^2$ & 3.42 & 1.49 & -.065* & -.545* & .404* & .045* & .133* & .100* & (.729) &  &  \\
+8 – Political debate on digital social networks$^3$ & 2.87 & 0.77 & .007 & -.277* & .149* & .056* & .005 & -.011 & .368* & (.810) &  \\
+9 – Media Free from Pressure & 2.43 & 0.89 & -.008 & -.005 & .053* & .367* & .066* & .142* & .063* & .121* &  \\
+10 – Trust in the UN & 1.55 & .50 & -.018* & -.031* & .158* & .358* & .052* & .079* & .097* & .123* & .246* \\
+\bottomrule
+\end{tabular}
+\source{Own elaboration based on Eurobarometer 2023 (98.2 ZA 7953).}
+\notes{N = 26,681. Reliability is in parentheses. \newline
+$^1$ Gender: 0 – Man. 1 – Women. \newline
+$^2$ TVNet; Podcast; Internet News; Digital Social Networks. \newline
+$^3$ Keeping Abreast; Have your say. \newline
+* $p < .01$}
+\end{threeparttable}
+\end{table}
+
+A minority of 40\% (sd 0.49) of Europeans say they trust the media. Regarding the radio, the average use is 4.26 (sd 1.93), higher than the written press, which registers 3.18 (sd 1.93). Both are positively correlated with trust in the UN, that is, the greater its use, the greater the adherence of citizens to UN action. Still within use, digital media appear to be used relatively similarly to the written press with 3.42 (sd 1.49).
+
+Involvement in debates about politics in digital social networks registers an average of 2.87 (sd 0.77), showing a positive and statistically significant correlation with confidence
+in the UN. The greater the involvement in the debate held in the digital sphere, the higher are the levels of confidence in the UN.
+
+Finally, the perception that the media are targets of political pressure and that of other social groups has an average of 2.43 (sd 0.89), presenting a positive and statistically significant correlation; Greater demand for media freedom translates into higher confidence in the UN.
+
+Concentrating on the dependent variable, trust in the UN, we find that 55\% (sd 0.5) of European respondents trust and adhere to UN action in terms of policy and management of international conflicts. As Table \ref{tab-2} shows, trust in the UN is weakly but significantly correlated with almost all predictors, especially media-related ones, with gender and age as the only exceptions.
+
+The built model has a reasonable ability to correctly categorize the cases according to \textcite{maroco2010} when ciphering its accuracy at around 66.7\%. The Hosmer and Lemeshow test ($X^2(8) = 25.582$, $p<.001$) suggests the existence of statistically significant differences between observed and estimated values. Regarding the assessment of the robustness of the model, it appears that there are statistically significant differences between the model with just the constant and this one with the various independent variables ($X^2(9) = 3338.167$, $p=.001$). Indeed, these three indicators allow us to demonstrate the predictive quality of the model regarding trust in the UN.
+
+%--- codigo da tabela 3 ---%
+\begin{table}[h!]
+\centering
+\begin{threeparttable}
+\caption{Propensity to trust the UN (binary logistic regression).}\label{tab-3}
+\begin{tabular}{p{8cm} p{2.5cm}}
+\toprule
+ & Exp(B) \\
+\midrule
+Gender (man) & 1.110** \\
+Age & 1.000 \\
+Education & 1.427** \\
+Trust in Media & 3.598** \\
+Media use - Radio & 1.028* \\
+Media use - Written Press & 1.031** \\
+Media use - Digital Media & 1.012 \\
+Political debate on digital social networks & 1.232** \\
+Media Free from Pressure & 1.351** \\
+Nagelkerke R$^2$ & .206 \\
+Model Χ$^2$ (9) & 3338.167** \\
+\bottomrule
+\end{tabular}
+\source{Own elaboration based on Eurobarometer 2023 (98.2 ZA 7953).}
+\notes{* $p<.01$ ** $p<.001$}
+\end{threeparttable}
+\end{table}
+
+Table \ref{tab-3} presents a summary of the implemented model and the effect of each of the nine predictor variables on trust in the UN. Among the nine predictors, only two -- age and use of digital media -- do not have a statistically significant effect. All the remaining seven variables show statistically significant and positive effects. In other words, they all build confidence in the UN.
+
+In terms of gender trends, the effect amounts to $\text{Exp}(B)=1.110$, that is, the transition from the male to the female group increases confidence in the UN by around 11\%. The increase in schooling also increases trust in the UN ($\text{Exp}=1.427$), or, in other words, the increase of one year of schooling increases the probability of trusting the UN by about 42.7\%.
+
+Turning to the data on the effect of the media variables that make up the model, we highlight the fact that trust in the media is the one that has the greatest effect and therefore most increases trust in the UN. Specifically, trust in the media ($\text{Exp}=3.598$) increases the probability of trusting the UN by 359.8\%.
+
+The two traditional media, more precisely the use of radio ($\text{Exp}(B)=1.028$) and the written press ($\text{Exp}(B)=1.031$), have relatively small effects of respectively 2.8\% and 3.1\% increase in the odds of trusting the UN. These coefficients are statistically significant but substantively modest, suggesting that radio and press work as weak stabilizing anchors rather than as central drivers of trust. Involvement in debates on social networks has a more relevant effect ($\text{Exp}(B)=1.232$), which translates into a 23.2\% increase in trust in the UN: the greater the political involvement in digital social networks, the greater the probability of trusting the organization. Finally, the perception that national media are free from political and/or other social pressures, captured by the inverted indicator Media Free from Pressure ($\text{Exp}(B)=1.351$), has a statistically significant and substantively relevant effect: each one-point increase in perceived media freedom is associated with a 35.1\% increase in the odds of trusting the UN. In other words, where citizens perceive stronger editorial autonomy, they are more likely to extend confidence to the UN.
+
+\section{Discussion and conclusion}
+The analysis carried out in this article has made it possible to assess how European public opinion forms judgments of trust in the UN in the context of war and informational disorder. The proposed model articulated three dimensions: informational, heuristic, and identity/polarizing, also including the perception of press freedom. The results largely confirm the projected expectations, linking empirical evidence with theory.
+
+The informational dimension proved to be particularly relevant due to the stabilizing role of traditional sources. Hypothesis H1a, which predicted a positive association between radio and press use and trust in the UN, was confirmed. Although the effects are statistically small, they are consistent, indicating that routine contact with legacy journalism still provides a weak but stable anchor for substantive evaluation criteria \cite{devreese2005}. Hypothesis H1b, which anticipated an ambivalent effect of digital media, was confirmed in terms of the absence of significant impact. Exposure on platforms subject to algorithmic curation and engagement incentives did not translate into institutional trust, showing that without credibility heuristics, information abundance remains volatile \cite{bucher2018, vosoughi2018}.
+
+The heuristic dimension operationalized in hypothesis 2 postulated that trust in the media would increase trust in the UN, an expectation that was largely confirmed. With $\text{Exp}(B)=3.598$, this is the strongest predictor in the model. The result confirms that, in conditions of uncertainty, citizens resort to cognitive shortcuts that transfer systemic credibility to multilateral organizations, as argued by \textcite{sundar2008} and heuristic persuasion theories \cite{chaiken1987}. In sociological terms, it reinforces the idea of trust as a relational bet under vulnerability \cite{levi2000, hardin2002trust}. In other words, without a predisposition to trust the media ecosystem, attributes such as competence or integrity lose their evaluation.
+
+In turn, the identity/polarizing dimension presented more complex results. Hypothesis 3 supported ambivalent effects of participation in digital debates: reinforcement of trust (H3+) in deliberative contexts or erosion (H3–) when incivility prevails. The data points to a positive association, confirming only the H3+ scenario. This result challenges literature that emphasizes the risks of affective polarization \cite{stroud2010, bail2018}. A plausible explanation is that, in the case of the UN, digital debates functioned as arenas for civic integration, less subject to ideological/political antagonisms. It may also mean that the corrosive effects of digital polarization affect national institutions while multilateral actors benefit from greater symbolic distance \cite{mutz2006}.
+
+Regarding H4, the evidence shows no statistically significant effect of digital media use ($\text{Exp}(B) = 1.012$). This absence suggests the neutralization of opposing mechanisms, consistent with theoretical ambivalence, but does not allow for a clear conclusion. Two limitations help explain the result: the composite indicator does not distinguish between news websites, social networks, or the quality of the content consumed \cite{gillespie2018}. Future research should disaggregate these digital indicators and measure exposure to professional journalism and contact with low-verifiability content to directly test the observed ambivalence.
+
+Hypothesis 5 established that higher levels of perceived press freedom would increase trust in the UN, functioning as an institutional shortcut. The robust effect of the inverted indicator Media Free from Pressure ($\text{Exp}(B)=1.351$; higher values = greater perceived freedom) confirms this expectation: where editorial autonomy is perceived, citizens tend to trust more. Press freedom thus acts as a normative value and cognitive resource that stabilizes judgements. When strong, it guides evaluations by procedures and results; when weak, it opens space for cynicism \cite{dellmuth2020}.
+
+The global model showed relevant but partial explanatory power ($R^2=0.206$; 66.7\% classification). The mechanisms identified explain an important part of trust in the UN but not all of it. It is plausible that contextual factors, the UN’s concrete performance, national frameworks, and domestic polarization increase the explained variance. In effect the model explains central mechanisms based on observable variables, without attempting to exhaust the complexity of the phenomenon.
+
+From a theoretical point of view, three contributions stand out. First, it demonstrates the usefulness of linking political communication and social psychology (agenda-setting, heuristics, digital ecosystems, polarization) with theories of trust and legitimacy of international organizations. Second, it confirms that the dimensions are not redundant: informational, heuristic, identity, and institutional dimensions contribute in distinct ways. Third, it highlights the centrality of trust in the media, showing that credibility heuristics weigh more than simple exposure.
+
+In terms of implications, trust in the UN is greater when citizens trust the media, when professional journalism maintains stable routines, and when press freedom is perceived as robust. These facts reinforce the importance of investing in media literacy, quality journalism, and institutional protection of the press \cite{norris2011}. It also suggests that communication strategies by organizations such as the UN will be more effective if they circulate in ecosystems capable of enhancing substantive attributes and resisting misinformation. As \textcite{wardle2017} argue, combating misinformation and regulating platforms are not only technical challenges but conditions for public trust in multilateral institutions.
+
+The study is based on cross-sectional data, making causal inference impossible. Measures of digital participation do not distinguish between deliberate and uncivil interactions. National variables, such as government composition or intensity of domestic polarization, were not included. Nevertheless, the consistency of the results supports the central theoretical mechanisms. Comparative studies could assess whether the same mechanisms operate in relation to other international organizations, such as the EU, NATO, or World Health Organization (WHO). Longitudinal approaches would allow us to observe the evolution of trust in the UN in response to contextual changes. Qualitative research could deepen the experience of digital participation, distinguishing deliberate practices from hostile ones.
+
+In summary, the results confirm H1a, H1b, H2 and H5, partially validate H3, and are compatible with H4 as a null effect produced by opposing mechanisms. They show that trust in the UN depends primarily on media trust, supported by stabilizing effects of traditional media, the ambivalent role of digital media, the positive contribution of digital participation, and the institutional pillar of perceived press freedom.
+
+This research contributes to understanding how public opinion, media, and institutional trust are intertwined in the European space. In times of war, disinformation, and pressure on democracy, trust in the UN is not only a reflection of its performance but also a function of the mediated quality of available signals, the credibility attributed to the media ecosystem, and the institutional strength of press freedom. It is at this confluence that the legitimacy of multilateral organizations in public opinion is ultimately decided.
+
+\begin{spacing}{0.95} 
+\printbibliography\label{sec-bib}
+% if the text is not in Portuguese, it might be necessary to use the code below instead to print the correct ABNT abbreviations [s.n.], [s.l.]
+%\begin{portuguese}
+%\printbibliography[title={Bibliography}]
+%\end{portuguese}
+\end{spacing}
+
+
+
+\begin{dataavailability}
+\txtdataavailability{databody} % options: dataavailable, dataonly, databody, datanotav, nodata
+\end{dataavailability}
+
+
+\end{document}
+
