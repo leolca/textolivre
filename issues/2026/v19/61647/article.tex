@@ -1,0 +1,546 @@
+% !TEX TS-program = XeLaTeX
+% use the following command:
+% all document files must be coded in UTF-8
+\documentclass[spanish]{textolivre}
+% build HTML with: make4ht -e build.lua -c textolivre.cfg -x -u article "fn-in,svg,pic-align"
+\usepackage{multirow}
+\usepackage{tabularx}
+
+\journalname{Texto Livre}
+\thevolume{19}
+%\thenumber{1} % old template
+\theyear{2026}
+\receiveddate{\DTMdisplaydate{2025}{9}{8}{-1}} % YYYY MM DD
+\accepteddate{\DTMdisplaydate{2025}{11}{6}{-1}}
+\publisheddate{\DTMdisplaydate{2026}{3}{26}{-1}}
+\corrauthor{Carlos Enrique George-Reyes}
+\articledoi{10.1590/1983-3652.2026.61647}
+%\articleid{NNNN} % if the article ID is not the last 5 numbers of its DOI, provide it using \articleid{} commmand 
+% list of available sesscions in the journal: articles, dossier, reports, essays, reviews, interviews, editorial
+\articlesessionname{articles}
+\runningauthor{George-Reyes, Reyes y Sorhegui-Ortega} 
+%\editorname{Leonardo Araújo} % old template
+\sectioneditorname{Hugo Heredia Ponce~\orcid{0000-0003-3657-1369}}
+\layouteditorname{Saula Cecília~\orcid{0009-0006-3069-8480}}
+
+\title{El uso de ChatGPT para el desarrollo de capacidades, habilidades y satisfacción en los estudiantes universitarios en América Latina}
+\othertitle{O uso do ChatGPT para o desenvolvimento de capacidades, habilidades e satisfação em estudantes universitários na América Latina}
+% if there is a third language title, add here:
+\othertitle{The use of ChatGPT for the development of capacities, skills, and satisfaction in university students in Latin America}
+
+\author[1]{Carlos Enrique George-Reyes~\orcid{0000-0002-2529-9155}\thanks{Email: \href{mailto:cgeorge@upmh.edu.mx}{cgeorge@upmh.edu.mx}}}
+\author[2]{Gary Reyes~\orcid{0000-0002-3711-1906}\thanks{Email: \href{mailto:gxreyesz@ube.edu.ec}{gxreyesz@ube.edu.ec}}}
+\author[2]{Rafael Antonio Sorhegui-Ortega~\orcid{0000-0001-7882-5246}\thanks{Email: \href{mailto:rasorheguio@ube.edu.ec}{rasorheguio@ube.edu.ec}}}
+\affil[1]{Universidad Politécnica Metropolitana de Hidalgo, Tolcayuca, México.}
+\affil[2]{Universidad Bolivariana del Ecuador, Durán, Ecuador.}
+
+
+\addbibresource{article.bib}
+% use biber instead of bibtex
+% $ biber article
+
+% used to create dummy text for the template file
+\definecolor{dark-gray}{gray}{0.35} % color used to display dummy texts
+\usepackage{lipsum}
+\SetLipsumParListSurrounders{\colorlet{oldcolor}{.}\color{dark-gray}}{\color{oldcolor}}
+
+% used here only to provide the XeLaTeX and BibTeX logos
+\usepackage{hologo}
+
+% if you use multirows in a table, include the multirow package
+\usepackage{multirow}
+
+% provides sidewaysfigure environment
+\usepackage{rotating}
+
+% CUSTOM EPIGRAPH - BEGIN 
+%%% https://tex.stackexchange.com/questions/193178/specific-epigraph-style
+\usepackage{epigraph}
+\renewcommand\textflush{flushright}
+\makeatletter
+\newlength\epitextskip
+\pretocmd{\@epitext}{\em}{}{}
+\apptocmd{\@epitext}{\em}{}{}
+\patchcmd{\epigraph}{\@epitext{#1}\\}{\@epitext{#1}\\[\epitextskip]}{}{}
+\makeatother
+\setlength\epigraphrule{0pt}
+\setlength\epitextskip{0.5ex}
+\setlength\epigraphwidth{.7\textwidth}
+% CUSTOM EPIGRAPH - END
+
+% to use IPA symbols in unicode add
+%\usepackage{fontspec}
+%\newfontfamily\ipafont{CMU Serif}
+%\newcommand{\ipa}[1]{{\ipafont #1}}
+% and in the text you may use the \ipa{...} command passing the symbols in unicode
+
+% LANGUAGE - BEGIN
+% ARABIC
+% for languages that use special fonts, you must provide the typeface that will be used
+% \setotherlanguage{arabic}
+% \newfontfamily\arabicfont[Script=Arabic]{Amiri}
+% \newfontfamily\arabicfontsf[Script=Arabic]{Amiri}
+% \newfontfamily\arabicfonttt[Script=Arabic]{Amiri}
+%
+% in the article, to add arabic text use: \textlang{arabic}{ ... }
+%
+% RUSSIAN
+% for russian text we also need to define fonts with support for Cyrillic script
+% \usepackage{fontspec}
+% \setotherlanguage{russian}
+% \newfontfamily\cyrillicfont{Times New Roman}
+% \newfontfamily\cyrillicfontsf{Times New Roman}[Script=Cyrillic]
+% \newfontfamily\cyrillicfonttt{Times New Roman}[Script=Cyrillic]
+%
+% in the text use \begin{russian} ... \end{russian}
+% LANGUAGE - END
+
+% EMOJIS - BEGIN
+% to use emoticons in your manuscript
+% https://stackoverflow.com/questions/190145/how-to-insert-emoticons-in-latex/57076064
+% using font Symbola, which has full support
+% the font may be downloaded at:
+% https://dn-works.com/ufas/
+% add to preamble:
+% \newfontfamily\Symbola{Symbola}
+% in the text use:
+% {\Symbola }
+% EMOJIS - END
+
+% LABEL REFERENCE TO DESCRIPTIVE LIST - BEGIN
+% reference itens in a descriptive list using their labels instead of numbers
+% insert the code below in the preambule:
+%\makeatletter
+%\let\orgdescriptionlabel\descriptionlabel
+%\renewcommand*{\descriptionlabel}[1]{%
+%  \let\orglabel\label
+%  \let\label\@gobble
+%  \phantomsection
+%  \edef\@currentlabel{#1\unskip}%
+%  \let\label\orglabel
+%  \orgdescriptionlabel{#1}%
+%}
+%\makeatother
+%
+% in your document, use as illustraded here:
+%\begin{description}
+%  \item[first\label{itm1}] this is only an example;
+%  % ...  add more items
+%\end{description}
+% LABEL REFERENCE TO DESCRIPTIVE LIST - END
+
+
+% add line numbers for submission
+%\usepackage{lineno}
+%\linenumbers
+
+
+\AtBeginBibliography{ \setlength{\itemsep}{12pt} \setlength{\parsep}{0pt} }
+
+\begin{document}
+\maketitle
+
+\begin{polyabstract}
+\begin{abstract}
+La inteligencia artificial generativa, como ChatGPT, está transformando los entornos de aprendizaje universitarios; sin embargo, existe escasa evidencia empírica sobre su impacto en la percepción de capacidades, el desarrollo de habilidades académicas y la satisfacción estudiantil en América Latina, una región caracterizada por desigualdades en el acceso tecnológico, lo que justifica la necesidad de investigaciones que analicen estos vínculos. El presente estudio tuvo como objetivo examinar cómo el uso de ChatGPT influye en dichas variables en estudiantes universitarios de Ecuador, Colombia, Chile y México, integrando el modelo de aceptación tecnológica como marco conceptual. Para ello, se realizó una investigación cuantitativa con diseño transversal y modelado de ecuaciones estructurales mediante PLS-SEM, que contó con la participación de 2357 estudiantes que respondieron un cuestionario validado. Los resultados evidenciaron que el uso frecuente de ChatGPT ejerce un efecto positivo elevado sobre la percepción de capacidades y un impacto moderado en el desarrollo de habilidades y la satisfacción con la experiencia tecnológica, mientras que la percepción de capacidades actuó como un mediador clave; todas las relaciones propuestas resultaron estadísticamente significativas. En definitiva, ChatGPT se consolida como un recurso pedagógico que potencia competencias cognitivas y la satisfacción estudiantil, aunque se recomienda promover su uso crítico y reflexivo.
+
+\keywords{ChatGPT\sep Inteligencia Artificial Generativa\sep Educación superior\sep Percepción de capacidades\sep Satisfacción}
+\end{abstract}
+
+\begin{portuguese}
+\begin{abstract}
+A inteligência artificial generativa, como o ChatGPT, está transformando os ambientes de aprendizagem universitários; no entanto, há pouca evidência empírica sobre seu impacto na percepção de capacidades, no desenvolvimento de habilidades acadêmicas e na satisfação estudantil na América Latina, uma região caracterizada por desigualdades no acesso tecnológico, o que justifica a necessidade de pesquisas que analisem esses vínculos. O presente estudo teve como objetivo examinar como o uso do ChatGPT influencia essas variáveis em estudantes universitários do Equador, Colômbia, Chile e México, integrando o modelo de aceitação tecnológica como referencial conceitual. Para isso, realizou-se uma pesquisa quantitativa de corte transversal com modelagem de equações estruturais por meio do PLS-SEM, com a participação de 2357 estudantes que responderam a um questionário validado. Os resultados mostraram que o uso frequente do ChatGPT exerce um efeito positivo elevado sobre a percepção de capacidades e um impacto moderado no desenvolvimento de habilidades e na satisfação com a experiência tecnológica, enquanto a percepção de capacidades atuou como mediador-chave; todas as relações propostas foram estatisticamente significativas. Em suma, o ChatGPT consolida-se como um recurso pedagógico que potencializa competências cognitivas e a satisfação estudantil, embora se recomende promover seu uso crítico e reflexivo.
+
+\keywords{ChatGPT\sep Inteligência Artificial Generativa\sep Ensino superior\sep Percepção de capacidades\sep Satisfação}
+\end{abstract}
+\end{portuguese}
+
+\begin{english}
+\begin{abstract}
+Generative artificial intelligence, such as ChatGPT, is transforming university learning environments; however, there is little empirical evidence on its impact on the perception of capacities, the development of academic skills, and student satisfaction in Latin America, a region characterized by inequalities in technological access, which justifies the need for studies analyzing these links. The present study aimed to examine how the use of ChatGPT influences these variables in university students from Ecuador, Colombia, Chile, and Mexico, integrating the technology acceptance model as a conceptual framework. To this end, a quantitative, cross-sectional study was conducted using structural equation modeling with PLS-SEM, involving 2357 students who responded to a validated questionnaire. The results showed that frequent use of ChatGPT exerts a strong positive effect on the perception of capacities and a moderate impact on the development of skills and satisfaction with the technological experience, while the perception of capacities acted as a key mediator; all proposed relationships were statistically significant. Ultimately, ChatGPT is consolidated as a pedagogical resource that enhances cognitive competencies and student satisfaction, although its critical and reflective use is recommended.
+
+\keywords{ChatGPT\sep Generative Artificial Intelligence\sep Higher education\sep Perception of capacities\sep Satisfaction}
+\end{abstract}
+\end{english}
+% if there is another abstract, insert it here using the same scheme
+\end{polyabstract}
+
+\section{Introducción}\label{sec-intro}
+El desarrollo de la inteligencia artificial (IA) está protagonizando una transformación de la educación superior \cite{ansari2024, enang2025} debido a que se tiene la perspectiva de que puede ofrecer soluciones que transfiguran los procesos de enseñanza, aprendizaje y evaluación \cite{ali2024, fernandezmiranda2024}. En particular, modelos de lenguaje natural como ChatGPT destacan por su capacidad de generar materiales y contenidos de diversos tipos mediante la elaboración de una instrucción comúnmente llamada prompt \cite{elbanna2024, garcialopez2025}. 
+
+El uso de ChatGPT se asocia con diversos propósitos académicos, que van desde la frecuencia con la que el estudiantado emplea la herramienta para resolver problemas, generar contenido o apoyar la realización de tareas escolares \cite{habibi2023}, pasando por el fortalecimiento de capacidades y la valoración de su eficacia en actividades educativas \cite{rahman2023}, hasta el desarrollo de habilidades cognitivas, comunicativas y analíticas que se potencian mediante la interacción con la inteligencia artificial generativa \cite{fu2025}.
+
+El uso de esta herramienta también se ha asociado con el desarrollo de capacidades relacionadas con el logro del aprendizaje autónomo y la mejora en el acceso a la información \cite{georgereyes2025}, la generación de ideas innovadoras \cite{ibrahimi2024}, así como con aspectos favorables relacionados con su utilidad para mejorar los aprendizajes y la facilidad para utilizarla. Lo anterior promueve intenciones de uso positivas \cite{foroughi2025}, de igual forma se ha confirmado que la capacidad de respuesta percibida al utilizar ChatGPT es un factor clave en la motivación para el aprendizaje y la satisfacción \cite{kimetal2025}.
+
+Aunque se reconoce que este tipo de tecnologías pueden fortalecer competencias críticas y facilitar la autogestión del conocimiento \cite{rivadeneira2025}, todavía existe una limitada comprensión de cómo los estudiantes perciben su uso y de qué manera sus percepciones inciden en el desarrollo de sus habilidades de aprendizaje \cite{malik2025}, así como de la satisfacción, la confianza y la valoración positiva asociada a su uso \cite{pabreja2024}.
+
+En este escenario, la percepción de capacidades y el desarrollo de habilidades pueden actuar como mediadores en la relación entre el uso de ChatGPT y la satisfacción estudiantil \cite{alshwiah2024, conglem2025}. No obstante, la literatura académica aún presenta resultados contradictorios \cite{chellappa2024}, ya que algunos estudios destacan impactos positivos en la autonomía, el desarrollo y el compromiso académico \cite{alsofyani2025, shuhaiber2025}, y en la satisfacción derivada de su uso \cite{rehman2024}. Por otra parte, otros estudios alertan sobre riesgos como la superficialidad en la comprensión conceptual, la dependencia excesiva y la pérdida de pensamiento crítico \cite{dahri2025a, monib2025, yankouskaya2025}.
+
+Otros estudios sostienen que la aceptación positiva para utilizar la herramienta fortalece la autoeficacia y la motivación intrínseca de los estudiantes \cite{almamary2024, almulla2024, almamary2025}, lo que incrementa su uso y generan un entorno propicio para desarrollar competencias cognitivas y comunicativas \cite{ma2025, kim2025}. En este sentido, una valoración positiva de las capacidades de ChatGPT puede vincularse con un mayor desarrollo de habilidades \cite{almogren2024, shah2024}, del mismo modo, se afirma que la satisfacción obtenida a partir del uso de tecnologías basadas en IA generativa constituye un factor clave para garantizar la continuidad en su adopción \cite{xing2024, chang2025}.
+
+Asimismo, algunos estudios han profundizado en la comprensión de los factores que explican la adopción y percepción de la IA en entornos educativos. \textcite{lucas2025} destacan que la preparación docente y la competencia digital constituyen predictores para la integración efectiva de la IA en la enseñanza, señalando que la formación inicial del profesorado aún presenta un enfoque superficial y técnico, lo que limita su potencial pedagógico. De igual forma, \textcite{arroyosagasta2025} evidencian que las actitudes estudiantiles hacia la IA se encuentran mediadas por el nivel de conciencia tecnológica y la confianza institucional, lo que refuerza la necesidad de una alfabetización ética y crítica en el uso de herramientas como ChatGPT.
+
+Por otra parte, un marco de referencia para evaluar las percepciones relacionadas con la aceptación de ChatGPT es el Modelo de la Aceptación Tecnológica (TAM), propuesto por \textcite{davis1989} y ampliado por \textcite{chau1996}, este es muy utilizado para explicar la adopción de innovaciones tecnológicas en entornos educativos y laborales, diversos autores lo han empleado para conocer la aceptación de herramientas de IA \cite{montag2025, yudhistyra2025} debido a que plantea que la utilidad y la facilidad de uso percibida son los principales determinantes de la intención de uso y la actitud favorable hacia las tecnologías \cite{saif2024}. 
+
+Por otra parte, el modelado de ecuaciones estructurales ha sido elegido como un método de evaluación de la satisfacción en el uso de la IA generativa \cite{suprapto2025}, así como en investigaciones sobre adopción tecnológica \cite{jasrai2025}, ya que permite analizar simultáneamente múltiples variables latentes, identificar relaciones directas e indirectas entre constructos y determinar el peso relativo de cada factor en la intención y motivación de los usuarios \cite{parveen2024}.
+
+Al respecto, algunos estudios evidencian que la utilidad percibida, la facilidad de uso y la autonomía son los principales impulsores en la adopción docente de ChatGPT \cite{zhao2024, dahri2025b}, estudios realizados con este método revelan que en universidades privadas la adopción de ChatGPT depende de facilidad y utilidad percibida, mientras en públicas influye el conocimiento previo \cite{howlader2025}, por otra parte, los factores sociales, la autoeficacia en IA, la ceguera sociotécnica y la ética influyen significativamente en la intención de uso de la herramienta \cite{uludag2025}.
+
+En este estudio, se decidió analizar cuatro constructos relacionados con la utilización del ChatGPT en la educación superior: el uso de ChatGPT, la percepción de capacidades, el desarrollo de habilidades y la satisfacción percibida por los usuarios. Estas relaciones y sus hipótesis pueden observarse en la Figura \ref{fig-1}, la primera menciona que: el uso de ChatGPT influye positivamente en la percepción que los estudiantes tienen sobre las capacidades de esta herramienta en contextos educativos (H1), la segunda, que el uso de ChatGPT tiene un efecto positivo en el desarrollo de habilidades académicas y de aprendizaje autónomo (H2), y que impacta de forma positiva en la satisfacción general de los estudiantes con las herramientas tecnológicas aplicadas a su formación (H3).
+
+A su vez, la percepción de capacidades asociadas al uso de ChatGPT influye positivamente en el desarrollo de habilidades de aprendizaje por parte de los estudiantes universitarios (H4), mientras que la percepción de capacidades derivadas del uso de ChatGPT tiene un efecto positivo sobre la satisfacción de los estudiantes con el uso de esta tecnología (H5), por último, el desarrollo de habilidades mediado por el uso de ChatGPT impacta de forma positiva en la satisfacción percibida de los estudiantes universitarios (H6).
+
+%--- codigo da figura 1 ---%
+\begin{figure}[h!]
+\centering
+\begin{minipage}{.75\textwidth}
+\includegraphics[width=\textwidth]{Imagens/image1.png}
+\caption{Constructos e hipótesis del estudio.}
+\label{fig-1}
+\source{Elaboración propia.}
+\end{minipage}
+\end{figure}
+
+
+\section{Método}
+\subsection{Diseño del estudio}
+El diseño metodológico se enmarca en un enfoque descriptivo-explicativo, orientado a analizar la influencia del uso de Chat GPT con relación a la percepción de capacidades, el desarrollo de habilidades y la satisfacción de los estudiantes universitarios. Se adoptó un enfoque cuantitativo fundamentado en el modelado de ecuaciones estructurales mediante mínimos cuadrados parciales (PLS-SEM), técnica reconocida por su idoneidad para estimar relaciones complejas entre variables latentes y proporcionar resultados estadísticamente robustos en contextos exploratorios \cite{hair2019}. 
+
+\subsection{Análisis realizados}
+Para analizar la información, se utilizó el software SmartPLS 4.0, el cual permite estimar modelos complejos sin requerir distribuciones normales de los datos y ha sido empleado en estudios de adopción de tecnologías emergentes \cite{hair2022}. La evaluación incluyó dos etapas: validación del modelo de medición (cargas factoriales, fiabilidad compuesta, AVE) y validez discriminante (Fornell-Larcker y HTMT y análisis del modelo estructural, estimando coeficientes de trayectoria, R$^2$, Q$^2$ predictivo y significancia de las relaciones propuestas).
+
+\subsection{Población y muestra}
+El estudio surge del proyecto internacional \textit{Percepción de los estudiantes sobre ChatGPT}, liderado por la Facultad de Administración Pública de la Universidad de Liubliana (Eslovenia) \cite{ravselj2025}. A partir del dataset resultante después de la aplicación del cuestionario se seleccionó información correspondiente a estudiantes de Ecuador, Colombia, Chile y México \cite{ravselj2024}. Este enfoque regional permitió generar evidencia empírica centrada en las prácticas y percepciones estudiantiles respecto al uso de ChatGPT en la educación superior latinoamericana. La distribución, que puede observarse en la Tabla \ref{tab-1}, refleja una diversidad geográfica suficiente para realizar comparaciones entre contextos educativos.
+
+%--- codigo da tabela 1 ---%
+\begin{table}[h!]
+\centering
+\begin{threeparttable}
+\caption{Descripción de la muestra.}\label{tab-1}
+\begin{tabular}{p{4cm} p{2cm} p{2cm}}
+\toprule
+País & Frecuencias & \% del Total \\
+\midrule
+Chile & 440 & 18.7 \% \\
+Colombia & 109 & 4.6 \% \\
+Ecuador & 1238 & 52.5 \% \\
+México & 570 & 24.2 \% \\
+\addlinespace
+Tipo de Universidad & Frecuencias & \% del Total \\
+Privada & 637 & 27.0 \% \\
+Pública & 1720 & 73.0 \% \\
+\addlinespace
+Estudios actuales & Frecuencias & \% del Total \\
+Doctorado & 36 & 1.5 \% \\
+Postgraduado & 81 & 3.4 \% \\
+Licenciatura & 2240 & 95.0 \% \\
+\addlinespace
+Método de enseñanza & Frecuencias & \% del Total \\
+Mixto & 728 & 30.9 \% \\
+En línea & 158 & 6.7 \% \\
+Tradicional & 1471 & 62.4 \% \\
+\addlinespace
+Experiencia con ChatGPT & Frecuencias & \% del Total \\
+Mala & 54 & 2.3 \% \\
+Buena & 1196 & 50.7 \% \\
+Neutral & 749 & 31.8 \% \\
+Muy mala & 15 & 0.6 \% \\
+Muy buena & 343 & 14.6 \% \\
+\bottomrule
+\end{tabular}
+\source{Datos obtenidos de estudiantes universitarios de Ecuador, Colombia, Chile y México.}
+\end{threeparttable}
+\end{table}
+
+\subsection{Ética}
+La participación de los estudiantes fue informada, consentida, anónima y voluntaria, los procedimientos de aplicación cumplieron con las disposiciones de la Declaración de Helsinki para la investigación con participantes humanos \cite{worldmedicalassociation2024} y fueron aprobados por los comités éticos de varias instituciones de educación superior involucradas \cite{covid19socialsciencelab2024}.
+
+\subsection{Instrumento}
+Aunque el instrumento original contenía 11 secciones temáticas, este análisis se enfocó únicamente en cuatro: el primero para medir el uso de ChatGPT, se partió de un conjunto de nueve ítems numerados del Q18A al Q18I, de los cuales se seleccionaron cinco (Q18a, Q18b, Q18c, Q18d y Q18f) debido a que presentaron cargas factoriales superiores a 0.70, tal como recomienda \cite{hair2019}. En el caso de la percepción de capacidades, se consideraron los ítems comprendidos entre Q19A y Q19I, y se incluyeron los indicadores Q19h, Q19i, Q19j y Q27h, seleccionados por cumplir con los parámetros de fiabilidad estadística. 
+
+Asimismo, el desarrollo de habilidades se midió a partir de los reactivos Q28A a Q28I, de los cuales se eligieron cuatro (Q28a, Q28c, Q28d y Q28e) por superar el umbral recomendado de consistencia interna. La variable satisfacción se evaluó con cuatro reactivos (Q24a, Q24e, Q24f y Q24g), todos ellos con cargas superiores al criterio establecido. Se utilizó una escala Likert de cinco puntos, desde ``totalmente en desacuerdo'' hasta ``totalmente de acuerdo'', en la Tabla \ref{tab-2} se presentan los ítems utilizados.
+
+%--- codigo da tabela 2 ---%
+\begin{table}[h!]
+\centering
+\begin{threeparttable}
+\caption{Variables de estudio e ítems.}\label{tab-2}
+\begin{tabular}{p{2.5cm} p{1cm} p{8cm}}
+\toprule
+Dimensiones & Código & Ítem \\
+\midrule
+Uso de ChatGPT & Q18a & Escritura académica (trabajos de escritura, trabajos de investigación...) \\
+ & Q18b & Redacción profesional (redacción de correos electrónicos) \\
+ & Q18c & Escritura creativa (generación de historias, poemas...) \\
+ & Q18d & Revisión (recibir comentarios sobre la escritura) \\
+ & Q18e & Lluvia de ideas (generación de nuevas ideas) \\
+ \addlinespace
+
+Capacidades & Q19a & Comprender las indicaciones dadas en lenguaje humano. \\
+ & Q19b & Responder en lenguaje humano. \\
+ & Q19h & Facilitar el aprendizaje tradicional (en un aula). \\
+ & Q19i & Facilitar el aprendizaje en línea (utilizando tecnologías digitales). \\
+\addlinespace
+ 
+Habilidades & Q28a & Dominio de la escritura académica. \\
+ & Q28c & Dominio de mecanografía. \\
+ & Q28d & Dominio del idioma nativo. \\
+ & Q28e & Dominio de idiomas extranjeros. \\
+ \addlinespace
+ 
+Satisfacción & Q24a & Encuentro que ChatGPT es más útil que Google u otros motores de búsqueda web. \\
+ & Q24e & Estoy satisfecho con el nivel de asistencia brindado por ChatGPT. \\
+ & Q24f & Estoy satisfecho con la calidad de la información proporcionada por ChatGPT. \\
+ & Q24g & Estoy satisfecho con la exactitud de la información proporcionada por ChatGPT. \\
+\bottomrule
+\end{tabular}
+\source{Elaboración propia.}
+\end{threeparttable}
+\end{table}
+
+\subsection{Análisis del modelo de medida: Fiabilidad y validez del constructo}
+Para realizar el análisis de fiabilidad y validez del modelo de medición se aplicaron el Alfa de Cronbach, la fiabilidad compuesta (rho\_a y rho\_c), la varianza extraída media (AVE), las cargas factoriales y los índices de inflación de la varianza (VIF) \cite{hair2022}. Los resultados mostrados en la Tabla \ref{tab-3} indican que todos los valores del Alfa de Cronbach superaron el umbral recomendado de 0.70 \cite{devellis2021}, con registros que oscilaron entre 0.841 y 0.880. Asimismo, la fiabilidad compuesta (rho\_c) se situó en un rango de 0.894 a 0.913, lo que confirma una consistencia interna robusta \cite{fornell1981}.
+
+La validez convergente se verificó mediante la AVE, cuyos valores se situaron entre 0.676 y 0.693, superando ampliamente el criterio mínimo de 0.50 recomendado por \cite{aburumman2023}. Este resultado indica que cada constructo es capaz de explicar más del 67\% de la varianza de sus indicadores, garantizando una adecuada relación conceptual entre los ítems y su factor latente. Además, las cargas factoriales presentaron valores comprendidos entre 0.720 y 0.892, lo que confirma un peso estadísticamente significativo en la medición de los constructos \cite{henseler2015}. La significancia de estas cargas fue respaldada por t-values que oscilaron entre 75.722 y 131.229, superando el umbral crítico de 1.96 para un nivel de confianza del 95\% \cite{cheung2024}.
+
+Por último, se analizaron los valores VIF con el propósito de identificar posibles problemas de colinealidad interna entre los indicadores, todos los ítems mostraron valores comprendidos entre 1.367 y 3.358, muy por debajo del umbral crítico de 5, lo que descarta riesgos de multicolinealidad y confirma la estabilidad de las estimaciones. Los resultados anteriores indican una fiabilidad y validez convergente del modelo de medición, por lo que puede ser utilizado para aplicarlo en los siguientes análisis estructurales.
+
+%--- codigo da tabela 3 ---%
+\begin{table}[h!]
+\centering
+\small
+\begin{threeparttable}
+\caption{Fiabilidad y validez convergente.}\label{tab-3}
+\begin{tabular}{
+p{1.5cm} 
+p{1.3cm} 
+p{1cm} 
+p{1cm} 
+p{1.1cm} 
+p{1.2cm} 
+p{1.3cm} 
+p{1.3cm} 
+p{1.2cm}}
+\toprule
+Factores & Indicadores & Cargas & VIF & t values & Alfa de \newline Cronbach & Fiabilidad \newline compuesta \newline rho\_a & Fiabilidad \newline compuesta \newline rho\_c & Varianza extraída media AVE \\
+\midrule
+
+\multirow{5}{=}{Uso de ChatGPT}
+& Q18a & 0.832 & 2.044 & 101.174 & \multirow{5}{*}{0.880} & \multirow{5}{*}{0.884} & \multirow{5}{*}{0.913} & \multirow{5}{*}{0.676} \\
+& Q18b & 0.831 & 3.200 & 97.712 \\
+& Q18c & 0.799 & 3.358 & 81.491 \\
+& Q18d & 0.789 & 1.392 & 80.867 \\
+& Q18e & 0.859 & 2.099 & 131.229 \\
+
+\midrule
+
+\multirow{4}{=}{Capacidades de ChatGPT}
+& Q19a & 0.806 & 3.107 & 75.722 & \multirow{4}{*}{0.854} & \multirow{4}{*}{0.866} & \multirow{4}{*}{0.900} & \multirow{4}{*}{0.693} \\
+& Q19b & 0.872 & 2.501 & 129.919 \\
+& Q19h & 0.877 & 2.234 & 128.965 \\
+& Q19i & 0.770 & 2.172 & 94.998 \\
+
+\midrule
+
+\multirow{4}{=}{Desarrollo de habilidades}
+& Q28a & 0.810 & 1.953 & 79.024 & \multirow{4}{*}{0.841} & \multirow{4}{*}{0.842} & \multirow{4}{*}{0.894} & \multirow{4}{*}{0.678} \\
+& Q28c & 0.814 & 1.849 & 77.808 \\
+& Q28d & 0.857 & 2.354 & 108.141 \\
+& Q28e & 0.811 & 1.367 & 84.280 \\
+
+\midrule
+
+\multirow{4}{=}{Satisfacción}
+& Q24a & 0.720 & 1.741 & 79.024 & \multirow{4}{*}{0.847} & \multirow{4}{*}{0.850} & \multirow{4}{*}{0.898} & \multirow{4}{*}{0.689} \\
+& Q24e & 0.848 & 1.900 & 77.808 \\
+& Q24f & 0.892 & 2.236 & 108.141 \\
+& Q24g & 0.849 & 1.775 & 84.280 \\
+
+\bottomrule
+\end{tabular}
+\source{Elaboración propia a partir de los resultados obtenidos del software Smart PLS 4.}
+\end{threeparttable}
+\end{table}
+
+\section{Resultados}
+\subsection{Evaluación de la validez discriminante}
+Para realizar este análisis se utilizó el criterio HTMT (Heterotrait-Monotrait Ratio of Correlations), que permite determinar el grado en que un constructo se diferencia conceptualmente de los demás, comparando la media de las correlaciones entre indicadores de distintos factores con la media de las correlaciones dentro de cada factor \cite{roemer2021}. Como se muestra en la Tabla \ref{tab-4}, todos los valores fueron inferiores al umbral recomendado de 0.85 por \textcite{henseler2015} lo que indica una separación adecuada entre los constructos. Los índices oscilaron entre 0.467 y 0.800. La relación más alta se observó entre Uso de ChatGPT y Percepción de Capacidades (0.800), mientras que la más baja correspondió a Desarrollo de Habilidades y Satisfacción (0.467).
+
+%--- codigo da tabela 4---%
+\begin{table}[h!]
+\centering
+\small
+\begin{threeparttable}
+\caption{Validez discriminante, criterio (htmt).}\label{tab-4}
+\begin{tabular}{p{3.5cm} p{2cm} p{2cm} p{3.5cm} p{1.5cm}}
+\toprule
+ & Uso ChatGPT & Capacidades & Desarrollo de habilidades & Satisfacción \\
+\midrule
+Uso ChatGPT \\
+Capacidades & 0.800 \\
+Desarrollo de habilidades & 0.683 & 0.583 \\
+Satisfacción & 0.619 & 0.600 & 0.467 \\
+\bottomrule
+\end{tabular}
+\source{Elaboración propia a partir de los resultados obtenidos del software Smart PLS 4.}
+\end{threeparttable}
+\end{table}
+
+Para consolidar la validez discriminante del modelo, se aplicó el criterio de \textcite{fornell1981}, el cual establece que la raíz cuadrada de la varianza extraída media (AVE) de cada constructo debe ser superior a las correlaciones que mantiene con los demás factores. Como se observa en la Tabla \ref{tab-5}, todas las raíces cuadradas de la AVE (valores diagonales) fueron mayores que las correlaciones inter-constructos (valores fuera de la diagonal). La raíz cuadrada de la AVE de Uso de ChatGPT fue 0.822, superior a sus correlaciones con Percepción de Capacidades (0.723), Desarrollo de Habilidades (0.590) y Satisfacción (0.536). De manera similar, los constructos restantes cumplieron este criterio, lo que confirma que cada variable mide un concepto distintivo. 
+
+%--- codigo da tabela 5---%
+\begin{table}[h!]
+\centering
+\begin{threeparttable}
+\small
+\caption{Validez discriminante de fornell-larcker.}\label{tab-5}
+\begin{tabular}{p{3.5cm} p{2cm} p{2cm} p{3.5cm} p{1.5cm}}
+\toprule
+ & Uso ChatGPT & Capacidades & Desarrollo de habilidades & Satisfacción \\
+\midrule
+Uso ChatGPT & 0.822 \\
+Capacidades & 0.723 & 0.832 \\
+Desarrollo de habilidades & 0.590 & 0.515 & 0.823 \\
+Satisfacción & 0.536 & 0.521 & 0.394 & 0.830 \\
+\bottomrule
+\end{tabular}
+\source{Elaboración propia a partir de los resultados obtenidos del software Smart PLS 4.}
+\end{threeparttable}
+\end{table}
+
+\subsection{Evaluación del modelo estructural}
+La evaluación de la colinealidad en el modelo estructural se realizó mediante el análisis de los valores VIF, con el propósito de identificar posibles problemas de multicolinealidad entre los predictores de cada relación endógena \cite{hair2021}. En la Tabla \ref{tab-6} se observa que todos los valores VIF se situaron muy por debajo del umbral crítico de 5, lo que indica ausencia de colinealidad severa. El VIF más bajo correspondió a la relación entre Uso de ChatGPT y Percepción de Capacidades (1.000), mientras que el valor más alto se observó en la ruta de Uso de ChatGPT hacia Satisfacción (2.419). Dado que todos los índices se encuentran por debajo de 3, se concluye que el modelo cumple con los supuestos de independencia entre predictores, garantizando la estabilidad de las estimaciones de los coeficientes estructurales \cite{aburumman2023}.
+
+%--- codigo da tabela 6---%
+\begin{table}[h!]
+\centering
+\begin{threeparttable}
+\caption{Estadística de colinealidad VIF.}\label{tab-6}
+\begin{tabular}{l l}
+\toprule
+ & VIF \\
+\midrule
+Uso ChatGPT $\rightarrow$ Capacidades & 1.000 \\
+Uso ChatGPT $\rightarrow$ Desarrollo de habilidades & 2.093 \\
+Uso de ChatGPT $\rightarrow$ Satisfacción & 2.419 \\
+Capacidades $\rightarrow$ Desarrollo de habilidades & 2.093 \\
+Capacidades $\rightarrow$ Satisfacción & 2.147 \\
+Desarrollo de habilidades $\rightarrow$ Satisfacción & 1.573 \\
+\bottomrule
+\end{tabular}
+\source{Elaboración propia a partir de los resultados obtenidos del software Smart PLS 4.}
+\end{threeparttable}
+\end{table}
+
+\subsection{Capacidad explicativa y relevancia predictiva del modelo}
+La evaluación de la capacidad explicativa y predictiva del modelo estructural se realizó mediante el análisis conjunto de los valores de R$^2$, R$^2$ ajustado, Q$^2$ predictivo, RMSE y MAE, como se muestra en la Tabla \ref{tab-7}, la Percepción de Capacidades alcanzó un R$^2$ de 0.522, indicando que el modelo explica el 52\% de su varianza, mientras que el Desarrollo de Habilidades presentó un R$^2$ de 0.364 y la Satisfacción un R$^2$ de 0.329. Según \textcite{liengaard2021}, estos valores se consideran moderados y aceptables en investigaciones exploratorias sobre adopción tecnológica. Por otra parte, los valores de Q$^2$ predictivo fueron positivos en todos los constructos, con registros entre 0.286 y 0.522, lo que evidencia una capacidad predictiva adecuada. Los indicadores de error RMSE oscilaron entre 0.692 y 0.846, y los valores MAE se situaron entre 0.534 y 0.640, lo que refleja un nivel aceptable de precisión en las estimaciones \cite{hair2022}.
+
+%--- codigo da tabela 7---%
+\begin{table}[h!]
+\centering
+\begin{threeparttable}
+\caption{Evaluación de la capacidad explicativa y predictiva del modelo estructural.}\label{tab-7}
+\begin{tabular}{l l l l l l}
+\toprule
+ & R cuadrado & R cuadrado ajustada & Q²predict & RMSE & MAE \\
+\midrule
+Capacidades & 0.522 & 0.522 & 0.522 & 0.692 & 0.534 \\
+Desarrollo de habilidades & 0.364 & 0.364 & 0.347 & 0.809 & 0.604 \\
+Satisfacción & 0.329 & 0.328 & 0.286 & 0.846 & 0.640 \\
+\bottomrule
+\end{tabular}
+\source{Elaboración propia a partir de los resultados obtenidos del software Smart PLS 4.}
+\end{threeparttable}
+\end{table}
+
+\subsection{Modelo estructural}
+La estimación del modelo estructural se realizó aplicando la técnica de \textit{bootstrapping} con 500 remuestras, lo que permitió contrastar las hipótesis planteadas y evaluar la magnitud, dirección y significancia estadística de los coeficientes de ruta \cite{hair2019}. En la Tabla \ref{tab-8} se observa que todas las relaciones resultaron significativas (p<0.001), lo que respalda la validez empírica del modelo propuesto \cite{zeng2021}. El Uso de ChatGPT mostró un efecto positivo muy alto sobre la Percepción de Capacidades ($\beta$=0.723; $t$=69.454), confirmando que una mayor frecuencia de uso incrementa sustancialmente la percepción de eficacia funcional de la herramienta, lo que confirma los hallazgos de investigaciones realizadas sobre adopción de tecnologías de IA en educación superior \cite{hamid2023}.
+
+Asimismo, el Uso de ChatGPT influyó de manera significativa en el Desarrollo de Habilidades ($\beta$=0.455; $t$=16.797) y en la Satisfacción ($\beta$=0.296; $t$=10.438), lo que corrobora que la utilización de IA genera tanto beneficios percibidos en competencias académicas como actitudes positivas hacia su uso \cite{wang2023}. Por otra parte, la Percepción de Capacidades presentó un efecto positivo sobre el Desarrollo de Habilidades ($\beta$=0.186; $t$=6.917) y sobre la Satisfacción ($\beta$=0.265; t=9.851), evidenciando su rol mediador entre el uso y las valoraciones favorables, en concordancia con el modelo TAM y sus extensiones \cite{yudhistyra2025}. Finalmente, el Desarrollo de Habilidades tuvo un impacto positivo, aunque más moderado, sobre la Satisfacción ($\beta$=0.083; $t$=3.653), lo que sugiere que la percepción de mejora en competencias también contribuye a incrementar la satisfacción general con la herramienta \cite{alshammari2025}.
+
+Los resultados anteriores sustentan las relaciones hipotetizadas y destacan el Uso de ChatGPT como un determinante clave de la percepción de capacidades, el desarrollo de habilidades y la satisfacción en contextos educativos. Este hallazgo resulta especialmente relevante, ya que evidencia cómo la IA aplicada al aprendizaje puede potenciar competencias cognitivas, generando experiencias de uso valoradas positivamente por los estudiantes \cite{kim2025}. Asimismo, la incorporación de ChatGPT favorece procesos de autoaprendizaje y autonomía, necesarios en la formación universitaria \cite{jia2024}. 
+
+%--- codigo da tabela 8 ---%
+\begin{table}[htbp]
+\centering
+\small
+\caption{Resultados del contraste de las hipótesis.}\label{tab-8}
+\begin{tabular}{p{2.5cm} p{2.2cm} p{2.2cm} p{2.2cm} p{2cm} p{1cm}}
+\toprule
+ & Muestra original (O) & Media de la muestra (M) & Desviación \newline estándar \newline(STDEV) & Estadísticos t (|O/STDEV|) & Valores p \\
+\midrule
+Uso ChatGPT $\rightarrow$  Capacidades & 0.723 & 0.723 & 0.010 & 69.454 & 0.000 \\
+Uso ChatGPT $\rightarrow$ Desarrollo de habilidades & 0.455 & 0.456 & 0.027 & 16.797 & 0.000 \\
+Uso de ChatGPT $\rightarrow$ Satisfacción & 0.296 & 0.296 & 0.028 & 10.438 & 0.000 \\
+Capacidades $\rightarrow$  Desarrollo de habilidades & 0.186 & 0.185 & 0.027 & 6.917 & 0.000 \\
+Capacidades $\rightarrow$  Satisfacción & 0.265 & 0.265 & 0.027 & 9.851 & 0.000 \\
+Desarrollo de habilidades $\rightarrow$  Satisfacción & 0.083 & 0.083 & 0.023 & 3.653 & 0.000 \\
+\bottomrule
+\end{tabular}
+\source{Elaboración propia a partir de los resultados obtenidos del software Smart PLS 4.}
+\end{table}
+
+En la Figura \ref{fig-2} se observa la representación esquemática del modelo estructural estimado, el modelo refleja de manera visual la intensidad y dirección de las asociaciones identificadas, destacando la relevancia del Uso de ChatGPT como variable exógena central que explica percepciones de capacidades, desarrollo de habilidades y satisfacción estudiantil. Esta representación facilita la comprensión integral del esquema propuesto y aporta evidencia visual que respalda la validez teórica y empírica del modelo de investigación.
+
+%--- codigo da figura 2 ---%
+\begin{figure}[h!]
+\centering
+\begin{minipage}{.90\textwidth}
+\includegraphics[width=\textwidth]{Imagens/image2.png}
+\caption{Modelo estructural.}
+\label{fig-2}
+\source{Elaboración propia a partir de los resultados obtenidos del software Smart PLS 4.}
+\end{minipage}
+\end{figure}
+
+
+\section{Discusión}
+Los resultados de este estudio evidencian que el uso de ChatGPT constituye un predictor significativo de la percepción de capacidades, el desarrollo de habilidades académicas y la satisfacción general con la experiencia tecnológica de los estudiantes universitarios latinoamericanos. Destaca especialmente el elevado impacto del uso sobre la percepción de capacidades ($\beta$=0.723), así como su influencia moderada sobre el desarrollo de habilidades ($\beta$=0.455) y la satisfacción ($\beta$=0.296). Estos hallazgos confirman que la familiaridad con la herramienta potencia tanto la valoración de su utilidad funcional como la confianza en su efectividad. La significación estadística de todas las rutas propuestas (p<0.001) respalda la solidez empírica del modelo estimado y su pertinencia en contextos educativos caracterizados por alta heterogeneidad tecnológica.
+
+Desde una perspectiva conceptual, estos resultados se alinean con el modelo de aceptación tecnológica de \textcite{davis1989} y \textcite{chang2025}, que plantea que la utilidad percibida y la facilidad de uso son factores determinantes en la adopción de innovaciones digitales. En este trabajo, la percepción de capacidades actúa como un reflejo de ambos constructos, integrando la percepción de eficacia y la confianza en el potencial de ChatGPT como herramienta de apoyo académico. La relación robusta entre uso y percepción de capacidades coincide con la evidencia reportada por \textcite{ma2025} y \textcite{kim2025}, quienes identifican que el contacto frecuente con sistemas de IA incrementa la disposición favorable hacia su uso. Asimismo, el uso continuado se asocia con una mayor adquisición de competencias y con experiencias de aprendizaje más satisfactorias, reforzando el papel de estas tecnologías como catalizadoras del desarrollo académico.
+
+Asimismo, se confirmó que la percepción de capacidades desempeña un papel mediador relevante entre el uso de ChatGPT y los resultados percibidos, tanto en términos de desarrollo de habilidades como de satisfacción. Este hallazgo refuerza la idea de que una evaluación positiva de la herramienta no solo mejora la autoconfianza digital, sino que también incrementa el compromiso con su uso continuado. La trayectoria que conecta el desarrollo de habilidades con la satisfacción sugiere que la percepción de progreso académico actúa como un facilitador del bienestar subjetivo y la motivación intrínseca. Este patrón coincide con lo señalado por \textcite{rahman2023}, quienes destacan la importancia de la percepción de competencias en la consolidación de actitudes favorables hacia las tecnologías emergentes.
+
+Los hallazgos también muestran un alto grado de coherencia con estudios que subrayan el potencial de la IA para fomentar el aprendizaje autónomo y fortalecer el compromiso estudiantil \cite{wang2023}. Sin embargo, difieren parcialmente de investigaciones que alertan sobre riesgos asociados a la dependencia excesiva o la superficialidad en la comprensión conceptual \cite{yankouskaya2025, cao2025}. Los hallazgos sugieren que las instituciones de educación superior deberían diseñar estrategias de formación que prioricen el fortalecimiento de la percepción de capacidades y la confianza en el uso de la IA.
+
+Por otra parte, los resultados pueden analizarse en contraste con la evidencia reciente sobre la conciencia y confianza hacia la IA en contextos educativos europeos. Al respecto, \textcite{arroyosagasta2025} identificaron que, aunque los estudiantes universitarios manifiestan una actitud generalmente positiva hacia la IA, persiste una brecha de conocimiento y cierta ambivalencia frente a su uso ético y educativo. Este hallazgo complementa lo observado en América Latina, donde la aceptación de ChatGPT se asocia principalmente con la percepción de utilidad y facilidad de uso, más que con una comprensión crítica de sus implicaciones sociales.
+
+Asimismo, los resultados coinciden con los hallazgos de \textcite{lucas2025}, quienes demostraron que el nivel de competencia digital y conocimiento de la IA constituye un predictor significativo de la disposición docente para integrar herramientas inteligentes en la enseñanza. En su estudio comparativo con profesorado en formación de Portugal y España, los autores señalaron que, aunque existe una actitud favorable hacia la IA, la preparación institucional sigue siendo limitada, restringida a un nivel superficial de alfabetización tecnológica. Este patrón se asemeja al de los estudiantes latinoamericanos, quienes, pese a mostrar satisfacción y motivación ante el uso de ChatGPT, aún carecen de una formación pedagógica sólida que les permita integrar críticamente estas tecnologías en sus prácticas académicas.
+
+Los aportes de esta investigación permiten afirmar que tanto la alfabetización en IA como la formación docente inicial y continua constituyen variables mediadoras esenciales para explicar la satisfacción y el impacto del uso de ChatGPT en el
+aprendizaje universitario. Integrar estos enfoques en programas formativos puede potenciar la transferencia de competencias digitales y fortalecer el vínculo entre confianza, percepción de capacidades y desarrollo de habilidades, consolidando así un modelo de adopción tecnológica ético y sostenible, coherente con los retos de la educación superior contemporánea.
+
+\section{Conclusión}
+El presente estudio ofrece una contribución empírica relevante al campo de la educación superior al examinar el impacto del uso de ChatGPT en la percepción de capacidades, el desarrollo de habilidades y la satisfacción estudiantil en contextos latinoamericanos. Mediante el uso de modelado de ecuaciones estructurales con una muestra representativa de cuatro países, se identificó que el uso frecuente de esta herramienta de IA generativa potencia de manera significativa la percepción de capacidades y, en menor medida, el desarrollo de habilidades académicas y la satisfacción con la experiencia tecnológica. Estos hallazgos confirman la utilidad pedagógica de ChatGPT como mediador de procesos de aprendizaje más eficaces, autónomos y personalizados.
+
+Los resultados tienen impacto en el campo de la innovación educativa, al brindar evidencia sobre el papel que desempeñan las tecnologías basadas en IA en la formación universitaria. Los hallazgos permiten reconocer que las relaciones identificadas entre el uso de ChatGPT, la percepción de capacidades, el desarrollo de habilidades y la satisfacción estudiantil están mediadas por factores culturales e institucionales propios del contexto latinoamericano. En el plano institucional, las diferencias en infraestructura tecnológica, capacitación docente y políticas de innovación influyen en la adopción efectiva de la inteligencia artificial en los entornos universitarios. 
+
+Desde una perspectiva cultural, la confianza en las tecnologías emergentes se ve condicionada por desigualdades en el acceso, actitudes de cautela y usos predominantemente instrumentales que limitan la apropiación crítica de estas herramientas. Estos factores delinean un ecosistema educativo donde la integración de ChatGPT trasciende lo tecnológico y se configura como un fenómeno social, institucional y cultural que demanda estrategias de alfabetización digital para potenciar su impacto formativo.
+
+Entre las limitaciones del estudio se encuentra su diseño transversal que impide establecer relaciones causales definitivas entre las variables analizadas, limitando la generalización de los hallazgos a largo plazo. Además, el muestreo no probabilístico por conveniencia, aunque justificado por el enfoque exploratorio y la cobertura multinacional, podría haber introducido sesgos en la representatividad de la muestra, a pesar de estas limitaciones, los resultados abren múltiples líneas de investigación como el desarrollo de estudios longitudinales que permitan analizar la evolución del impacto de ChatGPT en el tiempo, así como diseños mixtos que integren metodologías cualitativas para profundizar en la experiencia de uso. 
+
+
+
+\printbibliography\label{sec-bib}
+% if the text is not in Portuguese, it might be necessary to use the code below instead to print the correct ABNT abbreviations [s.n.], [s.l.]
+%\begin{portuguese}
+%\printbibliography[title={Bibliography}]
+%\end{portuguese}
+
+
+%full list: conceptualization,datacuration,formalanalysis,funding,investigation,methodology,projadm,resources,software,supervision,validation,visualization,writing,review
+\begin{contributors}[sec-contributors]
+\authorcontribution{Carlos Enrique George-Reyes}[conceptualization,methodology,formalanalysis,investigation,writing,review,visualization]
+\authorcontribution{Gary Reyes}[methodology,datacuration,formalanalysis,review]
+\authorcontribution{Rafael Antonio Sorhegui-Ortega}[supervision,validation,review,projadm]
+\end{contributors}
+
+\section*{Agradecimientos}
+Los autores reconocen el apoyo financiero y académico, así como el fortalecimiento de competencias para la investigación, brindados por la Universidad Bolivariana del Ecuador, a través de la Vicerrectoría de Investigación y Vinculación Social, mediante el grupo de investigación WISE: Women in Smart Education (\url{https://sites.google.com/ube.edu.ec/wiseai/wise}).
+
+\begin{dataavailability}
+\txtdataavailability{dataonly} % options: dataavailable, dataonly, databody, datanotav, nodata
+\end{dataavailability}
+
+\end{document}
+
