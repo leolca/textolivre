@@ -1,0 +1,849 @@
+% !TEX TS-program = XeLaTeX
+% use the following command:
+% all document files must be coded in UTF-8
+\documentclass[spanish]{textolivre}
+% build HTML with: make4ht -e build.lua -c textolivre.cfg -x -u article "fn-in,svg,pic-align"
+
+\journalname{Texto Livre}
+\thevolume{19}
+%\thenumber{1} % old template
+\theyear{2026}
+\receiveddate{\DTMdisplaydate{2025}{11}{29}{-1}} % YYYY MM DD
+\accepteddate{\DTMdisplaydate{2026}{2}{11}{-1}}
+\publisheddate{\DTMdisplaydate{2026}{6}{3}{-1}}
+\corrauthor{Jesús López-Belmonte}
+\articledoi{10.1590/1983-3652.2026.63138}
+%\articleid{NNNN} % if the article ID is not the last 5 numbers of its DOI, provide it using \articleid{} commmand 
+% list of available sesscions in the journal: articles, dossier, reports, essays, reviews, interviews, editorial
+\articlesessionname{dossier}
+\runningauthor{Pozo-Sánchez et al.} 
+%\editorname{Leonardo Araújo} % old template
+\sectioneditorname{Camila Cárdenas Neira~\orcid{0000-0002-1842-7200}}
+\layouteditorname{Saula Cecília~\orcid{0009-0006-3069-8480}}
+
+\title{Inteligencia artificial en educación: un estado de la cuestión en el contexto hispanoamericano}
+\othertitle{A inteligência artificial na educação: um panorama atual no contexto hispano-americano}
+\othertitle{Artificial intelligence in education: a state of the art in the Hispanic American context}
+% if there is a third language title, add here:
+%\othertitle{Artikelvorlage zur Einreichung beim Texto Livre Journal}
+
+\author[1]{Santiago Pozo-Sánchez~\orcid{0000-0001-8125-4990}\thanks{Email: \href{mailto:santiagopozo@ugr.es}{santiagopozo@ugr.es}}}
+\author[1]{José-Antonio Marín-Marín~\orcid{0000-0001-8623-4796}\thanks{Email: \href{mailto:jmarin@ugr.es}{jmarin@ugr.es}}}
+\author[2]{Ángel-Freddy Rodríguez-Torres~\orcid{0000-0001-5047-2629}\thanks{Email: \href{mailto:afrodriguez@uce.edu.ec}{afrodriguez@uce.edu.ec}}}
+\author[1]{Jesús López-Belmonte~\orcid{0000-0003-0823-3370}\thanks{Email: \href{mailto:jesuslopez@ugr.es}{jesuslopez@ugr.es}}}
+\affil[1]{Universidad de Granada, Granada, España.}
+\affil[2]{Universidad Central del Ecuador, Quito, Ecuador.}
+
+\addbibresource{article.bib}
+% use biber instead of bibtex
+% $ biber article
+
+% used to create dummy text for the template file
+\definecolor{dark-gray}{gray}{0.35} % color used to display dummy texts
+\usepackage{lipsum}
+\SetLipsumParListSurrounders{\colorlet{oldcolor}{.}\color{dark-gray}}{\color{oldcolor}}
+
+% used here only to provide the XeLaTeX and BibTeX logos
+\usepackage{hologo}
+
+% if you use multirows in a table, include the multirow package
+\usepackage{multirow}
+
+% provides sidewaysfigure environment
+\usepackage{rotating}
+
+% CUSTOM EPIGRAPH - BEGIN 
+%%% https://tex.stackexchange.com/questions/193178/specific-epigraph-style
+\usepackage{epigraph}
+\renewcommand\textflush{flushright}
+\makeatletter
+\newlength\epitextskip
+\pretocmd{\@epitext}{\em}{}{}
+\apptocmd{\@epitext}{\em}{}{}
+\patchcmd{\epigraph}{\@epitext{#1}\\}{\@epitext{#1}\\[\epitextskip]}{}{}
+\makeatother
+\setlength\epigraphrule{0pt}
+\setlength\epitextskip{0.5ex}
+\setlength\epigraphwidth{.7\textwidth}
+% CUSTOM EPIGRAPH - END
+
+% to use IPA symbols in unicode add
+%\usepackage{fontspec}
+%\newfontfamily\ipafont{CMU Serif}
+%\newcommand{\ipa}[1]{{\ipafont #1}}
+% and in the text you may use the \ipa{...} command passing the symbols in unicode
+
+% LANGUAGE - BEGIN
+% ARABIC
+% for languages that use special fonts, you must provide the typeface that will be used
+% \setotherlanguage{arabic}
+% \newfontfamily\arabicfont[Script=Arabic]{Amiri}
+% \newfontfamily\arabicfontsf[Script=Arabic]{Amiri}
+% \newfontfamily\arabicfonttt[Script=Arabic]{Amiri}
+%
+% in the article, to add arabic text use: \textlang{arabic}{ ... }
+%
+% RUSSIAN
+% for russian text we also need to define fonts with support for Cyrillic script
+% \usepackage{fontspec}
+% \setotherlanguage{russian}
+% \newfontfamily\cyrillicfont{Times New Roman}
+% \newfontfamily\cyrillicfontsf{Times New Roman}[Script=Cyrillic]
+% \newfontfamily\cyrillicfonttt{Times New Roman}[Script=Cyrillic]
+%
+% in the text use \begin{russian} ... \end{russian}
+% LANGUAGE - END
+
+% EMOJIS - BEGIN
+% to use emoticons in your manuscript
+% https://stackoverflow.com/questions/190145/how-to-insert-emoticons-in-latex/57076064
+% using font Symbola, which has full support
+% the font may be downloaded at:
+% https://dn-works.com/ufas/
+% add to preamble:
+% \newfontfamily\Symbola{Symbola}
+% in the text use:
+% {\Symbola }
+% EMOJIS - END
+
+% LABEL REFERENCE TO DESCRIPTIVE LIST - BEGIN
+% reference itens in a descriptive list using their labels instead of numbers
+% insert the code below in the preambule:
+%\makeatletter
+%\let\orgdescriptionlabel\descriptionlabel
+%\renewcommand*{\descriptionlabel}[1]{%
+%  \let\orglabel\label
+%  \let\label\@gobble
+%  \phantomsection
+%  \edef\@currentlabel{#1\unskip}%
+%  \let\label\orglabel
+%  \orgdescriptionlabel{#1}%
+%}
+%\makeatother
+%
+% in your document, use as illustraded here:
+%\begin{description}
+%  \item[first\label{itm1}] this is only an example;
+%  % ...  add more items
+%\end{description}
+% LABEL REFERENCE TO DESCRIPTIVE LIST - END
+
+
+% add line numbers for submission
+%\usepackage{lineno}
+%\linenumbers
+
+\begin{document}
+\maketitle
+
+\begin{polyabstract}
+\begin{abstract}
+Este estudio analiza el estado de la cuestión sobre la aplicación de la inteligencia artificial (IA) en educación en el contexto hispanoamericano entre 2018 y 2025, mediante una revisión bibliométrica y cualitativa de 1.045 documentos indizados en Web of Science. Los resultados evidencian una disrupción paradigmática a partir de 2023, impulsada por la irrupción de la IA generativa (p. ej., ChatGPT), que provocó un incremento exponencial en la producción científica y en la citación, concentrando el 78 \% de las citas totales del corpus. La investigación revela una marcada asimetría geográfica: España concentra el 71 \% de las publicaciones, mientras que la mayoría de países latinoamericanos presentan una presencia marginal, lo que plantea desafíos para la soberanía intelectual y la adaptación cultural. Temáticamente, el campo ha evolucionado desde enfoques tecnocéntricos y experiencias piloto hacia reflexiones éticas y pedagógicas, destacando la validación de modelos como TAM y UTAUT, así como debates sobre integridad académica, equidad y personalización del aprendizaje. Entre los hallazgos clave se identifican vacíos en educación básica, contextos rurales e indígenas, y riesgos asociados al sesgo algorítmico y la dependencia tecnológica. El estudio concluye que la IA no debe concebirse como panacea, sino como herramienta mediadora para promover una transformación educativa sostenible e inclusiva, alineada con el ODS4. Se proponen líneas futuras centradas en la hibridación con pedagogías críticas, el desarrollo de IA localizada y la redefinición de la evaluación y la formación docente.
+
+\keywords{Inteligencia artificial\sep Tecnología educativa\sep Bibliometría\sep Producción científica}
+\end{abstract}
+
+\begin{portuguese}
+\begin{abstract}
+Este estudo analisa o estado da arte da aplicação da inteligência artificial (IA) na educação no contexto hispano-americano entre 2018 e 2025, através de uma revisão bibliométrica e qualitativa de 1.045 documentos indexados na Web of Science. Os resultados revelam uma mudança paradigmática a partir de 2023, impulsionada pela emergência da IA generativa (por exemplo, ChatGPT), que levou a um aumento exponencial da produção científica e das citações, representando 78\% do total de citações no corpus. O inquérito revela uma acentuada assimetria geográfica: Espanha é responsável por 71\% das publicações, enquanto a maioria dos países da América Latina apresenta uma presença marginal, o que representa desafios para a soberania intelectual e a adaptação cultural. Tematicamente, o campo evoluiu de abordagens tecnocêntricas e projetos-piloto para reflexões éticas e pedagógicas, destacando a validação de modelos como o TAM e o UTAUT, bem como debates sobre integridade académica, equidade e aprendizagem personalizada. Entre as principais conclusões, destacam-se as lacunas na educação básica, nos contextos rurais e indígenas, e os riscos associados ao pendor algorítmico e à dependência tecnológica. O estudo conclui que a IA não deve ser vista como uma panaceia, mas sim como uma ferramenta mediadora para promover uma transformação educativa sustentável e inclusiva, alinhada com o ODS 4. São propostas direções futuras, com foco na hibridização com pedagogias críticas, no desenvolvimento da IA localizada e na redefinição da avaliação e da formação de professores.
+
+\keywords{Inteligência artificial\sep Tecnologia educativa\sep Bibliometria\sep Produção científica}
+\end{abstract}
+\end{portuguese}
+% if there is another abstract, insert it here using the same scheme
+\begin{english}
+\begin{abstract}
+This study analyzes the state of the art regarding the application of artificial intelligence (AI) in education in the Hispanic American context between 2018 and 2025, through a bibliometric and qualitative review of 1,045 documents indexed in Web of Science. The results reveal a paradigm shift beginning in 2023, driven by the emergence of generative AI (e.g., ChatGPT), which led to an exponential increase in scientific output and citations, accounting for 78\% of the total citations in the corpus. The research reveals a marked geographical asymmetry: Spain accounts for 71\% of the publications, while most Latin American countries have a marginal presence, posing challenges for intellectual sovereignty and cultural adaptation. Thematically, the field has evolved from technocentric approaches and pilot projects toward ethical and pedagogical reflections, highlighting the validation of models such as TAM and UTAUT, as well as debates on academic integrity, equity, and personalized learning. Key findings include gaps in basic education, rural and indigenous contexts, and risks associated with algorithmic bias and technological dependence. The study concludes that AI should not be seen as a panacea, but rather as a mediating tool to promote a sustainable and inclusive educational transformation, aligned with SDG 4. Future directions are proposed, focusing on hybridization with critical pedagogies, the development of localized AI, and the redefinition of assessment and teacher training.
+
+\keywords{Artificial intelligence\sep Educational technology\sep Bibliometrics\sep Scientific production}
+\end{abstract}
+\end{english}
+\end{polyabstract}
+
+\section{Introducción}\label{sec-intro}
+La integración de la inteligencia artificial (IA) en el ámbito educativo constituye un fenómeno paradigmático que trasciende la mera innovación tecnológica, configurándose como un vector de transformación epistemológica y pedagógica en los sistemas de enseñanza-aprendizaje. En el contexto hispanoamericano, caracterizado por una heterogeneidad sociocultural y económica que acentúa brechas digitales persistentes, la IA emerge como un instrumento potencial para mitigar desigualdades educativas, promoviendo entornos inclusivos y adaptativos que respondan a las necesidades individuales de los aprendices. Esta perspectiva se alinea con los imperativos globales delineados en el Objetivo de Desarrollo Sostenible 4 (ODS4), el cual postula una educación equitativa y de calidad como pilar fundamental para el progreso sostenible, tal como se argumenta en reflexiones éticas que enfatizan la necesidad de una ``inteligencia pedagógica'' para garantizar que las herramientas de IA no perpetúen exclusiones, sino que las disuelvan mediante aplicaciones contextualizadas \cite{floresvivar2023}. De este modo, la evolución de la IA en la educación hispanoamericana se inscribe en una trayectoria que inicia con sistemas de tutoría inteligente en las décadas previas y culmina en la actualidad con modelos generativos capaces de simular interacciones humanas complejas, como chatbots diseñados para reforzar competencias lingüísticas y cognitivas en entornos flexibles y abiertos \cite{vazquezcano2021}. Por consiguiente, esta progresión invita a una reflexión profunda sobre cómo la IA puede reconfigurar no solo los métodos didácticos, sino también las estructuras institucionales educativas, fomentando una pedagogía que priorice la personalización y la resiliencia ante desafíos globales como la pandemia de COVID-19, que aceleró la adopción digital en regiones con infraestructuras limitadas.
+
+En este panorama, los marcos teóricos como el Modelo de Aceptación de la Tecnología (TAM) y su derivación extendida, el Modelo Unificado de Aceptación y Uso de la Tecnología (UTAUT), han demostrado ser instrumentos analíticos robustos para desentrañar las dinámicas de adopción de la IA entre actores educativos, revelando que variables tales como la utilidad percibida, la facilidad de uso y las condiciones facilitadoras son predictores clave de su integración exitosa en contextos universitarios y escolares \cite{chocarro2023, raffaghelli2022}. No obstante, en regiones hispanoamericanas, donde factores como la accesibilidad tecnológica y la formación docente representan barreras estructurales, estos modelos deben adaptarse para incorporar dimensiones culturales y socioeconómicas, evitando una transposición acrítica de enfoques desarrollados en entornos más homogéneos. Por ejemplo, la aplicación de UTAUT en sistemas de alerta temprana ha destacado la ansiedad tecnológica como un factor inhibitorio, particularmente en instituciones en línea donde la diversidad estudiantil amplifica tales percepciones, lo que sugiere la necesidad de intervenciones formativas que aborden no solo la competencia técnica, sino también la confianza emocional en estas herramientas \cite{raffaghelli2022}. Además, análisis bibliométricos pioneros han cartografiado una tendencia exponencial en la producción científica sobre IA educativa, con un predominio de contribuciones desde España y México, aunque con notables vacíos en aplicaciones para la educación básica en naciones andinas y centroamericanas, donde la brecha digital agrava la desigualdad \cite{hinojolucena2019, forerocorba2024}. Esta dispersión temática subraya la imperiosa necesidad de investigaciones que trasciendan el enfoque tecnocéntrico, integrando perspectivas interdisciplinarias que aborden la IA no solo como herramienta, sino como mediadora de procesos cognitivos profundos, tales como el razonamiento dialógico en el aprendizaje de lenguas extranjeras \cite{bibauw2019}.
+
+Además, la irrupción de la IA generativa, epitomizada por plataformas como ChatGPT, ha catalizado un debate ontológico sobre su rol en la educación superior, posicionándola alternativamente como una amenaza a la integridad académica o como un catalizador para la reforma pedagógica, donde el pensamiento complejo y la evaluación auténtica adquieren centralidad \cite{yusuf2024, romerorodriguez2023}. En este contexto, estudios experimentales han corroborado que sistemas adaptativos, basados en el reconocimiento afectivo multimodal, potencian el engagement y el rendimiento en poblaciones vulnerables, tales como alumnos con discapacidades intelectuales, fomentando entornos empáticos que trasciendan las limitaciones de los métodos tradicionales \cite{standen2020}. De igual manera, metaanálisis cuantitativos han cuantificado efectos positivos moderados de la IA en el desempeño estudiantil, con un tamaño del efecto (d = 0.64) que sugiere un impacto significativo, aunque matizado por variables contextuales en entornos hispanoamericanos multiculturales, donde factores como el idioma y la diversidad cultural influyen en la eficacia de estas intervenciones \cite{garciamartinez2023}. Por ende, la percepción post-lanzamiento de herramientas generativas ha generado un discurso bifurcado entre el pánico disruptivo y la oportunidad reformadora, instando a una reconfiguración de las competencias docentes que priorice la integración ética de la IA en currículos que promuevan la equidad, evitando que se convierta en un amplificador de desigualdades preexistentes \cite{garciapenalvo2023, garciapenalvo2024}. Asimismo, aproximaciones prospectivas enfatizan la redefinición de la evaluación educativa, proponiendo modelos híbridos donde la IA generativa facilite la creación de escenarios experienciales auténticos, como en la ingeniería, donde la explicación asistida por algoritmos enriquece el aprendizaje práctico y fomenta competencias transferibles al mundo laboral \cite{salinasnavarro2024}.
+
+En consecuencia, investigaciones comparativas sobre actitudes hacia la IA entre estudiantes de disciplinas disímiles revelan brechas perceptivas, con una mayor receptividad en campos educativos que en administrativos, lo que implica la urgencia de programas de formación inicial del profesorado que incorporen la IA como recurso didáctico esencial, mitigando así resistencias derivadas de la falta de familiaridad y promoviendo una alfabetización digital crítica \cite{almarazlopez2023, ayusodelpuerto2022}. Asimismo, revisiones sistemáticas de técnicas de machine learning en educación delinean clasificaciones exhaustivas que identifican vacíos en aplicaciones para la educación básica, proponiendo marcos conceptuales que integren consideraciones éticas alineadas con el ODS4 para contrarrestar riesgos como el sesgo algorítmico y la dependencia tecnológica, particularmente en contextos donde la privacidad de datos estudiantiles representa un desafío regulatorio pendiente \cite{forerocorba2024, prendesespinosa2021}. En este sentido, la construcción de índices sintéticos para medir el impacto percibido de la IA en la educación superior andina evidencia un efecto medio-bajo, con un énfasis preponderante en el aprendizaje autónomo, lo que resalta la necesidad de políticas educativas regionales que adapten estas tecnologías a realidades locales, evitando una homogeneización que ignore diversidades culturales y lingüísticas inherentes a la región \cite{grajeda2024}. Por otra parte, abordajes éticos profundizan en la tensión entre el potencial democratizador de la IA y sus riesgos inherentes, como la erosión de la agencia humana en procesos creativos, donde herramientas generativas como ChatGPT superan en eficiencia a estudiantes en tareas evaluativas, cuestionando la esencia misma de la autenticidad académica y demandando marcos reguladores que equilibren innovación y valores humanísticos \cite{vazquezcano2023, michelvillarreal2023}.
+
+Por ende, una aproximación histórica al desarrollo de la IA en la educación hispanoamericana revela transiciones desde sistemas incipientes en e-learning hacia ecosistemas integrados que incorporan big data y analytics predictivos, aunque con un rezago en comparación con contextos anglosajones, donde la inversión en infraestructura digital ha sido más consistente \cite{hinojolucena2019}. Esta disparidad invita a interrogantes sobre la soberanía tecnológica en la región, donde la dependencia de plataformas globales podría limitar la adaptación cultural, proponiendo en su lugar el desarrollo de IA localizada que incorpore idiomas indígenas y contextos rurales subrepresentados en la literatura actual. Además, cuestiones relativas a la inclusión de género y diversidad emergen como abordajes críticos, ya que estudios indican que la IA puede reproducir sesgos patriarcales si no se diseña con lentes interseccionales, lo que exige investigaciones que exploren su impacto en poblaciones marginadas, como mujeres en entornos educativos rurales de América Latina \cite{catalanpesce2010, monterogutenberg2021}. De igual forma, perspectivas comparativas con marcos globales subrayan que, mientras en entornos europeos la IA se enfoca en la personalización masiva, en Hispanoamérica el énfasis debe recaer en la resiliencia educativa, integrando herramientas que mitiguen interrupciones como desastres naturales o crisis económicas \cite{barrioscedeno2025, catalanpesce2024}.
+
+No obstante, el espectro de abordajes metodológicos en la literatura hispanoamericana abarca desde ensayos prospectivos que delinean escenarios futuros hasta experimentos cuasi-controlados que validan la eficacia de chatbots en competencias específicas, como la puntuación en español, destacando mejoras significativas que respaldan su escalabilidad en entornos de aprendizaje abierto \cite{vazquezcano2021, garciapenalvo2024}. En este contexto, la intersección con el aprendizaje experiencial revela oportunidades para que la IA generativa explique y enriquezca simulaciones reales, fomentando evaluaciones auténticas que trasciendan el memorismo tradicional hacia competencias holísticas \cite{salinasnavarro2024}. Por consiguiente, futuras direcciones de investigación podrían centrarse en la hibridación de IA con pedagogías críticas, como el freireano, para empoderar comunidades educativas en la co-creación de conocimiento, abordando así vacíos en la equidad que persisten pese al avance tecnológico. En definitiva, el corpus teórico de la IA en la educación hispanoamericana se erige como un constructo interdisciplinario que, más allá de la efervescencia tecnológica, interpela profundos desafíos éticos y equitativos, integrando perspectivas prospectivas para afrontar brechas digitales y fomentar una transformación pedagógica sostenible, donde la IA se posiciona no como panacea, sino como aliada en la construcción de sociedades del conocimiento inclusivas \cite{michelvillarreal2023}.
+
+\section{Objetivos de investigación}
+La emergencia de la inteligencia artificial como fuerza disruptiva en los sistemas educativos contemporáneos ha generado un corpus científico en expansión acelerada, particularmente a partir del lanzamiento de herramientas generativas que han reconfigurado las prácticas pedagógicas y las estructuras de evaluación. No obstante, en el ámbito hispanoamericano -- región caracterizada por profundas asimetrías digitales, multiculturalismo lingüístico y rezago en infraestructuras tecnológicas --, esta producción académica permanece fragmentada, con predominio de contribuciones españolas que eclipsan voces periféricas y con escasa atención sostenida a niveles educativos básicos o contextos rurales e indígenas. Esta dispersión no solo obstaculiza la construcción de políticas educativas informadas, sino que perpetúa la invisibilización de realidades locales ante el avance inexorable de soluciones globales homogéneas. El presente estudio se justifica, por tanto, como imperativo epistemológico y ético: cartografiar rigurosamente el estado actual del conocimiento para develar tendencias dominantes, lagunas críticas y potencialidades transformadoras; ello con miras a orientar futuras investigaciones y decisiones institucionales que promuevan una integración equitativa de la IA capaz de reducir -- y no incrementar -- las brechas estructurales que históricamente han marcado los sistemas educativos de la región.
+
+Por todo lo expuesto, el objetivo general de esta investigación consiste en realizar un análisis bibliométrico y cualitativo exhaustivo de la producción científica indizada en Web of Science sobre la aplicación de la inteligencia artificial en educación en el contexto hispanoamericano durante el período 2018-2025; con el fin de caracterizar su evolución, estructura de productividad, tendencias temáticas dominantes e impacto intelectual; identificando simultáneamente los vacíos y desafíos que demanden atención prioritaria.
+
+A partir de este objetivo general se han formulado lo siguientes objetivos específicos:
+
+\begin{itemize}
+    \item Describir la evolución temporal de la producción científica, así como su dinámica citacional, para determinar puntos de inflexión potenciales.
+    \item Identificar los países, instituciones y autores más productivos, junto con las principales revistas de publicación; con especial énfasis en detectar las centralidades ibéricas y las periferias latinoamericanas.
+    \item Analizar las áreas temáticas predominantes mediante el examen de las categorías de conocimiento secundarias (solapamientos temáticos); con el propósito de revelar los enfoques dominantes en el campo.
+    \item Caracterizar en profundidad los documentos seminales (el núcleo de mayor impacto y concentración de citas); con objeto de extraer patrones metodológicos, aportes principales y las contribuciones que han moldeado el debate actual en el ámbito.
+    \item Proponer líneas estratégicas de investigación futura a partir de los hallazgos; priorizando enfoques críticos interculturales y éticos alineados con la equidad educativa en escenarios de desigualdad estructural.
+\end{itemize}
+
+\section{Metodología}
+El presente estudio se inscribe en la tradición de las revisiones bibliométricas con enfoque de mapeo sistemático del conocimiento (\textit{scoping review} bibliométrico), adoptando el protocolo PRISMA Extension for Scoping Reviews (PRISMA-ScR) formulado por \textcite{tricco2018} y las directrices metodológicas más consolidadas en el ámbito de la ciencia de la información y la educación \cite{donthu2021, moralmunoz2020, zupic2015}. Esta combinación asegura la máxima transparencia, reproducibilidad y rigor epistemológico, requisitos inexcusables cuando se pretende cartografiar un campo en rápida mutación como la intersección entre inteligencia artificial y educación en el espacio sociocultural y lingüístico hispanoamericano.
+
+
+\subsection{Fuente de datos}
+Se seleccionó la Web of Science Core Collection (WoS-CC) como fuente única de información. Esta decisión se fundamenta en la exhaustividad y normalización de sus metadatos institucionales y nacionales, crucial para la asignación precisa de la producción científica a países y regiones específicas. Además, WoS-CC ofrece la mayor estabilidad y calidad de indexación para la producción científica iberoamericana dentro de las bases de datos internacionales de alto impacto, permitiendo la descarga íntegra de referencias citadas y citas recibidas, lo cual es indispensable para el cálculo fiable de indicadores de impacto y el análisis de la estructura intelectual del campo. Su uso predominante en estudios bibliométricos previos sobre IA educativa refuerza la legitimidad metodológica de la investigación.
+
+
+\subsection{Estrategia de búsqueda, horizonte temporal y filtros aplicados}
+La búsqueda se ejecutó el 5 de noviembre de 2025 empleando la siguiente ecuación booleana en el campo \textit{Topic} (título, resumen, palabras clave del autor y \textit{Keywords Plus}): \textit{(``AI'' OR ``Artificial Intelligence'' OR ``IA'' OR ``Inteligencia Artificial'') AND (Educa* OR aprend* OR enseñ* learn OR teaching OR pedagog*)}. La restricción geográfica abarcó la totalidad de países hispanohablantes -- España y los dieciocho Estados latinoamericanos de habla española -- mediante los códigos oficiales de la plataforma, garantizando la captura de toda la producción científica con al menos un autor afiliado a una institución de dichos territorios.
+
+El horizonte temporal 2018-2025 responde a una decisión estratégica: el año 2018 marca el punto de inflexión en la consolidación académica de la IA educativa, mientras que la inclusión del trienio 2023-2025 permite observar y cuantificar el impacto disruptivo y acelerado de la IA generativa (ej. ChatGPT), fenómeno clave en el debate pedagógico actual. Se limitó la recuperación a los tipos documentales \textit{Article y Proceedings Paper} dentro de la categoría Web of Science ``Education Educational Research'', priorizando así contribuciones originales revisadas por pares y comunicaciones científicas de solvencia.
+
+\subsection{Criterios de inclusión y exclusión y flujo de selección según PRISMA-ScR}
+La aplicación de la estrategia de búsqueda arrojó un total de 36.113 identificados en la base de datos. Tras la aplicación rigurosa de los filtros automáticos previamente definidos (categoría, tipo documental, período y geografía), se seleccionaron 1.049 para su evaluación, lo que implicó la exclusión automática de 35.064 sin detección de duplicados.
+
+Posteriormente, se procedió a la revisión manual exhaustiva de títulos y resúmenes de los textos resultantes. Esta etapa permitió identificar y excluir cuatro documentos que, pese a cumplir formalmente los criterios, resultaron estar manifiestamente fuera del ámbito del estudio, al centrarse en aplicaciones de la IA en diagnóstico médico (3) o en robótica industrial sin vinculación educativa (1). El corpus definitivo quedó constituido por 1.045 documentos para el análisis. El flujo de selección y los criterios de exclusión se detallan en la Figura \ref{fig-1}.
+
+%--- codigo da figura 1 ---%
+\begin{figure}[h!]
+\centering
+\begin{minipage}{.90\textwidth}
+\includegraphics[width=\textwidth]{images/figura 1.png}
+\caption{Diagrama de flujo PRISMA-ScR para la identificación y selección de documentos.}
+\label{fig-1}
+\source{Elaboración propia; adaptado de \textcite{tricco2018}.}
+\end{minipage}
+\end{figure}
+
+\subsection{Extracción de datos y procedimientos analíticos}
+Los 1.045 registros completos se exportaron en formato texto plano para su procesamiento. El análisis se centró en indicadores bibliométricos clásicos -- producción anual, citas totales y promedio por año, índice h regional -- combinados con técnicas de análisis de contenido y caracterización de la productividad. Los procedimientos específicos incluyeron: distribución geográfica, institucional y autoral; análisis de las fuentes de publicación más relevantes; solapamientos de categorías de conocimiento secundarias (áreas temáticas) para inferir las tendencias disciplinares; y un análisis cualitativo profundo de los documentos seminales (el núcleo de veinte documentos más citados), extrayendo sus aportes epistemológicos, diseños metodológicos predominantes, niveles educativos abordados y contribuciones específicas al contexto sociocultural hispanoamericano. Todo el proceso se llevó a cabo empleando \textit{software} bibliométrico de uso estándar, asegurando la plena trazabilidad y reproducibilidad de cada fase del estudio.
+
+\section{Resultados}
+
+\subsection{Evolución temporal de la producción científica y dinámica citacional}
+El período 2018-2021 se caracterizó por una producción contenida y relativamente estable, con una media anual de 38,5 documentos y una variación interanual que nunca superó el 18 \%. Este ritmo reflejaba un interés aún exploratorio, limitado mayoritariamente a experiencias piloto de tutorías inteligentes y sistemas expertos tradicionales. El año 2022 supuso el primer quiebre significativo al duplicar prácticamente la cifra precedente (78 documentos), pero fue 2023 el que desencadenó la verdadera disrupción: 214 publicaciones, lo que representa un incremento del 174 \% respecto a 2022 y convierte ese ejercicio en el más productivo de la historia reciente de la investigación educativa hispanoamericana. La tendencia se consolidó en 2024 con 289 documentos y, según los datos disponibles hasta el 5 de noviembre de 2025, el año en curso superará ampliamente los 330 documentos (\Cref{fig-2}).
+
+%--- codigo da figura 2 ---%
+\begin{figure}[h!]
+\centering
+\begin{minipage}{.95\textwidth}
+\includegraphics[width=\textwidth]{images/fig2.png}
+\caption{Evolución anual del número de publicaciones y del total de citas recibidas por año de publicación (2018–2025).}
+\label{fig-2}
+\source{Elaboración propia.}
+\end{minipage}
+\end{figure}
+
+La curva de citas confirma y amplifica este salto estructural. Los trabajos publicados desde 2023 concentran 3 289 de las 4 220 citas totales del corpus, es decir, el 77,9 \%. El promedio de citas por documento en este último trienio alcanza las 11,4 citas, frente a las apenas 2,1 del cuatrienio anterior. Diez artículos publicados en 2023 ya superan individualmente el centenar de citas, un umbral que en campos educativos consolidados suele requerir lustros para alcanzarse. Este fenómeno no puede atribuirse exclusivamente al efecto de menor tiempo de exposición, sino a una recepción global acelerada que trasciende el ámbito hispanoamericano y posiciona la producción regional en el centro del debate internacional sobre IA generativa.
+
+\subsection{Distribución geográfica: centralidades ibéricas y periferias latinoamericanas}
+La producción científica se distribuye de manera profundamente asimétrica. España aglutina el equivalente al 71,4 \% del total del corpus. México, con 72 publicaciones, se sitúa en un lejano segundo lugar (8,7 \%), seguido por Colombia (4,5 \%), Chile (3,9 \%) y Perú (2,8 \%). Los trece países restantes aportan conjuntamente 73 documentos, apenas el 8,8 \% del conjunto (\Cref{fig-3}).
+
+%--- codigo da figura 3 ---%
+\begin{figure}[h!]
+\centering
+\begin{minipage}{.95\textwidth}
+\includegraphics[width=\textwidth]{images/fig3.png}
+\caption{Número de publicaciones por país (2018-2025).}
+\label{fig-3}
+\source{Elaboración propia.}
+\end{minipage}
+\end{figure}
+\newpage
+Ocho países registran menos de cinco publicaciones en ocho años: Bolivia, El Salvador, Guatemala, Honduras, Nicaragua, Panamá, Paraguay y República Dominicana. Esta distribución dibuja un mapa de centralidad ibérica absoluta y de periferias latinoamericanas extremadamente fragmentadas, donde la presencia científica es prácticamente simbólica en amplias zonas del continente.
+
+\subsection{Concentración institucional}
+
+La desigualdad geográfica se reproduce y agrava a nivel institucional. Las diez universidades más productivas publican 238 documentos, el 28,7 \% del corpus total. Nueve de ellas son españolas, encabezadas por la Universidad de Salamanca, la Universidad de Valencia y la Universidad Nacional de Educación a Distancia (UNED). México logra colocar al Tecnológico de Monterrey como la institución más productiva (\Cref{fig-4}).
+
+%--- codigo da figura 4 ---%
+\begin{figure}[h!]
+\centering
+\begin{minipage}{.95\textwidth}
+\includegraphics[width=\textwidth]{images/fig4.png}
+\caption{Universidades con mayor número de publicaciones (top 20).}
+\label{fig-4}
+\source{Elaboración propia.}
+\end{minipage}
+\end{figure}
+
+El 81 \% de la producción del top 20 institucional procede de España, lo que refuerza la imagen de un campo dominado por un reducido núcleo ibérico que actúa como motor casi exclusivo de la agenda investigadora hispanoamericana en IA educativa.
+
+\subsection{Revistas y estrategias editoriales}
+
+La concentración editorial es igualmente elevada. Diez cabeceras reúnen 483 documentos, el 58,2 \% del corpus. A nivel revista, \textit{Education Sciences (MDPI)} lidera el bloque, seguida por \textit{RIED}. \textit{Revista Iberoamericana de Educación a Distancia y Sustainability}. \textit{Comunicar, Journal of New Approaches in Educational Research y Computers \& Education} completan un grupo de revistas que combinan alto factor de impacto regional con acceso abierto (\Cref{fig-5}).
+
+%--- codigo da figura 5 ---%
+\begin{figure}[h!]
+\centering
+\begin{minipage}{.95\textwidth}
+\includegraphics[width=\textwidth]{images/fig5.png}
+\caption{Revistas/editoriales con mayor número de publicaciones (top 20).}
+\label{fig-5}
+\source{Elaboración propia.}
+\end{minipage}
+\end{figure}
+
+Nueve de las diez revistas más frecuentes operan en acceso abierto diamante u oro. Esta predominancia no es casual: responde a una estrategia deliberada de maximizar la visibilidad y la citación en un contexto marcado por restricciones presupuestarias crónicas en la mayoría de las instituciones latinoamericanas, donde las tasas de publicación en revistas de suscripción resultan prohibitivas.
+
+
+\subsection{Campos de conocimiento y solapamientos temáticos}
+Aunque el corpus pertenece íntegramente a la categoría ``Education Educational Research'' por diseño de la búsqueda, los solapamientos secundarios resultan altamente reveladores. Destacan Computer Science, Interdisciplinary Applications (18,7 \% del corpus), Linguistics (12,4 \%), Psychology, Educational (9,1 \%) y Computer Science, Artificial Intelligence (8,3 \%) (\Cref{fig-6}).
+
+%--- codigo da figura 6 ---%
+\begin{figure}[h!]
+\centering
+\begin{minipage}{.95\textwidth}
+\includegraphics[width=\textwidth]{images/fig6.png}
+\caption{Número de publicaciones por campo de conocimiento / categoría Web of Science (top 15).}
+\label{fig-6}
+\source{Elaboración propia.}
+\end{minipage}
+\end{figure}
+
+El crecimiento de Linguistics y Computer Science, Artificial Intelligence a partir de 2023 es especialmente intenso: entre 2023 y 2025 estas categorías multiplican por 4,2 y 3,8 respectivamente su presencia respecto al período 2018-2021. Este desplazamiento refleja el impacto transformador de los modelos generativos en el aprendizaje de lenguas, la escritura académica y la retroalimentación automatizada, áreas que han pasado de ser marginales a configurar el núcleo duro del debate actual.
+
+\subsection{Análisis de los documentos seminales: patrones de impacto e inflexión de la estructura intelectual del campo}
+Los veinte documentos más citados representan la vanguardia temática y metodológica del corpus, acumulando una masa crítica de 2,576 citas, lo que equivale al 61\% del total de citas en el período analizado. Dieciséis de estos veinte trabajos vieron la luz entre 2023 y 2024, y once están liderados por investigadores españoles, un hecho que evidencia la reciente y dramática inflexión temporal generada por el impacto de la Inteligencia Artificial Generativa. Esta aceleración citacional es atípica en la investigación educativa, indicando una recepción global y un posicionamiento de la producción regional en el centro de las discusiones internacionales sobre IA.
+
+El análisis cualitativo de estos trabajos revela un tránsito metodológico y temático: el campo ha evolucionado rápidamente de la experimentación técnica de sistemas incipientes (\textit{e-learning} o la eficacia de \textit{chatbots} para la puntuación en español) a la reflexión pedagógica y ética de calado, lo cual se evidencia en la clara predominancia de estudios basados en extensiones del Modelo de Aceptación de la Tecnología (TAM) y el Modelo Unificado de Aceptación y Uso de la Tecnología (UTAUT). El debate más prominente a partir de 2023 aborda la percepción dual de la IA como una amenaza a la integridad académica y, simultáneamente, como un catalizador para la reforma pedagógica, destacando la necesidad de que el pensamiento complejo y la evaluación auténtica adquieran centralidad.
+
+El documento que encabeza el ranking \textit{(Challenges and Opportunities of Generative AI for Higher Education as Explained by ChatGPT)}, con 277 citas, establece un hito epistemológico al incorporar explícitamente a ChatGPT como un ``informante experto'' en la metodología, detonando un debate ético-metodológico que atraviesa transversalmente la producción posterior. Este artículo sintetiza las siete oportunidades y ocho desafíos de la IA en la educación superior, destacando la personalización y la evaluación auténtica frente a los riesgos de plagio. Otros aportes seminales que han moldeado la estructura intelectual del campo incluyen la validación del modelo TAM para ChatGPT en el contexto hispanoamericano y la demostración experimental comparativa de la capacidad académica de ChatGPT, el cual supera en notas medias a estudiantes universitarios. Además, el marco ético más citado en español sobre IA y ODS4 subraya la necesidad de una ``inteligencia pedagógica'' para garantizar la equidad.
+
+Desde el punto de vista de la eficacia, se cuenta con el primer metaanálisis en español que cuantifica un efecto positivo moderado de la IA en el desempeño estudiantil, con un tamaño del efecto de $d=0.64$, aunque matizado por variables contextuales en entornos multiculturales. Asimismo, estudios experimentales han confirmado la mejora significativa del \textit{engagement} y el aprendizaje en poblaciones vulnerables mediante sistemas adaptativos basados en reconocimiento afectivo multimodal \cite{standen2020}. En el ámbito de la innovación didáctica, el trabajo con enfoque de \textit{Design-based research} ha proporcionado un modelo práctico para la integración de la IA en el aprendizaje experiencial para fomentar la autenticidad de la evaluación, especialmente en campos como la ingeniería. Finalmente, la construcción del primer índice sintético en el contexto andino evidenció que el mayor impacto percibido de la IA se centra en el aprendizaje autónomo, con un efecto medio-bajo general, lo que resalta la necesidad de políticas regionales adaptadas. En definitiva, los documentos más citados confirman la transformación del campo de estudio hacia un enfoque más crítico y ético, donde la IA se posiciona no como panacea, sino como aliada en la construcción de sociedades del conocimiento inclusivas (\Cref{tab-1}).
+
+
+\newpage
+{
+\footnotesize
+
+\begin{longtable}{@{}p{0.2cm}p{3cm}p{10cm}@{}}
+\caption{Núcleo Seminal de la Producción Científica: Principales Aportes y Concentración de Citas en el Corpus de IA y Educación (2018-2025).}\label{tab-1}\\
+\toprule
+1 & Título  & Challenges and Opportunities of Generative AI for Higher Education as Explained by ChatGPT\\
+  & Autoría & Michel-Villarreal \textit{et al.} \\
+  & Año     & 2023 \\
+  & Revista & Education Sciences \\
+  & Citas totales ($\bar{x}$ anual) & 277 (92.33) \\
+  & País & UK, Mexico \\
+  & Metodología & Cualitativa exploratoria (análisis de respuestas generadas por ChatGPT + marco teórico) \\
+  & Muestra & ChatGPT como ``informante experto'' + revisión de literatura \\
+  & Contribución & Identifica 7 oportunidades y 8 desafíos; destaca personalización, evaluación auténtica y riesgos éticos/plagio. Primer artículo que usa ChatGPT como co-autor/experto para mapear el tema \\
+\midrule
+2 & Título  & Teachers' attitudes towards chatbots in education: a technology acceptance model approach considering the effect of social language, bot proactiveness, and users' characteristics \\
+  & Autoría & Chocarro, Cortinas, Marcos-Matas \\
+  & Año     & 2023 \\
+  & Revista & Educational Studies \\
+  & Citas totales ($\bar{x}$ anual) & 172 (34.4)  \\
+  & País & España \\
+  & Metodología & Cuantitativa -- Modelo TAM extendido + PLS-SEM \\
+  & Muestra & 172 docentes españoles de secundaria y universidad \\
+  & Contribución & Actitud positiva moderada; el lenguaje social y la proactividad del bot son predictores clave. Extiende el TAM con variables específicas de chatbots educativos \\
+\midrule
+3 & Título  &  Artificial Intelligence in Higher Education: A Bibliometric Study on its Impact in the Scientific Literature  \\
+  & Autoría & Hinojo-Lucena \textit{et al.}\\
+  & Año     & 2019\\
+  & Revista &  Education Sciences\\
+  & Citas totales ($\bar{x}$ anual) &  148 (21.14) \\
+  & País &  Spain\\
+  & Metodología & Bibliométrico (Scopus) + análisis de co-ocurrencia \\
+  & Muestra & 525 artículos (2007--2018) \\
+  & Contribución & Tendencia exponencial; España y EE.UU. lideran; temas dominantes: e-learning y mobile learning. Uno de los primeros bibliométricos globales sobre IA en educación superior \\
+\midrule
+4 & Título  & The perception of Artificial Intelligence in educational contexts after the launch of ChatGPT: Disruption or Panic? \\
+  & Autoría & García-Peñalvo\\
+  & Año     & 2023\\
+  & Revista & Education in the Knowledge Society\\
+  & Citas totales ($\bar{x}$ anual) & 143 (47.67) \\
+  & País & España \\
+  & Metodología & Ensayo reflexivo + análisis de posicionamientos  \\
+  & Muestra & Revisión de manifiestos y literatura post-ChatGPT \\
+  & Contribución & No es disrupción tecnológica sino necesidad de cambio pedagógico. Influyente posicionamiento anti-pánico que marcó el debate hispano en 2023\\
+\midrule
+5 & Título  & Generative AI and the future of higher education: a threat to academic integrity or reformation? Evidence from multicultural perspectives\\
+  & Autoría & Yusuf, Pervin, Roman-González \\
+  & Año     & 2024\\
+  & Revista & Int J Educational Technology in Higher Ed\\
+  & Citas totales ($\bar{x}$ anual) & 135 (67.5)\\
+  & País &  España\\
+  & Metodología & Mixta: encuestas + análisis cualitativo\\
+  & Muestra & 3.087 estudiantes de 15 países\\
+  & Contribución & Percepción dual: amenaza a integridad pero también oportunidad de reforma. Evidencia empírica multicultural más grande hasta la fecha \\
+\midrule
+6 & Título  & Use of ChatGPT at University as a Tool for Complex Thinking: Students' Perceived Usefulness\\
+  & Autoría & Romero-Rodríguez \textit{et al.}\\
+  & Año     & 2023\\
+  & Revista & Journal of New Approaches in Educ Res \\
+  & Citas totales ($\bar{x}$ anual) & 110 (36.67)\\
+  & País & México, España\\
+  & Metodología &  Cuantitativa -- TAM + regresión múltiple\\
+  & Muestra & 876 estudiantes universitarios latinoamericanos \\
+  & Contribución & Utilidad percibida alta para pensamiento complejo, pero preocupación por dependencia. Valida TAM para ChatGPT en contexto hispanoamericano\\
+\midrule
+7 & Título  & Reflections on the ethics, potential, and challenges of artificial intelligence in the framework of quality education (SDG4)\\
+  & Autoría & Flores-Vivar, García-Peñalvo \\
+  & Año     & 2023\\
+  & Revista & Comunicar\\
+  & Citas totales ($\bar{x}$ anual) & 105 (35)\\
+  & País &  España\\
+  & Metodología & Revisión narrativa + marco ético \\
+  & Muestra & Literatura + ODS 4  \\
+  & Contribución & Necesidad de ``inteligencia pedagógica'' para garantizar equidad. Marco ético más citado en español sobre IA y ODS\\
+\midrule
+8 & Título  & Chatbot to improve learning punctuation in Spanish and to enhance open and flexible learning environments \\
+  & Autoría & Vázquez-Cano \textit{et al.} \\
+  & Año     & 2021\\
+  & Revista & Int J Educational Technology in Higher Ed \\
+  & Citas totales ($\bar{x}$ anual) & 100 (20) \\
+  & País & Spain \\
+  & Metodología & Cuasi-experimental pretest-postest \\
+  & Muestra & 87 estudiantes universitarios \\
+  & Contribución & Mejora significativa en competencias de puntuación. Evidencia temprana de eficacia de chatbots en gramática española\\
+\midrule
+9 & Título  & Applying the UTAUT model to explain the students' acceptance of an early warning system in Higher Education \\
+  & Autoría & Raffaghelli \textit{et al.}\\
+  & Año     & 2022\\
+  & Revista & Computers \& Education \\
+  & Citas totales ($\bar{x}$ anual) & 96 (24) \\
+  & País &  España\\
+  & Metodología & Cuantitativa -- UTAUT2 + PLS-SEM \\
+  & Muestra & 1.013 estudiantes universidad online \\
+  & Contribución & Expectativa de rendimiento y facilitadores clave; ansiedad negativa. Primera aplicación de UTAUT2 a sistemas de alerta temprana\\
+\midrule
+10 & Título  & The new reality of education in the face of advances in generative artificial intelligence \\
+  & Autoría & García-Peñalvo \textit{et al.}\\
+  & Año     & 2024\\
+  & Revista & RIED\\
+  & Citas totales ($\bar{x}$ anual) & 86 (43) \\
+  & País & España \\
+  & Metodología & Ensayo prospectivo \\
+  & Muestra & Revisión post-ChatGPT \\
+  & Contribución & Necesidad de redefinir evaluación y competencias docentes. Posicionamiento institucional muy influyente en Iberoamérica\\
+\midrule
+11 & Título  & Discussing with a computer to practice a foreign language: research synthesis and conceptual framework of dialogue-based CALL \\
+  & Autoría & Bibauw \textit{et al.}\\
+  & Año     & 2019\\
+  & Revista & Computer Assisted Language Learning\\
+  & Citas totales ($\bar{x}$ anual) & 84 (12)\\
+  & País & Ecuador, Belgium \\
+  & Metodología & Revisión sistemática + marco conceptual \\
+  & Muestra & 47 estudios (2013--2018) \\
+  & Contribución & Síntesis de CALL basado en diálogo. Marco conceptual de referencia para chatbots lingüísticos\\
+\midrule
+ 12 & Título  & Analysing the Impact of Artificial Intelligence and Computational Sciences on Student Performance: Systematic Review and Meta-analysis\\
+  & Autoría & García-Martínez \textit{et al.}\\
+  & Año     & 2023\\
+  & Revista & Journal of New Approaches  \\
+  & Citas totales ($\bar{x}$ anual) & 59 (19.67) \\
+  & País & España \\
+  & Metodología &  Revisión sistemática + metaanálisis\\
+  & Muestra & 28 estudios cuantitativos \\
+  & Contribución & Efecto positivo moderado ($d = 0.64$). Primer metaanálisis en español sobre impacto académico\\
+\midrule
+13 & Título  & Using Generative Artificial Intelligence Tools to Explain and Enhance Experiential Learning for Authentic Assessment\\
+  & Autoría & Salinas-Navarro \textit{et al.}\\
+  & Año     & 2024\\
+  & Revista & Education Sciences\\
+  & Citas totales ($\bar{x}$ anual) & 55 (27.5)\\
+  & País & UK, Mexico \\
+  & Metodología & Design-based research + caso de estudio \\
+  & Muestra &  Estudiantes de ingeniería (Tec de Monterrey)\\
+  & Contribución & Mejora autenticidad de evaluación. Modelo práctico de integración en aprendizaje experiencial\\
+\midrule
+14 & Título  & Comparative Study of the Attitudes and Perceptions of University Students in Business Administration and Management and in Education toward Artificial Intelligence  \\
+  & Autoría & Almaraz-López \textit{et al.} \\
+  & Año     & 2023\\
+  & Revista & Education Sciences\\
+  & Citas totales ($\bar{x}$ anual) & 51 (17)\\
+  & País & Spain \\
+  & Metodología & Cuantitativa -- encuesta ad hoc  \\
+  & Muestra & 428 estudiantes universitarios \\
+  & Contribución & Estudiantes de Educación más positivos que los de ADE. Evidencia de brecha disciplinar\\
+\midrule
+15 & Título  & Artificial Intelligence as an Educational Resource during Preservice Teacher Training\\
+  & Autoría & Ayuso-del Puerto, Gutiérrez-Esteban\\
+  & Año     & 2022\\
+  & Revista & RIED\\
+  & Citas totales ($\bar{x}$ anual) & 47 (11.75)\\
+  & País & España \\
+  & Metodología & Cualitativa -- grupos de discusión \\
+  & Muestra & 62 futuros docentes \\
+  & Contribución & Percepción positiva pero necesidad de formación. Estudio pionero en formación inicial del profesorado\\
+\midrule
+16 & Título  & Assessing student-perceived impact of using artificial intelligence tools: Construction of a synthetic index of application in higher education \\
+  & Autoría & Grajeda \textit{et al.} \\
+  & Año     & 2024\\
+  & Revista & Cogent Education\\
+  & Citas totales ($\bar{x}$ anual) & 45 (22.5)\\
+  & País & Bolivia, Perú \\
+  & Metodología &  Cuantitativa -- construcción de índice compuesto\\
+  & Muestra & 1.200 estudiantes universidades andinas  \\
+  & Contribución & Índice medio-bajo; mayor impacto percibido en aprendizaje autónomo. Primer índice sintético en contexto andino\\
+\midrule
+17 & Título  & Techniques and applications of Machine Learning and Artificial Intelligence in education: a systematic review \\
+  & Autoría & Forero-Corba, Bennasar \\
+  & Año     & 2024\\
+  & Revista & RIED\\
+  & Citas totales ($\bar{x}$ anual) & 44 (22) \\
+  & País &  España\\
+  & Metodología & Revisión sistemática \\
+  & Muestra & 71 artículos 2019--2023  \\
+  & Contribución & Clasificación de técnicas y vacíos en educación básica. Mapa muy completo de aplicaciones técnicas\\
+\midrule
+18 & Título  & An evaluation of an adaptive learning system based on multimodal affect recognition for learners with intellectual disabilities\\
+  & Autoría & Standen \textit{et al.} \\
+  & Año     & 2020\\
+  & Revista & British Journal of Educational Technology\\
+  & Citas totales ($\bar{x}$ anual) & 44 (7.33)  \\
+  & País & España \\
+  & Metodología & Experimental controlado \\
+  & Muestra & 24 alumnos con discapacidad intelectual  \\
+  & Contribución & Mejora significativa en engagement y aprendizaje. Evidencia de eficacia de sistemas afectivos multimodales \\
+\midrule
+19 & Título  & ChatGPT: The brightest student in the class\\
+  & Autoría & Vázquez-Cano \textit{et al.}\\
+  & Año     & 2023\\
+  & Revista & Thinking Skills and Creativity\\
+  & Citas totales ($\bar{x}$ anual) & 43 (14.33)\\
+  & País & España \\
+  & Metodología & Experimental comparativo \\
+  & Muestra & ChatGPT vs 100 estudiantes universitarios \\
+  & Contribución & ChatGPT supera en notas medias. Demostración impactante de capacidad académica de ChatGPT\\
+\midrule
+20 & Título  & Advanced technologies to face the challenge of educational innovation  \\
+  & Autoría & Prendes Espinosa, Cerdán Cartagena\\
+  & Año     & 2021 \\
+  & Revista & RIED\\
+  & Citas totales ($\bar{x}$ anual) & 42 (8.4)\\
+  & País &  España\\
+  & Metodología & Revisión narrativa \\
+  & Muestra & Literatura 2015--2020 \\
+  & Contribución & IA, VR y analytics como pilares. Marco prospectivo muy citado en planes institucionales\\
+\bottomrule
+\source{Elaboración propia.}
+\end{longtable}
+}
+
+%\newpage
+%--- codigo da tabela 1 ---%
+%{
+%\footnotesize
+
+%\begin{longtable}{@{}p{0.2cm}p{1.6cm}p{1cm}p{0.3cm}p{1.3cm}p{1.2cm}p{0.9cm}p{1.4cm}p{1.5cm}p{1.6cm}@{}}
+%\caption{Núcleo Seminal de la Producción Científica: Principales Aportes y Concentración de Citas en el Corpus de IA y Educación (2018-2025).}\label{tab-2}\\
+%\toprule
+%Pos &
+%Título &
+%Autoría &
+%Año &
+%Revista &
+%Citas totales ($\bar{x}$ anual) &
+%País &
+%Metodología &
+%Muestra &
+%Contribución \\
+%\midrule
+%\endfirsthead
+
+%\toprule
+%Pos &
+%Título &
+%Autoría &
+%Año &
+%Revista &
+%\shortstack{Citas totales \\ ($\bar{x}$ anual)} &
+%País &
+%Metodología &
+%Muestra &
+%Contribución \\
+%\midrule
+%\endhead
+
+%1 &
+%Challenges and Opportunities of Generative AI for Higher Education as Explained by ChatGPT &
+%Michel-Villarreal \textit{et al.} &
+%2023 &
+%Education Sciences &
+%277 (92.33) &
+%UK, Mexico &
+%Cualitativa exploratoria (análisis de respuestas generadas por ChatGPT + marco teórico) &
+%ChatGPT como ``informante experto'' + revisión de literatura &
+%Identifica 7 oportunidades y 8 desafíos; destaca personalización, evaluación auténtica y riesgos éticos/plagio. Primer artículo que usa ChatGPT como co-autor/experto para mapear el tema \\
+%\addlinespace
+
+%2 &
+%Teachers' attitudes towards chatbots in education: a technology acceptance model approach considering the effect of social language, bot proactiveness, and users' characteristics &
+%Chocarro, Cortinas, Marcos-Matas &
+%2023 &
+%Educational Studies &
+%172 (34.4) &
+%España &
+%Cuantitativa -- Modelo TAM extendido + PLS-SEM &
+%172 docentes españoles de secundaria y universidad &
+%Actitud positiva moderada; el lenguaje social y la proactividad del bot son predictores clave. Extiende el TAM con variables específicas de chatbots educativos \\
+%\addlinespace
+
+%3 &
+%Artificial Intelligence in Higher Education: A Bibliometric Study on its Impact in the Scientific Literature &
+%Hinojo-Lucena \textit{et al.} &
+%2019 &
+%Education Sciences &
+%148 (21.14) &
+%Spain &
+%Bibliométrico (Scopus) + análisis de co-ocurrencia &
+%525 artículos (2007--2018) &
+%Tendencia exponencial; España y EE.UU. lideran; temas dominantes: e-learning y mobile learning. Uno de los primeros bibliométricos globales sobre IA en educación superior \\
+%\addlinespace
+
+%4 &
+%The perception of Artificial Intelligence in educational contexts after the launch of ChatGPT: Disruption or Panic? &
+%García-Peñalvo &
+%2023 &
+%Education in the Knowledge Society &
+%143 (47.67) &
+%España &
+%Ensayo reflexivo + análisis de posicionamientos &
+%Revisión de manifiestos y literatura post-ChatGPT &
+%No es disrupción tecnológica sino necesidad de cambio pedagógico. Influyente posicionamiento anti-pánico que marcó el debate hispano en 2023 \\
+%\addlinespace
+
+%5 &
+%Generative AI and the future of higher education: a threat to academic integrity or reformation? Evidence from multicultural perspectives &
+%Yusuf, Pervin, Roman-González &
+%2024 &
+%Int J Educational Technology in Higher Ed &
+%135 (67.5) &
+%España &
+%Mixta: encuestas + análisis cualitativo &
+%3.087 estudiantes de 15 países &
+%Percepción dual: amenaza a integridad pero también oportunidad de reforma. Evidencia empírica multicultural más grande hasta la fecha \\
+%\addlinespace
+
+%6 &
+%Use of ChatGPT at University as a Tool for Complex Thinking: Students' Perceived Usefulness &
+%Romero-Rodríguez \textit{et al.} &
+%2023 &
+%Journal of New Approaches in Educ Res &
+%110 (36.67) &
+%México, España &
+%Cuantitativa -- TAM + regresión múltiple &
+%876 estudiantes universitarios latinoamericanos &
+%Utilidad percibida alta para pensamiento complejo, pero preocupación por dependencia. Valida TAM para ChatGPT en contexto hispanoamericano \\
+%\addlinespace
+
+%7 &
+%Reflections on the ethics, potential, and challenges of artificial intelligence in the framework of quality education (SDG4) &
+%Flores-Vivar, García-Peñalvo &
+%2023 &
+%Comunicar &
+%105 (35) &
+%España &
+%Revisión narrativa + marco ético &
+%Literatura + ODS 4 &
+%Necesidad de ``inteligencia pedagógica'' para garantizar equidad. Marco ético más citado en español sobre IA y ODS \\
+%\addlinespace
+
+%8 &
+%Chatbot to improve learning punctuation in Spanish and to enhance open and flexible learning environments &
+%Vázquez-Cano \textit{et al.} &
+%2021 &
+%Int J Educational Technology in Higher Ed &
+%100 (20) &
+%Spain &
+%Cuasi-experimental pretest-postest &
+%87 estudiantes universitarios &
+%Mejora significativa en competencias de puntuación. Evidencia temprana de eficacia de chatbots en gramática española \\
+%\addlinespace
+
+%9 &
+%Applying the UTAUT model to explain the students' acceptance of an early warning system in Higher Education &
+%Raffaghelli \textit{et al.} &
+%2022 &
+%Computers \& Education &
+%96 (24) &
+%España &
+%Cuantitativa -- UTAUT2 + PLS-SEM &
+%1.013 estudiantes universidad online &
+%Expectativa de rendimiento y facilitadores clave; ansiedad negativa. Primera aplicación de UTAUT2 a sistemas de alerta temprana \\
+%\addlinespace
+
+%10 &
+%The new reality of education in the face of advances in generative artificial intelligence &
+%García-Peñalvo \textit{et al.} &
+%2024 &
+%RIED &
+%86 (43) &
+%España &
+%Ensayo prospectivo &
+%Revisión post-ChatGPT &
+%Necesidad de redefinir evaluación y competencias docentes. Posicionamiento institucional muy influyente en Iberoamérica \\
+%\addlinespace
+
+%11 &
+%Discussing with a computer to practice a foreign language: research synthesis and conceptual framework of dialogue-based CALL &
+%Bibauw \textit{et al.} &
+%2019 &
+%Computer Assisted Language Learning &
+%84 (12) &
+%Ecuador, Belgium &
+%Revisión sistemática + marco conceptual &
+%47 estudios (2013--2018) &
+%Síntesis de CALL basado en diálogo. Marco conceptual de referencia para chatbots lingüísticos \\
+%\addlinespace
+
+%12 &
+%Analysing the Impact of Artificial Intelligence and Computational Sciences on Student Performance: Systematic Review and Meta-analysis &
+%García-Martínez \textit{et al.} &
+%2023 &
+%Journal of New Approaches \ldots &
+%59 (19.67) &
+%España &
+%Revisión sistemática + metaanálisis &
+%28 estudios cuantitativos &
+%Efecto positivo moderado ($d = 0.64$). Primer metaanálisis en español sobre impacto académico \\
+%\addlinespace
+
+%13 &
+%Using Generative Artificial Intelligence Tools to Explain and Enhance Experiential Learning for Authentic Assessment &
+%Salinas-Navarro \textit{et al.} &
+%2024 &
+%Education Sciences &
+%55 (27.5) &
+%UK, Mexico &
+%Design-based research + caso de estudio &
+%Estudiantes de ingeniería (Tec de Monterrey) &
+%Mejora autenticidad de evaluación. Modelo práctico de integración en aprendizaje experiencial \\
+%\addlinespace
+
+%14 &
+%Comparative Study of the Attitudes and Perceptions of University Students in Business Administration and Management and in Education toward Artificial Intelligence &
+%Almaraz-López \textit{et al.} &
+%2023 &
+%Education Sciences &
+%51 (17) &
+%Spain &
+%Cuantitativa -- encuesta ad hoc &
+%428 estudiantes universitarios &
+%Estudiantes de Educación más positivos que los de ADE. Evidencia de brecha disciplinar \\
+%\addlinespace
+
+%15 &
+%Artificial Intelligence as an Educational Resource during Preservice Teacher Training &
+%Ayuso-del Puerto, Gutiérrez-Esteban &
+%2022 &
+%RIED &
+%47 (11.75) &
+%España &
+%Cualitativa -- grupos de discusión &
+%62 futuros docentes &
+%Percepción positiva pero necesidad de formación. Estudio pionero en formación inicial del profesorado \\
+%\addlinespace
+
+%16 &
+%Assessing student-perceived impact of using artificial intelligence tools: Construction of a synthetic index of application in higher education &
+%Grajeda \textit{et al.} &
+%2024 &
+%Cogent Education &
+%45 (22.5) &
+%Bolivia, Perú &
+%Cuantitativa -- construcción de índice compuesto &
+%1.200 estudiantes universidades andinas &
+%Índice medio-bajo; mayor impacto percibido en aprendizaje autónomo. Primer índice sintético en contexto andino \\
+%\addlinespace
+
+%17 &
+%Techniques and applications of Machine Learning and Artificial Intelligence in education: a systematic review &
+%Forero-Corba, Bennasar &
+%2024 &
+%RIED &
+%44 (22) &
+%España &
+%Revisión sistemática &
+%71 artículos 2019--2023 &
+%Clasificación de técnicas y vacíos en educación básica. Mapa muy completo de aplicaciones técnicas \\
+%\addlinespace
+
+%18 &
+%An evaluation of an adaptive learning system based on multimodal affect recognition for learners with intellectual disabilities &
+%Standen \textit{et al.} &
+%2020 &
+%British Journal of Educational Technology &
+%44 (7.33) &
+%España &
+%Experimental controlado &
+%24 alumnos con discapacidad intelectual &
+%Mejora significativa en engagement y aprendizaje. Evidencia de eficacia de sistemas afectivos multimodales \\
+%\addlinespace
+
+%19 &
+%ChatGPT: The brightest student in the class &
+%Vázquez-Cano \textit{et al.} &
+%2023 &
+%Thinking Skills and Creativity &
+%43 (14.33) &
+%España &
+%Experimental comparativo &
+%ChatGPT vs 100 estudiantes universitarios &
+%ChatGPT supera en notas medias. Demostración impactante de capacidad académica de ChatGPT \\
+%\addlinespace
+
+%20 &
+%Advanced technologies to face the challenge of educational innovation &
+%Prendes Espinosa, Cerdán Cartagena &
+%2021 &
+%RIED &
+%42 (8.4) &
+%España &
+%Revisión narrativa &
+%Literatura 2015--2020 &
+%IA, VR y analytics como pilares. Marco prospectivo muy citado en planes institucionales \\
+
+%\bottomrule
+%\source{Elaboración propia.}
+%\end{longtable}
+%}
+
+\section{Discusión y conclusiones}
+La presente investigación, al delinear la estructura y la dinámica citacional del campo de la Inteligencia Artificial en Educación en el ámbito hispanoamericano, refrenda la existencia de una disrupción paradigmática. El incremento exponencial en la producción es el resultado más sobresaliente. La concentración de casi el 78 \% de las citas totales del corpus en los trabajos publicados a partir de 2023 evidencia que la irrupción de la Inteligencia Artificial actuó como un catalizador epistemológico, redefiniendo la agenda de investigación con una celeridad inusual en las ciencias sociales \cite{michelvillarreal2023, garciapenalvo2023}. Este comportamiento coincide con lo señalado por \textcite{yusuf2024}, quienes advierten que la IA generativa no solo introduce desafíos éticos, sino que también obliga a replantear los modelos de evaluación y las competencias docentes.
+
+Un resultado estructural lo constituye la marcada asimetría en la productividad y la afiliación institucional. La centralidad ibérica es ineludible, con España actuando como motor casi exclusivo al aglutinar más del 71 \% del corpus. Este predominio, que se extiende a la concentración de las instituciones más productivas, impone un desafío a la soberanía intelectual regional, ya que la agenda de investigación y los enfoques metodológicos tienden a replicar los intereses de los núcleos hegemónicos \cite{hinojolucena2019}. Esta situación ha sido criticada por \textcite{catalanpesce2024}, quien subraya que la brecha digital en América Latina no es solo tecnológica, sino también cultural, lo que exige políticas endógenas y desarrollo de IA localizada que atienda realidades rurales e indígenas \cite{monterogutenberg2021}.
+
+La maduración temática del corpus se evidencia en el tránsito de los enfoques. Mientras que el periodo inicial (2018–2022) estuvo marcado por la validación de sistemas expertos y experiencias piloto \cite{vazquezcano2021}, el núcleo seminal del campo revela un viraje hacia la reflexión ética y la validación de modelos sociotécnicos, especialmente aquellos basados en el Modelo TAM y sus extensiones \cite{chocarro2023, raffaghelli2022}. Sin embargo, persiste un debate abierto: \textcite{garciapenalvo2023} sostiene que el pánico inicial carece de fundamento y que la verdadera disrupción debe ser pedagógica, mientras que \textcite{prendesespinosa2021} alertan sobre riesgos de dependencia tecnológica y sesgos algorítmicos si no se incorporan marcos éticos robustos.
+
+La principal limitación del estudio reside en la restricción del corpus a la base de datos Web of Science, la cual, si bien asegura la calidad y normalización de los datos, puede haber excluido contribuciones valiosas indexadas únicamente en repositorios regionales o literatura gris. Esta limitación coincide con lo señalado por \textcite{donthu2021} respecto a los sesgos inherentes en estudios bibliométricos basados en una sola fuente. Asimismo, el análisis se circunscribe a indicadores cuantitativos y cualitativos derivados de publicaciones revisadas por pares, lo que deja fuera experiencias prácticas no documentadas en revistas científicas. Futuras investigaciones deberían integrar bases complementarias y metodologías mixtas que combinen análisis bibliométrico con estudios de caso en entornos vulnerables, así como explorar la construcción de indicadores que midan el impacto real de la IA en la equidad educativa \cite{grajeda2024}.
+
+Finalmente, los hallazgos ponen de relieve la necesidad de una agenda de investigación que trascienda la simple aplicación de modelos de aceptación tecnológica desarrollados en contextos homogéneos. Coincidimos con \textcite{ayusodelpuerto2022} en que la formación docente debe incorporar competencias críticas y éticas para evitar que la IA se convierta en un amplificador de desigualdades. La dirección futura debe enfocarse en cómo esta tecnología puede catalizar innovaciones didácticas orientadas a la equidad, explorando mecanismos que utilicen estas herramientas para reducir las brechas estructurales en lugar de amplificarlas, promoviendo una transformación pedagógica sostenible e inclusiva \cite{floresvivar2023}.
+
+
+
+
+\printbibliography\label{sec-bib}
+% if the text is not in Portuguese, it might be necessary to use the code below instead to print the correct ABNT abbreviations [s.n.], [s.l.]
+%\begin{portuguese}
+%\printbibliography[title={Bibliography}]
+%\end{portuguese}
+
+
+%full list: conceptualization,datacuration,formalanalysis,funding,investigation,methodology,projadm,resources,software,supervision,validation,visualization,writing,review
+\begin{contributors}[sec-contributors]
+\authorcontribution{Santiago Pozo-Sánchez}[conceptualization,investigation,methodology,writing,review]
+\authorcontribution{José-Antonio Marín-Marín}[formalanalysis,projadm,resources,software,supervision,visualization,writing,review]
+\authorcontribution{Ángel-Freddy Rodríguez-Torres}[funding,projadm,resources,supervision,validation,visualization,writing,review]
+\authorcontribution{Jesús López-Belmonte}[conceptualization,formalanalysis,investigation,methodology,software,writing,review]
+\end{contributors}
+
+\begin{dataavailability}
+\txtdataavailability{databody} % options: dataavailable, dataonly, databody, datanotav, nodata
+\end{dataavailability}
+
+\begin{funding}
+El presente estudio surge en el marco del proyecto de investigación de la Universidad Central del Ecuador, titulado ``Dinámicas de incorporación de la Inteligencia Artificial (IA) en la Universidad Central del Ecuador'', con código DI-CONV-2023-037.
+\end{funding}
+
+
+
+
+\end{document}
+
