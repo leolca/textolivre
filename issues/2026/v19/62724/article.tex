@@ -1,0 +1,835 @@
+% !TEX TS-program = XeLaTeX
+% use the following command:
+% all document files must be coded in UTF-8
+\documentclass[english]{textolivre}
+% build HTML with: make4ht -e build.lua -c textolivre.cfg -x -u article "fn-in,svg,pic-align"
+
+\journalname{Texto Livre}
+\thevolume{19}
+%\thenumber{1} % old template
+\theyear{2026}
+\receiveddate{\DTMdisplaydate{2025}{11}{7}{-1}} % YYYY MM DD
+\accepteddate{\DTMdisplaydate{2026}{1}{16}{-1}}
+\publisheddate{\DTMdisplaydate{2026}{6}{12}{-1}}
+\corrauthor{Fabián Sandoval-Ríos}
+\articledoi{10.1590/1983-3652.2026.62724}
+%\articleid{NNNN} % if the article ID is not the last 5 numbers of its DOI, provide it using \articleid{} commmand 
+% list of available sesscions in the journal: articles, dossier, reports, essays, reviews, interviews, editorial
+\articlesessionname{articles}
+\runningauthor{Pérez-Romero et al.} 
+%\editorname{Leonardo Araújo} % old template
+\sectioneditorname{Daniervelin Pereira~\orcid{0000-0003-1861-3609}}
+\layouteditorname{Leonardo Araujo~\orcid{0000-0003-3884-2177}}
+
+\title{ChatGPT, ally or enemy? Personal appraisal, beliefs, challenges, and applications in higher education: a mixed-method approach}
+\othertitle{ChatGPT, aliado ou inimigo? Avaliação pessoal, crenças, desafios e aplicações no ensino superior: uma abordagem de método misto}
+% if there is a third language title, add here:
+%\othertitle{Artikelvorlage zur Einreichung beim Texto Livre Journal}
+
+\author[1]{Nuria Pérez-Romero~\orcid{0000-0003-2070-5422}\thanks{Email: \href{mailto:nuria.perez@unab.cl}{nuria.perez@unab.cl}}}
+\author[1]{Lorena Martínez-Ulloa~\orcid{0000-0002-8788-4376}\thanks{Email: \href{mailto:lorena.martinez@unab.cl}{lorena.martinez@unab.cl}}}
+\author[1]{Mauricio Quidel~\orcid{0009-0005-9450-5265}\thanks{Email: \href{mailto:mauricio.quidel@unab.cl}{mauricio.quidel@unab.cl}}}
+\author[1]{Fabián Sandoval-Ríos~\orcid{0009-0007-4217-4665}\thanks{Email: \href{mailto:fabian.sandoval@unab.cl}{fabian.sandoval@unab.cl}}}
+\affil[1]{Universidad Andrés Bello, Faculty of Rehabilitation Sciences, Santiago, Chile.}
+
+\addbibresource{article.bib}
+% use biber instead of bibtex
+% $ biber article
+
+% used to create dummy text for the template file
+\definecolor{dark-gray}{gray}{0.35} % color used to display dummy texts
+\usepackage{lipsum}
+\SetLipsumParListSurrounders{\colorlet{oldcolor}{.}\color{dark-gray}}{\color{oldcolor}}
+
+% used here only to provide the XeLaTeX and BibTeX logos
+\usepackage{hologo}
+
+% if you use multirows in a table, include the multirow package
+\usepackage{multirow}
+
+% provides sidewaysfigure environment
+\usepackage{rotating}
+
+% CUSTOM EPIGRAPH - BEGIN 
+%%% https://tex.stackexchange.com/questions/193178/specific-epigraph-style
+\usepackage{epigraph}
+\renewcommand\textflush{flushright}
+\makeatletter
+\newlength\epitextskip
+\pretocmd{\@epitext}{\em}{}{}
+\apptocmd{\@epitext}{\em}{}{}
+\patchcmd{\epigraph}{\@epitext{#1}\\}{\@epitext{#1}\\[\epitextskip]}{}{}
+\makeatother
+\setlength\epigraphrule{0pt}
+\setlength\epitextskip{0.5ex}
+\setlength\epigraphwidth{.7\textwidth}
+% CUSTOM EPIGRAPH - END
+
+% to use IPA symbols in unicode add
+%\usepackage{fontspec}
+%\newfontfamily\ipafont{CMU Serif}
+%\newcommand{\ipa}[1]{{\ipafont #1}}
+% and in the text you may use the \ipa{...} command passing the symbols in unicode
+
+% LANGUAGE - BEGIN
+% ARABIC
+% for languages that use special fonts, you must provide the typeface that will be used
+% \setotherlanguage{arabic}
+% \newfontfamily\arabicfont[Script=Arabic]{Amiri}
+% \newfontfamily\arabicfontsf[Script=Arabic]{Amiri}
+% \newfontfamily\arabicfonttt[Script=Arabic]{Amiri}
+%
+% in the article, to add arabic text use: \textlang{arabic}{ ... }
+%
+% RUSSIAN
+% for russian text we also need to define fonts with support for Cyrillic script
+% \usepackage{fontspec}
+% \setotherlanguage{russian}
+% \newfontfamily\cyrillicfont{Times New Roman}
+% \newfontfamily\cyrillicfontsf{Times New Roman}[Script=Cyrillic]
+% \newfontfamily\cyrillicfonttt{Times New Roman}[Script=Cyrillic]
+%
+% in the text use \begin{russian} ... \end{russian}
+% LANGUAGE - END
+
+% EMOJIS - BEGIN
+% to use emoticons in your manuscript
+% https://stackoverflow.com/questions/190145/how-to-insert-emoticons-in-latex/57076064
+% using font Symbola, which has full support
+% the font may be downloaded at:
+% https://dn-works.com/ufas/
+% add to preamble:
+% \newfontfamily\Symbola{Symbola}
+% in the text use:
+% {\Symbola }
+% EMOJIS - END
+
+% LABEL REFERENCE TO DESCRIPTIVE LIST - BEGIN
+% reference itens in a descriptive list using their labels instead of numbers
+% insert the code below in the preambule:
+%\makeatletter
+%\let\orgdescriptionlabel\descriptionlabel
+%\renewcommand*{\descriptionlabel}[1]{%
+%  \let\orglabel\label
+%  \let\label\@gobble
+%  \phantomsection
+%  \edef\@currentlabel{#1\unskip}%
+%  \let\label\orglabel
+%  \orgdescriptionlabel{#1}%
+%}
+%\makeatother
+%
+% in your document, use as illustraded here:
+%\begin{description}
+%  \item[first\label{itm1}] this is only an example;
+%  % ...  add more items
+%\end{description}
+% LABEL REFERENCE TO DESCRIPTIVE LIST - END
+
+
+% add line numbers for submission
+%\usepackage{lineno}
+%\linenumbers
+
+\begin{document}
+\maketitle
+
+\begin{polyabstract}
+\begin{abstract}
+This study analyzes personal appraisal, beliefs, challenges, concerns, and applications regarding ChatGPT among students and academic staff from the Faculty of Rehabilitation Sciences at Andrés Bello University in Chile. Using a mixed-methods approach, surveys (n = 472) and focus groups revealed diverse attitudes toward ChatGPT. While participants highlighted its potential to enhance learning, streamline tasks, and create educational materials, important challenges related to ethical use, dependency, accuracy, and critical thinking emerged. Findings emphasize the importance of teacher training, ethical guidelines, and strategies to foster technological literacy and critical evaluation of information. The study underscores the need for balanced integration of ChatGPT as a complementary tool in higher education, ensuring that its use aligns with pedagogical objectives and promotes meaningful learning experiences. These insights contribute to the growing discourse on artificial intelligence (AI) in education, providing a foundation for future research on the responsible adoption of AI technologies.
+
+\keywords{Higher education \sep Artificial intelligence \sep Beliefs \sep Technology}
+\end{abstract}
+
+\begin{portuguese}
+\begin{abstract}
+Este estudo analisa a avaliação pessoal, as crenças, os desafios, as preocupações e as aplicações relacionadas ao ChatGPT entre estudantes e docentes da Faculdade de Ciências da Reabilitação da Universidade Andrés Bello, no Chile. Utilizando uma abordagem de métodos mistos, questionários (n = 472) e grupos focais revelaram atitudes diversas em relação ao ChatGPT. Embora os participantes tenham destacado o seu potencial para melhorar a aprendizagem, otimizar tarefas e apoiar a criação de materiais educativos, emergiram desafios relevantes associados ao uso ético, à dependência, à precisão da informação e ao pensamento crítico. Os resultados enfatizam a importância da formação docente, de diretrizes éticas e de estratégias destinadas a promover a literacia tecnológica e a avaliação crítica da informação. O estudo sublinha a necessidade de uma integração equilibrada do ChatGPT como ferramenta complementar no ensino superior, assegurando que o seu uso esteja alinhado com os objetivos pedagógicos e promova experiências de aprendizagem significativas. Estas contribuições inserem-se no debate crescente sobre a inteligência artificial (IA) na educação, oferecendo uma base para investigações futuras sobre a adoção responsável de tecnologias baseadas em IA.
+
+\keywords{Ensino superior \sep Inteligência artificial \sep Crenças \sep Tecnologia}
+\end{abstract}
+\end{portuguese}
+% if there is another abstract, insert it here using the same scheme
+\end{polyabstract}
+
+\section{Introduction}\label{sec-intro}
+ChatGPT is a conversational chatbot that was developed in November 2022 by Open AI and consists of generating texts from questions asked by users (known as prompts). In this way, it creates mostly unpublished content by relying on a large database available on the web \cite{diegoolite2023chatgpt}. Given the accelerated growth in the use of this tool, the United Nations Educational, Scientific and Cultural Organization \cite{unesco2024chatgpt} created the first quick guide for the use of ChatGPT in higher education institutions, providing guidelines on its application, challenges, and ethical implications. In this sense, it recognized that some universities have banned it for fear of plagiarism and some countries have blocked it. However, UNESCO proposes challenges and ethical implications that should be taken into consideration, especially regarding plagiarism, lack of regulation, data protection, or cognitive bias, since the tool is not governed by ethical principles, gender, or inclusion. Some universities have taken these factors into account, such as the Andrés Bello University (UNAB; Chile), which has already established guidelines through its library to control the use of artificial intelligence (AI) and preserve academic integrity in university works \cite{unab2024integridade}.
+
+At the national level, Chile published its first National Policy on Science, Knowledge, Technology and Innovation (CTCI), which established the importance of developing this type of tool as a future investment from an innovative but ethical vision. It was updated in 2025 \cite{chile2025pnia}. According to the data from the Latin American Index of AI \cite{cenia2023ilia}, Chile is the Latin American country with the highest AI development. Additionally, in relation to the 2030 Agenda for Sustainable Development, the goal was set to position Chile as the country with the greatest progress in artificial intelligence in Latin America. Based on this, the Chilean National Artificial Intelligence Policy \cite{chile2025pnia} was established, including three main axes: enabling factors; development and adoption; governance and ethics.
+
+In this sense, the use of AI and one of its resources, such as ChatGPT, have been suggested as options that could improve different aspects of the training process \cite{lo2023impact}. In \posscite{lo2023impact} literature review, it is stated that ChatGPT could benefit teaching preparation, specifically by generating course material, providing suggestions, and/or translating documents into different languages. It also suggests that ChatGPT could help in the generation of assessment tasks and in performance evaluation itself. From the students’ point of view, for learning, it is suggested that AI could help in answering questions, summarizing information, facilitating collaboration, providing feedback, or assisting with exam preparation, review of concepts, and writing. \textcite{neumann2023chatgpt}, based on the study of gray literature, point out different challenges and opportunities, highlighting as the main challenge the unknown potential of this tool, which generates uncertainty regarding the aspects that should be used in the context of higher education. In this regard, critical challenges and controversies remain, such as the generation of incorrect or biased information (known as “hallucinations”), the lack of reliable bibliographic citations, and the risk of compromising academic integrity \cite{marinas2025tam,unesco2024chatgpt}. Uncertainty about the unknown potential of these tools and their rapid evolution raises questions among higher education institutions about how to validate their ethical and pedagogical suitability within current regulatory frameworks \cite{unesco2024chatgpt}.
+
+Since ChatGPT was launched, several studies have taken an interest in examining it. Using the Technology Acceptance Model (TAM), originally proposed by Fred Davis in 1989, attempts have been made to predict and explain how students and teachers adopt artificial intelligence tools such as ChatGPT in higher education \cite{aguilos2024chatgpt,barakat2025educators,marinas2025tam}. This theory holds that the acceptance of a technology depends mainly on two key determinants: perceived usefulness, which is the user’s belief that the technology will improve their academic or professional performance, and perceived ease of use, which refers to the minimum amount of effort expected when interacting with the chatbot \cite{davis1989tam}. Due to the complexity of generative AI, current research uses extended models (eTAM) that integrate additional variables such as social influence, trust, information credibility \cite{marinas2025tam}, perceived risk, technological anxiety \cite{barakat2025educators}, and privacy concerns \cite{kelly2025healthcare} to better understand users’ behavioral intentions. Furthermore, the adoption of ChatGPT is not solely based on its convenience, but is also influenced by the emotions and expectations it generates in people \cite{lee2024chatgpt}. In the university context, these factors influence attitudes toward the tool, which has been identified as the main predictor of intention to use and effective adoption for tasks such as bibliography synthesis, multilingual translation, and academic research support \cite{aguilos2024chatgpt,zou2023acceptance}.
+
+Despite growing research on ChatGPT in higher education, current studies have mostly focused on general academic contexts, language learning, and scientific writing support \cite{marinas2025tam,zou2023acceptance}. However, there are still gaps in understanding how this technology is perceived and used in professional training in rehabilitation sciences. In this field, specific challenges related to clinical reasoning, medical information accuracy, and sensitive data protection are critical, as AI responses may be inconsistent or lack the depth necessary for complex health contexts \cite{kelly2025healthcare,marinas2025tam}. Furthermore, the lack of data on the use of AI in specific faculties limits the ability of institutions to design strategies that respond to the particular educational demands of these disciplines, which require a balance between automation and human agency \cite{kelly2025healthcare,unab2024integridade}.
+
+Based on the above, the following research question arises: how do students and faculty perceive the use of ChatGPT in terms of previous experience, perceived benefits and challenges, interaction with students, impact on training, and impact on rehabilitation practice? The general objective of this study is to analyze the experience in the use of ChatGPT in the formative process of students and faculty of the Faculty of Rehabilitation Sciences (FCR) of UNAB. For this purpose, two specific objectives were formulated: (1) to compare the differences between students and faculty on the applications of ChatGPT, including: positioning use of ChatGPT in the educational environment, hours of Internet use, knowledge of ChatGPT, and frequency of use of ChatGPT; and (2) to analyze the perceptions of both groups towards ChatGPT, including previous experience, benefits and challenges, interaction with students, impact on training, and impact on rehabilitation. This information could be crucial to understand the real impact of these technologies in higher education, ensuring that their current and future implementation is aligned with the needs and expectations of students and faculty, considering their own voices and valuing their experiences and ideas about the use of ChatGPT.
+
+\section{Method}\label{sec-normas}
+\subsection{Sampling}
+A non-probabilistic sampling of students and faculty of the FCR of the UNAB was carried out, whose only exclusion criterion was not wanting to participate. Previously, the sample size was calculated \cite[p. 178]{hernandez2014metodologia}, requiring at least a total of 353 students and 247 faculty. For this purpose, the entire target population was considered (N = 4,266 students and N = 682 faculty) assuming a confidence level of 95\% and a margin of error of 5\%. The participants who answered the initial survey were contacted as part of focus groups, with participation being voluntary. The only inclusion criterion was the affirmative response to the use of ChatGPT in this survey. A minimum of 2 focus groups were established for each segment of the population (students and faculty) \cite{prieto2002investigacion}, with a minimum of 4 and a maximum of 10 participants, following the recommendations of previous literature \cite{bonilla2017grupos,prieto2002investigacion}.
+
+\subsection{Design}\label{sec-conduta}
+A mixed study was conducted, including a first observational and cross-sectional part for the characterization of the sample and a second qualitative part of iterative phenomenological method of emerging categories \cite{creswell2016qualitative,rueda2023categorias} with a descriptive and exploratory scope.
+
+
+\subsection{Instruments}\label{sec-fmt-manuscrito}
+Google Form: created by the researchers based on the research objectives (\Cref{tab1}).
+
+
+\begin{table}[h!]
+\centering
+\begin{threeparttable}
+\caption{Characterization form.}
+\label{tab1}
+\begin{tabular}{p{3cm}p{5cm}p{5.5cm}}
+\toprule
+Variable & Question & Type of answer \\
+\midrule
+
+Sociodemographic &
+Gender and year of birth &
+Female, male, other, and prefer not to answer; year of birth \\
+
+Level of knowledge &
+How much do you know about ChatGPT? &
+Scale from 1 to 10 in ascending order \\
+
+Frequency of use &
+How often do you use ChatGPT? &
+Scale from 1 to 5 in ascending order \\
+
+Daily Internet usage &
+Hours of daily Internet usage &
+Less than 1 hour, 1 to 3 hours, 3 to 5 hours, 5 to 8 hours, 8 to 11 hours, 11 to 14 hours, more than 14 hours \\
+
+Positioning for or against &
+How would you position yourself regarding the use of ChatGPT in the educational environment? &
+Scale from 1 to 5 in ascending order \\
+\bottomrule
+\end{tabular}
+\source{Authors' elaboration.}
+\end{threeparttable}
+\end{table}
+
+Semi-structured interviews through focus groups to learn about the perception and use of ChatGPT: two semi-structured interview scripts were used, one for students and the other for faculty (Appendix \ref{apx-longtable1}), created ad hoc by the researchers and subsequently validated by expert judgment.
+
+
+\subsection{Procedure}\label{sec-formato}
+The Google Form was distributed by email to both groups and requested up to two times between March 8, 2023, and October 24, 2023. The data were stored in an Excel spreadsheet through the form and subsequently analyzed descriptively, providing a characterization of the participants.
+
+The ethical considerations of the Declaration of Helsinki for research in humans were considered \cite{wma2013helsinki}. In addition, prior to data collection, the research protocol was approved by the Scientific Ethical Committee of the Hospital San Juan de Dios de Santiago de Chile, Chile (Acta de Revisión Protocolo de Investigación N° 229 Versión 1, Resolución Exenta N° 2213578397), dated July 23, 2023. The participants did not receive any type of incentive. They all signed an informed consent form and were made aware that they could withdraw from the study at any time, without negative consequences.
+
+After the survey, focus groups were conducted, taking into account those who answered that they had used ChatGPT for academic purposes, regardless of their frequency. These sessions were videotaped and transcribed using the tool provided by Zoom and Microsoft Word. After this, they were reviewed to adjust for errors, and all private data were modified to make it impossible to identify them. All focus groups were conducted by an expert who did not share links with the participants. Both quantitative and qualitative data were subsequently evaluated by two authors (N.P.-R. and F.S.).
+
+
+\subsection{Analysis}\label{sec-modelo}
+Descriptive and frequency analyses were carried out, differentiating between faculty and students, for the variables consulted. In addition, the relationships between these variables were evaluated using Spearman correlations, and the Mann-Whitney U test was applied to compare the differences between faculty and students. Since the main variables (except year of birth and gender) are ordinal, parametric assumptions were not met; therefore, nonparametric methods, suitable for the analysis of ordinal data, were used. It was considered significant when p < .05. Analyses were performed using JASP statistical software and Microsoft Excel 365.
+
+Content validation was analyzed by means of expert judgment, considering the opinion of four experts. The relevance, clarity, and importance of each question were assessed, and a quantitative approach was performed using the content validity index (CVI) to determine the questions that were modified or eliminated \cite{desouza2017psicometricas,padilla2019validacion}. In addition, an open-ended question was added so that each expert could explain what he or she thought was appropriate in each question. These data were collected through a Word document sent by email and analyzed using Microsoft Excel 365.
+
+For the analysis of the focus groups, the six-step method of \textcite{braun2006thematic} was followed, in accordance with the methodology previously developed by \textcite{kovacs2022pitfall} (\Cref{fig-1}). The authors met several times during the analysis process in order to contrast ideas and reach consensus, avoiding author bias. Finally, a membership check was performed to validate the data obtained \cite{mckim2023memberchecking}.
+
+\begin{figure}[h!]
+\centering
+\begin{minipage}{.95\textwidth}
+\includegraphics[width=\textwidth]{Fig1.png}
+\caption{Six-step method.}
+\label{fig-1}
+\source{Image made by the authors using napkin.ai \cite{napkin2026ai} based on information from \textcite{braun2006thematic}.}
+\end{minipage}
+\end{figure}
+
+
+\section{Results}\label{sec-organizacao}
+\subsection{Validation}
+The interview was presented to the four experts, who made comments and evaluated it based on clarity, relevance, and importance. None of the items were eliminated, since all scored more than 2 important points. However, those items that obtained a CVI of less than 0.6 were given special consideration. All the experts’ comments were considered in deciding whether to maintain or modify the interview questions, the final version being the one shown in Appendix \ref{apx-longtable2}. \Cref{tab2} shows the results obtained from each of the experts in the general interview script.
+
+\begin{table}[h!]
+\centering
+\begin{threeparttable}
+\caption{Analysis of experts' opinion.}
+\label{tab2}
+\begin{tabular}{p{2cm}p{2cm}p{2cm}p{2cm}p{2cm}p{2cm}}
+\toprule
+Interview &
+Clarity &
+Pertinence &
+Importance (mean) &
+Importance (standard deviation) &
+CVI (importance) \\
+\midrule
+
+1 & 91\%  & 89\%  & 3.63 & 0.78 & 0.87 \\
+2 & 73\%  & 80\%  & 3.30 & 1.04 & 0.78 \\
+3 & 100\% & 96\%  & 3.76 & 0.59 & 0.92 \\
+4 & 92\%  & 98\%  & 3.82 & 0.53 & 0.92 \\
+
+\bottomrule
+\end{tabular}
+\source{Authors' elaboration.}
+\end{threeparttable}
+\end{table}
+
+
+\subsection{Participants}\label{sec-organizacao-latex}
+\Cref{fig-2} shows the process and details of each stage of the research. Thus, it can be seen that of the 4,266 students and 682 faculty of the Faculty of Rehabilitation Sciences, a total of 365 students and 107 faculty filled out the survey and accepted participation in the research. The causes that led participants not to respond to the survey are unknown. There was no missing data since all the questions in the survey were mandatory, so all the data were analyzed. After this, students and faculty who responded that they had used ChatGPT daily, frequently, or occasionally (n = 111 students, n = 31 faculty) were invited to participate in the focus groups. Finally, 15 of those students and 11 of the faculty participated in the focus groups. Again, the reasons for not participating are unknown, as they did not respond to the mail delivered. The duration of each focus group ranged from 30-60 minutes.
+
+\begin{figure}[h!]
+\centering
+\begin{minipage}{.95\textwidth}
+\includegraphics[width=\textwidth]{Fig2.png}
+\caption{Flow chart of participants.}
+\label{fig-2}
+\source{Authors’ elaboration.}
+\end{minipage}
+\end{figure}
+
+\subsubsection{Quantitative analysis}\label{sec-titulo}
+The tables in Appendix \ref{apx-longtable2} show the descriptive data and frequency analysis of the survey conducted. The median year of birth was 1983 for faculty and 2001 for students. The interquartile range for faculty was 10, with a minimum of 1957 and a maximum of 1997. There was higher participation of women than men in both faculty (63.55\%) and students (72.60\%). Of the number of hours of Internet use, both faculty and students most frequently reported 5 to 8 hours of daily use. Most faculty (89.72\%) and students (89.86\%) reported having heard of ChatGPT; however, almost half of the faculty (44.86\%) and students (42.19\%) reported that they had never used it. Finally, no faculty declared themselves experts on the subject, compared to 4.38\% of the students.
+
+For the Spearman correlation analyses (Appendix \ref{apx-longtable2}), the frequency of use correlated very significantly and with a strong correlation with knowledge of ChatGPT. This suggests that greater familiarity with ChatGPT is associated with more frequent use, highlighting the importance of exposure and hands-on experience in fostering meaningful adoption of AI tools in educational settings. In addition, the position with respect to ChatGPT correlated highly significantly with three variables: with medium strength and positively with hours of Internet use, with weak strength and positively with knowledge of ChatGPT, and finally with weak strength and negatively with year of birth. Overall, attitudes toward ChatGPT were moderately associated with general digital engagement, weakly influenced by self-reported knowledge of the tool, and only marginally related to age, suggesting that acceptance in educational contexts is shaped more by experience and contextual factors than by generational differences.
+
+Finally, the independent group contrast analyses (Mann-Whitney U), considering the groups of faculty and students, were only significant with respect to the positioning regarding the use of ChatGPT in the educational environment, with faculty being the ones who positioned themselves mostly in favor compared to students, as can be seen in the descriptive analyses included in Appendix \ref{apx-longtable2}.
+
+\subsection{Qualitative analysis}\label{sec-autores}
+This section presents the qualitative results derived from the analysis of the interviews, organized into themes and sub-themes that reflect participants’ personal appraisal, beliefs, perceived challenges, and applications of ChatGPT in educational and professional contexts. The following tables summarize the corresponding sub-themes, the frequency of mentions, and the key codes for the four main themes found: personal appraisal, beliefs, challenges, and applications.
+
+\Cref{tab3} presents the results related to the Personal Appraisal theme. In this study, personal appraisal refers to participants’ subjective evaluation of ChatGPT in relation to their academic or professional roles, encompassing emotional responses, perceived usefulness, and overall positioning toward its use. This appraisal reflects an ambivalent evaluation, shaped by both perceived benefits and concerns associated with the use of the tool.
+
+\begin{table}[h!]
+\centering
+\begin{threeparttable}
+\caption{Personal Appraisal.}
+\label{tab3}
+\begin{tabular}{p{3cm}p{3,5cm}c p{5cm}}
+\toprule
+Theme & Sub-theme & Frequency & Code \\
+\midrule
+\multirow{6}{*}{Personal Appraisal}
+& Confidence and Security & 10 & Feelings of insecurity and uncertainty \\
+& Confidence and Security & 3 & Perception of risks and limitations \\
+& Negative Experiences & 2 & Negative perceptions of faculty towards ChatGPT \\
+& Positive Experiences & 7 & Positive perceptions and feelings towards ChatGPT \\
+& General Perceptions & 3 & General attitude towards ChatGPT \\
+& Usability and Access & 1 & Ease of use \\
+& Usability and Access & 5 & Limitations in functionality \\
+\bottomrule
+\end{tabular}
+\source{Authors' elaboration.}
+\end{threeparttable}
+\end{table}
+
+Participants expressed feelings of insecurity and uncertainty regarding the use of ChatGPT, particularly related to trust and reliability. These perceptions point to difficulties in assessing the accuracy and implications of the information generated by the tool. As one student stated, “in the end it generates distrust in me, since, if this is not used well, I will not know who to believe” (Group 3 of students). Another participant referred to uncertainty about the future impact of artificial intelligence, noting “the uncertainty of thinking that in the future we will all think the same” (Group 2 of students).
+
+They also reported feelings of fear related to the possibility of being replaced in the future or losing control over professional decision-making. One student expressed this concern by stating, “at some point it could perhaps come to replace certain types of professionals” (Group 3 of students). These views suggest that ChatGPT is perceived as both useful and potentially threatening, depending on how it is used and integrated into professional contexts.
+
+As one student noted, “because while it is a tool that is dangerous, it can also be very useful to us” (Group 2 of students). This position reflects a cautious appraisal that balances perceived risks and benefits.
+
+On the other hand, positive experiences showed a favorable assessment toward ChatGPT, highlighting its usefulness in supporting learning and task organization. One student described it as “someone who gives me support and a guide so that I can start to structure myself” (Group 1 of students), while a faculty member noted improvements in how information is delivered “especially in the table formats” (Group 2 of faculty). These accounts reinforce the perception of ChatGPT as a supportive resource rather than a substitute for human guidance.
+
+Finally, participants also reflected on usability and access, acknowledging both the ease of use of ChatGPT and its functional limitations. From the students’ perspective, challenges related to the operation of the tool were mentioned, such as the need to update ChatGPT or to learn how to use it effectively. Overall, these findings indicate that personal appraisal of ChatGPT is characterized by a nuanced and context-dependent evaluation rather than a uniform stance.
+
+\Cref{tab4} presents the results related to the Beliefs theme. In this study, beliefs refer to participants’ interpretative views on the role of ChatGPT in education. These beliefs encompass perceived positive and negative impacts, expectations about future use, and considerations related to trust and reliability. They reflect broader assumptions and judgments about how artificial intelligence may influence teaching, learning, and professional roles in education.
+
+\begin{table}[h!]
+\centering
+\begin{threeparttable}
+\caption{Beliefs about ChatGPT in education.}
+\label{tab4}
+\begin{tabular}{p{3cm}p{3cm}c p{6cm}}
+\toprule
+Theme & Sub-theme & Frequency & Code \\
+\midrule
+
+\multirow{11}{=}{Beliefs about ChatGPT in education}
+
+& \multirow{3}{=}{Perceptions of Negative Impact}
+& 11 & Risk of dehumanization and loss of human skills \\
+& & 7 & Concern about technological dependence and generation unconcerned with learning \\
+& & 4 & Risk of oversimplification of processes \\
+
+& \multirow{2}{=}{Perceptions of Positive Impact}
+& 11 & Useful tool if used ethically and with proper guidance \\
+& & 3 & Simplification of tasks and support in future technological contexts \\
+
+& \multirow{3}{=}{Perceptions of the Future}
+& 8 & ChatGPT should be used consciously by the next generations \\
+& & 5 & AI should be complementary to the human role \\
+& & 3 & Future decisions will be delegated to machines \\
+
+& \multirow{3}{=}{Trust and Reliability}
+& 5 & Risk of overreliance on technology \\
+& & 3 & Misperception of perfection in ChatGPT \\
+& & 2 & Distrust about privacy and data security \\
+
+& \multirow{2}{=}{Interaction and Complementary Use}
+& 5 & Using ChatGPT as a complementary tool, not a replacement \\
+& & 2 & ChatGPT replaces search engines but should not be the only resource \\
+
+\bottomrule
+\end{tabular}
+\source{Authors' elaboration.}
+\end{threeparttable}
+\end{table}
+
+Regarding perceived negative impact, several participants associated ChatGPT with risks of dehumanization and reduced development of human skills. A student noted that ChatGPT may help with content, but “how to empathize, how to relate to others, has to be in a human context” (Group 4 of students). Another student emphasized limitations in interpersonal understanding, stating that the tool “cannot feel what a connection is” (Group 1 of students). Together, these beliefs frame ChatGPT as insufficient for inherently human dimensions of professional formation, reinforcing the need for human mediation in learning processes.
+
+Participants also expressed beliefs about oversimplification and excessive dependence on technology. One student warned that easy access to information may lead to “a risk of oversimplification, without the understanding of the associated procedures” (Group 3 of students). Similarly, a faculty member highlighted “the oversimplification of things… if we do not understand the procedures that occur in between” (Group 2 of faculty). These views suggest a belief that learning may become more superficial when the tool is used as a shortcut rather than as support for deeper reasoning.
+
+At the same time, positive beliefs emphasized that ChatGPT can be valuable when used ethically and with proper guidance. As one faculty participant stated, “it is a tremendous support… however, it requires… an ethical component… and the use of critical thinking” (Group 3 of faculty). This belief positions ChatGPT as beneficial under conditions of responsible use, where pedagogical guidance and critical evaluation remain central.
+
+Beliefs about future use were also expressed, with participants emphasizing conscious and responsible use by new generations. One student noted that future users should approach the tool “on a conscious basis” (Group 4 of students), and that AI should remain “a complement to the human role” (Group 4 of students). These expectations highlight an anticipatory belief that educational value will depend on developing criteria and judgment for responsible use.
+
+Finally, beliefs related to trust and reliability focused on the need to verify information and concerns about transparency. A faculty member expressed skepticism because “you don’t know where the information comes from” (Group 2 of faculty). This conditional trust suggests that acceptance of ChatGPT is shaped not only by perceived utility but also by perceived reliability, accountability, and safeguards around information use.
+
+\Cref{tab5} presents the results related to the Challenges and concerns theme. This theme focuses on the main challenges associated with the use of ChatGPT, encompassing technical, ethical, and pedagogical aspects. The analysis highlights how these challenges shape participants’ cautious and critical perspectives toward the integration of ChatGPT in educational contexts, particularly regarding issues of accuracy, ethical responsibility, technological adaptation, and the development of critical thinking.
+
+\begin{table}[h!]
+\centering
+\begin{threeparttable}
+\caption{Challenges and concerns.}
+\label{tab5}
+\begin{tabular}{p{2.5cm} p{3cm} c p{6cm}}
+\toprule
+Theme & Sub-theme & Frequency & Code \\
+\midrule
+\multirow{13}{=}{Challenges and concerns}
+
+& \multirow{3}{=}{Adaptation and Effective Use}
+& 7 & Need for constant updates and adaptation \\
+& & 2 & Need for training to facilitate learning \\
+& & 1 & Risk of losing critical thinking \\
+
+& \multirow{2}{=}{Knowledge and Faculty Training}
+& 7 & Erroneous or problematic information \\
+& & 3 & Ethical responsibility in the use of ChatGPT \\
+
+& \multirow{3}{=}{Dependency and Critical Thinking}
+& 4 & Challenge of adapting to new technologies \\
+& & 2 & Requires precise question formulation \\
+& & 2 & Essential prior knowledge for proper use \\
+
+& \multirow{3}{=}{Accuracy and Verification of Information}
+& 22 & Challenge of avoiding dependency in students \\
+& & 8 & Risk of receiving information from a limited perspective \\
+& & 6 & Need for confirmation with updated sources \\
+
+& \multirow{2}{=}{Regulation and Ethical Responsibility}
+& 16 & Need for additional data corroboration \\
+& & 4 & Need for regulation to ensure proper use \\
+\\
+\bottomrule
+\end{tabular}
+\source{Authors' elaboration.}
+\end{threeparttable}
+\end{table}
+
+One of the most relevant challenges identified relates to the accuracy and verification of information. Participants expressed concerns about relying on information whose origin and reliability are unclear. As one student stated, “the main challenge would be not to rely so much on the information that appears there, because although it is complete, you don’t know where it comes from” (Group 2 of students). Similarly, a faculty member warned about the risk of assuming that generated content is fully aligned with reality, noting “the worst thing is to make the act of faith that what the application delivers is one hundred percent in line with reality” (Group 1 of faculty). These concerns underscore the need for verification practices and critical evaluation of AI-generated information.
+
+Ethical responsibility and regulation also emerged as significant concerns. Participants highlighted uncertainties regarding access, supervision, and potential misuse of the tool, particularly in educational settings. One student questioned, “who do I give this tool to? Who can access it?” and emphasized the need for external supervision to ensure proper use (Group 3 of students). These perspectives reflect broader ethical concerns related to accountability, regulation, and responsible implementation of ChatGPT in educational contexts.
+
+Another important challenge relates to technological adaptation and faculty training. Participants noted that effective use of ChatGPT requires not only continuous updating of knowledge about the tool but also the development of skills to formulate precise questions. As one faculty member observed, “the greatest difficulty is that we faculty cannot adapt at the same speed as the students” (Group 2 of faculty). Another faculty participant added that the challenge lies in “how we adapt and teach students to take this technology and use it in a good way” (Group 2 of faculty). These challenges point to the need for structured faculty training and pedagogical strategies that support meaningful integration of AI tools.
+
+Finally, concerns arose about technological dependency and its impact on the development of critical thinking, particularly among students. Participants warned that excessive reliance on ChatGPT could limit the development of essential cognitive and reflective skills. One student mentioned that delegating complex academic tasks to the tool could ultimately “limit how you learn to communicate in a written way” (Group 3 of students). This concern was echoed by academic staff, who highlighted that the apparent efficiency provided by ChatGPT does not necessarily correspond to meaningful learning processes. As one faculty member noted, “what we are seeing is that it facilitates the delivery of a task, but not necessarily that it is a reflection of learning acquisition” (Group 2 of faculty).
+
+In addition, participants emphasized the importance of prior knowledge and effective use conditions when interacting with ChatGPT. Some noted that small modifications in question formulation can lead to different outputs, requiring users to remain attentive and reflective. As one student explained, “when one tries to look for the same information and modifies the question a little, the answer also changes” (Group 4 of students). Taken together, these perspectives suggest that the challenges associated with ChatGPT are not inherent to the technology itself, but are closely linked to how it is used, taught, and regulated within educational environments.
+
+\Cref{tab6} presents the main applications of ChatGPT identified in the interviews. In this study, applications refer to the different ways in which participants described current and potential uses of ChatGPT across multiple educational and professional contexts. The analysis highlights how these applications extend beyond simple information retrieval, supporting learning processes, academic tasks, and professional practices. To capture this diversity, applications were organized into general applications, teaching applications, and rehabilitation applications.
+
+\begin{table}[h!]
+\centering
+\begin{threeparttable}
+\caption{Applications.}
+\label{tab6}
+\begin{tabular}{p{3cm} p{3.5cm} c p{5cm}}
+\toprule
+Theme & Sub-theme & Frequency & Application \\ 
+\midrule
+
+General Applications &
+Facilitation of learning and organization of information &
+22 &
+Learning and information organization \\
+
+General Applications &
+Text development and homework assistance &
+19 &
+Text development and homework assistance \\
+
+Teaching Applications &
+Development of academic instruments and assessments &
+11 &
+Academic instruments and assessments \\
+
+Teaching Applications &
+Academic integrity monitoring and counseling &
+4 &
+Academic integrity monitoring and counseling \\
+
+Rehabilitation Applications &
+Impact on therapeutic interventions and practices &
+13 &
+Therapeutic interventions and practices \\
+
+Rehabilitation Applications &
+Benefits and challenges in the therapeutic context &
+4 &
+Benefits and challenges in therapy \\
+
+\bottomrule
+\end{tabular}
+\source{Authors’ elaboration.}
+\end{threeparttable}
+\end{table}
+
+Participants described the use of ChatGPT primarily as a supportive tool for facilitating learning through the organization of information and the elaboration of texts. Rather than emphasizing the extent of use, participants’ accounts focused on how ChatGPT supports academic work by helping structure ideas, clarify concepts, and refine written outputs. One student explained that they began using the tool to explore unfamiliar topics and gradually move toward more focused searches, noting that “I started to use it as a way to help me… to look for information that I did not know… and that allowed me to go on to do more precise searches” (Group 4 of students). This perception was reinforced by comparisons with traditional search engines, as another student stated that “artificial intelligence is not too far from what Google is… I ask ChatGPT for specific things” (Group 3 of students), highlighting its role as an extension rather than a replacement of existing tools.
+
+In teaching contexts, applications were mainly associated with pedagogical support and instructional design. Faculty members emphasized its usefulness for developing academic materials, assessment instruments, and providing guidance to students. One academic noted that ChatGPT offers opportunities “to build rubrics, although very basic ones” (Group 2 of faculty), acknowledging both its potential and the need for greater familiarity with the tool. These uses were framed as complementary to teaching practice, supporting educators’ work without substituting pedagogical expertise or professional judgment.
+
+In the field of rehabilitation, applications were described in relation to therapeutic planning, creativity, and the personalization of interventions. Students highlighted ChatGPT’s usefulness for generating adapted texts in voice and language-related activities, with one student explaining that she used it “to generate texts that are in line with her work and can be useful in her day-to-day context” (Group 2 of students). Others emphasized its value as a creative aid for designing therapeutic strategies, noting that ChatGPT can function as a guide when professionals lack ready-made ideas, for example by helping structure play-based rehabilitation approaches (Group 1 of students). Faculty members similarly recognized its usefulness for supporting individualized interventions, pointing out that “by generating a personalization of the treatment, it is easier to generate adherence to treatment” (Group 3 of faculty).
+
+Despite the broad range of applications described, participants also expressed caution regarding the limitations and risks associated with the use of ChatGPT in professional contexts. Concerns were raised about reliability, professional responsibility, and the potential impact on critical and creative skills. One student warned that “if used in the wrong way, it could harm the veracity of us as professionals” (Group 2 of students). Another reflected on the implications for future practitioners, particularly in rehabilitation, noting that insufficient preparation and excessive reliance on the tool could “harm the rehabilitation that can be offered to users in the future” (Group 3 of students). Overall, these findings suggest that ChatGPT is perceived as a versatile and supportive tool whose educational and professional value depends largely on the conditions of its use, users’ prior knowledge, and the guidance provided within training environments.
+
+\section{Discussion}\label{sec-idioma}
+The general objective of this study was to analyze the experience in the use of ChatGPT in the formative process of students and faculty of the Faculty of Rehabilitation Sciences (FCR) of UNAB. The quantitative and qualitative results allowed responses to this, finding aspects related to positioning and the relationship between knowledge, frequency, and use among faculty and students.
+
+\subsection{What is the positioning of students and faculty towards ChatGPT? Moving through the myths}
+
+Despite the possible previous hypotheses related to the difference between students and faculty in their relationship with the use of ChatGPT, the results showed that there were no significant differences either in their knowledge or in their frequency of use, either by age or according to the number of hours of daily Internet use. However, there seems to be a greater positioning in favor of ChatGPT in older people compared to younger ones. Something similar was found in a previous study that showed a stronger positioning in favor of ChatGPT use in older professionals \cite{belaldavar2024dentistry}. A possible explanation for this phenomenon, given by these authors, could be greater experience due to age. This could be supported by the results that showed a relationship between knowledge of ChatGPT and greater use of ChatGPT. Something similar was obtained in another study conducted in Jordan \cite{sallam2023health} in which students who had used ChatGPT prior to the study showed a more positive attitude towards the technology.
+
+Although further research on the topic would still be necessary, a possible explanation for this can be made from fear of technology or technostress, with those who use the Internet more frequently being the most familiar and therefore those who are positioned in favor. Thus, some studies have postulated that the need to adapt to new systems or the inability to handle technological demands could generate technostress \cite{tarafdar2010technostress}, something that could be increased by concerns about the ethical and security limitations of ChatGPT \cite{hua2024limitations}. The above is supported by what emerged in the focus groups, including different challenges such as the need for constant updating and adaptation, adaptation to new technologies, or the need for training to facilitate learning.
+
+In this sense, the perception of ChatGPT seems to be heterogeneous, with opinions both in favor and against. Feelings related to insecurity and uncertainty associated with ethical aspects, dependence, and misuse of the information obtained by AI have been frequently mentioned in the focus groups. These concerns have also been part of the academic discussion at the international level in recent years \cite{kamalov2023newera,ma2023ethical,swindell2024artificial}, so the need to consider these opinions when implementing the use of ChatGPT and other generative AI in higher education is evident. For their part, students and faculty consider that there is a risk of losing the ability to think critically. This is also observed by \textcite{ruizrojas2024collaborative}, who used different AI tools with university students, concluding that to avoid misuse and dependence on AI, their incorporation in the classroom must be very well planned, so that critical thinking is encouraged in these activities. In this way, it can be said that if the tool is used properly, in an ethical and conscious manner, it can bring quite a few benefits in the university context; however, if its use is not adequate, it can negatively affect people’s positioning with respect to its valuation. An example of this is the study by \textcite{amaro2024believe}, where participants suffered a significant decrease in trust and satisfaction when they detected false information generated by ChatGPT. This is especially the case if it occurs at the beginning of the interaction, which leads to considering aspects such as source confirmation in future AI usage guidelines.
+
+Another aspect highlighted by participants is the potential dehumanization associated with the use of ChatGPT, along with the gradual loss of key human skills such as critical thinking, creativity, and professional judgment. Likewise, the uncritical use of AI-based tools can lead to oversimplification of complex processes, resulting in a reductionist view of knowledge and professional practice. Similarly, \textcite{unab2024integridade} warns that delegating basic cognitive processes to artificial intelligence, such as “writing without thinking” through the automatic generation of outlines and drafts, can weaken the structuring of thought by relinquishing fundamental intellectual responsibilities and impoverishing deep reflection. However, this may lead to a new perspective focused on the search for new strategies for assessing and promoting learning. On the other hand, \textcite{marinas2025tam} point out that trust has a 100\% weighting in the importance of the variables that predict whether a student will actually use the technology and that, furthermore, this is highly influenced by ChatGPT’s lack of emotional intelligence and humanity.
+
+
+\subsection{What was most related? It seems that awareness, frequency of use, and positioning match}\label{sec-resumo}
+Frequency of use correlated strongly and highly significantly with the level of subjective knowledge about ChatGPT. Although a cause and effect could not be indicated due to the nature of the analysis, these results could suggest that understanding the nature of the tool may influence greater use or, conversely, greater use may improve knowledge of the tool. This aspect can be linked to what was pointed out in the focus groups, where both students and faculty highlighted the use of ChatGPT in learning processes and in the elaboration of texts. These uses could increase in frequency and usefulness as users acquire a deeper knowledge of this technology. Some studies indicate that AI features benefit the perception of its users, due to the bidirectionality that a collaborative experience brings. Thus, those people who use AI more tend to refine their use and knowledge \cite{li2021smartservice,rezwana2022humanai}.
+
+In addition, a significant, small, positive relationship was found between knowledge and positioning in favor of ChatGPT use, which is consistent with the data extracted from the focus groups. In particular, it was found that within the heterogeneity of perceptions, there is a high frequency of positive experiences in the knowledge of the tool, which favorably influenced the personal assessment of the interviewees, coinciding with the study of \textcite{zou2023acceptance} with doctoral students in China, who concluded that previous experience with ChatGPT improves the perception of ease of use, fosters greater personal control of the tool, and reinforces positive attitudes towards its adoption. However, the study by \textcite{kohler2024highereducation} conducted in Germany points out that greater knowledge of ChatGPT could be associated with less positive attitudes, due to awareness of its risks and limitations, generating a more critical view of the technology, an aspect that should also be taken into account.
+
+A relevant aspect that was mentioned in the focus groups was the importance of knowledge and faculty training in the use of technologies such as ChatGPT, which would favor the integration of technology for the promotion of student learning, as suggested by other studies \cite{montenegro2023systematic,sok2024opportunities} that recommend the implementation of training programs in ChatGPT for its use in teaching. These training programs can help reduce technological stress among university faculty; however, if not designed properly, they can also increase it. To mitigate technostress, it is key to involve teachers in the implementation process and ensure ongoing technical support \cite{li2021technostress}. In other words, training programs work when they shift from imposing information (“literacy”) to a process where teachers have a say in how and what technology is used in their classrooms, increasing their autonomy and reducing tech overload due to lack of technical support \cite{li2021smartservice}.
+
+\subsection{What is the usefulness of all this?}\label{sec-secoes}
+The results reveal key implications for integrating ChatGPT into rehabilitation sciences and other fields. These recommendations emphasize training, ethical use, and strategies to maximize its potential while addressing challenges:
+
+\begin{enumerate}
+    \item Faculty and Student Training: Training programs are essential to ensure the ethical and pedagogical use of ChatGPT. Without such initiatives, negative perceptions like distrust or fear may arise.
+    \item Ethical and Regulated Use: Clear guidelines must be established to prevent plagiarism, protect privacy, and maintain content quality. Faculty should foster ethical reflections on AI use.
+    \item Maximizing Educational Potential: ChatGPT can aid in organizing information, creating teaching materials, and designing assessment tools, enhancing its value in educational contexts.
+    \item Accuracy and Verification: To address the risk of erroneous information, methodologies promoting verification and critical thinking should be implemented to evaluate AI-generated content.
+    \item Impact on Rehabilitation: ChatGPT shows promise in developing personalized therapeutic plans and materials. However, prioritizing professional oversight and the human component is essential to ensure responsible use in clinical practices.
+\end{enumerate}
+
+\subsection{Limitations and future lines of research}\label{sec-format-simple}
+The study’s limitations include a small teacher sample size, reducing data representativeness and potentially introducing bias. Online data collection may have excluded participants less familiar with digital technologies. Conducted in 2023, the findings might not reflect recent advancements in AI. Additionally, the qualitative methodology, while insightful, did not capture the full range of participant opinions, potentially excluding critical perspectives on ChatGPT and AI. On the other hand, although a preliminary calculation of the sample size for the group of teachers was made, this could not ultimately be achieved. However, given the exploratory nature of the study, the results are not intended to be statistically representative and should be interpreted as contextual findings, without ruling out the presence of non-response bias. Additionally, variables such as “knowledge of ChatGPT” were assessed through self-report measures and therefore reflect participants’ perceived rather than objectively verified knowledge. This reliance on self-reported data may be influenced by individual differences in confidence, familiarity, or interpretation of the construct, which should be considered when interpreting the findings. Future research should address these limitations by expanding sample size, increasing participant diversity, and incorporating mixed and longitudinal methods to provide a more comprehensive understanding.
+
+\section{Conclusion}\label{sec-links}
+This study makes a novel contribution to the growing field of AI-in-education research by providing empirical evidence from the rehabilitation sciences, an underrepresented disciplinary context. By integrating quantitative and qualitative data from both students and academic staff, the findings offer a comprehensive understanding of beliefs, perceptions, emotional responses, and challenges associated with ChatGPT use in higher education. While recognizing its potential to enhance learning and streamline tasks, participants expressed concerns about ethical use, dependency, and the erosion of critical thinking. These findings highlight the importance of ethical guidelines, teacher training, and strategies to promote technological literacy and responsible AI usage. ChatGPT’s integration into higher education should focus on its role as a complementary tool, not a substitute, ensuring it supports pedagogical goals and fosters meaningful learning. Additionally, ChatGPT shows promise in rehabilitation sciences by aiding in the creation of educational and therapeutic materials. However, its limitations underscore the need to consider ethical and responsible use. Future research should expand on these findings with diverse samples and longitudinal designs to better understand how AI technologies like ChatGPT can be responsibly adopted in higher education and clinical settings.
+
+
+\printbibliography\label{sec-bib}
+% if the text is not in Portuguese, it might be necessary to use the code below instead to print the correct ABNT abbreviations [s.n.], [s.l.]
+%\begin{portuguese}
+%\printbibliography[title={Bibliography}]
+%\end{portuguese}
+
+
+%full list: conceptualization,datacuration,formalanalysis,funding,investigation,methodology,projadm,resources,software,supervision,validation,visualization,writing,review
+\begin{contributors}[sec-contributors]
+\authorcontribution{Nuria Pérez-Romero}[conceptualization,methodology,formalanalysis,projadm,supervision,writing]
+\authorcontribution{Lorena Martínez-Ulloa}[investigation,validation,review]
+\authorcontribution{Mauricio Quidel}[investigation,validation,review]
+\authorcontribution{Fabián Sandoval-Ríos}[conceptualization,methodology,formalanalysis,projadm,supervision,writing]
+\end{contributors}
+
+\begin{dataavailability}
+\txtdataavailability{dataonly} % options: dataavailable, dataonly, databody, datanotav, nodata
+\end{dataavailability}
+
+\begin{funding}
+This project was funded by the Educational Innovation Fund of Andrés Bello University (UNAB) in 2023. The funding supported the interviews conducted during the second phase of the study. 
+\end{funding}
+
+\newpage
+\appendix 
+
+\section{Semi-structured interview scripts for students and teachers on their perception of the use of ChatGPT.}\label{apx-longtable1} 
+
+\begin{table}[h]
+\centering
+\small
+\caption{Semi-structured interview scripts for students and teachers regarding their perceptions of ChatGPT use.}
+\label{tab:appendixA}
+\small
+\begin{tabularx}{\textwidth}{p{2.5cm} X X}
+\toprule
+Dimension & Students & Faculty \\
+\midrule
+
+Previous experience
+&
+What previous experiences have you had with ChatGPT?
+
+How have you used ChatGPT in your training?
+
+Do you feel able to use this tool with your current knowledge?
+&
+What previous experiences have you had with ChatGPT in your teaching work?
+
+In what contexts or subjects have you used ChatGPT?
+
+How would you describe your overall experience using ChatGPT?
+\\
+\hline
+
+Benefits and challenges
+&
+\multicolumn{2}{p{0.75\textwidth}}{
+What do you consider to be the main benefits of using ChatGPT in the training process?
+
+Have you faced any challenges, difficulties, or risks when using ChatGPT? Which ones?
+
+Do you confirm the information provided by ChatGPT with other sources of information? Which ones?
+}
+\\
+\hline
+
+Interaction with students
+&
+What do you think has been the best contribution for your teachers? And the worst?
+
+(Here, inquire not about the student's own use, but about that of their teachers.)
+&
+What do you think has been the best contribution for your students? And the worst?
+
+(Here, inquire not about the teacher's own use, but about that of their students.)
+\\
+\hline
+
+Impact on training
+&
+\multicolumn{2}{p{0.75\textwidth}}{
+How do you think the use of ChatGPT (or other similar artificial intelligences) can influence the future educational environment?
+
+After answering, ask how they feel about it (emotions, feelings, perceptions, etc.).
+}
+\\
+\hline
+
+Impact on rehabilitation
+&
+\multicolumn{2}{p{0.75\textwidth}}{
+In the context of the School of Rehabilitation Sciences, how do you think the use of ChatGPT currently influences rehabilitation practice? And in the future?
+}
+\\
+\hline
+
+Final thoughts
+&
+If there is anything that you consider important and has not been said so far, you can share what you deem necessary about your experience with ChatGPT and other artificial intelligences in the formative process as a student.
+&
+If there is anything that you consider important and has not been said so far, you can share what you deem necessary about your experience with ChatGPT and other artificial intelligences in the formative process as a teacher.
+\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+
+\newpage
+\section{Quantitative analysis results.}\label{apx-longtable2}
+
+\begin{table}[htbp]
+\begin{threeparttable}
+\centering
+\small
+\caption{Descriptive analyses for each variable according to teachers and students.}
+\label{tab:quantitative_results}
+\small
+\begin{tabular}{p{3cm} p{3cm} p{3cm} p{3cm}}
+\toprule
+Variable & Statistic & Faculty & Student \\
+\midrule
+
+\multirow{3}{=}{Year of birth}
+& Median (Q1;Q3) & 1983 (1979;1989) & 2001 (1999;2002) \\
+& Minimum & 1957 & 1977 \\
+& Maximum & 1997 & 2005 \\
+\midrule
+
+\multirow{3}{=}{Positioning use of ChatGPT in the educational environment}
+& Median (Q1;Q3) & 4 (3;4.5) & 3 (3;4) \\
+& Minimum & 2 & 1 \\
+& Maximum & 5 & 5 \\
+\midrule
+
+\multirow{3}{=}{Hours of Internet use}
+& Median (Q1;Q3) & 4 (3;5) & 4 (3;5) \\
+& Minimum & 2 & 1 \\
+& Maximum & 7 & 7 \\
+\midrule
+
+\multirow{3}{=}{Knowledge of ChatGPT}
+& Median (Q1;Q3) & 4 (3;6) & 5 (3;6) \\
+& Minimum & 1 & 1 \\
+& Maximum & 9 & 10 \\
+\midrule
+
+\multirow{3}{=}{Frequency of use of ChatGPT}
+& Median (Q1;Q3) & 2 (1;3) & 2 (1;3) \\
+& Minimum & 1 & 1 \\
+& Maximum & 5 & 5 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\item For self-reported ChatGPT use and frequency of use, the scale ranges from 1 to 5 in ascending order. For hours of Internet use, category 4 corresponds to 5--8 hours per day. For knowledge of ChatGPT, the scale ranges from 1 to 10 in ascending order. IQR = Interquartile Range; Q1 = First Quartile; Q3 = Third Quartile.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{Frequencies and descriptive data according to faculty and students}
+\label{tab:frequencies}
+\footnotesize
+\setlength{\tabcolsep}{6pt}
+
+\begin{tabular}{lcc}
+\toprule
+Participants &
+Faculty &
+Students \\
+\midrule
+Dedication & 107 & 365 \\
+\midrule
+
+\multicolumn{3}{l}{Gender} \\
+Feminine & 68 (63.55\%) & 265 (72.60\%) \\
+Masculine & 38 (35.51\%) & 95 (26.03\%) \\
+Other & 0 (0.00\%) & 2 (0.55\%) \\
+I prefer not to answer & 1 (0.94\%) & 3 (0.82\%) \\
+\midrule
+
+\multicolumn{3}{l}{Hours of daily Internet use, either through cell phone, computer...} \\
+Less than 1 hour & 0 (0.00\%) & 4 (1.10\%) \\
+1--3 hours & 9 (8.41\%) & 19 (5.21\%) \\
+3--5 hours & 23 (21.50\%) & 103 (28.22\%) \\
+5--8 hours & 41 (38.32\%) & 141 (38.63\%) \\
+8--11 hours & 28 (26.17\%) & 60 (16.44\%) \\
+11--14 hours & 2 (1.87\%) & 21 (5.75\%) \\
+More than 14 hours & 4 (3.74\%) & 17 (4.66\%) \\
+\midrule
+
+\multicolumn{3}{l}{Have you heard of ChatGPT?} \\
+Yes & 96 (89.72\%) & 328 (89.86\%) \\
+No & 11 (10.28\%) & 37 (10.14\%) \\
+\midrule
+
+\multicolumn{3}{l}{How often do you use ChatGPT?} \\
+1 Never used & 48 (44.86\%) & 154 (42.19\%) \\
+2 Rarely & 28 (26.17\%) & 100 (27.40\%) \\
+3 Occasionally & 20 (18.69\%) & 87 (23.84\%) \\
+4 Frequently & 8 (7.48\%) & 22 (6.03\%) \\
+5 Daily & 3 (2.80\%) & 2 (0.55\%) \\
+\midrule
+
+\multicolumn{3}{l}{How much do you know about ChatGPT?} \\
+1 Never heard of it & 12 (11.22\%) & 51 (13.97\%) \\
+2 & 14 (13.08\%) & 36 (9.86\%) \\
+3 & 16 (14.95\%) & 41 (11.23\%) \\
+4 & 12 (11.22\%) & 44 (12.06\%) \\
+5 & 16 (14.95\%) & 71 (19.45\%) \\
+6 & 15 (14.02\%) & 32 (8.77\%) \\
+7 & 14 (13.08\%) & 37 (10.14\%) \\
+8 & 7 (6.54\%) & 29 (7.95\%) \\
+9 & 1 (0.94\%) & 8 (2.19\%) \\
+10 I am an expert & 0 (0.00\%) & 16 (4.38\%) \\
+\midrule
+
+\multicolumn{3}{l}{How would you position yourself with respect to ChatGPT in the educational field?} \\
+1 Completely against & 0 (0.00\%) & 22 (6.03\%) \\
+2 & 6 (5.61\%) & 53 (14.53\%) \\
+3 & 43 (40.19\%) & 128 (35.07\%) \\
+4 & 31 (28.97\%) & 76 (20.82\%) \\
+5 Strongly in favor & 27 (25.23\%) & 86 (23.56\%) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\newpage
+\begin{table}[h]
+\centering
+\small
+\begin{threeparttable}
+\caption{Correlation analysis.}
+\label{tab:correlation}
+\begin{tabular}{p{4cm} p{1,5cm} p{1,5cm} p{1,5cm} p{1,5cm} p{1,5cm}}
+\toprule
+Variable & 1 & 2 & 3 & 4 & 5 \\
+\midrule
+
+1. Year of birth
+& --- & & & & \\
+
+2. How much do you know about ChatGPT?
+& .058 & --- & & & \\
+
+3. How often do you use ChatGPT?
+& -.024 & .717*** & --- & & \\
+
+4. Hours of daily Internet use, either through cell phone, computer...
+& .015 & .052 & .024 & --- & \\
+
+5. How would you position yourself regarding the use of ChatGPT in the educational environment?
+& -.174*** & .316*** & .405*** & .024 & --- \\
+
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\item * $p < .05$, ** $p < .01$, *** $p < .001$.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\vspace{1cm}
+
+\begin{table}[h]
+\centering
+\small
+\begin{threeparttable}
+\caption{Group comparison analysis using Mann--Whitney U test for faculty and students}
+\label{tab:group_comparison}
+\begin{tabular}{p{6cm} p{3cm} p{3cm}}
+\toprule
+Variable & U & $p$ \\
+\midrule
+
+How much do you know about ChatGPT?
+& 18736.500
+& .521 \\
+
+How often do you use ChatGPT?
+& 19266.000
+& .824 \\
+
+How much do you know about Artificial Intelligence?
+& 19836.500
+& .801 \\
+
+How would you position yourself regarding the use of ChatGPT in the educational environment?
+& 22433.000
+& .015* \\
+
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\item Mann--Whitney U test comparing faculty and students. Statistical significance was considered at $p < .05$. The result for positioning regarding the use of ChatGPT in the educational environment was statistically significant.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\vfill
+
+\end{document}
+
