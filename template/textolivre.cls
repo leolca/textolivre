@@ -457,3 +457,52 @@
   forthcoming = {en prensa}, % "forthcoming" to "en prensa"
   techreport = {informe técnico}, % "techreport" to "informe técnico"
 }}{}
+
+% Interview Begin
+\newlength{\transcriptlen}
+
+\NewDocumentCommand {\setspeaker} { mo } {%
+  \IfNoValueTF{#2}
+  % Changed \newcommand to \DeclareDocumentCommand
+  {\expandafter\DeclareDocumentCommand\csname#1\endcsname{}{\item[#1:]}}%
+  {\expandafter\DeclareDocumentCommand\csname#1\endcsname{}{\item[#2:]}}%
+  \IfNoValueTF{#2}
+  {\settowidth{\transcriptlen}{#1}}%
+  {\settowidth{\transcriptlen}{#2}}%
+}
+
+% Easiest to put the longest name last...
+
+% How much of a gap between speakers and text?
+\addtolength{\transcriptlen}{1em}%
+
+\newcommand{\foo}{\color{black}\makebox[0pt]{\textbullet}\hskip-0.5pt\vrule width 1pt\hspace{\labelsep}}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+\newcommand{\interviewdate}{\today}
+\newcommand{\interviewcontext}{}
+\newcommand{\interviewcontent}{}
+
+\newcommand{\interviewerfname}{}
+\newcommand{\interviewername}{}
+\newcommand{\interviewerorg}{}
+\newcommand{\intervieweremail}{}
+\newcommand{\intervieweefname}{}
+\newcommand{\intervieweename}{}
+\newcommand{\intervieweeorg}{}
+\newcommand{\intervieweeemail}{}
+
+\newcommand{\setinterviewer}[4]{
+\renewcommand{\interviewerfname}{#1}
+\renewcommand{\interviewername}{#2}
+\renewcommand{\interviewerorg}{#3}
+\renewcommand{\intervieweremail}{#4}
+}
+\newcommand{\setinterviewee}[4]{
+\renewcommand{\intervieweefname}{#1}
+\renewcommand{\intervieweename}{#2}
+\renewcommand{\intervieweeorg}{#3}
+\renewcommand{\intervieweeemail}{#4}
+}
+% Interview End
+
