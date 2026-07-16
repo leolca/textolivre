@@ -1,0 +1,479 @@
+% !TEX TS-program = XeLaTeX
+% use the following command:
+% all document files must be coded in UTF-8
+\documentclass[portuguese]{textolivre}
+% build HTML with: make4ht -e build.lua -c textolivre.cfg -x -u article "fn-in,svg,pic-align"
+
+\journalname{Texto Livre}
+\thevolume{19}
+%\thenumber{1} % old template
+\theyear{2026}
+\receiveddate{\DTMdisplaydate{2025}{12}{5}{-1}} % YYYY MM DD
+\accepteddate{\DTMdisplaydate{2026}{1}{22}{-1}}
+\publisheddate{\DTMdisplaydate{2026}{7}{16}{-1}}
+\corrauthor{Guilherme Brambila}
+\articledoi{10.1590/1983-3652.2026.63312}
+%\articleid{NNNN} % if the article ID is not the last 5 numbers of its DOI, provide it using \articleid{} commmand 
+% list of available sesscions in the journal: articles, dossier, reports, essays, reviews, interviews, editorial
+\articlesessionname{articles}
+\runningauthor{Brambila} 
+%\editorname{Leonardo Araújo} % old template
+\sectioneditorname{Daniervelin Pereira~\orcid{0000-0003-1861-3609}}
+\layouteditorname{Leonardo Araujo~\orcid{0000-0003-3884-2177}}
+
+\title{Por um estudo indiciário do texto em contextos desinformativos digitais}
+\othertitle{Towards an Evidential Study of Text in Digital Disinformation Contexts}
+% if there is a third language title, add here:
+%\othertitle{Artikelvorlage zur Einreichung beim Texto Livre Journal}
+
+\author[1]{Guilherme Brambila~\orcid{0000-0001-7978-5020}\thanks{Email: \href{mailto:guilherme.brambila@ufc.br}{guilherme.brambila@ufc.br}}}
+\affil[1]{Universidade Federal do Ceará, Fortaleza, CE, Brasil.}
+
+\addbibresource{article.bib}
+% use biber instead of bibtex
+% $ biber article
+
+% used to create dummy text for the template file
+\definecolor{dark-gray}{gray}{0.35} % color used to display dummy texts
+\usepackage{lipsum}
+\SetLipsumParListSurrounders{\colorlet{oldcolor}{.}\color{dark-gray}}{\color{oldcolor}}
+
+% used here only to provide the XeLaTeX and BibTeX logos
+\usepackage{hologo}
+
+% if you use multirows in a table, include the multirow package
+\usepackage{multirow}
+
+% provides sidewaysfigure environment
+\usepackage{rotating}
+
+% CUSTOM EPIGRAPH - BEGIN 
+%%% https://tex.stackexchange.com/questions/193178/specific-epigraph-style
+\usepackage{epigraph}
+\renewcommand\textflush{flushright}
+\makeatletter
+\newlength\epitextskip
+\pretocmd{\@epitext}{\em}{}{}
+\apptocmd{\@epitext}{\em}{}{}
+\patchcmd{\epigraph}{\@epitext{#1}\\}{\@epitext{#1}\\[\epitextskip]}{}{}
+\makeatother
+\setlength\epigraphrule{0pt}
+\setlength\epitextskip{0.5ex}
+\setlength\epigraphwidth{.7\textwidth}
+% CUSTOM EPIGRAPH - END
+
+% to use IPA symbols in unicode add
+%\usepackage{fontspec}
+%\newfontfamily\ipafont{CMU Serif}
+%\newcommand{\ipa}[1]{{\ipafont #1}}
+% and in the text you may use the \ipa{...} command passing the symbols in unicode
+
+% LANGUAGE - BEGIN
+% ARABIC
+% for languages that use special fonts, you must provide the typeface that will be used
+% \setotherlanguage{arabic}
+% \newfontfamily\arabicfont[Script=Arabic]{Amiri}
+% \newfontfamily\arabicfontsf[Script=Arabic]{Amiri}
+% \newfontfamily\arabicfonttt[Script=Arabic]{Amiri}
+%
+% in the article, to add arabic text use: \textlang{arabic}{ ... }
+%
+% RUSSIAN
+% for russian text we also need to define fonts with support for Cyrillic script
+% \usepackage{fontspec}
+% \setotherlanguage{russian}
+% \newfontfamily\cyrillicfont{Times New Roman}
+% \newfontfamily\cyrillicfontsf{Times New Roman}[Script=Cyrillic]
+% \newfontfamily\cyrillicfonttt{Times New Roman}[Script=Cyrillic]
+%
+% in the text use \begin{russian} ... \end{russian}
+% LANGUAGE - END
+
+% EMOJIS - BEGIN
+% to use emoticons in your manuscript
+% https://stackoverflow.com/questions/190145/how-to-insert-emoticons-in-latex/57076064
+% using font Symbola, which has full support
+% the font may be downloaded at:
+% https://dn-works.com/ufas/
+% add to preamble:
+% \newfontfamily\Symbola{Symbola}
+% in the text use:
+% {\Symbola }
+% EMOJIS - END
+
+% LABEL REFERENCE TO DESCRIPTIVE LIST - BEGIN
+% reference itens in a descriptive list using their labels instead of numbers
+% insert the code below in the preambule:
+%\makeatletter
+%\let\orgdescriptionlabel\descriptionlabel
+%\renewcommand*{\descriptionlabel}[1]{%
+%  \let\orglabel\label
+%  \let\label\@gobble
+%  \phantomsection
+%  \edef\@currentlabel{#1\unskip}%
+%  \let\label\orglabel
+%  \orgdescriptionlabel{#1}%
+%}
+%\makeatother
+%
+% in your document, use as illustraded here:
+%\begin{description}
+%  \item[first\label{itm1}] this is only an example;
+%  % ...  add more items
+%\end{description}
+% LABEL REFERENCE TO DESCRIPTIVE LIST - END
+
+
+% add line numbers for submission
+%\usepackage{lineno}
+%\linenumbers
+
+\begin{document}
+\maketitle
+
+\begin{polyabstract}
+\begin{abstract}
+Este artigo propõe uma aproximação entre a Linguística Textual (LT) e o paradigma indiciário de \textcite{ginzburg1986mitos,ginzburg2007fio}, defendendo sua aplicação em uma proposta analítica de textos em contextos desinformativos no espaço digital, com a finalidade de desvelar intencionalidades negligenciáveis, apesar de constituintes, bem como as circunstâncias que o ciberespaço proporciona para viabilizar interações erráticas ou de nebulosidade informacional. O estudo recorre ao paradigma indiciário para examinar as singularidades reveladoras \cite{abaurre2008torno} em textos de temáticas distintas, mas que compartilham a característica comum de veicular enunciados enganosos em gêneros do ambiente digital, a saber, uma tentativa de golpe financeiro no gênero conversa de aplicativo de mensagens, uma desinformação científica no gênero postagem de rede social e uma correspondência predatória no gênero e-mail. A análise rastreia contradições entre o que o texto projeta ser e suas intenções subjacentes, que são obtidas com o uso do paradigma indiciário como método inferencial de investigação agregado dos conhecimentos tácitos nutridos pelo analista que convive em espaços digitais. Os resultados apontam uma possibilidade de ampliação das ferramentas da LT, permitindo uma análise mais crítica do texto contemporâneo, em especial, o digital. O método contribui para uma leitura menos ingênua e mais engajada, alinhada à função social dos estudos da linguagem.
+
+\keywords{Paradigma indiciário \sep Linguística Textual \sep Desinformação \sep Gêneros digitais}
+\end{abstract}
+
+\begin{english}
+\begin{abstract}
+This paper proposes an approximation between Textual Linguistics (TL) and the evidential paradigm \cite{ginzburg1986mitos,ginzburg2007fio}, advocating for its application in an analytical framework for texts within disinformation contexts in the digital sphere. The aim is to unveil negligible yet constituent intentionalities, as well as the circumstances that cyberspace provides to enable erratic interactions or informational opacity. The study employs the evidential paradigm to examine revealing singularities \cite{abaurre2008torno} in texts from distinct thematic domains, which share the common characteristic of conveying deceptive statements within digital genres. Specifically, it analyzes an attempted financial scam in the instant messaging conversation genre, a piece of scientific disinformation in the social media post genre, and a predatory correspondence in the email genre. The analysis traces contradictions between a text's projected identity and its underlying intentions, identified through the evidential paradigm as an inferential investigative method, combined with the analyst's tacit knowledge cultivated through engagement in digital spaces. The findings indicate a potential expansion of TL's analytical toolkit, enabling a more critical examination of contemporary texts, particularly digital ones. This methodological approach contributes to a less naïve and more critically engaged reading, aligning with the social function of language studies.
+
+\keywords{Indiciary Paradigm \sep Text Linguistics \sep Disinformation \sep Digital genres}
+\end{abstract}
+\end{english}
+% if there is another abstract, insert it here using the same scheme
+\end{polyabstract}
+
+\section{Introdução}\label{sec-intro}
+\textcite{ginzburg1986mitos} afirmou em uma de suas célebres obras que o homem foi, por milênios, um caçador. Esse traço primitivo, em certa medida, aproxima e distingue o ser humano de outros animais que figuram alguma posição na cadeia alimentar. Se, por um lado, compartilhamos do ímpeto pela caça e pela busca de pistas que indiquem situações familiares ou de risco, distanciamo-nos, por outro, no nível de refinamento e no tipo de caça que temos feito ao longo de nossa evolução e sociabilidade.
+
+Indivíduos inseridos em configurações sociais minimamente organizadas já não disputam sua sobrevivência como feras, o que não significa afirmar que não convivam com outros riscos que possam corromper sua integridade física, moral, democrática e cidadã. Com o avanço das tecnologias e com a guinada cada vez mais desproporcional da (des)informação, o vocábulo \textit{sobrevivência} já conta com um sentido cada vez mais ampliado, visto que a recepção e o consumo de dados e notícias em textos das mais diversas semioses tem se tornado uma tarefa complexa que exige, além do acionamento de competências cognitivas, habilidades e instrumentalizações que previnam as pessoas de desdobramentos negativos advindos do engano e da ignorância.
+
+Nesse raciocínio, a linguagem é uma arena que, por primazia, constitui-se de rastros de um intenso fiar de sentidos. Em trabalho anterior \cite{brambila2022contemironia} e sob uma abordagem voltada à dimensão discursiva prioritariamente, foram discutidas as estratégias utilizadas por internautas em uma rede social para demarcarem que seus enunciados tinham caráter irônico, por meio de diferentes usos da \textit{hashtag} \#contémironia. Esse estudo rendeu algumas reflexões relevantes quanto ao papel exercido pela linguagem enquanto fonte de indícios que apontam para as intencionalidades humanas em seu trato interacional.
+
+\begin{quote}
+    […] Formas relativamente estáveis de enunciado surgem e se dissipam de maneira mais volatizada no contexto digital, tornando a catalogação de fenômenos uma tarefa hercúlea. Ao mesmo tempo, ignorar essas formas de interação e sua potencialidade na investigação do movimento da língua/linguagem não é uma decisão adequada, pois imporia limites drásticos à área de estudo, em virtude da abrangência da interação virtual. Por essa razão, advogamos pela identificação das posições axiológicas, reconhecidas como rastros do lugar do sujeito na interação verbal, o que é um caminho produtivo à pesquisa na análise da língua e do discurso. Deve-se assumir uma postura de caça aos indícios que emergem na materialidade da língua, buscando rastros e fios que reverberem as condições materiais e ideológicas do discurso \cite[p. 25]{brambila2022contemironia}.
+\end{quote}
+
+Na ocasião dessa investigação, não se pretendia aprofundar uma defesa acerca da pertinência de se pensar o estudo do texto dentro do plano metodológico do paradigma indiciário, proposto por \textcite{ginzburg1986mitos,ginzburg2007fio}. Todavia, pela revisitação ao trabalho, compreendeu-se como cabível trazer à baila esse tipo de ideia, a qual está baseada em duas premissas.
+
+A primeira concentra-se na noção já desenvolvida que os estudos textual-discursivos têm sobre o objeto texto. Tomando a visada sociocognitiva interacional, pode-se sintetizar que o texto ocupa o papel de materialização de projetos de dizer, pela qual enunciados dotados de sentido e ideologias se condensam em convenções linguísticas, multimodais, pragmáticas e de gênero compatíveis e coerentes com os contextos em que são postos em trânsito e negociação. Consequência disso é um desafio cada vez mais abrangente sobre como discursos se textualizam, visto que os contextos, os suportes e as projeções de mundo são cada vez mais diversas e menos estanques. Por essa razão, compreender textos tem deixado de ser uma tarefa meramente catalográfica, passando a exigir um olhar muito mais apurado aos enlaces históricos, culturais, políticos e sociais que se manifestam em determinada materialidade, para se compreender com mais profundidade as intenções que carrega em sua constituição.
+
+A segunda reside no franco diálogo ao qual a Linguística Textual (doravante LT) tem se disposto com outras frentes teóricas e metodológicas. De acordo com \textcite[p. 18]{elias2021texto}, “[n]o interior da LT, vimos o quanto a concepção de texto foi sendo remodelada e as relações da LT com outras disciplinas foram se intensificando e se diversificando”. Se um estudo aprofundado do texto tem comprovado seu caráter tentacular e reticulado, seria uma limitação assumir que bastariam as fontes da própria LT para sanar todas as inquietações que emergem do seu processo analítico. Ainda que não se deva ignorar o ponto de partida do estudo do texto, é igualmente salutar agregar instrumentos que refinem essa investigação.
+
+Nesse sentido, o paradigma indiciário é apresentado, no presente trabalho, como uma proposta agregadora aos estudos que se dedicam, de alguma forma, a compreender o funcionamento do texto em contexto.
+
+Essas ponderações preliminares reúnem, concomitantemente, justificativas para a proposição aqui apresentada. Em termos organizacionais, o trabalho seguirá com a próxima seção, que recuperará bases do paradigma indiciário, postulado por \textcite{ginzburg1986mitos,ginzburg2007fio}, advogando por sua aproximação com os estudos da linguagem, especialmente, com os da LT. Sequencialmente, serão demonstradas, por meio de uma análise, algumas saídas promissoras que o paradigma proporciona ao estudo analítico do texto, podendo ser considerado como fonte agregadora ao trabalho de linguistas e profissionais da linguagem (professores, revisores, tradutores, editores etc.).
+
+Ao longo das próximas linhas, seja na seção teórica, seja na analítica, serão utilizados alguns textos como objetos para a validação desta proposta. Assim, cumpre informar que o processo de seleção desse \textit{corpus} se deu sob uma orientação qualitativa, guiando-se pelo norteamento de serem produções de comprovado pertencimento ao campo desinformativo. Os textos utilizados (um golpe financeiro em uma conversa de WhatsApp, um \textit{e-mail} com um convite para uma revista acadêmica predatória e uma postagem de rede social com desinformação científica) foram considerados, dentro do escopo a ser especificado a seguir, exemplos competentes para se evidenciar a necessidade de se olhar para o texto como um espaço em que intenções podem estar postas, camufladas e, até, mascaradas, para se alcançar os mais diversos objetivos interacionais.
+
+\section{O paradigma indiciário e sua produtividade aos estudos do texto}\label{sec-normas}
+Carlo Ginzburg (1939–2026) é um historiador italiano considerado uma das figuras mais importantes da historiografia contemporânea e das ciências humanas, de maneira geral. Ele é conhecido por sua abordagem inovadora da história e por seu trabalho na história social e cultural. Ginzburg também demarca sua relevância por ter desenvolvido metodologias que buscam compreender o pensamento, as crenças e as visões de mundo das sociedades.
+
+A concepção de paradigma indiciário (ou indiciarismo) é emblemática no pensamento de Ginzburg e refere-se a uma abordagem investigativa e analítica da história e das ciências sociais. O paradigma indiciário propõe que, ao estudar fontes históricas, o pesquisador deve ser capaz de encontrar “indícios” ou “sinais” que revelem aspectos mais profundos e muitas vezes ocultos de uma sociedade ou de um indivíduo, mesmo quando as fontes disponíveis são escassas ou parciais. Em vez de procurar por provas diretas e explícitas, como documentos oficiais ou relatos privilegiados, Ginzburg defende que é possível reconstruir uma história mais complexa a partir de fragmentos e pistas que permitem entender o comportamento, a mentalidade e as intencionalidades das pessoas.
+
+Esses indícios podem ser pequenos detalhes, fragmentos de discursos, imagens, práticas ou mesmo elementos da vida cotidiana que, quando analisados de maneira cuidadosa e contextualizada, oferecem uma visão mais rica e profunda da realidade social, cultural e histórica. O paradigma indiciário se destaca por sua ênfase no método de inferência, ou seja, ao examinar os sinais de uma determinada época ou situação, o pesquisador deve ser capaz de traçar relações e reconstruir aspectos mais amplos da história, mesmo que não haja documentação direta sobre eles.
+
+Já em uma primeira aproximação, cabe considerar que o texto, objeto primeiro da LT, pode ser enxergado como um material que aporta rastros e indícios diversos da natureza humana, uns mais e outros menos explícitos, já que é dotado de historicidade e se realiza em determinado contexto e condições de produção específicos. Para isso, cabe retomar o pensamento de \textcite[p. 25-26]{koch2003texto}, quando postula que:
+
+\begin{quote}
+    [u]m texto passa a existir no momento que parceiros de uma atividade comunicativa global, diante de uma manifestação linguística, pela atuação conjunta de uma complexa rede de fatores de ordem situacional, cognitiva, sociocultural e interacional, são capazes de construir, para ela, determinado sentido. […] [O] sentido não está no texto, mas se constrói a partir dele, no curso de uma interação.
+\end{quote}
+
+Acompanhando a defesa da linguista, entende-se que textos são formulados a partir de situações comunicativas globais, isto é, reiteram práticas social e historicamente estabilizadas de interação humana. Nessa dinâmica, enunciados são organizados em gêneros que lhes dão pertencimento no trânsito interacional de determinada comunidade. Apesar disso, o texto aporta sentidos que são inscritos na situação de sua produção, sendo engendrados pelas perspectivas de mundo e pelas intencionalidades do interlocutor. Consequentemente, discursos textualizados e posições axiológicas singulares comporão a interface irrepetível do texto, que, não raramente, pode estar escondida ou pouco visível nas tramas do gênero ou em recursos estilísticos pré-determinados.
+
+Assim, este trabalho defende que, por ser pautado na busca por minúcias, o paradigma indiciário encontra no texto sua materialidade de investigação por excelência. Tal perspectiva fundamenta-se na premissa da textualização do mundo, onde o consumo intenso e constante de textos nas sociedades letradas pode gerar uma leitura automatizada. Esta, por sua vez, parte da suposição ingênua de que gêneros textuais carregam sempre traços regulares e intencionalidades homogêneas, o que a abordagem indiciária se propõe a contestar.
+
+Nesse sentido, há de se considerar incontáveis golpes e farsas que têm sido aplicados em aplicativos de mensagens e \textit{e-mails}, pelos quais, fingindo se passar por um familiar, cidadão ou empresa reconhecida, indivíduos extorquem, enganam e roubam usuários que, por razões diversas, não souberam captar que o texto apresentado se camuflava de legítimo, enquanto aportava minúcias de uma atividade errática. Na \Cref{fig1}, vemos um caso.
+
+\begin{figure}[htbp]
+\centering
+\begin{minipage}{.5\textwidth}
+ \includegraphics[width=\textwidth]{Fig1.png}
+ \caption{Golpe do WhatsApp.}
+ \label{fig1}
+ \source{Acervo do autor.}
+\end{minipage}
+\end{figure}
+
+O exemplo em questão trata-se de um golpe no aplicativo de mensagens WhatsApp em que alguém clona o número de contato, ou simplesmente finge ser um familiar, para, em meio a uma conversa aparentemente rotineira, obter informações privilegiadas ou realizar um roubo.
+Um fator relevante, e que dará impulso para se compreender o papel do paradigma indiciário no estudo do texto, reside no cotejo que se faz necessário entre a parte vistosa e aparente do texto com suas minúcias e traços mais implícitos. Na \Cref{fig1}, é possível sublinhar como aparente o uso de um aplicativo de mensagens altamente popular e comum na sociedade brasileira (WhatsApp), a aplicação de um vocativo correspondente ao grau de parentesco das vítimas (Em “Mãe tá ocupada?”), bem como o teor da solicitação, que usa termos e argumentos típicos da vida cotidiana e se afasta de qualquer construção textual ameaçadora ou de um contexto de assalto (“É que preciso fazer um pagamento”/ “Pode fazer para mim?”/ “À tarde já te mando de volta”).
+
+Uma análise mais minuciosa, contudo, pode revelar indícios menos evidentes que desvelam a natureza fraudulenta da mensagem, distinguindo-a de uma conversa corriqueira. Tais elementos incluem: 1) desvios idiomáticos: inconsistências no registro linguístico esperado do remetente, como a ausência de pontuação adequada; 2) ausência de marcadores relacionais: a falta de recursos comunicativos típicos do interlocutor genuíno, como \textit{emojis}, figurinhas ou mensagens de voz; 3) ruptura de padrões lexicais: a omissão de saudações, apelidos ou outras escolhas vocabulares características da relação histórica entre os interlocutores.
+
+Assim, defende-se que os textos contemporâneos exigem uma análise que ultrapasse seu conteúdo explícito. É necessário investigar os rastros textuais, pois cada texto, enquanto materialização de um projeto de dizer, carrega individualidades mesmo quando inserido em gêneros aparentemente regulares. Propõe-se, portanto, uma abordagem de análise textual de base indiciária, fundamentada na obra de Ginzburg, como método para desvelar essas camadas subjacentes de significado. Por isso, assume-se concordância com \textcite[p. 219]{rodrigues2005razao}, quando indaga:
+
+\begin{quote}
+    Que lições podemos aprender com Ginzburg? Em primeiro lugar é preciso transformar a realidade num enigma, duvidar do óbvio e tratar a prova e a retórica como partes integrantes e importantes de um mesmo processo, em que a prova documental, as provas extratextual e a retórica (argumentação) são parte da pesquisa e do processo de construção do conhecimento histórico. O núcleo do paradigma indiciário é o postulado segundo o qual a realidade, pelo menos em certos aspectos, apresenta-se opaca, mas existem certos pontos privilegiados – os indícios, sintomas – que tornam possível decifrá-la.
+\end{quote}
+
+Em posição afim à afirmação de Rodrigues, entende-se que essa prova extratextual corresponderia ao contexto em que o texto se realizou e que, ainda que apresente certa exterioridade, lhe é constitutivo e altamente relevante para se compreender os sentidos e projetos concretos em determinada situação comunicativa. No seio da Linguística Textual contemporânea, o contexto
+
+\begin{quote}
+    […] não se reduz, portanto, nem somente aos fatos, valores e crenças presentes na memória discursiva dos grupos sociais, nem somente à situação imediata da interação que dá uma sensação de presentificação do texto, mas à conjunção desses aspectos que, ao emergirem no acontecimento textual, são incorporados aos sentidos que os participantes da comunicação vão recriar \cite[p. 27]{cavalcante2022linguistica}.
+\end{quote}
+
+Em “Sinais: raízes de um paradigma indiciário”, \textcite{ginzburg1986mitos} indica a influência do método morelliano à arte como um caminho a ser reproduzido no processo de caça aos indícios. A partir da noção de que nem todas as pinturas se encontram em perfeitas condições que permitam a detecção do seu autor, Morelli propõe o acompanhamento de rastros, mesmo que marginais e não à mostra, para se esclarecer a autoria de alguma produção. \textcite[p. 144]{ginzburg1986mitos} detalha essa concepção, ao afirmar que:
+
+\begin{quote}
+    [p]ara tanto, porém (como dizia Morelli), é preciso não se basear, como normalmente se faz, em características mais vistosas, portanto mais facilmente imitáveis, dos quadros: os olhos erguidos para o céu dos personagens de Perugino, os sorrisos dos de Leonardo, e assim por diante. Pelo contrário, é necessário examinar os pormenores mais negligenciáveis, e menos influenciáveis pelas características da escola a que o pintor pertencia: os lóbulos das orelhas, as unhas, as formas dos dedos das mãos e dos pés.
+\end{quote}
+
+Um aprendizado central do paradigma indiciário é sua contraposição à abordagem positivista, contestando o que está exclusivamente à mostra para buscar rupturas e sinais negligenciáveis. O caso do WhatsApp ilustra essa necessidade: além dos elementos aparentes do gênero, uma camada de detalhes revela a intencionalidade real – frequentemente velada por estratégias como polidez ou dissimulação. Assim, propõe-se que o estudo textual contemporâneo deve questionar as regularidades, tratando-as como limites a serem desafiados. Enquanto aspectos sistêmicos e formais garantem aceitabilidade superficial, são as singularidades materiais – escolhas lexicais atípicas, inconsistências gráficas ou rupturas de expectativa – que revelam a real intencionalidade do texto, demandando uma análise desconfiada e atenta a esses indícios.
+
+Focalizando a questão metodológica, \textcite[p. 174]{abaurre2008torno} elencam que o paradigma indiciário, pensado na pesquisa em linguagem,
+
+\begin{quote}
+    […] define algumas questões metodológicas cruciais, que dizem respeito: 1) aos critérios de identificação e seleção dos dados a serem tomados como representativos do que se considera “singularidade reveladora” (uma vez que, em um sentido trivial do termo “singular”, qualquer dado diferente de qualquer outro dado é um dado singular); 2) ao conceito mesmo de “rigor” metodológico, que não pode, neste contexto, ser entendido no sentido galileano que assume no âmbito de paradigmas de investigação centrados nos procedimentos experimentais, na replicabilidade e na quantificação de resultados.
+\end{quote}
+
+O conceito de singularidade reveladora representa uma mudança crucial na perspectiva de análise textual. Embora a Linguística Textual tradicionalmente priorize o estudo de regularidades, o paradigma indiciário propõe incluir a busca por pontos de ruptura e particularidades textuais que desafiam padrões esperados. Não se trata de subestimar as regularidades, mas, sim, de investigar como esses padrões podem ser instrumentalizados para fins específicos – incluindo usos criativos ou escusos. Essa abordagem exige que o analista transcenda a leitura superficial, correlacionando o texto com seu contexto histórico, social e as posições dos interlocutores.
+
+Na prática, a análise indiciária admite considerar todas as circunstâncias não regulares da produção textual, pois entende que esses traços singulares revelam a irrepetibilidade do texto como entidade multifacetada. “O que caracteriza esse saber é a capacidade de, a partir de dados aparentemente negligenciáveis, remontar a uma realidade complexa não experimentável diretamente” \cite[p. 152]{ginzburg1986mitos}.
+
+O rigor metodológico flexível para parâmetros mais canônicos de pesquisa pode, sob um primeiro olhar, parecer contraditório e, em certa medida, inexequível no bojo analítico da Linguística Textual. Isso se dá, principalmente, por um extenso histórico que a área tem com a busca de regularidades e fenômenos recorrentes na materialidade textual que pudessem ser categorizados e utilizados como fontes norteadoras do trabalho do linguista. Por outro lado, importa igualmente assumir que, se os textos de hoje estão em crescente irregularidade quanto a aspectos tecnológicos, multimodais e de linearidade, estratégias adicionais para compreender suas dimensões e seus impactos contemporâneos são consequentemente cabíveis.
+
+Com isso, o papel do linguista de texto diante das regularizações é, ainda, relevante e importante para que se entenda caminhos reiteráveis e projeções sobre como as coletividades têm textualizado seus discursos. Todavia, importa que esse pesquisador não perca de vista as quebras de contratos interacionais, as rupturas com as regularidades do gênero e as motivações situadas que engatilham tais processos, visto que, possivelmente, nessas brechas é que se encontram as raízes e os indícios quanto aos porquês da existência daquele texto.
+
+\begin{quote}
+    A distinção entre natureza (inanimada ou viva) e cultura é fundamental – certamente mais do que aquela, infinitamente mais superficial e mutável, entre as disciplinas individuais. Ora, Morelli propusera-se buscar, no interior de um sistema de signos culturalmente condicionados como o pictórico, os signos que tinham a involuntariedade dos sintomas (e da maior parte dos indícios). Não só: nesses signos involuntários, nas “miudezas materiais – um calígrafo as chamaria de garatujas” comparáveis às “palavras e frases prediletas” que a “maioria dos homens, tanto falando quanto escrevendo… introduzem no discurso às vezes sem intenção, ou seja, sem se aperceber”, Morelli reconhecia o sinal mais certo da individualidade do artista \cite[p. 171]{ginzburg1986mitos}.
+\end{quote}
+
+Com base nessas observações conceituais e indicações metodológicas, o presente trabalho segue para a próxima seção, a qual se propõe a demonstrar em mais dois textos distintos a produtividade do paradigma indiciário em um estudo analítico filiado à LT. Busca-se, com isso, evocar a defesa de mais uma possibilidade de exploração a essa área que tem se autodeterminado interdisciplinar.
+
+\section{Os rastros no texto: provocações indiciárias}\label{sec-conduta}
+Conforme anunciado anteriormente, esta seção dedica-se à demonstração dos usos e da repercussão do paradigma indiciário no estudo analítico do texto. Para tanto, foram propositalmente selecionados dois textos de gêneros e naturezas temáticas distintas, a fim de também evocar a flexibilidade dessa fonte para, principalmente, lidar com temas como a desinformação e/ou textos que aportem algum tipo de falsidade ou pretensão socialmente errática.
+
+Como primeiro objeto, segue um \textit{e-mail} contendo um texto muito conhecido por aqueles que usualmente trabalham com pesquisa acadêmica: uma chamada de uma editora predatória para publicação de livros. Trata-se de uma mensagem recebida pelo autor deste trabalho. O nome da empresa foi suprimido na \Cref{fig2}.
+
+\begin{figure}[htbp]
+\centering
+\begin{minipage}{.9\textwidth}
+ \includegraphics[width=\textwidth]{Fig2.png}
+ \caption{\textit{E-mail} de uma editora predatória.}
+ \label{fig2}
+ \source{Acervo do autor.}
+\end{minipage}
+\end{figure}
+
+Assumindo de antemão que o texto aporta rastros intencionais de seus produtores, requerendo dos interlocutores lentes cada vez mais refinadas para que a leitura seja aplicada, propõe-se realizar a análise em três níveis: da estrutura genérica, das regularidades do texto e dos indícios negligenciáveis.
+
+O nível da estrutura genérica, neste caso, do \textit{e-mail}, é o de maior visualização e, sob determinada ótica, dimensão raramente negligenciável. Isso se verifica na presença de marcas historicamente construídas que se reiteram e permitem ao leitor reconhecer e criar pressuposições sobre o conteúdo com o qual ainda terá contato.
+
+Traços composicionais como o uso do recurso digital (plataforma/site de \textit{e-mail}), a inscrição de um remetente, o assunto, a saudação, a despedida e a assinatura (omitida por razões de identificação do remetente) colocam essa produção em consonância com expectativas relacionadas ao gênero textual \textit{e-mail}, mitigando atitudes preventivas que o potencial destinatário poderia ter, caso algum desses elementos aparecesse em um registro ou leiaute diferente do habitual. Nesse sentido, pode-se inferir que, no crivo do gênero, este \textit{e-mail} dificilmente seria retido a uma possível exclusão imediata, requerendo que o leitor acesse seu conteúdo e faça uma nova avaliação.
+
+Uma vez que o material em questão se comporta e preenche expectativas afins à estrutura genérica que lhe é designada, qual seja, a de um \textit{e-mail}, cabe a este leitor acessar as regularidades do texto, com a finalidade de poder reagir, aceitando ou não, à comunicação que lhe é endereçada.
+
+Como caminho analítico, acolhe-se a proposta de Antunes (2017) quanto a fenômenos que decorrem do texto, os quais servem de guias para que sua materialização se estabeleça em uma função comunicativo-interacional. Fenômenos como a textualidade, a intencionalidade e a comunicabilidade, na \Cref{tab1} retomados, foram escolhidos para a análise no nível das regularidades do texto.
+
+\begin{table}[htbp]
+\centering
+\begin{threeparttable}
+\caption{Fenômenos textuais.}
+\label{tab1}
+
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{0.23\textwidth}X}
+\toprule
+\textbf{Fenômeno} & \textbf{Característica} \\
+\midrule
+Textualidade &
+Toda e qualquer atividade de linguagem somente ocorre em forma de textos; assim, tudo o que as pessoas dizem, em qualquer circunstância social, constitui um texto; a dimensão desse texto não importa. \\
+\addlinespace
+
+Intencionalidade &
+Toda atividade de linguagem somente acontece com uma finalidade específica, ou seja, com determinada intenção e objetivo. \\
+\addlinespace
+
+Comunicabilidade &
+As ações da linguagem se destinam a estabelecer e a produzir eventos de comunicação, de intercâmbio, de troca entre os sujeitos participantes. \\
+\bottomrule
+\end{tabularx}
+\source{Adaptado de \textcite[p.~22]{antunes2017textualidade}.}
+\end{threeparttable}
+\end{table}
+
+Tomando o \textit{e-mail} como objeto da análise, são obtidos os seguintes dados:
+
+\begin{enumerate}
+    \item De sua textualidade:
+    
+Trata-se de uma proposta de venda de um produto (editoração de um livro científico) que se textualiza em duas frentes: a da promoção do serviço e a do diálogo com um cliente em prospecção. Nesse sentido, e acompanhando o pensamento de que a dimensão do texto ocuparia um lugar secundário com relação à atividade de linguagem que se oferta como texto \cite{antunes2017textualidade}, compreende-se que a promoção do serviço ocorre em trechos identificáveis, como:
+
+\begin{enumerate}
+    \item  “Você já se perguntou o que mais você pode fazer para alcançar novos patamares na sua trajetória acadêmica?”
+    \item “Publicar um livro é o passo que pode impulsionar sua carreira e abrir portas para oportunidades que talvez ainda estejam fora do seu alcance.”
+    \item “Com a Editora [***], você tem a chance de transformar sua pesquisa em um livro de impacto […].”
+\end{enumerate}
+
+Para aprimorar essa análise, é possível explorar a estrutura e os recursos linguísticos que contribuem para a coerência, a coesão e a interação no texto, além de analisar como os enunciados são organizados para garantir uma comunicação eficaz e persuasiva.
+
+Nas sentenças destacadas, a repetição do pronome “você” estabelece uma coesão referencial, tornando a mensagem mais direta e personalizada. Essa reiteração cria uma relação constante entre o texto e o destinatário, fomentando um processo interativo evidente. Além disso, outras ocorrências de processos referenciais do tipo anafórico (“E para você, o que falta para dar \textit{esse passo}?” [grifo nosso]) e, também, pronominal (“Com a \textit{Editora} [***], você tem a chance de transformar sua pesquisa em um livro de impacto e \textit{nós} queremos te ajudar […]” [grifo nosso]) asseguram a sequência lógica das ideias e reforçam esse traço argumentativo voltado ao convencimento pela interação aproximada.
+
+Em face disso, o texto demonstra-se coerente, ao criar seu encadeamento de ideias: é iniciado com uma pergunta que induz à reflexão, passa para a proposta de um benefício (impulsionar a carreira) e, finalmente, apresenta a oportunidade de transformação por meio da editora. A progressão das ideias segue uma linha lógica, com um claro objetivo de induzir o leitor a se interessar pela proposta de publicar o livro.
+
+\item De sua intencionalidade:
+
+Após acessar a materialidade do texto, não há grandes empecilhos para se notar que se trata de uma produção voltada à venda de um serviço, no caso, a editoração de uma publicação acadêmica paga. Itens do texto como “você tem a chance de transformar sua pesquisa em um livro de impacto” ou “Envie sua obra em PDF ou Word para uma avaliação gratuita” reproduzem traços de uma visada injuntiva, a qual está direcionada ao convencimento e à instrução do interlocutor quanto à realização de uma atividade pretendida, o que faz interface direta com as intenções de uma chamada comercial.
+
+O que, possivelmente, fica de fora desse crivo são as projeções implícitas que a empresa/locutor lança sobre seu destinatário, bem como os lugares de interação/consumo que se pretende que esse possível cliente assuma em caso de uma efetiva realização da investida na venda. Ressalta-se, então, a importância de levar esse tipo de análise para um nível mais profundo, pormenorizado e que valorize os indícios negligenciáveis.
+
+\item De sua comunicabilidade:
+
+Tomando a ideia de \textcite{bentes2024texto} de que textos são fenômenos inspiradores, isto é, são materialidades que são postas no trânsito interacional como engrenagens que motivam a produção de novos enunciados que mantenham constante a cadeia comunicacional, entende-se que a comunicabilidade se presentifica em alguns trechos chamarizes, os quais perfazem apelos de resposta ao interlocutor (aqui tomado como um cliente em prospecção). Exemplos que comprovam essa percepção são:
+
+\begin{enumerate}
+    \item “Você já se perguntou o que mais você pode fazer para alcançar novos patamares na sua trajetória acadêmica?”
+    \item  “E para você, o que falta para dar esse passo?” (grifo nosso)
+    \item “Envie sua obra em PDF ou em Word […]”
+    \item “Abraços”
+\end{enumerate}
+
+Desde elementos mais direcionais e instrutivos, como ocorre nas perguntas e nos comandos diretos e indiretos, até o uso de uma saudação mais aproximada e afetuosa, ao se despedir com abraços, nota-se que a comunicabilidade desse texto se manifesta em uma intensa pretensão por se instaurar um princípio dialogal, de orientação cuidadosa e de proximidade, evocando a ideia de que o \textit{e-mail} em questão está muito relacionado a um contexto de sentidos de um captador de talentos e de uma figura amigável e preocupada com a ascensão profissional e individual de seu destinatário.
+
+A análise empreendida no nível das regularidades do texto no objeto em questão, por investir em um princípio sociocognitivo-interacional, é capaz de desvelar camadas pertinentes ao entendimento do projeto de dizer inscrito na materialidade apresentada. Nesse sentido, reitera-se o posicionamento de que o estudo indiciário do texto deve ser recepcionado como uma fonte agregadora e não substitutiva da investigação em LT, uma vez que se orienta, em grande medida, a captar resquícios, rastros e demais traços que se manifestem nas irregularidades, as quais só são perceptíveis em meio à repetibilidade de um fenômeno.
+
+Tendo essa premissa em vista, o terceiro nível de análise, o dos indícios negligenciáveis do texto, seleciona os seguintes itens do objeto em questão:
+
+\begin{enumerate}
+    \item a saudação “Olá!”;
+    \item a ausência de substantivos e adjetivos que se refiram diretamente ao gênero do destinatário;
+    \item “[…] nós queremos te ajudar nesse processo, basta aceitar nosso convite”.
+\end{enumerate}
+
+O item A, na saudação “Olá”, releva um detalhe que entrega um traço típico de editoras predatórias: a inexistência de um destinatário específico, que, nesse contexto, tem um valor sumariamente quantitativo e capitalizado, compondo a receita de arrecadação dos produtos e serviços que conseguirem vender.
+
+Fazendo interface com o gênero \textit{e-mail}, que, em linhas gerais, é utilizado para se comunicar com um destinatário ou com uma audiência bem definida, a falta de um vocativo para a saudação inicial indicia que a correspondência em questão tem uma considerável propensão de não ser personalizada (contradizendo textualizações afetuosas e aproximadas inscritas ao longo do material analisado) e tem como um endereçamento qualquer pessoa que tenha, porventura, seu \textit{e-mail} vinculado a algum tipo de atividade acadêmica.
+
+Essa contradição se reitera no item B, pela falta de marcação de gênero em excertos que indiquem uma apreciação elogiosa ou que remeta à construção de adjetivos referentes ao destinatário, no caso, o autor que escreve este artigo (e que está textualmente marcado no singular). Sob um olhar minucioso, nota-se que não há qualquer menção ou marcação de a mensagem se direcionar para alguém do sexo masculino ou feminino, ou, sequer, para um grupo de pesquisadores, ao qual, convencionalmente na norma-padrão, utiliza-se o masculino plural. Infere-se, assim, a confirmação de que há um aspecto falacioso na aparente preocupação de tornar o trabalho acadêmico do destinatário em um livro como uma forma de catapultar seu talento e dedicação. Abre-se o questionamento, inclusive, quanto ao real conhecimento da editora sobre o que o destinatário produz ou produziu.
+
+O item C corrobora essa vagueza, ao demonstrar que “nesse processo” retoma “transformar sua pesquisa em um livro de impacto”, mas não deixa qualquer indicação sobre qual pesquisa seria essa. Não é incomum que um pesquisador já inserido e atuante no meio acadêmico desenvolva mais de um trabalho, seja com orientandos, redes de pesquisa, autonomamente etc. A falta de uma especificação sobre a qual produção de pesquisa se trata fornece a possibilidade de um destinatário ingênuo completar o sentido que foi propositalmente lançado indiscriminadamente pelo remetente. Para a editora, inclusive, isso se mostraria como um bom plano de negócio, já que o trabalho com a curadoria de uma pesquisa publicável ficaria a cargo do cliente em prospecção, enquanto o papel que lhe caberia, o de uma editoração com responsabilização acadêmica, ficaria em suspenso.
+
+O nível de análise dos indícios negligenciáveis pode, como a experiência demonstra, explicitar implicações sociais, econômicas e éticas que um texto adquire, a depender de como é materializado. Ainda que o estudo das regularidades permita depreender que o texto aporta intenções não ditas, é com o estudo indiciário que essas intenções são observadas em profundidade e constante diálogo com o contexto em que são postas, desvelando que não há sentidos pré-estabelecidos, mas, sim, constantemente renegociados.
+
+\end{enumerate}
+
+O segundo exemplo, conforme previsto, é de um texto produzido em um gênero diferente dos anteriores, sendo de desinformação científica, e que foi publicado no formato de uma postagem em uma rede social. A produção foi obtida do site Boatos.org, organização de verificação de notícias falsas. Ainda que já se trate de um texto que fora identificado como informação falsa no campo científico, o intuito de aplicar o estudo indiciário visará, também, utilizar a própria constituição do texto como fonte para se traçar indícios negligenciáveis e possíveis à verificação de sua ilegitimidade, o que pode ser um caminho de alcance possível a leitores com os mais diversos níveis de letramento.
+
+\begin{figure}[htbp]
+\centering
+\begin{minipage}{.8\textwidth}
+ \includegraphics[width=\textwidth]{Fig3.png}
+ \caption{\textit{E-mail} de uma editora predatória.}
+ \label{fig3}
+ \source{Acervo do autor.}
+\end{minipage}
+\end{figure}
+
+Transcrição:
+
+\begin{quote}
+    Um manuscrito revisado por pares da Fundação McCullough foi publicado na Science, Public Health Policy and the Law, pedindo que todas as vacinas contra a COVID-19 sejam retiradas do uso humano. Os motivos para retirar as vacinas incluem mortalidade excessiva, eficácia negativa, contaminação generalizada de DNA e nenhuma redução na transmissão, hospitalização ou morte.
+    
+Essas solicitações unificadas de ação regulatória ressaltam deficiências substanciais no monitoramento de segurança de dados e mitigação de riscos.
+
+Os autores concluíram que a retirada imediata das vacinas contra a COVID-19 do mercado é essencial para evitar mais perdas de vidas. Mais de 81.000 médicos, cientistas, pesquisadores e cidadãos preocupados, 240 autoridades governamentais eleitas, 17 organizações profissionais de saúde pública e médicos, 2 partidos republicanos estaduais, 17 comitês de condado do Partido Republicano e 6 estudos científicos de todo o mundo pediram a retirada do mercado das vacinas contra a COVID-19.
+\end{quote}
+
+Trata-se de um texto que divulga o estudo de uma instituição de pesquisa publicado em um periódico científico, indicando a retirada das vacinas contra a Covid-19, com a justificativa de que seriam causadoras de mortalidade excessiva, contaminação de DNA, dentre outros problemas e consequências negativas.
+
+Assumindo o mesmo passo metodológico, será aplicado uma vez mais o estudo em três níveis, dessa vez dispensando algumas explicações contextuais/terminológicas que foram feitas no exemplo anterior. Desse modo, a análise seguirá para a estrutura genérica, passando pelas regularidades do texto e findará nos indícios negligenciáveis.
+
+O gênero \textit{postagem} em uma rede social dispõe de algumas características basilares que são plenamente alcançadas pela produção em tela. Há um usuário da rede que, por possuir uma conta e estar devidamente inscrito, habilita-se a usá-la e nela fazer publicações. Privilegia-se, também, o uso de elementos multimodais e interacionais (ícones e funções para curtir, compartilhar e comentar a publicação). O texto verbal, por sua vez, ocupa o local que lhe é designado e é escrito sob uma formatação não necessariamente rígida, dispondo de uma figura de mão, indicando seu início, separação dos parágrafos por meio de espaçamento e a liberdade de mencionar fontes sem a obrigatoriedade de indicar referências claras e sistematizadas, uma vez que se trata de uma conta pessoal e que a própria rede social não faz essa exigência.
+
+Considerando o tipo de interação comumente praticado nas redes sociais, que requer uma atividade leitora dinâmica, rápida, altamente conectada e, consequentemente, não linear, pode-se inferir que o plano da estrutura genérica apreendido pelo usuário foge a qualquer estranhamento óbvio. Afinal, o produto veiculado coaduna com recursos multimodais e com as dimensões esperadas, podendo ser facilmente consumido em um \textit{feed} de notícias de qualquer usuário com acesso às postagens dessa conta. Nesse sentido, cabe assumir a possibilidade de essa produção estar apta, do ponto de vista estrutural, a ser consumida por usuários que, talvez desavisadamente, a recebam como mais uma informação legítima de registros da vida pública e cotidiana, comuns às redes sociais.
+
+No plano das regularidades do texto, toma-se novamente as categorias textualidade, intencionalidade e comunicabilidade, tais quais propostas por \textcite{antunes2017textualidade}, para a presente análise. Nesse sentido:
+
+\begin{enumerate}
+    \item Na textualidade:
+
+    Dentre as várias possibilidades de se observar como a produção se textualiza, cabe destaque à relação intertextual estabelecida na construção de uma linha argumentativa sustentável ao pleito principal do texto: a defesa de que as vacinas contra a Covid-19 são responsáveis por diversos malefícios aos que as utilizarem. Assim, sublinha-se o excerto: “Um manuscrito revisado por pares da Fundação McCullough foi publicado na Science, Public Health Policy and the Law, pedindo que todas as vacinas contra a COVID-19 sejam retiradas do uso humano”.
+    
+Tomando os estudos de \textcite{koch2012intertextualidade} sobre a intertextualidade, especialmente sobre a sua manifestação \textit{stricto sensu} no texto, pode-se aludir a presença de intertextualidade explícita no trecho em questão. Conforme as autoras \cite[p. 28-29]{koch2012intertextualidade},
+
+\begin{quote}
+    [a] intertextualidade será explícita quando, no próprio texto, é feita menção à fonte do intertexto, isto é, quando um outro texto ou fragmento é citado, é atribuído a outro enunciador; ou seja, quando é reportado como tendo sido dito por outro ou por outros generalizados (“Como diz o povo…”, “segundo os antigos…”). […] [E]m textos argumentativos, quando se emprega o recurso à autoridade; e, em se tratando de situações de interação face a face, nas retomadas do texto do parceiro, para encadear sobre ele ou contraditá-lo, ou mesmo para demonstrar atenção ou interesse na interação – neste último caso, funcionando de modo semelhante a um sinal de retroalimentação (\textit{backchanel}).
+\end{quote}
+
+Para opor-se ao argumento de que as vacinas contra a Covid-19 teriam embasamento científico de apoio quanto à sua eficácia, a postagem explicita que seu conteúdo não se trataria de uma mera publicação pessoal, mas que ressoa e ratifica o texto de uma fonte com algum capital intelectual, um texto publicado no periódico \textit{Science, Public Health Policy and the Law}, e validado, por ter sido alvo de revisão por pares.
+
+Concomitante à estratégia argumentativa pautada na intertextualidade explícita, a autoria da postagem também investe no acionamento de possíveis conhecimentos enciclopédicos de seus interlocutores quanto a práticas comuns ao meio científico. Os que tenham familiaridade com esse contexto poderão ser convencidos quanto a alguma legitimidade do texto, ao lerem que a produção foi revisada por pares. Nesse sentido, a postagem constrói a legitimidade de sua textualidade ao estabelecer diálogo explícito com uma fonte, pondo-se em um lugar interacional de divulgador, ao passo que advoga por ela, comunicando aos seus interlocutores de que não se trataria de uma produção ordinária, mas, sim, qualificada e referendada por uma comunidade do conhecimento.
+
+\item Na intencionalidade:
+
+Considerando a pauta que se explicita ao longo da postagem, a campanha antivacina contra a Covid-19, cumpre destacar elementos do plano textual que reiterem essa tentativa. No campo da materialidade textual, comprova-se essa investida no trecho “Os motivos para retirar as vacinas incluem mortalidade \textit{excessiva}, eficácia \textit{negativa}, contaminação \textit{generalizada} de DNA e \textit{nenhuma} redução na transmissão, hospitalização ou morte”.
+
+Nota-se que, no percurso difamatório às vacinas, a autoria da postagem recorre a uma construção regular de motivações sempre pareadas por adjuntos adnominais de alusão mensurável: “mortalidade \textit{excessiva}”; “eficácia \textit{negativa}”; “contaminação \textit{generalizada}” e “\textit{nenhuma} redução na transmissão, hospitalização ou morte” (grifo nosso).
+
+Além de encaminharem uma noção quantificada dos itens “mortalidade”, “eficácia”, “contaminação” e “redução na transmissão, hospitalização ou morte”, deve-se considerar que os adjuntos adnominais escolhidos reforçam um projeto argumentativo que visa aterrorizar o interlocutor, ao passo que também desvelam a posição do autor da postagem quanto a como se posiciona sobre as vacinas. Isso se comprova como uma perspectiva pessoal no fato de que, ainda que os termos “excessiva”, “negativa”, “generalizada” e “nenhuma” aludam a uma conclusão obtida de dados, não são apresentadas quaisquer informações referenciais que os sustentem, sendo cabível, portanto, assumir que se trate de uma visão e projeto de dizer do criador da postagem diante do assunto sobre o qual discute.
+
+\item Na comunicabilidade:
+
+Assumindo as regularidades do texto, pode-se detectar que a sua comunicabilidade reitera os dados previamente elencados, uma vez que também se sustenta no uso de termos de apelo emocional e alardado. É o que se percebe em escolhas como:
+
+\begin{enumerate}
+    \item “[…] a retirada imediata das vacinas contra a COVID-19 do mercado é essencial para evitar mais perdas de vidas […]”;
+    \item “Mais de 81.000 médicos, cientistas, pesquisadores e cidadãos preocupados […]”.
+\end{enumerate}
+
+Percebe-se pelos excertos que a autoria da postagem usa de construções textuais de modalidade deôntica (“a retirada imediata […] é essencial”) e emotiva (“médicos, cientistas, pesquisadores e cidadãos preocupados”), para construir uma comunicação com seu leitor por meio de duas estratégias diferentes, ainda que complementares: pauta a retirada das vacinas como um dever moral e paradigmático a ser cumprido, ao passo que, em posição distinta, coloca tal ação como alvo de uma empatia coletiva de indivíduos que, por razões profissionais ou pessoais, preocupam-se com o bem-estar da população.
+
+O movimento apresentado, considerando a comunicabilidade do texto, constrói uma faceta dupla dessa produção: compartilha uma recomendação normativa e demonstra uma posição apelativa, visando interagir com diferentes interlocutores que podem deter diversas (in)flexibilidades opinativas frente ao tema.
+
+Por fim, a análise dos indícios negligenciáveis retoma itens discutidos nos níveis anteriores para ampliar as lentes quanto a rastros que indiquem naturezas não tão óbvias do texto. Nesse sentido, são destacados:
+
+\begin{enumerate}
+    \item “Um manuscrito revisado por pares da Fundação McCullough foi publicado na Science, Public Health Policy and the Law, pedindo que todas as vacinas contra a COVID-19 sejam retiradas do uso humano”.
+
+    A Fundação McCullough pode veicular, em certa medida, algum tipo de intimidação intelectual, seja pelo fato de uma fundação remeter um caráter institucionalizado e oficial, seja pelo sobrenome em questão fazer alusão a uma fonte que estaria para além do domínio nacional, ressoando resquícios de influências imperialistas e colonizatórias. Todavia, a mesma linhagem faz retomar a pessoa de Peter McCullough, médico e fundador da Fundação McCullough, e conhecido na época da pandemia da Covid-19 como um dos defensores do “tratamento precoce”, bem como do uso de hidroxicloroquina para o combate à doença \cite{estadao2021cloroquina}.
+    
+Essa averiguação não disponível no texto, mas rastreável por meio dele, permite desvelar um plano mais ampliado de sua realização: a fonte usada como autoridade intelectual para a veiculação dos dados atua dentro de uma pauta enviesada e que vai na contramão de procedimentos básicos da cientificidade. Assim, os indícios revelam que o texto do qual essa postagem parte, o artigo da Fundação McCullough, está emprenhado de uma historicidade que depõe contra a constituição que alega ter.
+
+\item “Mais de 81.000 médicos, cientistas, pesquisadores e cidadãos preocupados, 240 autoridades governamentais eleitas, 17 organizações profissionais de saúde pública e médicos, 2 partidos republicanos estaduais, 17 comitês de condado do Partido Republicano e 6 estudos científicos de todo o mundo pediram a retirada do mercado das vacinas contra a COVID-19”.
+
+Em B há outros rastros importantes que abrem uma nova dimensão de recepção desse texto. O primeiro deles diz respeito à presença de quantificações específicas relacionadas aos indivíduos e instituições que endossam a retirada das vacinas contra a Covid-19 do mercado. Há, com isso, um dissenso com os próprios princípios argumentativos no texto analisado, visto que, anteriormente, o embasamento por quantificação numérica não foi aplicado para se relatar as aparentes consequências negativas da vacina (“Os motivos para retirar as vacinas incluem mortalidade excessiva, eficácia negativa, contaminação generalizada de DNA e nenhuma redução na transmissão, hospitalização ou morte”).
+
+Ao se realizar um paralelo entre os dois excertos, depreende-se que o uso dos numerais arábicos para se ratificar o apoio a uma medida antivacina em nada coaduna com qualquer verificação científica, visto que tal posicionamento pode se dar por razões diversas, como visão político-partidária, religiosidade, crenças pessoais etc. Por outro lado, o trecho que trata de consequências mensuráveis da vacina, estas, sim, de uma possível natureza empírica, limitam-se a adjuntos adnominais alarmantes e sem acurácia. Dessa inferência indiciária, constata-se mais um elemento de quebra entre o texto em análise e sua alegada legitimidade científica.
+
+Outro rastro deixado pela materialidade do excerto constante em B se revela tanto na não nomeação de, minimamente, uma entidade médica que apoie a causa antivacina (visto que cita haver 17), ao passo que demarca a presença do Partido Republicano (em 2 partidos estaduais e 17 comitês) nesse endosso. Utilizando-se, mais uma vez, do princípio inferencial e contextual do paradigma indiciário, cumpre retomar o histórico abrangente dos Republicanos com a pauta antivacina nos Estados Unidos da América, tendo exercido influência sobre outros países do globo, como o próprio Brasil no período crítico da pandemia da Covid-19. Nesse sentido, a presença marcada dessa menção é, também, uma forma de o texto fazer seu aceno político, podendo angariar engajamento de leitores simpáticos a essas conjunturas ideológicas.
+\end{enumerate}
+
+\end{enumerate}
+
+Em suma, os indícios negligenciáveis do texto, mais uma vez, revelam dados importantes que não necessariamente estão em suspenso, mas que carregam em si uma não obviedade constitutiva. Dessa forma, olhar para as outras interfaces de sentido presentes na materialidade da palavra, e que são exigentes do ponto de vista analítico, demandam reduzir a escala de observação, o que, para Ginzburg (2007, p. 264), quer dizer:
+
+\begin{quote}
+    […] transformar num livro aquilo que, para outro estudioso, poderia ter sido uma simples nota de rodapé numa hipotética monografia sobre a Reforma protestante no Friul. […] Pouco a pouco me dei conta de que uma grande quantidade de acontecimentos e conexões que eu ignorava totalmente contribuiu para orientar as decisões que eu imaginara tomar automaticamente: um fato em si banal, mas sempre surpreendente, porque contradiz as nossas fantasias narcísicas.
+\end{quote}
+
+
+\section{Conclusão}\label{sec-fmt-manuscrito}
+O presente artigo buscou demonstrar uma possibilidade analítica que põe em diálogo a Linguística Textual com o paradigma indiciário, pensado especificamente como uma frente metodológica eficaz para se analisar textos desinformativos. Na intenção de findar da melhor forma possível as elaborações produzidas ao longo destas páginas, serão elencados um desafio e uma potencialidade inerentes a um estudo indiciário do texto.
+
+O principal desafio reside no reconhecimento de que os sentidos textuais enfrentam uma crise constitutiva, com seus limites tornando-se progressivamente mais flexíveis devido às transformações tecnológicas, à superabundância informacional e às disputas de poder multiespaciais. Diante desse cenário, o paradigma indiciário oferece as lentes necessárias para examinar essa instabilidade inerente, exigindo que o analista observe o texto em seus detalhes marginais e paralelos, acolhendo a complexidade como dado analítico fundamental.
+
+Como consequência, exige-se que o estudioso do texto seja não apenas um conhecedor de mecanismos de textualização socialmente reiterados, mas também alguém que desconfie sistematicamente da obviedade dos dados, interpretando-os em sua singularidade irrepetível. A potencialidade dessa abordagem manifesta-se na geração de análises textualmente engajadas com a transformação social, alinhando-se assim às tendências contemporâneas da Linguística Textual. Dessa forma, o paradigma indiciário consolida-se como recurso teórico-metodológico agregador, particularmente coerente com a diversidade de textos e projetos argumentativos cada vez menos lineares que caracterizam a contemporaneidade.
+
+Para concluir, vislumbra-se assumir, juntamente à fortuna do pensamento de Ginzburg, a visão de que textos são objetos de interações humanas cada vez mais complexas e multidimensionais. Coadunam e estabelecem atritos com outros textos em diferentes contextos históricos e sociais por aqueles que os produzem e os consomem, negociando sentidos. Desse movimento contínuo e engajador, deixam marcas e rastros, aos quais o homem, por um traço ancestral, pode ser capaz de perseguir, como um caçador de indícios.
+
+
+\printbibliography\label{sec-bib}
+% if the text is not in Portuguese, it might be necessary to use the code below instead to print the correct ABNT abbreviations [s.n.], [s.l.]
+%\begin{portuguese}
+%\printbibliography[title={Bibliography}]
+%\end{portuguese}
+
+
+
+\begin{dataavailability}
+\txtdataavailability{databody} % options: dataavailable, dataonly, databody, datanotav, nodata
+\end{dataavailability}
+
+
+
+\end{document}
+
