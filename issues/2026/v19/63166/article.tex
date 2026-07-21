@@ -1,0 +1,691 @@
+% !TEX TS-program = XeLaTeX
+% use the following command:
+% all document files must be coded in UTF-8
+\documentclass[spanish]{textolivre}
+% build HTML with: make4ht -e build.lua -c textolivre.cfg -x -u article "fn-in,svg,pic-align"
+
+\journalname{Texto Livre}
+\thevolume{19}
+%\thenumber{1} % old template
+\theyear{2026}
+\receiveddate{\DTMdisplaydate{2025}{11}{30}{-1}} % YYYY MM DD
+\accepteddate{\DTMdisplaydate{2026}{1}{21}{-1}}
+\publisheddate{\today}
+\corrauthor{Leticia Gambetta}
+\articledoi{10.1590/1983-3652.2026.63166}
+%\articleid{NNNN} % if the article ID is not the last 5 numbers of its DOI, provide it using \articleid{} commmand 
+% list of available sesscions in the journal: articles, dossier, reports, essays, reviews, interviews, editorial
+\articlesessionname{dossier}
+\runningauthor{Gambetta, Abdala y Huertas} 
+%\editorname{Leonardo Araújo} % old template
+\sectioneditorname{Camila Cárdenas Neira~\orcid{0000-0002-1842-7200}}
+\layouteditorname{Leonardo Araujo~\orcid{0000-0003-3884-2177}}
+
+\title{La agentividad del analista crítico del discurso frente a ChatGPT: un estudio comparativo a partir del \#casoAstesiano en Uruguay}
+\othertitle{A agentividade do analista crítico do discurso frente ao ChatGPT: um estudo comparativo a partir do \#casoAstesiano no Uruguai}
+\othertitle{The agency of the critical discourse analyst in relation to ChatGPT: a comparative study based on the \#AstesianoCase in Uruguay}
+% if there is a third language title, add here:
+%\othertitle{Artikelvorlage zur Einreichung beim Texto Livre Journal}
+
+\author[1]{Leticia Gambetta Abella~\orcid{0000-0003-4892-6833 }\thanks{Email: \href{mailto:leticiagambetta@gmail.com}{leticiagambetta@gmail.com}}}
+\author[1]{Andres Abdala~\orcid{0009-0001-7908-8492}\thanks{Email: \href{mailto:andresabdala66@gmail.com}{andresabdala66@gmail.com}}}
+\author[1,2]{Agustina Huertas Rehermann~\orcid{0009-0000-1144-9995}\thanks{Email: \href{mailto:agustinahuertasr@gmail.com}{agustinahuertasr@gmail.com}}}
+\affil[1]{Universidad de la República, Facultad de Información y Comunicación, Departamento de Medios y Lenguajes, Montevideo, Uruguay.}
+\affil[2]{Universitat Pompeu Fabra, Barcelona, España.}
+
+\addbibresource{article.bib}
+% use biber instead of bibtex
+% $ biber article
+
+% used to create dummy text for the template file
+\definecolor{dark-gray}{gray}{0.35} % color used to display dummy texts
+\usepackage{lipsum}
+\SetLipsumParListSurrounders{\colorlet{oldcolor}{.}\color{dark-gray}}{\color{oldcolor}}
+
+% used here only to provide the XeLaTeX and BibTeX logos
+\usepackage{hologo}
+
+% if you use multirows in a table, include the multirow package
+\usepackage{multirow}
+
+% provides sidewaysfigure environment
+\usepackage{rotating}
+
+% CUSTOM EPIGRAPH - BEGIN 
+%%% https://tex.stackexchange.com/questions/193178/specific-epigraph-style
+\usepackage{epigraph}
+\renewcommand\textflush{flushright}
+\makeatletter
+\newlength\epitextskip
+\pretocmd{\@epitext}{\em}{}{}
+\apptocmd{\@epitext}{\em}{}{}
+\patchcmd{\epigraph}{\@epitext{#1}\\}{\@epitext{#1}\\[\epitextskip]}{}{}
+\makeatother
+\setlength\epigraphrule{0pt}
+\setlength\epitextskip{0.5ex}
+\setlength\epigraphwidth{.7\textwidth}
+% CUSTOM EPIGRAPH - END
+
+% to use IPA symbols in unicode add
+%\usepackage{fontspec}
+%\newfontfamily\ipafont{CMU Serif}
+%\newcommand{\ipa}[1]{{\ipafont #1}}
+% and in the text you may use the \ipa{...} command passing the symbols in unicode
+
+% LANGUAGE - BEGIN
+% ARABIC
+% for languages that use special fonts, you must provide the typeface that will be used
+% \setotherlanguage{arabic}
+% \newfontfamily\arabicfont[Script=Arabic]{Amiri}
+% \newfontfamily\arabicfontsf[Script=Arabic]{Amiri}
+% \newfontfamily\arabicfonttt[Script=Arabic]{Amiri}
+%
+% in the article, to add arabic text use: \textlang{arabic}{ ... }
+%
+% RUSSIAN
+% for russian text we also need to define fonts with support for Cyrillic script
+% \usepackage{fontspec}
+% \setotherlanguage{russian}
+% \newfontfamily\cyrillicfont{Times New Roman}
+% \newfontfamily\cyrillicfontsf{Times New Roman}[Script=Cyrillic]
+% \newfontfamily\cyrillicfonttt{Times New Roman}[Script=Cyrillic]
+%
+% in the text use \begin{russian} ... \end{russian}
+% LANGUAGE - END
+
+% EMOJIS - BEGIN
+% to use emoticons in your manuscript
+% https://stackoverflow.com/questions/190145/how-to-insert-emoticons-in-latex/57076064
+% using font Symbola, which has full support
+% the font may be downloaded at:
+% https://dn-works.com/ufas/
+% add to preamble:
+\newfontfamily\Symbola{Symbola}
+% in the text use:
+% {\Symbola }
+% EMOJIS - END
+
+% LABEL REFERENCE TO DESCRIPTIVE LIST - BEGIN
+% reference itens in a descriptive list using their labels instead of numbers
+% insert the code below in the preambule:
+%\makeatletter
+%\let\orgdescriptionlabel\descriptionlabel
+%\renewcommand*{\descriptionlabel}[1]{%
+%  \let\orglabel\label
+%  \let\label\@gobble
+%  \phantomsection
+%  \edef\@currentlabel{#1\unskip}%
+%  \let\label\orglabel
+%  \orgdescriptionlabel{#1}%
+%}
+%\makeatother
+%
+% in your document, use as illustraded here:
+%\begin{description}
+%  \item[first\label{itm1}] this is only an example;
+%  % ...  add more items
+%\end{description}
+% LABEL REFERENCE TO DESCRIPTIVE LIST - END
+
+
+% add line numbers for submission
+%\usepackage{lineno}
+%\linenumbers
+
+\begin{document}
+\maketitle
+
+\begin{polyabstract}
+\begin{abstract}
+Este artículo examina la agencia del analista crítico del discurso ante la incorporación de Inteligencia Artificial Generativa (IAG), a partir de una comparación empírica entre el análisis realizado por investigadores humanos y el procesamiento efectuado por ChatGPT sobre un mismo corpus discursivo vinculado al \#casoAstesiano en Uruguay. El análisis se desarrolló en cuatro fases: conformación del corpus, análisis crítico del discurso realizado por los investigadores, replicación de las mismas etapas mediante ChatGPT Plus 5.1, y comparación entre ambos resultados. Se conformó un corpus de 431 tuits que mencionaron la cuenta del entonces presidente @luislacallepou, a partir de una muestra inicial de 20 000 tuits obtenida mediante \textit{scraping} y procesamiento en R, con apoyo metodológico de ChatGPT Plus. El análisis humano clasificó los textos en función del apoyo, crítica o indeterminación que expresaron los usuarios sobre el expresidente, identificó tres ejes temáticos de crítica y aplicó el Sistema de la Valoración \cite{martin2005language}. ChatGPT fue instruido a replicar las operaciones analíticas. Los resultados del análisis comparativo demostraron que la herramienta mostró utilidad en las tareas técnicas; sin embargo, evidenció limitaciones interpretativas tales como errores en la clasificación de los posicionamientos de los usuarios, identificación parcial de los ejes temáticos y aplicación restringida del Sistema de la Valoración. En las condiciones específicas de este estudio y para el tipo de operaciones interpretativas examinadas, las limitaciones del análisis automatizado frente al análisis discursivo humano, en principio refuerzan la necesidad de una interpretación situada en investigaciones críticas del discurso.
+
+\keywords{Inteligencia Artificial Generativa \sep Análisis Crítico del Discurso \sep Agentividad investigativa \sep Corrupción política \sep Sistema de valoración}
+\end{abstract}
+
+\begin{portuguese}
+\begin{abstract}
+Este artigo examina a agência do analista crítico do discurso diante da incorporação da Inteligência Artificial Generativa (IAG), com base em uma comparação empírica entre a análise realizada por pesquisadores humanos e o processamento efetuado pelo ChatGPT sobre um mesmo corpus discursivo relacionado ao \#casoAstesiano, no Uruguai. A análise foi desenvolvida em quatro etapas: constituição do corpus, análise crítica do discurso realizada pelos pesquisadores, replicação das mesmas etapas por meio do ChatGPT Plus 5.1 e comparação entre ambos os resultados. Foi constituído um corpus de 431 tuítes que mencionavam a conta do então presidente @luislacallepou, a partir de uma amostra inicial de 20.000 tuítes obtida mediante raspagem de dados e processamento no R, com o apoio metodológico do ChatGPT Plus. A análise humana classificou os textos de acordo com o apoio, a crítica ou a indeterminação expressos pelos usuários em relação ao ex-presidente, identificou três eixos temáticos de crítica e aplicou o Sistema de Avaliatividade \cite{martin2005language}. O ChatGPT foi instruído a replicar as operações analíticas. Os resultados da análise comparativa demonstraram que a ferramenta se mostrou útil na realização de tarefas técnicas; no entanto, evidenciou limitações interpretativas, tais como erros na classificação dos posicionamentos dos usuários, identificação parcial dos eixos temáticos e aplicação restrita do Sistema de Avaliatividade. Nas condições específicas deste estudo e para o tipo de operações interpretativas examinadas, as limitações da análise automatizada em comparação com a análise discursiva humana reforçam, em princípio, a necessidade de uma interpretação situada nas pesquisas críticas do discurso.
+
+\keywords{ Inteligência Artificial Generativa \sep Análise Crítica do Discurso \sep Agentividade investigativa \sep Corrupção política \sep Sistema de Avaliatividade}
+\end{abstract}
+\end{portuguese}
+
+\begin{english}
+\begin{abstract}
+This article examines the agency of the critical discourse analyst in the context of the incorporation of Generative Artificial Intelligence (GAI), through an empirical comparison between the analysis conducted by human researchers and the processing performed by ChatGPT on the same discourse corpus related to the \#AstesianoCase in Uruguay. The analysis was carried out in four phases: corpus construction, critical discourse analysis conducted by the researchers, replication of the same stages using ChatGPT Plus 5.1, and comparison between both sets of results. A corpus of 431 tweets mentioning the account of then-president @luislacallepou was compiled from an initial sample of 20,000 tweets obtained through scraping and processing in R, with methodological support from ChatGPT Plus. The human analysis classified the texts according to the support, criticism, or indeterminacy expressed by users toward the former president, identified three thematic axes of criticism, and applied the Appraisal framework \cite{martin2005language}. ChatGPT was instructed to replicate the analytical operations. The comparative analysis showed that the tool demonstrated utility in technical tasks; however, it revealed interpretative limitations, including errors in the classification of users’ positioning, partial identification of thematic axes, and restricted application of the Appraisal framework. Under the specific conditions of this study and for the types of interpretative operations examined, the limitations of automated analysis in comparison with human discourse analysis ultimately reinforce the need for situated interpretation in critical discourse research.
+
+\keywords{Generative Artificial Intelligence \sep Critical Discourse Analysis \sep Investigative agency \sep Political corruption \sep Appraisal framework}
+\end{abstract}
+\end{english}
+% if there is another abstract, insert it here using the same scheme
+\end{polyabstract}
+
+\section{Introducción}\label{sec-intro}
+En 2022 se lanzó globalmente la herramienta de inteligencia artificial generativa ChatGPT, desarrollada por OpenAI, que masificó el acceso público a modelos de lenguaje capaces de producir textos a partir de instrucciones (prompts). Su incorporación en prácticas académicas y profesionales abrió debates sobre sus potencialidades y los riesgos de delegar en sistemas automatizados operaciones interpretativas.
+
+En este escenario surgen preguntas para los Estudios Críticos del Discurso (ECD), cuyo enfoque se sustenta en la reflexividad, la interpretación situada y la agencia del investigador. Este trabajo indaga la agentividad del analista crítico del discurso ante la incorporación de IAG a partir de un corpus de tuits recolectados en 2023 sobre un caso de corrupción política en Uruguay. El estudio compara el análisis realizado por investigadores humanos con la replicación del procedimiento mediante ChatGPT Plus 5.1 para examinar convergencias, divergencias y límites interpretativos.
+
+El objetivo general es comparar ambos análisis para identificar qué operaciones interpretativas propias de los ECD no pueden ser reproducidas por la IAG y en qué medida dichas operaciones dependen de la agentividad del analista.
+
+La hipótesis plantea que ChatGPT puede desempeñarse eficazmente en tareas técnicas y descriptivas, pero presenta limitaciones para reproducir operaciones interpretativas (clasificación de posicionamientos, identificación de ejes temáticos y aplicación del Sistema de la Valoración), especialmente cuando requieren inferencias situadas, lo que permite problematizar el lugar de la agentividad del analista en el proceso interpretativo.
+
+\subsection{El caso Astesiano}\label{sec-normas}
+El denominado caso Astesiano refiere a una trama de corrupción vinculada al exjefe de seguridad presidencial Alejandro Astesiano, detenido en septiembre de 2022 por integrar una organización dedicada a la falsificación de documentos para ciudadanos rusos. La investigación judicial reveló intercambios que involucraban vínculos con actores policiales, empresariales y políticos, lo que generó amplia cobertura mediática y debate público en Uruguay \cite{ladiaria2021custodia,ladiaria2022pasaportes,mvdnoticias2022chat}.
+
+El caso adquirió centralidad en la agenda política y mediática al involucrar a una figura del entorno presidencial y abrir interrogantes sobre responsabilidades políticas, mecanismos de control institucional y prácticas de vigilancia. La circulación de información en medios y redes sociales configuró un espacio de disputa interpretativa en torno al alcance del caso, las responsabilidades atribuidas y la figura del entonces presidente.
+
+En la interacción digital, el expresidente Luis Lacalle Pou se constituyó en un punto privilegiado de interpelación, tanto en términos de apoyo como de crítica, lo que posicionó su cuenta como nodo central en la conversación pública y orientó el recorte analítico del corpus hacia los tuits que lo mencionan directamente.
+
+El interés del caso para los Estudios Críticos del Discurso radica en que permite observar la construcción discursiva de la corrupción política en un contexto de alta visibilidad mediática, así como las formas en que actores diversos disputan interpretaciones, atribuyen responsabilidades y movilizan recursos evaluativos. En este sentido, el caso Astesiano constituye un escenario pertinente para analizar posicionamientos, configuraciones enunciativas y mecanismos valorativos en interacción digital.
+
+A continuación, se presenta el marco teórico-conceptual que fundamenta las decisiones analíticas del estudio y permite comprender el posicionamiento epistemológico desde el cual se comparan el análisis humano y el procesamiento efectuado por la IAG.
+
+\section{Marco teórico}\label{sec-conduta}
+El marco teórico de este trabajo se inscribe en los Estudios Críticos del Discurso (ECD) e integra la clasificación de enunciadores en el ecosistema digital \cite{muller2020estudios,gambetta2021desequilibrio,gambettaabella2024media} y el Sistema de la Valoración \cite{martin2005language}, desarrollado en la tradición de la Lingüística Sistémico-Funcional. Estos enfoques permiten articular una perspectiva crítica situada sobre la producción discursiva en redes sociales y constituyen el soporte conceptual para comparar la interpretación realizada por investigadores humanos con el procesamiento generado por la Inteligencia Artificial Generativa (IAG).
+
+
+\subsection{Estudios Críticos del Discurso}\label{sec-fmt-manuscrito}
+Los Estudios Críticos del Discurso (ECD) se configuran como un enfoque inter y transdisciplinario orientado a analizar las relaciones entre discurso, poder y desigualdad social \cite{fairclough1995critical,vandijk2008discourse,wodak2003metodos}. Este campo se interesa por comprender cómo las prácticas discursivas contribuyen a la reproducción, legitimación o cuestionamiento de estructuras sociales, con especial atención a la dimensión ideológica del lenguaje y a los procesos mediante los cuales los actores sociales son representados y evaluados.
+
+Este carácter integrador de los ECD habilita el diálogo con enfoques lingüísticos que permiten examinar con mayor precisión la materialidad del discurso. En este sentido, la Lingüística Sistémico-Funcional \cite{halliday2004introduction} ofrece un marco relevante al concebir el lenguaje como un recurso semiótico para la construcción de significados sociales. Dentro de esta tradición, el Sistema de la Valoración \cite{martin2005language,oteiza2019valoracion} proporciona herramientas analíticas para describir cómo los discursos evalúan personas, acciones y acontecimientos, y cómo estas evaluaciones contribuyen a la construcción de posicionamientos ideológicos.
+
+Asimismo, el desarrollo de los ECD en entornos digitales ha incorporado aportes del análisis del discurso en redes sociales y de los estudios sobre enunciación en plataformas, que examinan las formas específicas que adquiere la producción discursiva en estos espacios \cite{khosravinik2017social,khosravinik2020social,zappavigna2012discourse,noblia2020politica}. Estas investigaciones destacan la centralidad de fenómenos como la polifonía, la interdiscursividad y la intensificación evaluativa, rasgos relevantes para el análisis crítico de debates políticos digitalizados.
+
+Desde esta integración conceptual, la incorporación del Sistema de la Valoración y de los estudios sobre enunciación digital permite abordar la dimensión evaluativa del discurso en redes sociales y fundamenta la comparación entre la interpretación situada del analista y el procesamiento generado por la Inteligencia Artificial Generativa.
+
+En este marco, la agentividad del analista adquiere un lugar central. El análisis crítico del discurso no se concibe como una aplicación técnica de categorías, sino como una práctica interpretativa situada que implica decisiones analíticas, movilización de saberes sociopolíticos e inferencias contextuales. Desde la tradición de los Estudios Críticos del Discurso, el análisis supone “el estudio del discurso con una actitud” \cite[p. 204]{vandijk2006politica}, lo que implica reconocer que la interpretación se encuentra atravesada por el posicionamiento epistemológico del investigador y por los criterios que orientan la construcción de sentido.
+
+
+\subsection{La enunciación en el ecosistema digital}\label{sec-formato}
+En el ecosistema digital, la enunciación adquiere características específicas vinculadas a la lógica socio-técnica de las plataformas. Como señalan autores que estudian la circulación de sentido en redes sociales \cite{khosravinik2017social,muller2020estudios,gambetta2022enunciador}, X (antes Twitter) funciona como un espacio donde múltiples actores intervienen en tiempo real, disputan interpretaciones y producen valoraciones sobre acontecimientos de relevancia pública. Estas intervenciones no solo dependen del contenido textual, sino también de las posiciones sociales, institucionales y relacionales que adopta cada participante en la red.
+
+En este estudio se retoma la noción de enunciador propuesta por \textcite{muller2020estudios}, entendida no como una identidad fija, sino como un lugar discursivo que un actor ocupa en un entramado comunicativo. Esta perspectiva permite clasificar las intervenciones, tal como muestra la \Cref{tab1}, según su inscripción social —medios de comunicación, periodistas, actores gubernamentales, referentes partidarios, cuentas militantes y usuarios anónimos—, reconociendo que estas posiciones implican distintos grados de legitimidad, visibilidad, autoridad y capacidad de influir en el debate público. En el caso Astesiano, esta dinámica se evidenció en la variedad de voces que intervinieron para definir la gravedad del episodio, exigir explicaciones o defender a los actores involucrados.
+
+\begin{table}[htbp]
+\centering
+\begin{threeparttable}
+\caption{Características de las arenas discursivas.}
+\label{tab1}
+
+\footnotesize
+
+\begin{tabularx}{\textwidth}{
+>{\raggedright\arraybackslash}p{0.25\textwidth}
+>{\raggedright\arraybackslash}X
+>{\raggedright\arraybackslash}X}
+\toprule
+&
+\textbf{Discursos ``clásicos'' de los medios de comunicación y las élites} &
+\textbf{Discursos en los medios sociales} \\
+\midrule
+
+\textbf{Institucionalización} &
+Institucionalizado &
+Desinstitucionalizado \\
+
+\addlinespace
+
+\textbf{Producción de contenidos/consumo} &
+Profesionales de los medios de comunicación = productores; usuarios = consumidores &
+Profesionales de los medios de comunicación = productores y consumidores; usuarios = productores y consumidores \\
+
+\addlinespace
+
+\textbf{Dirección de la comunicación/interactividad} &
+Unidireccionalidad; uno a muchos &
+Multidireccional; muchos a muchos; uno a muchos; uno a uno \\
+
+\addlinespace
+
+\textbf{Control de acceso} &
+Redacción &
+Apenas hay guardianes \\
+
+\addlinespace
+
+\textbf{Acceda a} &
+Acceso estrictamente limitado; elitista &
+Acceso potencialmente abierto; igualitario \\
+
+\addlinespace
+
+\textbf{Poder discursivo} &
+Condicionado al acceso &
+Vinculado a la recepción \\
+
+\bottomrule
+\end{tabularx}
+\source{Adaptación de los autores de \textcite{muller2020estudios}.}
+\end{threeparttable}
+\end{table}
+
+La articulación de estos aportes conceptuales permite interpretar el corpus como una red de posiciones enunciativas donde se negocian sentidos sobre corrupción, autoridad y legitimidad política. Esta concepción orientó la construcción del corpus representativo y fundamenta la comparación entre la lectura situada de los investigadores y la producción generada por una IAG, que no participa como enunciador social ni se inscribe en estos circuitos de legitimación.
+
+Esta transformación de los entornos digitales ha implicado una ampliación de los lugares de enunciación, que  \textcite{gambetta2021desequilibrio,gambettaabella2024media} han clasificado atendiendo a la postura enunciativa que asume cada actor en redes sociales. La categorización considera el rol social del enunciador, el propósito comunicativo y el nivel de carga valorativa presente en los textos. Para este último aspecto, los autores proponen una escala de cuatro niveles —neutra, baja, media y alta— determinada a partir de marcas lingüísticas y elementos multimodales característicos de los entornos digitales.
+
+La propuesta original de \textcite{gambetta2021desequilibrio}, luego ampliada en \textcite{gambetta2022enunciador,gambettaabella2024media}, distingue distintos tipos de enunciadores. En la \cref{tab2} se presentan y describen únicamente aquellos pertinentes para este estudio, en función de su presencia efectiva en la circulación discursiva del caso Astesiano.
+
+\begin{table}[htbp]
+\centering
+\begin{threeparttable}
+\caption{Categorización de enunciadores.}
+\label{tab2}
+
+\footnotesize
+
+\begin{tabularx}{\textwidth}{
+>{\raggedright\arraybackslash}p{0.12\textwidth}
+>{\raggedright\arraybackslash}p{0.22\textwidth}
+>{\raggedright\arraybackslash}p{0.23\textwidth}
+>{\raggedright\arraybackslash}p{0.19\textwidth}
+>{\raggedright\arraybackslash}p{0.12\textwidth}}
+\toprule
+\textbf{Categoría de Enunciador} &
+\textbf{Actores sociales} &
+\textbf{Contenidos compartidos} &
+\textbf{Propósito de la comunicación} &
+\textbf{Carga valorativa esperada} \\
+\midrule
+
+\textit{Oficial} &
+Gobiernos, Organismos públicos e instituciones &
+Información sobre gestión y asuntos que los involucran &
+Informar &
+Baja/Media \\
+
+\addlinespace
+
+\textit{Legitimado} &
+Medios de comunicación tradicionales &
+Información, publicidad, entretenimiento &
+Informar, vender, entretener &
+Neutra/Baja Media/Alta\\
+
+\addlinespace
+
+\textit{Paralelo} &
+Iglesias, Sindicatos, Partidos políticos, movimientos sociales &
+Información sobre la organización: objetivos, actividades, iniciativas &
+Informar, ganar adeptos, movilizar, concientizar &
+Media/Alta \\
+
+\addlinespace
+
+\textit{Independiente} &
+Referentes en el área como periodismo, deporte, artes, ciencias &
+Opiniones y reflexiones sobre temas de interés en los que actúan como referentes &
+Informar y opinar &
+Media/Alta \\
+
+\bottomrule
+\end{tabularx}
+\source{\textcite{gambetta2022enunciador,gambettaabella2024media}.}
+\end{threeparttable}
+\end{table}
+
+Desde esta perspectiva, los ECD se constituyen como un espacio de convergencia teórica y metodológica orientado a problematizar la naturalización de prácticas sociales que contribuyen al mantenimiento o la disputa de relaciones de poder. En ese marco, el Sistema de la Valoración se integra como una herramienta analítica que permite examinar cómo se construyen evaluaciones sociales, juicios morales y posicionamientos afectivos en el discurso.
+
+En contextos de interacción digital, donde la crítica política se expresa frecuentemente de forma implícita, intensificada o irónica, el Sistema de la Valoración ofrece categorías que hacen visible la dimensión evaluativa del discurso sin reducirla a una lectura literal o descriptiva. De este modo, el análisis valorativo se inscribe en una lectura crítica situada y permite examinar cómo se atribuyen responsabilidades, se legitiman o deslegitiman actores y se negocian sentidos en torno a la corrupción política.
+
+Esta articulación resulta central para los objetivos del estudio, ya que el contraste entre el análisis humano y el procesamiento efectuado por la IAG se apoya en la capacidad —o incapacidad— de reconocer evaluaciones implícitas, inferencias contextuales y operaciones interpretativas que exceden la detección de patrones lingüísticos.
+
+\subsection{Sistema de la valoración}\label{sec-modelo}
+El análisis discursivo desarrollado en este estudio se apoya en el Sistema de la Valoración propuesto por \textcite{martin2005language}, un marco teórico que permite describir cómo los hablantes evalúan personas, acciones y acontecimientos. Este enfoque resulta especialmente pertinente para el caso Astesiano, dado que gran parte de la circulación discursiva en X se organiza en torno a la atribución de responsabilidades, la expresión de emociones y la formulación de juicios morales sobre actores políticos en un contexto de conflictividad pública.
+
+En diálogo con esta propuesta, se recuperan aplicaciones posteriores que amplían el estudio de la valoración al análisis de procesos históricos, sociales y culturales atravesados por narrativas políticas \cite{oteiza2019valoracion}, desplazando el foco desde la identificación de recursos evaluativos hacia el análisis de su funcionamiento ideológico en discursos políticos, particularmente en la atribución de responsabilidades, la construcción de legitimidades y la evaluación moral de actores sociales.
+
+Esta perspectiva resulta especialmente pertinente para el análisis de discursos sobre corrupción política en entornos digitales, donde las evaluaciones suelen expresarse de forma implícita, intensificada o irónica y requieren una interpretación situada que articule categorías analíticas con conocimiento contextual e interdiscursivo. Desde esta lectura, el Sistema de la Valoración permite clasificar evaluaciones e identificar operaciones interpretativas que dependen de la agentividad del analista, aspecto central para la comparación con el procesamiento efectuado por la IAG.
+
+El Sistema de la Valoración se organiza en tres grandes dominios —Actitud, Gradación y Compro\-mi\-so—. Este trabajo se centra en el primero, dentro del cual se distinguen las categorías de Afecto, Juicio y Apreciación. El Afecto refiere a la expresión de emociones y sentimientos; el Juicio involucra la evaluación del comportamiento y la conducta social de personas; y la Apreciación permite valorar objetos, procesos o situaciones. En entornos digitales, estos recursos se manifiestan tanto de forma explícita —mediante adjetivos, valoraciones directas o expresiones emocionales— como de manera implícita, a través de ironía, presuposiciones, referencias intertextuales o intensificaciones afectivas propias de las redes sociales.
+
+Las actitudes pueden manifestarse de manera inscrita, cuando la evaluación aparece explícitamente en el léxico, o de forma evocada, cuando el posicionamiento se infiere a partir de asociaciones, presuposiciones o conocimientos compartidos.
+
+El Sistema de la Valoración también permite reconocer cómo los usuarios intensifican o suavizan sus posicionamientos. En X, estas intensificaciones pueden expresarse a través del léxico y mediante recursos multimodales —mayúsculas, signos de exclamación, emojis o marcas de ironía— que modulan la fuerza evaluativa del mensaje. Este tipo de matices resulta clave para comprender cómo se construyen las representaciones sobre el caso y cómo se negocia públicamente la gravedad del episodio. La \Cref{fig1} muestra las categorías propuestas por \textcite{martin2005language}.
+
+\begin{figure}[htbp]
+\centering
+\begin{minipage}{.8\textwidth}
+ \includegraphics[width=\textwidth]{Fig1.png}
+ \caption{Esquema general del Sistema de Valoración con términos en español.}
+ \label{fig1}
+ \source{\textcite{oteiza2019valoracion} con base en \textcite{martin2005language}.}
+\end{minipage}
+\end{figure}
+
+Siguiendo a \textcite{martin2005language}, las actitudes pueden desplegarse de manera acumulativa a lo largo del discurso, configurando lo que estos autores denominan prosodias valorativas, concepto que permite dar cuenta de orientaciones evaluativas sostenidas por la reiteración y convergencia de distintos significados de actitud.
+
+El Sistema de la Valoración orienta el análisis humano del corpus y permite comparar la lectura situada de los investigadores con la clasificación generada por la IAG.
+
+
+\subsection{X como ecosistema mediático}\label{sec-organizacao}
+Esta red social, previo a sus últimas actualizaciones, era considerada un territorio relevante en la comunicación digital contemporánea, principalmente por permitir expresar y compartir, en pocos caracteres, vivencias u opiniones sobre temas de agenda pública. Una plataforma de microblogging caracterizada por la sencillez y la volatilidad, utilizada para informarse, participar en el debate público, apoyar causas sociales o compartir pequeñas irritaciones de la cotidianeidad \cite{zappavigna2012discourse}. Se trata de un ecosistema digital que habilita a millones de usuarios —antes meros receptores— a producir contenidos y expresarse \cite{buckingham2005educacion}.
+
+En este marco conviven en X diversos enunciadores, bajo una presunta horizontalidad que simula quebrar la hegemonía y verticalidad de producción y distribución de contenidos típica de otros medios, generando nichos de afinidad \cite{aparici2018prosumidores}. Sus prestaciones —como hashtags, hilos y trending topics— dinamizan las interacciones, permiten pluralizar la capacidad de marcar temas y puntos de vista, e incidir en la agenda noticiosa \cite{martinezfresneda2021agenda}. Esto hace posible que ciertos acontecimientos se expongan y debatan “en vivo”, entre distintos enunciadores, sin necesidad de pasar por los medios tradicionales.
+
+De este modo, los enunciadores, en tanto “prosumidores” —que no sólo consumen, sino que también comparten y producen contenidos \cite{buckingham2005educacion}— se sienten en libertad de expresarse, criticar e incluso juzgar a otros actores, incluidos aquellos pertenecientes a élites que difícilmente serían interpelados de esta forma.
+
+\subsection{Inteligencia Artificial y estudios discursivos}\label{sec-organizacao-latex}
+Las IAG forman parte de una nueva etapa de desarrollo tecnológico basada en modelos entrenados con grandes volúmenes de datos, capaces de generar contenidos a partir de patrones lingüísticos aprendidos. En este marco, los grandes modelos de lenguaje han adquirido una presencia creciente en prácticas vinculadas con la producción y el análisis discursivo.
+
+ChatGPT, específicamente, es un modelo de lenguaje que interactúa con los usuarios en formato conversacional y puede adaptarse a distintos registros, niveles de detalle y propósitos comunicativos. Su funcionamiento se sostiene en arquitecturas de aprendizaje profundo que permiten producir respuestas coherentes y ajustadas al contexto inmediato de la interacción. Estas características han facilitado su incorporación en ámbitos académicos, profesionales y cotidianos, donde opera como una herramienta para asistir procesos de escritura, exploración conceptual o verificación de información y ha comenzado a ocupar un lugar cada vez mayor en prácticas de investigación, docencia y producción de conocimiento.
+
+Analíticamente, ha derivado en estudios orientados a comprender su forma de accionar, el impacto de su incorporación a metodologías cuantitativas y cualitativas, la capacidad de generar contenido \cite{fontjulian2024chatgpt}, así como su nivel de rendimiento, autonomía y agencia en relación con el grado de intervención o supervisión humana \cite{gildezuniga2024scholarly}. Desde la lingüística y los estudios del discurso, se han desarrollado abordajes vinculados con la recolección y análisis de corpus, identificación de patrones y descripción de particularidades.
+
+ChatGPT como IAG basada en texto ha comenzado a incidir en las modalidades de la investigación lingüística y el análisis del discurso, abriendo nuevas vías de desarrollo y crítica, tanto en los procesos de investigación como en su aplicación a contextos del mundo real \cite{curry2024generative,maci2025impact}. En este campo se ha argumentado que ChatGPT ofrece valor a los analistas humanos en el estudio de textos de redes sociales, principalmente en tareas cuantitativas \cite{zappavigna2023hack}. Sin embargo, se identifican limitaciones en tareas que requieren razonamiento, rigor y precisión dependiente del contexto \cite{curry2024generative}.
+
+Más recientemente, desde los ECD se han desarrollado reflexiones sobre la incorporación de herramientas automatizadas en el análisis discursivo. Estos aportes advierten que, si bien los enfoques computacionales resultan útiles para identificar patrones y regularidades, presentan limitaciones para captar evaluaciones implícitas, ironías y relaciones de poder que requieren interpretación situada \cite{khosravinik2020social}. En esta línea, trabajos recientes señalan que la irrupción de los grandes modelos de lenguaje plantea desafíos técnicos, epistemológicos y metodológicos para los ECD \cite{gillings2024rise}. Asimismo, estudios empíricos han mostrado cómo los textos producidos por IA construyen posiciones de autoridad, evaluación y control discursivo, reforzando la necesidad de una lectura situada \cite{ting2025mentor}. En este contexto, la presente investigación se inscribe en estos debates al examinar comparativamente el análisis humano y el procesamiento automatizado del discurso.
+
+\section{Recorrido metodológico}\label{sec-titulo}
+En coherencia con el marco teórico-conceptual expuesto, el recorrido metodológico de este estudio articuló técnicas propias del análisis de redes sociales digitales con herramientas provenientes de los ECD. El objetivo fue reconstruir el circuito de circulación del caso Astesiano en X, conformar un corpus analizable y, posteriormente, contrastar el análisis discursivo realizado por los investigadores con el procesamiento generado por una herramienta de IAG.
+
+\subsection{Recolección del corpus ampliado}\label{sec-autores}
+La recolección inicial se realizó mediante \textit{scraping} en X -en aquel entonces abierto a este tipo de procesos-, recuperando tuits escritos en español que contuvieran la palabra clave “Astesiano” y provinieran de cuentas uruguayas. Este procedimiento permitió obtener un corpus ampliado de 20 000 tuits, que tras un tratamiento de datos que consistió en la normalización de los textos, la eliminación de enunciados duplicados y la verificación lingüística, quedó compuesto por 11 325 tuits. Tras la normalización, se asignó a cada tuit un identificador único para su reconocimiento durante el análisis. Estas etapas se desarrollaron a partir del lenguaje de programación R para garantizar la limpieza y organización de los datos.
+
+\subsection{Identificación de nodos relevantes y selección de cuentas}\label{sec-idioma}
+A partir del corpus normalizado, se elaboró un listado de las 50 cuentas más mencionadas, con el fin de identificar los lugares de enunciación predominantes en la interacción pública sobre el caso. La visualización de los usuarios con mayor frecuencia de interacción permitió reconocer la presencia de actores de diferentes campos sociales: gobierno, justicia, medios de comunicación, referentes partidarios y cuentas anónimas de alta actividad.
+
+La clasificación preliminar de estos actores siguió criterios presentes en trabajos previos sobre circulación de sentido en redes sociales y fue apoyada puntualmente por consultas metodológicas realizadas a ChatGPT Plus, específicamente sobre procedimientos de agrupamiento proporcional en muestras de redes.
+
+\subsection{Construcción del corpus de 1 431 tuits}\label{sec-resumo}
+Sobre la base de la red de cuentas más mencionadas, se conformó una muestra representativa de 1 431 tuits, seleccionados de manera proporcional a la participación de cada grupo de enunciadores en el corpus ampliado. Este recorte intermedio permite conservar la heterogeneidad discursiva presente en el ecosistema del caso Astesiano, evitando la sobrerrepresentación de actores hiperactivos y asegurando diversidad de voces (\Cref{tab2}). Este paso es metodológicamente relevante porque constituye el puente entre el universo total de tuits y el corpus analítico final. También marca el límite del uso técnico de la IAG: en esta etapa, ChatGPT fue consultado exclusivamente como soporte metodológico para afinar criterios de proporcionalidad y limpieza de datos.
+
+\subsection{Selección del corpus analítico final: 431 tuits}\label{sec-secoes}
+A partir de la muestra de 1 431 tuits, se realizó un recorte focalizado en la circulación discursiva vinculada al entonces presidente @luislacallepou, en tanto figura central del caso y objeto destacado de interpelación pública. De este proceso surgió un corpus analítico de 431 tuits, que constituyen el material empírico de esta investigación. El recorte mantiene la diversidad valorativa y temática del debate: incluye tuits de apoyo, críticas y posiciones indeterminadas.
+
+\subsection{El rol de la Inteligencia Artificial Generativa}\label{sec-format-simple}
+En esta investigación, la IAG ocupó un rol en dos dimensiones:
+
+\begin{enumerate}[label=\Roman*]
+    \item Soporte técnico
+    
+ChatGPT Plus fue consultado para resolver dudas sobre el uso de algunas librerías de R vinculadas a definir el tamaño de la muestra y la normalización del corpus, y para la selección de la estrategia metodológica de muestreo proporcional. Su intervención permitió agilizar etapas técnicas, sin sustituir la toma de decisiones metodológicas.
+
+\item Replicación del análisis de investigadores
+
+Una vez conformado el corpus final, se le solicitó a ChatGPT que replicara las mismas etapas del análisis humano:
+
+\begin{itemize}
+    \item clasificación de posicionamientos de los usuarios en los tuits que referían al expresidente,
+    \item identificación de ejes temáticos en los tuits críticos,
+    \item aplicación del Sistema de la Valoración \cite{martin2005language}.
+\end{itemize}
+\end{enumerate}
+
+Este doble rol asignado a la IAG —como soporte técnico y como replicador del análisis humano— no tuvo como finalidad automatizar el proceso, sino generar las condiciones para una comparación empírica que permitiera examinar, en términos metodológicos y epistemológicos, la agentividad del analista crítico del discurso frente a estas herramientas.
+
+Este diseño permite someter a prueba la hipótesis del trabajo, al solicitar a ChatGPT la replicación de las mismas operaciones analíticas realizadas por los investigadores y comparar sistemáticamente ambos resultados.
+
+La \Cref{fig2} resume el recorrido metodológico.
+
+\begin{figure}[htbp]
+\centering
+\begin{minipage}{.8\textwidth}
+ \includegraphics[width=\textwidth]{Fig2.png}
+ \caption{Recorrido metodológico.}
+ \label{fig2}
+ \source{Elaboración propia.}
+\end{minipage}
+\end{figure}
+
+\section{Análisis}\label{sec-links}
+La presentación del análisis sigue el recorrido que se presentó en el apartado metodológico.
+
+
+
+
+\subsection{Fase 1. Composición del corpus y clasificación de enunciadores}\label{sec-listas}
+Como se señaló en el apartado metodológico, a partir del corpus normalizado se identificaron las cuentas más mencionadas en la interacción digital sobre el caso Astesiano, con el propósito de reconocer los lugares de enunciación que estructuraron la circulación discursiva del debate público.
+
+Este procedimiento permitió observar la presencia de actores provenientes de distintos campos sociales —gobierno, justicia, medios de comunicación, referentes partidarios y usuarios de alta actividad—, lo que confirma la heterogeneidad del ecosistema enunciativo en el que se desarrolló la conversación.
+
+En este marco, el análisis mostró que la interacción se organizó en torno a un conjunto relativamente estable de cuentas que concentraron la mayor visibilidad y capacidad de interpelación. Entre ellas, la cuenta del entonces presidente de la República (@luislacallepou) ocupó una posición claramente central, al registrar el mayor volumen de menciones dentro del corpus.
+
+La clasificación de estas cuentas según los lugares de enunciación permitió reconocer la coexistencia de enunciadores oficiales, legitimados, independientes, paralelos y comunes, evidenciando que el debate se configuró como un espacio de disputa interpretativa entre actores con distintos grados de autoridad, visibilidad y legitimidad discursiva. La \Cref{tab3} presenta los 50 enunciadores con mayor frecuencia de mención en el corpus, lo que permite visualizar la red de actores que estructuró la interacción pública sobre el caso.
+
+\begin{table}[htbp]
+\centering
+\begin{threeparttable}
+\caption{50 enunciadores más mencionados en el debate en X.}
+\label{tab3}
+
+\footnotesize
+
+\begin{tabularx}{\textwidth}{
+>{\raggedright\arraybackslash}p{0.04\textwidth}
+>{\raggedright\arraybackslash}X
+>{\raggedright\arraybackslash}p{0.13\textwidth}
+>{\raggedright\arraybackslash}p{0.04\textwidth}
+>{\raggedright\arraybackslash}X
+>{\raggedright\arraybackslash}p{0.13\textwidth}}
+\toprule
+\multicolumn{3}{c}{\textbf{}} &
+\multicolumn{3}{c}{\textbf{}} \\
+1  & @luislacallepou     & Oficial        & 26 & @mario\_bergara      & Independiente \\
+2  & @ladiaria           & Legitimado    & 27 & @gustavozubia        & Independiente \\
+3  & @frente\_amplio     & Paralelo      & 28 & @carasycaretasuy     & Legitimado \\
+4  & @mvdnoticias        & Legitimado    & 29 & @m24radio            & Legitimado \\
+5  & @gbianchi404        & Independiente & 30 & @gaby\_marigaf       & Independiente \\
+6  & @nadaqueperderuy    & Legitimado    & 31 & @pnacional           & Paralelo \\
+7  & @luisaheber         & Independiente & 32 & @nataliabrites5      & Comun \\
+8  & @camboue            & Independiente & 33 & @antoniomaeso        & Independiente \\
+9  & @pachasanchez       & Independiente & 34 & @cabezamartini       & Independiente \\
+10 & @elpaisuy           & Legitimado    & 35 & @igalvar71           & Independiente \\
+11 & @port9almvd         & Legitimado    & 36 & @jorgegandini        & Independiente \\
+12 & @telemundouy        & Legitimado    & 37 & @cossecarolina       & Independiente \\
+13 & @gustavoleal\_uy    & Independiente & 38 & @rodriguezpuppo      & Comun \\
+14 & @vtvnoticiasuy      & Legitimado    & 39 & @alftuitea           & Independiente \\
+15 & @chcarreraleal      & Independiente & 40 & @pitcnt1             & Paralelo \\
+16 & @25siete\_info      & Legitimado    & 41 & @desayunos12         & Legitimado \\
+17 & @leosarro           & Independiente & 42 & @lucasmartinsil      & Independiente \\
+18 & @gabrielhpereyra    & Independiente & 43 & @alma49008929        & Comun \\
+19 & @alvarodelgadouy    & Independiente & 44 & @sebas166019         & Comun \\
+20 & @minterioruy        & Oficial        & 45 & @tvciudaduy          & Legitimado \\
+21 & @observadoruy       & Legitimado    & 46 & @beatrizargimon      & Oficial \\
+22 & @fiscaliauruguay    & Oficial        & 47 & @cronicasdeleste     & Legitimado \\
+23 & @radiosarandi690    & Legitimado    & 48 & @radiofenix9         & Legitimado \\
+24 & @subrayado          & Legitimado    & 49 & @rperengano          & Comun \\
+25 & @epreve             & Independiente & 50 & @grazianopascale     & Independiente \\
+
+\bottomrule
+\end{tabularx}
+\source{Elaboración propia.}
+\end{threeparttable}
+\end{table}
+
+Como se observa, la red está compuesta por actores provenientes de distintos campos sociales y confirma la centralidad de la cuenta @luislacallepou del entonces presidente en la dinámica de interpelación pública. Esta configuración enunciativa orientó el recorte del corpus hacia los tuits que la mencionaron directamente. De este proceso surge el corpus analítico de 431 tuits que constituye el material empírico de las siguientes fases.
+
+
+\subsection{Fase 2. Análisis Discursivo}\label{sec-figuras-tabelas}
+Esta fase corresponde al análisis realizado íntegramente por los investigadores y constituye el punto de referencia interpretativo que luego será contrastado con el procesamiento efectuado por ChatGPT, en función de las hipótesis planteadas.
+
+
+\subsubsection{Fase 2.1}\label{sec-quotesandfootnotes}
+El objetivo principal de esta segunda fase, radicó en el análisis crítico del discurso de tuits de los usuarios de X durante la interacción en la red social, sobre el caso Astesiano. En este contexto, se indaga en las formas de evaluar al expresidente uruguayo Luis Lacalle Pou, ya que fue la cuenta más mencionada en el corpus. Por ello, en un primer paso, se observó en estos 431 tuits los posicionamientos a favor, en contra e indeterminados que fueron adoptados por los usuarios en la interacción con @luislacallepou. La identificación de estos grupos y el conteo resultó en que 271 publicaciones fueron contra el expresidente, 39 a favor y 121 indeterminados. Esto se traduce en que el 62,9 \% de los tuits son críticos hacia @luislacallepou, 28,1 \% indeterminados y 9 \% de apoyo.
+
+Este resultado se explica porque, aunque el caso de corrupción analizado no tiene como protagonista al expresidente, el condenado se desempeñaba como su jefe de seguridad y los hechos que se le imputan se vinculan estrechamente tanto con su entorno personal como con su esfera de gobierno.
+
+\subsubsection{Fase 2.2}\label{sec-equacao}
+Una vez seleccionados los 271 tuits con contenido crítico hacia @luislacallepou, se identificaron tres ejes temáticos que estructuran la crítica: (1) ataques a la figura personal del expresidente -ejemplo 1- (2) vinculaciones con el delito -ejemplo 2- y (3) atribuciones de responsabilidad por los hechos -ejemplo 3-.
+
+Estos tres ejes temáticos funcionaron como categorías para identificar el tipo de crítica presente en cada tuit y se atribuyeron de manera no excluyente, lo cual resultó en una distribución de 195 tuits en los que se vincula al ex jerarca con el caso o con otros hechos delictivos, 113 tuits en los que se destaca su responsabilidad como presidente en relación al caso y 86 tuits en los que se identifica el ataque a la persona de Lacalle Pou. Estos resultados revelan que la gran mayoría de quienes “arrobaron” la cuenta del expresidente consideran que de cierta forma está vinculado a actos delictivos. En términos porcentuales, el 72 \% de los mensajes establece algún tipo de vinculación del expresidente con hechos delictivos, el 41,6 \% apela a su responsabilidad última en tanto jefe de Estado por las acciones de su subordinado, mientras que el 31,7 \% corresponde a ataques dirigidos a su persona. Siguen algunos ejemplos de estos tres ejes temáticos.
+
+\textbf{Ejemplo 1. Ataque a la figura personal del expresidente}
+
+“se acuerdan \textbf{años anteriores con tabla de surf y mostrándose y sacándose fotos con veraneantes} de \textbf{la paloma} al pte \textbf{herrerista}?
+
+después del caso grave, importante y+grande de corrupción en la historia del uy cómo fue astesiano\_marset, a @luislacallepou \textbf{dónde lo tienen escondido}?” (TWT\_3912)
+
+\textbf{Ejemplo 2. Vínculo del Presidente con hechos delictivos}
+
+“el uruguay decente \textbf{aspira q investigación de corrupción millonaria con pasaportes} llegue al hueso. astesiano fue un peón en la etapa final. el dinero deja huellas. \textbf{la punta del ovillo comieza en primera década del 2000. ojalá se aplique la ley}. @luislacallepou (TWT\_316)
+
+\textbf{Ejemplo 3. Atribución de responsabilidad como jefe de Estado}
+
+“@pnacional @luislacallepou \textbf{yo esperando que rinda cuentas} con los chats que tiene la fiscalía entre astesiano, y no soy sólo yo, \textbf{somos la mayoría de los uruguayos}, \#blancospillos” (TWT\_1795)
+
+Los ejemplos presentados, muestran diversos recursos discursivos relacionados al contexto histórico y político uruguayo, así como referencias culturales y mediáticas fácilmente reconocibles para un analista humano.
+
+
+\subsubsection{Fase 2.3}\label{sec-codigos}
+Para poder analizar estos discursos de forma crítica y en profundidad, en esta etapa se recurrió a los estudios críticos del discurso y específicamente al sistema de valoración de \textcite{martin2005language}.  El análisis de los tuits desde este Sistema, permitió revelar que en casi la totalidad de los textos (58 \%) que critican al expresidente Lacalle Pou, lo hacen dentro del subsistema de la Actitud, a partir de la categoría Juicio. El Juicio en el subsistema de la Actitud, como se expresó en el marco teórico, incluye aquellas evaluaciones de comportamientos y conductas de actores sociales, que emiten un juicio de valor, tanto como sanción social o como estima social. Estas valoraciones se realizan tanto mediante recursos inscritos —cuando la evaluación aparece explícitamente en el léxico— como de forma evocada, cuando el sentido condenatorio surge por inferencia contextual. En el análisis, la mayoría de los tuits contrarios a @luislacallepou lo juzgan desde la sanción social (52 \%), mientras que apenas el 9 \% lo hace desde la subcategoría de estima social, como se ve a continuación:
+
+\textbf{Ejemplo 1: Juicio + Gradación}
+
+“en los audios divulgados ayer y hoy \textbf{hay hechos muy graves}. en el de ayer, astesiano, confirma que el presidente @luislacallepou, conoce todo su curriculum, hecho que negó en la conf. de prensa posterior a su detención, \textbf{donde afirmó desconocer el prontuario de su custodia}. va hilo” (TWT\_46).
+
+En este tuit se enuncia la expresión “hechos muy graves” que introduce una \textbf{Apreciación negativa del acontecimiento}, que funciona como base para el posterior \textbf{Juicio por sanción social de veracidad} atribuido al expresidente, de carácter evocado, inferido a partir de la contradicción entre el conocimiento atribuido y la negación pública. La expresión “hechos muy graves” activa el subsistema de la Gradación, intensificando la valoración negativa. El uso de “prontuario” también contribuye a intensificar, pues no remite simplemente a antecedentes penales, sino a una trayectoria delictiva más extensa y de mayor gravedad.
+
+\textbf{Ejemplo 2: Juicio + interdiscursividad + Gradación}
+
+“@soylabagual @luislacallepou serás cornuda, porque el \textbf{presi sabía quién era astesiano y no le importó}. \textbf{expuso al país al escarnio} y ahora está buscando a quién culpar, porque (una vez más) \textbf{no se hace cargo}.
+
+\#blancospillos \#blancoschorros” (TWT\_377)
+
+Este tuit vuelve a formular un \textbf{Juicio por sanción social de integridad}, inscrito en expresiones como “expuso al país al escarnio, no se hace cargo”, con especial énfasis en la acusación de ocultamiento y en la falta de responsabilidad. La frase “expuso al país al escarnio” intensifica la evaluación negativa mediante \textbf{Gradación}, al escalar la consecuencia del acto desde la esfera política a la afectación colectiva. Además, la referencia intertextual a la frase “no se hace cargo”, usada por el expresidente en su propio discurso, introduce un elemento interdiscursivo que refuerza la crítica.
+
+La recurrencia de apreciaciones negativas sobre la gravedad de los hechos - Ejemplos 1 y 2-, sumada a la activación reiterada de Juicios de veracidad e integridad, contribuye a configurar una \textbf{prosodia de deslegitimación} que atraviesa el conjunto de los enunciados.
+
+\textbf{Ejemplo 3: Juicio + Afecto + Gradación}
+
+“lo increíble de ésto d la "caja" de seré y \#astesiano el mandadero de @luislacallepou ,es q nadie piensa q son regalos,sino suponemos que es falopa, capaz regalo d \#marset o a lo sumo chupi para el borracho pan de azúcar. ese nivel de pte tenemos {\Symbola 🤮}
+ \#corruptos \#mafiablanca \#sevan” (TWT\_3097)
+
+En este tuit aparece nuevamente el \textbf{Juicio por sanción social de integridad}, inscrito explícitamente en la asociación con prácticas delictivas, vinculando al presidente con delitos de narcotráfico (“falopa”) y prácticas corruptas. La formulación “ese nivel de pte tenemos” funciona como una \textbf{Apreciación negativa del estado institucional}, que se articula con el Juicio de integridad atribuido al mandatario. Hay también una presencia marcada del subsistema \textbf{Afecto por insatisfacción}, mediante expresiones de repulsión (“{\Symbola 🤮}”) y desdén (“borracho pan de azúcar”), que funcionan como evaluaciones emocionales explícitas. Además, “ese nivel de pte tenemos” opera como una \textbf{Gradación}, dado que delimita un umbral de valoración extremadamente bajo para la figura presidencial.
+
+\textbf{Ejemplo 4: Juicio + Gradación + Afecto}
+
+“entre el caso astesiano y ahora con penades, no quedan dudas que @luislacallepou nos toma a todos por pelotudos  \#blancospillos  \#elpeorgobiernodelahistoria”(TWT\_3179)
+
+Este tuit articula un \textbf{Juicio por sanción social de integridad} inscrito en la imputación directa a la conducta del expresidente (“nos toma a todos por pelotudos”). La afirmación “no quedan dudas” constituye una forma explícita de \textbf{Gradación}, al eliminar cualquier matiz o posibilidad de interpretación alternativa. La etiqueta “\#elpeorgobiernodelahistoria” funciona también como un recurso graduador, maximizando la crítica. Finalmente, hay un componente de \textbf{Afecto negativo}, al situar al enunciador en una posición de insatisfacción e indignación colectiva.
+
+\textbf{Ejemplo 5: Apreciación+Juicio}
+
+“este caso de astesiano es sin ningún lugar a dudas \textbf{el acto de corrupción más grande en la historia del uy}. pues ahora se le prohíbe x parte de pte @luislacallepou a fiscal fossati investigar ws de astesiano con él. \textbf{esto muestra q poder ejecutivo esconde algo gigante}.” (TWT\_1066)
+
+En este tuit se caracteriza al episodio como “el acto de corrupción más grande en la historia”, lo que constituye una \textbf{Apreciación extrema del hecho}, que prepara el terreno para el \textbf{Juicio por sanción social de integridad} dirigido al expresidente y al Poder Ejecutivo, inscrito en la acusación directa de encubrimiento. La expresión “sin ningún lugar a dudas” constituye un claro recurso del subsistema de la \textbf{Gradación}, usado para eliminar toda posibilidad de relativización y para presentar la afirmación como indiscutible. Esto se refuerza con la formulación “el acto de corrupción más grande en la historia del uy”, donde la gradación extrema (“más grande”, “en la historia”) amplifica la carga valorativa negativa y sitúa el caso en un lugar excepcional dentro de la memoria colectiva.
+
+La segunda parte del tuit —“pues ahora se le prohíbe… investigar”— vuelve a activar el \textbf{Juicio por sanción social}, al atribuirle al expresidente una acción deliberada de obstaculización de la Justicia. Esta imputación se inscribe directamente en la dimensión ética del comportamiento, núcleo de esta categoría del Sistema de la Valoración. Finalmente, la frase “esto muestra q poder ejecutivo esconde algo gigante” incorpora nuevamente la \textbf{Gradación} (“algo gigante”), intensificando la acusación e insinuando una ocultación de gran magnitud. En su conjunto, el tuit construye una representación fuertemente negativa del expresidente y del Poder Ejecutivo, apoyada en una combinación de juicio moral y maximización evaluativa.
+
+En este caso de corrupción política, esta revelación es altamente significativa porque expresa que los hechos delictivos por los que la Justicia condenó a su jefe de seguridad no quedaron restringidos a quien cometió los delitos, sino que se estableció una relación directa con el exmandatario, a pesar de que no hubo acusaciones en su contra. Contextualmente, la prensa escrita uruguaya tomó posicionamientos diferentes en torno a esto, mientras medios de izquierda, como el periódico La Diaria, se posicionaron discursivamente desde este lugar de resaltar el vínculo del condenado al expresidente, otros medios de prensa, tal como El País, construyeron una narrativa en la que se despega a Astesiano del gobierno, atribuyéndole autonomía en el cometido de sus delitos \cite{gambetta2027narrativas}.
+
+La red social X, dentro de sus prestaciones y dinámicas internas, favorece estas expresiones donde se evalúan con mucha libertad a las personas y acontecimientos con los que se las vincula, sobre todo, si estos actores sociales representan lugares de poder.
+
+Como se mencionó, dentro de los tuits contrarios al presidente, que fueron la gran mayoría para los investigadores, se identificaron tres direccionamientos de esta crítica, uno orientado a los ataques personales, otro al vínculo del exmandatario con los delitos de Astesiano u otros crímenes y finalmente, aquellos que le atribuían responsabilidad ante los sucesos. En algunos casos, se observó incluso más de una línea de crítica en forma simultánea. En los tuits contrarios al presidente que se orientaron a atacar la persona de Lacalle Pou, si bien también se expresa la categoría Juicio por sanción social (Veracidad/Integridad), las Apreciaciones negativas sobre los hechos operan como soporte argumentativo para intensificar los Juicios dirigidos al mandatario, dentro del Subsistema de la Actitud \cite{martin2005language}, generando una orientación evaluativa sostenida a lo largo del intercambio. En ocasiones, estas evaluaciones también se enmarcan en la categoría afecto, incorporando la expresión de emociones del enunciador.
+
+La convergencia entre la asociación con prácticas delictivas, la intensificación léxica y la incorporación de recursos afectivos produce una \textbf{prosodia condenatoria} que refuerza la atribución de responsabilidad al actor político.
+
+%Emojis
+
+
+\subsection{Fase 3 Chat como analista}\label{sec-contributors-expl}
+En esta fase se reproduce, mediante ChatGPT, el mismo recorrido analítico realizado por los investigadores, con el objetivo de generar condiciones comparables que permitan evaluar qué operaciones interpretativas pueden y no pueden ser realizadas por la IAG.
+
+\subsubsection{Fase 3.1}
+En un primer paso, se subió a la plataforma el documento con el corpus final de 431 tuits y se le solicitó que actuaracomo investigador del área de los Estudios Críticos del Discurso. Para ello se empleó el siguiente prompt:
+
+Prompt: \textit{Actuá como investigador en el área de los estudios críticos del discurso y observá con atención este documento. Esta planilla contiene textos de tuits que arrobaron la cuenta @luislacallepou en el contexto del llamado caso astesiano. Leé con atención todos los tuits y seleccioná aquellos que critican negativamente la cuenta, los que apoyan al titular de la cuenta y aquellos textos neutros. Seleccioná con rojo aquellos tuits críticos a la cuenta, con amarillo los neutros y con verde aquellos que apoyan a la cuenta @luislacallepou.}
+
+La IAG respondió afirmando que había ejecutado un “script que leyó el archivo y clasificó los tuits según su orientación discursiva”, y a partir de ello obtuvo los siguientes resultados:
+
+\begin{itemize}
+    \item 122 tuits “críticos” hacia @luislacallepou (rojo)
+    \item 304 tuits “Indeterminados” / indeterminados” (amarillo)
+    \item 5 tuits “de apoyo” (verde)
+\end{itemize}
+
+Hallazgos: El análisis del Chat no coincidió con el realizado por los investigadores. La IAG clasificó erróneamente una gran cantidad de tuits claramente críticos como indeterminados, lo que evidencia dificultades en la detección de ironías, intensificaciones valorativas y elementos interdiscursivos. La herramienta tampoco logró captar recursos lingüísticos frecuentes en la conversación digital como la elipsis, la referencia indirecta a actores, el uso de sarcasmo o apodos, todos ellos centrales para la orientación discursiva del corpus.
+
+\subsubsection{Fase 3.2}
+En una segunda etapa, tal como se detalló en la Fase 2.2, se solicitó a la IAG que identificara los tres ejes temáticos presentes en los tuits críticos hacia la cuenta del expresidente. El prompt utilizado fue:
+
+Prompt: \textit{Te voy a subir un archivo en blanco de 431 tuits. No consideres nada de lo que hayas leído antes. Leé estos textos y seleccioná únicamente los tuits rojos, es decir, aquellos que critican de alguna manera la cuenta @luislacallepou. Identificá tres ejes temáticos en estos tuits: tres temas centrales que guíen las críticas.}
+
+Resultado dado por ChatGPT
+
+Tres ejes temáticos centrales en los tuits críticos:
+
+\begin{enumerate}
+    \item Responsabilidad política directa y encubrimiento presidencial
+ Principal eje identificado. Los tuits cuestionan:
+
+ \begin{itemize}
+     \item  si Lacalle Pou sabía, ordenó o permitió las acciones de Astesiano;
+    \item las contradicciones en su discurso y explicaciones públicas;
+    \item la posibilidad de ocultamiento de información o protección desde Fiscalía o Presidencia;
+    \item la falta de asunción de responsabilidad.
+ \end{itemize}
+
+\item Uso ilegítimo del aparato estatal (espionaje / favores / policía / registros)
+
+ Los tuits refieren a:
+
+\begin{itemize}
+    \item elaboración o uso de “prontuarios”,
+    \item acceso privilegiado a información,
+    \item espionaje o vigilancia,
+    \item pedidos de favores o gestiones irregulares,
+    \item utilización del Estado con fines personales o partidarios.
+\end{itemize}
+
+\item Corrupción estructural, deterioro institucional y pérdida de credibilidad
+
+Aparecen referencias a:
+
+\begin{itemize}
+    \item corrupción sistémica más allá del caso puntual;
+    \item desprestigio institucional (Presidencia, Fiscalía, medios oficialistas);
+    \item crisis ética del gobierno y falta de transparencia;
+    \item discursos de “Uruguay ya no es serio” o “esto es más grave de lo que dicen”.
+\end{itemize}
+
+Resumen sintético del ChatGPT
+
+\begin{itemize}
+    \item Responsabilidad / Encubrimiento
+    \item Uso ilegítimo del aparato estatal
+    \item Corrupción estructural / Crisis institucional
+\end{itemize}
+
+\end{enumerate}
+ 
+Este resultado evidencia que el Chat logra una lectura superficialmente similar a la categorización realizada por los investigadores en algunos aspectos, pero con diferencias conceptuales. Por ejemplo, la IAG atribuyó 90 tuits al eje “uso ilegítimo del aparato estatal” (33,2 \%), 81 tuits a “responsabilidad / encubrimiento” (29,9 \%) y 56 tuits a “corrupción / institucionalidad” (20,7 \%). Estas clasificaciones se basan en una lectura general del texto y no en la interpelación específica al expresidente, lo cual introduce inconsistencias metodológicas. Si bien se observan ciertas similitudes entre las categorías de “Responsabilidad” y “Uso ilegítimo del aparato estatal”, la coincidencia con las categorías definidas por los investigadores fue de apenas 34,85 \%.
+
+Estas primeras exploraciones sugieren que, si bien el Chat puede identificar temas generales, los resultados no permiten confiar en su capacidad para producir análisis discursivos rigurosos, especialmente en fenómenos que requieren comprensión contextual.
+
+
+
+\section{Reflexiones finales}\label{sec-conclusao}
+Los resultados obtenidos permiten observar que, en las condiciones específicas de este estudio, el análisis realizado por la IAG no reproduce de manera consistente las operaciones interpretativas desarrolladas por los investigadores. Si bien la herramienta logra identificar temas generales y clasificar posicionamientos de forma global, aún con diferencias con los investigadores, presenta limitaciones en la detección de fenómenos discursivos que requieren inferencias contextuales, reconocimiento de interdiscursividad y lectura de valoraciones implícitas, particularmente en la identificación de ironías e intensificaciones valorativas.
+
+Estos resultados confirman la hipótesis de que la IAG puede asistir determinadas etapas del análisis discursivo, pero no sustituir las operaciones interpretativas centrales que configuran la agentividad del analista.
+
+En relación con los objetivos del estudio, la comparación entre el análisis humano y la replicación realizada por la herramienta permitió identificar tanto coincidencias como divergencias. Mientras la IAG reproduce parcialmente clasificaciones generales, las discrepancias se concentran en la lectura de posicionamientos, en la delimitación del objeto interpretativo y en la aplicación del Sistema de la Valoración, especialmente en categorías que implican inferencias contextuales.
+
+Estos hallazgos refuerzan la idea de que la agentividad analítica no se reduce a la aplicación de categorías, sino que involucra decisiones interpretativas vinculadas con el conocimiento del contexto, la articulación de niveles discursivos y la evaluación de la pertinencia analítica de las categorías utilizadas. En este marco, la IAG se configura como una herramienta útil para explorar datos, organizar información y generar aproximaciones iniciales, pero no reproduce de manera consistente la dimensión interpretativa que caracteriza al análisis crítico del discurso.
+
+En síntesis, el estudio muestra que la incorporación de IAG en investigaciones discursivas abre posibilidades metodológicas relevantes, al tiempo que pone en evidencia la necesidad de mantener el papel activo del analista en la construcción del objeto, la interpretación de los datos y la toma de decisiones analíticas.
+
+
+\printbibliography\label{sec-bib}
+% if the text is not in Portuguese, it might be necessary to use the code below instead to print the correct ABNT abbreviations [s.n.], [s.l.]
+%\begin{portuguese}
+%\printbibliography[title={Bibliography}]
+%\end{portuguese}
+
+
+%full list: conceptualization,datacuration,formalanalysis,funding,investigation,methodology,projadm,resources,software,supervision,validation,visualization,writing,review
+\begin{contributors}[sec-contributors]
+\authorcontribution{Leticia Gambetta Abella}[conceptualization,investigation,methodology,projadm,writing]
+\authorcontribution{Andres Abdala}[conceptualization,datacuration,investigation,methodology,software]
+\authorcontribution{Agustina Huertas Rehermann}[conceptualization,investigation,visualization,writing]
+\end{contributors}
+
+
+\begin{dataavailability}
+\txtdataavailability{dataonly} % options: dataavailable, dataonly, databody, datanotav, nodata
+\end{dataavailability}
+
+
+
+\end{document}
+
