@@ -1,0 +1,524 @@
+% !TEX TS-program = XeLaTeX
+% use the following command:
+% all document files must be coded in UTF-8
+\documentclass[portuguese]{textolivre}
+% build HTML with: make4ht -e build.lua -c textolivre.cfg -x -u article "fn-in,svg,pic-align"
+
+\journalname{Texto Livre}
+\thevolume{19}
+%\thenumber{1} % old template
+\theyear{2026}
+\receiveddate{\DTMdisplaydate{2025}{12}{14}{-1}} % YYYY MM DD
+\accepteddate{\DTMdisplaydate{2026}{1}{15}{-1}}
+\publisheddate{\DTMdisplaydate{2026}{7}{22}{-1}}
+\corrauthor{Eduardo Augusto Werneck Ribeiro}
+\articledoi{10.1590/1983-3652.2026.63455}
+%\articleid{NNNN} % if the article ID is not the last 5 numbers of its DOI, provide it using \articleid{} commmand 
+% list of available sesscions in the journal: articles, dossier, reports, essays, reviews, interviews, editorial
+\articlesessionname{reports}
+\runningauthor{Ribeiro} 
+%\editorname{Leonardo Araújo} % old template
+\sectioneditorname{Daniervelin Pereira~\orcid{0000-0003-1861-3609}}
+\layouteditorname{Leonardo Araujo~\orcid{0000-0003-3884-2177}}
+
+\title{\textit{Litmaps} como ferramenta para mapeamento de literatura científica: protocolo de rede de citações, saturação temática e medidas de transparência}
+\othertitle{\textit{Litmaps} as a tool for scientific literature mapping: citation network protocol, thematic saturation and transparency measures}
+% if there is a third language title, add here:
+%\othertitle{Artikelvorlage zur Einreichung beim Texto Livre Journal}
+
+\author[1]{Eduardo Augusto Werneck Ribeiro~\orcid{0000-0003-3313-6783}\thanks{Email: \href{mailto:eduardo.ribeiro@ifc.edu.br}{eduardo.ribeiro@ifc.edu.br}}}
+\affil[1]{Instituto Federal Catarinense, São Francisco do Sul, SC, Brasil.}
+
+\addbibresource{article.bib}
+% use biber instead of bibtex
+% $ biber article
+
+% used to create dummy text for the template file
+\definecolor{dark-gray}{gray}{0.35} % color used to display dummy texts
+\usepackage{lipsum}
+\SetLipsumParListSurrounders{\colorlet{oldcolor}{.}\color{dark-gray}}{\color{oldcolor}}
+
+% used here only to provide the XeLaTeX and BibTeX logos
+\usepackage{hologo}
+
+% if you use multirows in a table, include the multirow package
+\usepackage{multirow}
+
+% provides sidewaysfigure environment
+\usepackage{rotating}
+
+% CUSTOM EPIGRAPH - BEGIN 
+%%% https://tex.stackexchange.com/questions/193178/specific-epigraph-style
+\usepackage{epigraph}
+\renewcommand\textflush{flushright}
+\makeatletter
+\newlength\epitextskip
+\pretocmd{\@epitext}{\em}{}{}
+\apptocmd{\@epitext}{\em}{}{}
+\patchcmd{\epigraph}{\@epitext{#1}\\}{\@epitext{#1}\\[\epitextskip]}{}{}
+\makeatother
+\setlength\epigraphrule{0pt}
+\setlength\epitextskip{0.5ex}
+\setlength\epigraphwidth{.7\textwidth}
+% CUSTOM EPIGRAPH - END
+
+% to use IPA symbols in unicode add
+%\usepackage{fontspec}
+%\newfontfamily\ipafont{CMU Serif}
+%\newcommand{\ipa}[1]{{\ipafont #1}}
+% and in the text you may use the \ipa{...} command passing the symbols in unicode
+
+% LANGUAGE - BEGIN
+% ARABIC
+% for languages that use special fonts, you must provide the typeface that will be used
+% \setotherlanguage{arabic}
+% \newfontfamily\arabicfont[Script=Arabic]{Amiri}
+% \newfontfamily\arabicfontsf[Script=Arabic]{Amiri}
+% \newfontfamily\arabicfonttt[Script=Arabic]{Amiri}
+%
+% in the article, to add arabic text use: \textlang{arabic}{ ... }
+%
+% RUSSIAN
+% for russian text we also need to define fonts with support for Cyrillic script
+% \usepackage{fontspec}
+% \setotherlanguage{russian}
+% \newfontfamily\cyrillicfont{Times New Roman}
+% \newfontfamily\cyrillicfontsf{Times New Roman}[Script=Cyrillic]
+% \newfontfamily\cyrillicfonttt{Times New Roman}[Script=Cyrillic]
+%
+% in the text use \begin{russian} ... \end{russian}
+% LANGUAGE - END
+
+% EMOJIS - BEGIN
+% to use emoticons in your manuscript
+% https://stackoverflow.com/questions/190145/how-to-insert-emoticons-in-latex/57076064
+% using font Symbola, which has full support
+% the font may be downloaded at:
+% https://dn-works.com/ufas/
+% add to preamble:
+% \newfontfamily\Symbola{Symbola}
+% in the text use:
+% {\Symbola }
+% EMOJIS - END
+
+% LABEL REFERENCE TO DESCRIPTIVE LIST - BEGIN
+% reference itens in a descriptive list using their labels instead of numbers
+% insert the code below in the preambule:
+%\makeatletter
+%\let\orgdescriptionlabel\descriptionlabel
+%\renewcommand*{\descriptionlabel}[1]{%
+%  \let\orglabel\label
+%  \let\label\@gobble
+%  \phantomsection
+%  \edef\@currentlabel{#1\unskip}%
+%  \let\label\orglabel
+%  \orgdescriptionlabel{#1}%
+%}
+%\makeatother
+%
+% in your document, use as illustraded here:
+%\begin{description}
+%  \item[first\label{itm1}] this is only an example;
+%  % ...  add more items
+%\end{description}
+% LABEL REFERENCE TO DESCRIPTIVE LIST - END
+
+
+% add line numbers for submission
+%\usepackage{lineno}
+%\linenumbers
+
+\begin{document}
+\maketitle
+
+\begin{polyabstract}
+\begin{abstract}
+Este artigo apresenta um protocolo metodológico para mapeamento de literatura científica utilizando o \textit{Litmaps}, plataforma que combina rastreamento por rede de citações e recomendação por similaridade textual. O protocolo propõe uma regra operacional de parada baseada em saturação temática, adaptando princípios consolidados na pesquisa qualitativa ao contexto da construção de \textit{corpus} bibliométrico. O objetivo central é explicitar decisões e etapas que permitam replicação e auditoria, reconhecendo as limitações inerentes ao uso de ferramentas com algoritmos proprietários. Para demonstração, o protocolo foi aplicado a um tema empírico (pesquisas com veículos aéreos não tripulados em ambientes costeiros, realizadas entre 2013 e 2024), utilizado exclusivamente como caso ilustrativo. O \textit{corpus} resultante contém 58 publicações, cujos metadados foram depositados em repositório público. O texto discute riscos metodológicos associados à opacidade algorítmica, ao viés por conectividade de citações e ao atraso de acumulação de citações em publicações recentes, propondo medidas de mitigação. A contribuição principal reside na formalização de um roteiro replicável que permite a outros pesquisadores utilizar o \textit{Litmaps} com documentação adequada de escolhas metodológicas.
+
+\keywords{Mapeamento de literatura \sep Bibliometria \sep Rede de citações \sep Saturação temática \sep Transparência metodológica \sep \textit{Litmaps}}
+\end{abstract}
+
+\begin{english}
+\begin{abstract}
+This article presents a methodological protocol for scientific literature mapping using \textit{Litmaps}, a platform that combines citation network tracking with textual similarity recommendations. The protocol proposes an operational stopping rule based on thematic saturation, adapting established principles from qualitative research to bibliometric \textit{corpus} construction. The central objective is to make explicit the decisions and steps that allow replication and auditing, recognizing the inherent limitations of using tools with proprietary algorithms. For demonstration, the protocol was applied to an empirical topic (unmanned aerial vehicles researches in coastal environments, conducted between 2013 and 2024), used exclusively as an illustrative case. The resulting \textit{corpus} contains 58 publications, whose metadata were deposited in a public repository. The text discusses methodological risks associated with algorithmic opacity, citation connectivity bias, and citation accumulation delay, proposing mitigation measures. The main contribution lies in the formalization of a replicable roadmap that allows other researchers to use \textit{Litmaps} with adequate documentation of methodological choices.
+
+\keywords{Literature mapping \sep Bibliometrics \sep Citation network \sep Thematic saturation \sep Methodological transparency \sep \textit{Litmaps}}
+\end{abstract}
+\end{english}
+% if there is another abstract, insert it here using the same scheme
+\end{polyabstract}
+
+\section{Introdução}\label{sec-intro}
+O mapeamento de literatura científica constitui etapa fundamental em qualquer empreendimento de pesquisa que pretenda se situar em relação ao conhecimento acumulado em determinado campo. A identificação de trabalhos influentes, a descrição de conexões entre linhas de investigação e a síntese de evidências disponíveis dependem de procedimentos sistemáticos que permitam recuperar, organizar e analisar a produção científica relevante. Nesse contexto, as abordagens baseadas em citações oferecem uma perspectiva particular: ao tratarem referências bibliográficas como traços documentais de relações intelectuais entre textos, permitem reconstruir redes de influência e identificar padrões estruturais na organização do conhecimento.
+
+	A proposição de índices de citação como mecanismo de recuperação de informação científica remonta ao trabalho de \textcite{Garfield1955}, que estabeleceu as bases conceituais para o que viria a constituir a bibliometria moderna. A formalização subsequente de redes de artigos científicos como representação do fluxo de conhecimento, elaborada por \textcite{Price1965}, consolidou a perspectiva de que as citações não são meros elementos formais de textos acadêmicos, mas indicadores de relações substantivas entre problemas, métodos e comunidades de pesquisa. A análise de cocitação, introduzida por \textcite{Small1973}, e o acoplamento bibliográfico, proposto por \textcite{Kessler1963}, ampliaram esse arcabouço conceitual ao permitirem inferir proximidade temática a partir de padrões de referência compartilhada e de citação simultânea.
+    
+	A operacionalização dessas abordagens foi viabilizada pelo desenvolvimento de ferramentas computacionais dedicadas ao mapeamento e à visualização bibliométrica. O \textit{VOSviewer} \cite{VanEck2010} tornou-se referência para construção de mapas baseados em distância; o \textit{CiteSpace} \cite{Chen2006} especializou-se na detecção de frentes de pesquisa; o pacote \textit{Bibliometrix} \cite{Aria2017} oferece ambiente integrado para análises estatísticas em linguagem R. Essas ferramentas, embora distintas em suas funcionalidades, compartilham uma característica comum: exigem que o pesquisador exporte dados bibliográficos de bases indexadoras e possua conhecimento técnico para manipulação e análise.
+    
+	Mais recentemente, plataformas baseadas na web passaram a integrar funcionalidades de busca, visualização e recomendação de literatura em interfaces unificadas, reduzindo barreiras técnicas de entrada. O \textit{Litmaps} insere-se nesse contexto como plataforma que combina visualização de redes de citação com algoritmos de processamento de linguagem natural para identificação de publicações semanticamente relacionadas. A ferramenta permite construir mapas a partir de um artigo inicial, expandindo a rede por meio de citações recebidas, referências e similaridade textual. Como ocorre com outras plataformas proprietárias, os parâmetros específicos dos algoritmos de recomendação e ordenação não são integralmente divulgados, o que impõe limitações à reprodutibilidade estrita dos resultados.
+    
+	A literatura metodológica sobre revisões de literatura dispõe de protocolos consolidados para abordagens baseadas em busca lexical. O \textit{PRISMA} \cite{Page2021} estabelece diretrizes para relato de revisões sistemáticas e meta-análises; as orientações de \textcite{Kitchenham2007} sistematizam procedimentos para revisões em engenharia de software. Esses protocolos pressupõem recuperação por correspondência entre termos de busca predefinidos pelo pesquisador e palavras presentes em títulos, resumos ou descritores – lógica fundamentalmente lexical que exige conhecimento prévio do vocabulário do campo.
+    
+	Três lacunas justificam o presente estudo. Primeiramente, os protocolos existentes não contemplam adequadamente as especificidades de ferramentas baseadas em redes dinâmicas de citação. A expansão iterativa por conexões de citação opera sob lógica epistemológica distinta da busca lexical: em vez de pressupor conhecimento prévio do vocabulário, utiliza as próprias citações como mecanismo de descoberta. Essa diferença não é apenas operacional, mas conceitual – e requer formalização metodológica própria.
+    
+	Segundo, a proliferação de plataformas proprietárias de mapeamento bibliográfico introduz desafios de transparência e reprodutibilidade que os protocolos tradicionais não anteciparam. Quando critérios de ordenação, cálculo de similaridade e detecção de agrupamentos não são divulgados, parte do procedimento metodológico torna-se inacessível à auditoria. A ausência de diretrizes específicas para documentação de estudos conduzidos com essas ferramentas compromete a avaliação por pares e a acumulação de conhecimento metodológico.
+    
+	Terceiro, a combinação de estratégias de expansão – citações recebidas, referências, similaridade textual – carece de sistematização que explicite critérios de articulação e regras de encerramento. Usos exploratórios dessas ferramentas frequentemente incorporam decisões implícitas sobre quando parar de expandir a rede e como integrar os diferentes mecanismos de recomendação, produzindo procedimentos não replicáveis.
+    
+	O objetivo deste artigo é propor um protocolo metodológico para mapeamento de literatura científica utilizando o \textit{Litmaps}, definindo etapas, critérios e produtos de transparência que permitam replicação e avaliação crítica por outros pesquisadores. O protocolo busca formalizar procedimentos que tornem explícitas as decisões metodológicas, reconhecendo as limitações inerentes ao uso de ferramentas com algoritmos proprietários.
+    
+	Três perguntas orientam o desenvolvimento do estudo:
+
+    \begin{enumerate}
+        \item Como operacionalizar um procedimento replicável no \textit{Litmaps} e em que medida a formalização de etapas documentadas permite superar a tendência a usos exploratórios não sistemáticos da ferramenta? Essa pergunta se dirige à necessidade de explicitar decisões que, em usos informais, frequentemente permanecem implícitas ou não documentadas.
+\item Como articular a expansão por rede de citações com a recomendação por similaridade textual e com quais implicações essa combinação afeta a composição e a abrangência do \textit{corpus} resultante? A questão reconhece que ambas as estratégias possuem virtudes e limitações distintas e que sua articulação requer critérios explícitos que permitam avaliar os vieses introduzidos por cada uma.
+\item Quais limitações estruturais afetam a transparência e a reprodutibilidade de estudos conduzidos com ferramentas proprietárias e em que medida as medidas de mitigação propostas permitem preservar o rigor metodológico dentro dessas restrições? Esta pergunta situa o protocolo no contexto mais amplo das discussões sobre ciência aberta e reprodutibilidade científica.
+    \end{enumerate}
+
+    Para demonstração do protocolo, utilizou-se um tema empírico específico – aplicações de veículos aéreos não tripulados em ambientes costeiros (realizadas entre 2013 e 2024) –, escolhido exclusivamente por suas características de interdisciplinaridade e crescimento recente, que tornam visíveis os desafios de mapeamento em campos em expansão. O foco permanece no procedimento metodológico, não na síntese substantiva do domínio empírico.
+    
+	O texto está organizado em cinco seções além desta introdução. A Seção \ref{sec-normas} apresenta a fundamentação teórica que sustenta as escolhas metodológicas do protocolo. A Seção \ref{sec-organizacao} detalha os métodos, incluindo uma síntese do protocolo, parâmetros da demonstração e resultados do mapeamento. A Seção \ref{sec-secoes} discute os achados, articulando as respostas às perguntas de pesquisa com o referencial teórico. A Seção \ref{sec-codigos} apresenta as considerações finais, incluindo limitações e desdobramentos.
+    
+	Este texto tem caráter metodológico. O tema aplicado é apenas um caso demonstrativo e não constitui uma revisão temática do domínio.
+
+\section{Fundamentação teórica}\label{sec-normas}
+O protocolo proposto neste artigo fundamenta-se em premissas epistemológicas e metodológicas que requerem explicitação. Esta seção apresenta os conceitos que sustentam as escolhas adotadas, organizados em quatro eixos: a distinção entre mapeamento e revisão sistemática, com ênfase no diferencial epistemológico da abordagem por redes de citação; a compreensão de citações como representações estruturais do conhecimento científico; a adaptação do conceito de saturação temática ao contexto bibliométrico; e os desafios de transparência e reprodutibilidade impostos pelo uso de ferramentas proprietárias.
+
+\subsection{Mapeamento de literatura e revisão sistemática: distinções epistemológicas}\label{sec-conduta}
+A proliferação de abordagens para síntese de literatura científica produziu uma diversidade terminológica que frequentemente obscurece diferenças metodológicas substantivas. \textcite{Grant2009}, em tipologia amplamente referenciada, identificaram 14 tipos distintos de revisão, cada qual caracterizado por objetivos, métodos de busca, avaliação de qualidade e forma de síntese específicos. Essa taxonomia permite situar o mapeamento de literatura em relação a modalidades mais conhecidas, como a revisão sistemática e a revisão de escopo, e explicitar o diferencial epistemológico que justifica a abordagem aqui proposta.
+
+	A revisão sistemática, conforme consolidada em protocolos como o \textit{PRISMA} \cite{Page2021} e as diretrizes de \textcite{Kitchenham2007}, caracteriza-se por uma pergunta de pesquisa altamente delimitada, estratégia de busca exaustiva em múltiplas bases, avaliação formal de qualidade dos estudos incluídos e síntese orientada à agregação de evidências. O mecanismo de recuperação é lexical: a busca opera pela correspondência entre termos predefinidos pelo pesquisador e palavras presentes em títulos, resumos ou descritores. Essa abordagem pressupõe que o pesquisador conhece antecipadamente o vocabulário do campo e que documentos relevantes compartilham terminologia identificável.
+    
+	O mapeamento de literatura por redes de citação opera sob lógica epistemológica distinta. Em vez de pressupor conhecimento prévio do vocabulário, a abordagem utiliza as próprias conexões de citação como mecanismo de descoberta. A premissa subjacente é a de que autores, ao citarem trabalhos anteriores, registram julgamentos de relevância que constituem evidência documental de relações intelectuais entre textos. A agregação dessas conexões individuais produz uma estrutura relacional que revela a organização do campo sem depender da capacidade do pesquisador de antecipar termos de busca.
+    
+	Essa diferença tem implicações metodológicas substantivas. A busca lexical é sensível à polissemia e à variação terminológica: campos interdisciplinares frequentemente utilizam vocabulários distintos para problemas relacionados e a evolução conceitual pode tornar obsoletos os termos que inicialmente definiam um domínio. A expansão por citação contorna parcialmente essas limitações, pois a conexão entre documentos independe de compartilharem terminologia explícita. Um artigo de ecologia que cita um estudo de engenharia estabelece vínculo documentado entre os dois campos, ainda que não empreguem palavras-chave comuns.
+    
+	O protocolo aqui proposto não pretende substituir a revisão sistemática, cujo rigor permanece adequado para questões delimitadas que exigem síntese exaustiva de evidências. A contribuição reside em oferecer alternativa metodológica para contextos em que a lógica relacional é mais apropriada: campos emergentes, cujo vocabulário ainda não se consolidou; domínios interdisciplinares com fragmentação terminológica; e situações em que o objetivo é compreender a estrutura de conexões entre subcampos, não inventariar exaustivamente a produção sobre tema específico. A escolha entre abordagens deve ser orientada pela pergunta de pesquisa e pelas características do campo investigado, não por preferência instrumental.
+
+
+\subsection{Redes de citação como representação do conhecimento científico}\label{sec-fmt-manuscrito}
+A análise de citações constitui tradição consolidada nos estudos de ciência, fundamentada na premissa de que referências bibliográficas não são meros elementos formais de textos acadêmicos, mas registros documentais de relações intelectuais entre problemas, métodos e comunidades de pesquisa. \textcite{Zupic2015}, em revisão abrangente dos métodos bibliométricos, sistematizaram as principais técnicas de análise baseadas em citação e argumentaram que essas técnicas convergem para uma compreensão da ciência como sistema de comunicação estruturado por relações documentáveis.
+
+	Duas técnicas clássicas exploram essa perspectiva de modos complementares. A análise de cocitação, introduzida por \textcite{Small1973}, identifica proximidade entre documentos que são frequentemente citados conjuntamente: se muitos autores citam A e B no mesmo trabalho, presume-se que A e B compartilham relevância para um mesmo domínio de problemas. O acoplamento bibliográfico, proposto por \textcite{Kessler1963}, opera na direção inversa: dois documentos são considerados próximos quando compartilham referências, indicando que partem de bases intelectuais semelhantes. Ambas as técnicas permitem inferir estruturas de organização do conhecimento a partir de padrões agregados de referenciação, sem depender de classificações temáticas atribuídas externamente.
+    
+	Essa fundamentação teórica justifica a escolha de redes de citação como mecanismo central do protocolo proposto. A expansão por citações recebidas (rastreamento prospectivo) permite identificar desenvolvimentos subsequentes ao ponto de partida – trabalhos que utilizaram determinado fundamento aplicaram os métodos em novos contextos ou estabeleceram críticas. A expansão por referências (rastreamento retrospectivo) permite identificar antecedentes conceituais e metodológicos – a genealogia intelectual sobre a qual o campo se construiu. A combinação de ambas as direções produz um \textit{corpus} que reflete a estrutura de conexões documentadas, não uma amostra aleatória da literatura.
+    
+	É importante reconhecer que essa abordagem introduz um viés sistemático: publicações com maior conectividade aparecem em mais buscas, enquanto documentos isolados ou de subcampos periféricos tendem à sub-representação. O viés não é um defeito a ser eliminado, mas sim uma característica estrutural a ser reconhecida e documentada. O \textit{corpus} resultante representa o campo tal como organizado por práticas de citação, não necessariamente a totalidade da produção relevante. Essa limitação é parcialmente mitigada pela incorporação de mecanismos de similaridade textual, que permitem identificar documentos conceitualmente relacionados independentemente de conexões por citação já estabelecidas.
+
+
+\subsection{Saturação temática: critério de suficiência informacional}\label{sec-formato}
+A expansão iterativa por redes de citação, diferentemente da busca lexical com \textit{string} predefinida, não possui critério intrínseco de encerramento. Protocolos como \textit{PRISMA} e o de \textcite{Kitchenham2007} definem a priori as bases a serem consultadas e os termos de busca; o fechamento ocorre quando todas as fontes previstas foram varridas. No mapeamento por citação, a rede pode expandir-se indefinidamente enquanto houver conexões a explorar. Essa característica exige critério fundamentado para determinar quando a coleta atingiu suficiência informacional para os propósitos da investigação.
+
+	O conceito de saturação, originário da teoria fundamentada de \textcite{Glaser1967}, oferece fundamento epistemológico para esse critério. Na formulação original, a saturação teórica designa o ponto em que a coleta adicional de dados não acrescenta propriedades novas às categorias analíticas em desenvolvimento. O conceito foi subsequentemente apropriado por diversas tradições metodológicas, adquirindo significados parcialmente distintos conforme o contexto de aplicação.
+    
+	\textcite{Saunders2018} sistematizaram essa diversidade conceitual, distinguindo quatro modelos na literatura metodológica contemporânea: saturação teórica, vinculada ao desenvolvimento de categorias em teoria fundamentada; saturação de dados, referente à redundância de informações em novos casos; saturação temática, relativa à identificação de temas em análise qualitativa; e saturação por modelo de informação, com critérios formalizados para estimativa de tamanho amostral. A distinção entre esses modelos evidencia que a saturação não é um conceito único, mas uma família de critérios de suficiência que requerem operacionalização específica conforme o contexto metodológico.
+    
+	A adaptação ao mapeamento bibliométrico requer reconhecer que, diferentemente da pesquisa qualitativa, o pesquisador não acessa diretamente o conteúdo integral dos documentos durante a fase de expansão. A saturação, nesse contexto, deve ser avaliada por indicadores observáveis no próprio processo: predominância de documentos cujas abordagens já estão representadas no \textit{corpus} (redundância metodológica); concentração de citações em documentos já incluídos na rede (circularidade de citação); e ausência de temas novos em títulos e resumos de candidatos (fechamento conceitual). A convergência desses indicadores fundamenta a decisão de encerramento, preservando o princípio epistemológico da suficiência informacional enquanto o adapta às especificidades do mapeamento por redes.
+
+
+\subsection{Transparência e reprodutibilidade: tensões da ciência aberta}\label{sec-modelo}
+O movimento de ciência aberta propõe democratização do acesso ao conhecimento científico e aos processos de sua produção, mas enfrenta tensões constitutivas entre abertura e controle de qualidade \cite{Quintanilha2019}. Essas tensões manifestam-se de modo particular no contexto das ferramentas computacionais para análise bibliométrica: plataformas que facilitam o acesso à literatura e a visualização de padrões frequentemente operam com algoritmos cujos parâmetros não são integralmente divulgados, introduzindo camadas de opacidade que desafiam os próprios princípios de transparência que o movimento defende.
+
+	\textcite{Munafo2017}, em manifesto amplamente referenciado sobre reprodutibilidade científica, identificaram ameaças sistemáticas à confiabilidade da pesquisa e propuseram medidas organizadas em cinco eixos: métodos, relato e disseminação, reprodutibilidade, avaliação e incentivos. O diagnóstico central é o de que práticas estabelecidas na comunicação científica – incluindo relato seletivo de resultados, falta de acesso a dados e materiais e especificação insuficiente de procedimentos – comprometem a capacidade de verificação independente. A resposta proposta enfatiza o pré-registro de estudos, compartilhamento de dados e materiais e documentação completa de procedimentos metodológicos.
+    
+	O uso de ferramentas proprietárias para mapeamento bibliográfico situa-se nessa problemática de modo específico. Quando os critérios de ordenação de resultados, cálculo de similaridade e detecção de agrupamentos não são documentados, parte do procedimento metodológico torna-se inacessível à auditoria. Dois pesquisadores, executando procedimentos nominalmente idênticos, podem obter resultados distintos – seja por variações de versão da plataforma, seja por diferenças nas bases de dados agregadas em momentos diferentes –, sem que seja possível identificar a origem das discrepâncias. A reprodutibilidade estrita, nessas circunstâncias, é estruturalmente impossível.
+    
+	Essa limitação não implica que tais ferramentas devam ser evitadas, mas que medidas compensatórias de transparência são imprescindíveis para preservar o caráter científico do procedimento. O protocolo proposto adota três medidas principais, fundamentadas nos princípios articulados por \textcite{Munafo2017}: registro sistemático de datas, versões e parâmetros utilizados, permitindo identificar as condições da coleta e eventuais fontes de variação; explicitação completa dos critérios de triagem aplicados pelo pesquisador, distinguindo decisões humanas documentáveis de processamentos algorítmicos opacos; e depósito público do \textit{corpus} resultante com metadados padronizados, permitindo verificação independente do produto final ainda que o processo de sua construção não seja integralmente reprodutível.
+    
+	Essas medidas não eliminam a dependência de algoritmos proprietários, mas tornam visível a fronteira entre o que pode e o que não pode ser auditado. A transparência possível nessas circunstâncias é parcial – reconhecimento que constitui, ele próprio, elemento de rigor metodológico e que deve acompanhar a interpretação dos resultados.
+
+\section{Métodos}\label{sec-organizacao}
+Este estudo se caracteriza como uma pesquisa metodológica com demonstração aplicada. O objetivo é formalizar um protocolo de mapeamento de literatura por redes de citação utilizando o \textit{Litmaps}, com demonstração em caso empírico selecionado por suas características ilustrativas. A unidade de análise é o documento bibliográfico – artigos de periódicos, capítulos de livros e trabalhos completos em anais –, desde que apresente metadados suficientes para identificação e verificação.
+
+\subsection{Síntese do protocolo}\label{sec-organizacao-latex}
+A \Cref{tab1} apresenta as etapas do protocolo de mapeamento, com indicação dos produtos esperados em cada fase. As subseções seguintes detalham a execução de cada etapa na demonstração aplicada.
+
+\begin{table}[htbp]
+\centering
+\begin{threeparttable}
+\caption{Protocolo de mapeamento de literatura por rede de citações no \textit{Litmaps}.}
+\label{tab1}
+
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{3cm}
+                                  >{\raggedright\arraybackslash}p{4.8cm}
+                                  X
+                                  >{\raggedright\arraybackslash}p{2cm}}
+\toprule
+\textbf{Etapa} & \textbf{Procedimento} & \textbf{Produto} \\
+\midrule
+1. Preparação &
+Definir escopo temático, recorte temporal, idiomas aceitos, tipos de documento elegíveis e regras de exclusão &
+Registro prévio de decisões estruturantes \\
+
+2. Seleção da semente &
+Identificar artigo inicial com base em anterioridade temporal, acumulação de citações e caráter de síntese &
+Referência completa, identificador persistente, justificativa documentada \\
+
+3. Expansão por citações &
+Rastrear citações recebidas (prospectivo) e referências (retrospectivo) iterativamente &
+\textit{Log} de iterações com contagens e datas \\
+
+4. Similaridade textual &
+Aplicar recomendação por ``texto semelhante'' como mecanismo complementar &
+Registro do modo utilizado em cada inclusão \\
+
+5. Triagem &
+Aplicar critérios de inclusão/exclusão a cada documento identificado &
+Razões de exclusão categorizadas \\
+
+6. Saturação &
+Monitorar redundância metodológica, circularidade de citação e fechamento conceitual &
+Decisão de encerramento fundamentada \\
+
+7. Extração &
+Registrar metadados padronizados para cada documento incluído &
+Planilha com \textit{corpus} completo \\
+
+8. Depósito &
+Disponibilizar \textit{corpus}, \textit{log} de decisões e tabelas suplementares em repositório público &
+Identificador persistente (DOI) \\
+\bottomrule
+\end{tabularx}
+
+\source{Elaborada pelo autor.}
+
+\end{threeparttable}
+\end{table}
+
+
+\subsection{Demonstração aplicada: tema e parâmetros}\label{sec-titulo}
+Para demonstração do protocolo, selecionou-se como tema empírico o uso de veículos aéreos não tripulados em estudos ambientais costeiros no período de 2013 a 2024. A escolha justifica-se por características que tornam o campo adequado para ilustrar os desafios do mapeamento: interdisciplinaridade, envolvendo geomorfologia, ecologia e engenharia; crescimento acelerado no período considerado; e diversificação de abordagens metodológicas e tecnológicas.
+
+	O artigo semente selecionado foi a revisão de \textcite{Colomina2014}, publicada no “ISPRS Journal of Photogrammetry and Remote Sensing”. A seleção fundamentou-se em três critérios: anterioridade temporal em relação à proliferação de estudos costeiros específicos; elevada contagem de citações indicando função de referência no campo; e escopo abrangente, que conecta múltiplas linhas de aplicação.
+
+    A \Cref{tab2} sintetiza os parâmetros estabelecidos na etapa de preparação.
+
+\begin{table}[htbp]
+\centering
+\begin{threeparttable}
+\caption{Parâmetros da demonstração aplicada.}
+\label{tab2}
+
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{3.6cm}X}
+\toprule
+\textbf{Parâmetro} & \textbf{Especificação} \\
+\midrule
+Tema &
+Veículos aéreos não tripulados em ambientes costeiros \\
+
+Recorte temporal &
+2013--2024 \\
+
+Idiomas aceitos &
+Português, espanhol, inglês \\
+
+Tipos elegíveis &
+Artigos de periódicos, capítulos de livros, trabalhos completos em anais com revisão por pares \\
+
+Exclusões &
+Duplicatas, materiais sem metadados mínimos, publicações sem conexão verificável com a rede \\
+
+Artigo semente &
+\textcite{Colomina2014} \\
+
+Período de coleta &
+Janeiro a maio de 2025 \\
+
+Versão do \textit{Litmaps} &
+Versão paga (sem limitação de tamanho do mapa) \\
+\bottomrule
+\end{tabularx}
+
+\source{Elaborada pelo autor.}
+
+\end{threeparttable}
+\end{table}
+
+\subsection{Execução e critério de encerramento}\label{sec-autores}
+A expansão procedeu iterativamente, combinando rastreamento por citações recebidas, rastreamento por referências e recomendação por similaridade textual. A cada iteração, os documentos identificados foram submetidos aos critérios de triagem estabelecidos. O modo “texto semelhante” foi utilizado como mecanismo complementar para recuperar publicações recentes com baixa conectividade por citação, mantendo a rede de citações como estrutura principal do mapeamento.
+
+	O encerramento fundamentou-se no critério de saturação temática descrito na Seção \ref{sec-formato}. A decisão baseou-se na convergência de três indicadores: redundância metodológica (predominância de abordagens já representadas), circularidade de citação (referências direcionadas a documentos já incluídos) e fechamento conceitual (ausência de temas novos em títulos e resumos). O encerramento ocorreu quando três iterações consecutivas não produziram publicações novas relevantes, com mais de 80\% dos documentos identificados excluídos por redundância temática.
+
+\subsection{\textit{Corpus} resultante e materiais depositados}\label{sec-idioma}
+O \textit{corpus} final compreende 58 publicações, distribuídas entre 2013 e 2024. A \Cref{tab3} apresenta a distribuição temporal.
+
+\begin{table}[htbp]
+\centering
+\begin{threeparttable}
+\caption{Distribuição temporal do \textit{corpus}.}
+\label{tab3}
+
+\begin{tabularx}{\textwidth}{
+    >{\raggedright\arraybackslash}p{2.6cm}
+    >{\centering\arraybackslash}p{2.2cm}
+    X}
+\toprule
+\textbf{Período} & \textbf{Publicações} & \textbf{Caracterização} \\
+\midrule
+2013--2016 & 15 &
+Motivadores: publicações fundacionais, protocolos de validação \\
+
+2017--2019 & 12 &
+Inovação: diversificação de sensores, expansão de domínios \\
+
+2020--2024 & 31 &
+Refinamento: maturação operacional, aprendizado de máquina \\
+
+\midrule
+\textbf{Total} & \textbf{58} & \\
+\bottomrule
+\end{tabularx}
+
+\source{Elaborada pelo autor, com base em \textcite{Ribeiro2025}.}
+
+\end{threeparttable}
+\end{table}
+
+A concentração em anos recentes reflete tanto o crescimento do campo quanto o viés de conectividade que favorece publicações mais antigas com maior acumulação de citações. A similaridade textual permitiu incorporar publicações de 2023 e 2024 que ainda não haviam sido citadas por membros da rede.
+
+	Os metadados completos e as tabelas suplementares foram depositados no \textit{Zenodo} \cite{Ribeiro2025}, incluindo: lista completa do \textit{corpus} com metadados padronizados (S4); registro das iterações de coleta com datas e contagens; e tabelas suplementares que sintetizam características do \textit{corpus} (S1-S3). Esses materiais permitem verificar o escopo, reconstituir o \textit{corpus} e replicar análises descritivas independentemente do acesso ao \textit{Litmaps}.
+
+\subsection{Visualização da rede}\label{sec-resumo}
+A \Cref{fig1} apresenta a visualização da rede de citações gerada pelo \textit{Litmaps}. O eixo horizontal representa a progressão temporal; o vertical, a hierarquia por acumulação de citações. As cores dos nós refletem a categorização temática atribuída pela plataforma; as arestas representam conexões por citação.
+
+\begin{figure}[htbp]
+\centering
+\begin{minipage}{.8\textwidth}
+ \includegraphics[width=\textwidth]{Fig1.png}
+ \caption{Rede de citações do \textit{corpus} demonstrativo (58 publicações, 2013-2024) gerada pelo \textit{Litmaps}.}
+ \label{fig1}
+ \source{\textit{Litmaps}.}
+\end{minipage}
+\end{figure}
+
+O artigo semente \cite{Colomina2014} ocupa a posição superior esquerda. A dispersão ao longo do eixo horizontal ilustra a expansão temporal do campo; a diminuição do tamanho dos nós à direita reflete o menor tempo de acumulação de citações em publicações recentes.
+
+	A estrutura tripartite identificada na \Cref{tab3} emergiu da análise de padrões de citação e proximidade temática, não de classificação imposta a priori. A verificação manual de títulos e resumos corroborou a coerência dos agrupamentos. A documentação integra os materiais depositados, permitindo que outros pesquisadores avaliem a pertinência das categorias.
+    
+	Cabe reiterar que a descrição dessa estrutura serve para ilustrar o tipo de resultado que o protocolo permite obter, não para apresentar conclusões substantivas sobre o campo empírico.
+
+\section{Discussão}\label{sec-secoes}
+Esta seção articula os resultados da demonstração aplicada com a fundamentação teórica apresentada na Seção \ref{sec-normas}, respondendo às três perguntas que orientaram o desenvolvimento do protocolo. A discussão organiza-se em torno dessas perguntas, seguida pela análise dos riscos metodológicos e suas implicações para a prática de mapeamento de literatura.
+
+\subsection{Primeira pergunta: como operacionalizar um procedimento replicável?}\label{sec-format-simple}
+A primeira pergunta indagava como operacionalizar um procedimento replicável no \textit{Litmaps}, desde a seleção do artigo inicial até o fechamento do \textit{corpus}. A resposta materializa-se no protocolo de oito etapas sintetizado na \Cref{tab1}, cuja demonstração aplicada produziu \textit{corpus} de 58 publicações com materiais depositados em repositório público.
+
+	O protocolo proposto posiciona-se, na tipologia de \textcite{Grant2009}, como uma abordagem de mapeamento – distinta da revisão sistemática não por pretender exaustividade, mas por explicitar procedimento de exploração estruturada do campo. Essa distinção, fundamentada na Seção \ref{sec-conduta}, tem consequência prática direta: o pesquisador que adota o protocolo não deve esperar recuperar a totalidade da literatura relevante, mas sim documentar um percurso de descoberta guiado por relações de citação verificáveis.
+    
+	A replicabilidade, nesse contexto, não significa que dois pesquisadores obterão \textit{corpus} idênticos – o que a opacidade algorítmica do \textit{Litmaps} impede –, mas que o procedimento é suficientemente documentado para permitir avaliação crítica das decisões tomadas. A formalização das etapas de preparação, a seleção de semente, expansão iterativa e aplicação de critérios de triagem transforma práticas frequentemente implícitas em usos exploratórios da ferramenta em roteiro auditável. O depósito público dos materiais no \textit{Zenodo} \cite{Ribeiro2025} completa essa cadeia de transparência, permitindo a verificação independente do \textit{corpus} resultante.
+
+\subsection{Segunda pergunta: como combinar expansão por citações com similaridade textual?}\label{sec-links}
+A segunda pergunta interrogava como combinar a expansão por rede de citações com a recomendação por similaridade textual, reduzindo a margem de decisões arbitrárias. A resposta fundamenta-se na distinção epistemológica entre abordagens relacionais e lexicais, desenvolvida na Seção \ref{sec-conduta}, e na compreensão de citações como representações estruturais do conhecimento, conforme \textcite{Zupic2015}.
+
+	A demonstração aplicada evidenciou a complementaridade das estratégias. A expansão por citações, mecanismo principal do protocolo, recuperou 47 das 58 publicações do corpus, privilegiando documentos com conexões consolidadas. A similaridade textual, mecanismo complementar, permitiu incorporar 11 publicações de 2023 e 2024 que ainda não haviam acumulado citações suficientes para aparecer nas redes. Sem essa combinação, o \textit{corpus} sub-representaria os desenvolvimentos mais recentes do campo – limitação particularmente relevante em domínios de crescimento acelerado, como o uso de drones em ambientes costeiros.
+    
+	A articulação entre as estratégias operacionalizou-se pela submissão de ambas aos mesmos critérios de triagem e pelo registro sistemático do modo de recomendação que originou cada inclusão. Essa documentação permite distinguir, no \textit{corpus} final, quais publicações foram incorporadas por conexão de citação e quais foram incorporadas por proximidade textual – informação relevante para interpretar a estrutura da rede e avaliar a robustez do mapeamento.
+    
+	A combinação não elimina os vieses de cada abordagem, mas os torna explícitos e parcialmente compensáveis. A expansão por citações introduz um viés de conectividade, favorecendo publicações estabelecidas; a similaridade textual pode recuperar documentos conceitualmente relacionados, mas cuja ausência de conexões por citação pode indicar pertencimento à comunidade de pesquisa efetivamente distinta. O julgamento do pesquisador na triagem permanece insubstituível, entretanto opera sobre uma base documentada que permite escrutínio posterior.
+
+
+\subsection{Terceira pergunta: quais limitações afetam a transparência e a reprodutibilidade?}\label{sec-listas}
+A terceira pergunta examinava quais limitações afetam a transparência e a reprodutibilidade de estudos conduzidos com ferramentas proprietárias e quais medidas podem mitigar esses riscos. A resposta situa o protocolo no contexto das discussões sobre ciência aberta e reprodutibilidade científica, articulando os achados com o referencial de \textcite{Munafo2017} e as tensões identificadas por \textcite{Quintanilha2019}.
+
+	O uso do \textit{Litmaps} impõe limitações estruturais à reprodutibilidade estrita. Os parâmetros que governam a ordenação de resultados, o cálculo de similaridade e a detecção de agrupamentos não são integralmente divulgados. Essa opacidade algorítmica significa que parte do procedimento metodológico permanece inacessível à auditoria, mesmo quando o pesquisador documenta rigorosamente suas próprias decisões. A tensão identificada por \textcite{Quintanilha2019} entre abertura e controle de qualidade manifesta-se aqui de modo específico: a plataforma facilita o acesso à literatura e reduz barreiras técnicas, mas introduz camadas de opacidade que desafiam os princípios de transparência que fundamentam a ciência aberta.
+    
+	O protocolo propõe três medidas de mitigação, fundamentadas nos princípios articulados por \textcite{Munafo2017}: registro sistemático de datas, versões e parâmetros; explicitação completa dos critérios de triagem; e depósito público do \textit{corpus} com metadados padronizados. Essas medidas não eliminam a dependência de algoritmos proprietários, mas tornam visível a fronteira entre decisões do pesquisador (auditáveis) e processamentos da plataforma (opacos). A transparência possível nessas circunstâncias é parcial – reconhecimento que constitui, ele próprio, elemento de rigor metodológico.
+    
+	A demonstração aplicada ilustrou essa transparência parcial. O \textit{corpus} de 58 publicações está integralmente disponível no \textit{Zenodo}, permitindo verificação independente de sua composição. O \textit{log} de iterações documenta o percurso de expansão. Os critérios de inclusão e exclusão estão explicitados. Contudo, não é possível garantir que outro pesquisador, executando o mesmo protocolo no \textit{Litmaps} em momento posterior, recuperaria exatamente os mesmos resultados – variações de versão da plataforma, atualizações de base de dados e flutuações algorítmicas podem produzir diferenças não rastreáveis.
+
+
+
+\subsection{Riscos metodológicos e medidas de mitigação}\label{sec-figuras-tabelas}
+Além das limitações de transparência e reprodutibilidade, o protocolo enfrenta riscos metodológicos que merecem explicitação. O viés por conectividade, discutido na Seção \ref{sec-fmt-manuscrito} como característica estrutural da análise de redes de citação, manifestou-se na demonstração aplicada pela concentração de publicações fundacionais nos primeiros agrupamentos temáticos. Documentos frequentemente citados aparecem em mais buscas, enquanto subcampos periféricos ou publicações isoladas tendem à invisibilidade.
+
+	O atraso de citação constitui uma manifestação temporal desse viés. Publicações recentes, por definição, tiveram menos tempo para acumular citações. Na demonstração, o período de 2020 a 2024 concentrou 31 publicações (53\% do \textit{corpus}), mas sua incorporação dependeu significativamente da similaridade textual para compensar a baixa conectividade por citação. Esse padrão sugere que mapeamentos em campos de crescimento rápido devem necessariamente combinar estratégias para evitar sub-representação de desenvolvimentos recentes.
+    
+	A triagem por avaliador único introduz um risco de inconsistência, que não se restringe ao uso do \textit{Litmaps}, mas afeta revisões de literatura em geral. O protocolo propõe medidas de mitigação – recodificação de amostra, verificação parcial por segundo avaliador, disponibilização de guia de categorias –, que não eliminam o risco, mas demonstram atenção ao problema e fornecem elementos para a avaliação da robustez das decisões.
+    
+	A \Cref{tab4} sintetiza os principais riscos identificados e as medidas de mitigação correspondentes.
+
+\begin{table}[htbp]
+\centering
+\begin{threeparttable}
+\caption{Riscos metodológicos e medidas de mitigação.}
+\label{tab4}
+
+\begin{tabularx}{\textwidth}{
+    >{\raggedright\arraybackslash}p{3.2cm}
+    >{\raggedright\arraybackslash}X
+    >{\raggedright\arraybackslash}X}
+\toprule
+\textbf{Risco} & \textbf{Efeito} & \textbf{Medidas de mitigação} \\
+\midrule
+
+Opacidade algorítmica &
+Seleção e ordenação de resultados não auditáveis &
+Critérios explícitos de triagem; depósito público do \textit{corpus} \\
+
+Viés por conectividade &
+Subcampos pouco citados são sub-representados &
+Combinação com similaridade textual; busca complementar \\
+
+Atraso de citação &
+Publicações recentes parecem menos influentes &
+Interpretação contextualizada; registro da janela de coleta \\
+
+Variação de metadados &
+Contagens por autor imprecisas &
+Registro conforme metadado original; explicitar ausência de desambiguação \\
+
+Avaliador único &
+Classificação temática variável &
+Recodificação de amostra; verificação parcial; guia de categorias \\
+
+\bottomrule
+\end{tabularx}
+
+\source{Elaborada pelo autor.}
+
+\end{threeparttable}
+\end{table}
+
+\subsection{Posicionamento em relação a ferramentas bibliométricas tradicionais}\label{sec-quotesandfootnotes}
+O posicionamento do \textit{Litmaps} no ecossistema de ferramentas bibliométricas ilumina as escolhas do protocolo. Diferentemente de aplicações como \textit{VOSviewer}, \textit{CiteSpace} e \textit{Bibliometrix}, que operam sobre dados exportados de bases indexadoras e cujos algoritmos são documentados ou disponibilizados como código aberto, o \textit{Litmaps} integra busca, visualização e recomendação em uma plataforma proprietária. Essa integração reduz barreiras técnicas de entrada, mas transfere para a plataforma decisões que, em ferramentas tradicionais, permanecem sob controle do pesquisador.
+
+	A comparação não implica a superioridade de uma abordagem sobre outra, mas uma adequação a finalidades distintas. Para investigações que exijam especificação completa de parâmetros e reprodutibilidade estrita, ferramentas com algoritmos documentados permanecem mais adequadas. Para mapeamentos exploratórios conduzidos por pesquisadores sem formação especializada em bibliometria, plataformas integradas como o \textit{Litmaps} reduzem a complexidade operacional – e o protocolo aqui proposto busca compensar parcialmente a perda de controle por meio de documentação sistemática.
+
+
+
+\subsection{Implicações para a prática de revisão de literatura}\label{sec-equacao}
+	O protocolo insere-se no contexto mais amplo das discussões sobre rigor metodológico em revisões de literatura. A proliferação de ferramentas computacionais não só ampliou as possibilidades de mapeamento, mas também introduziu novos desafios de transparência. A facilidade de uso dessas ferramentas pode obscurecer a complexidade das decisões metodológicas envolvidas, produzindo uma aparência de objetividade em procedimentos que incorporam escolhas não documentadas.
+    
+	A resposta adequada não é recusar o uso de ferramentas computacionais, mas desenvolver práticas de documentação que tornem visíveis as decisões implícitas. O depósito público de \textit{corpus} e metadados, a explicitação de critérios de triagem e o registro de datas e versões constituem elementos mínimos dessa prática. A formalização de protocolos replicáveis contribui para estabelecer padrões de relato que facilitem a avaliação por pares e a acumulação de conhecimento metodológico.
+    
+	A contribuição do protocolo proposto reside precisamente nessa formalização. Não se trata de resolver os desafios de reprodutibilidade inerentes a ferramentas proprietárias – o que exigiria abertura de seus algoritmos –, mas de oferecer um roteiro que maximize a transparência possível dentro dessas limitações. A expectativa é que essa formalização contribua para elevar o padrão de rigor em estudos que empreguem plataformas de mapeamento bibliográfico, sem criar a ilusão de que a documentação equivale à superação de limitações estruturais.
+
+\section{Considerações finais}\label{sec-codigos}
+Este artigo apresentou um protocolo para mapeamento de literatura científica utilizando o \textit{Litmaps}, combinando expansão por rede de citações e recomendação por similaridade textual, com regra de parada baseada em saturação temática. A demonstração aplicada ao campo de veículos aéreos não tripulados em ambientes costeiros ilustrou o funcionamento do protocolo, resultando em um \textit{corpus} de 58 publicações, cujos materiais foram depositados em repositório público.
+
+	As três perguntas que orientaram o estudo receberam respostas articuladas com a fundamentação teórica. À primeira pergunta – como operacionalizar um procedimento replicável – o protocolo responde com roteiro de oito etapas documentadas, posicionando-se na tipologia de \textcite{Grant2009} como abordagem de mapeamento que explicita decisões frequentemente implícitas em usos exploratórios da ferramenta. À segunda pergunta – como combinar expansão por citações com similaridade textual – a demonstração evidenciou a complementaridade das estratégias: a expansão por citações recuperou a estrutura consolidada do campo, enquanto a similaridade textual permitiu incorporar publicações recentes com baixa conectividade, operacionalizando a articulação entre abordagens relacionais e lexicais, discutida a partir de \textcite{Zupic2015}. À terceira pergunta – quais limitações afetam a transparência e a reprodutibilidade – o protocolo reconhece a opacidade algorítmica como restrição estrutural e propõe medidas de mitigação fundamentadas nos princípios de \textcite{Munafo2017}, situando a contribuição no contexto das tensões da ciência aberta identificadas por \textcite{Quintanilha2019}.
+    
+	A contribuição principal reside na formalização de um roteiro que permite a outros pesquisadores utilizar o \textit{Litmaps} com documentação adequada de escolhas metodológicas. O protocolo não resolve os desafios de reprodutibilidade inerentes a ferramentas proprietárias – o que exigiria a abertura de seus algoritmos –, mas torna visível a fronteira entre decisões do pesquisador e processamentos da plataforma. A transparência possível nessas circunstâncias é parcial e essa parcialidade foi explicitamente reconhecida ao longo do texto.
+    
+	Algumas limitações merecem registro. O protocolo foi demonstrado em um único caso empírico: sua aplicação a campos com características distintas – maior ou menor interdisciplinaridade, diferentes taxas de crescimento, variados padrões de citação – pode revelar desafios não antecipados. A triagem por avaliador único, embora mitigada por medidas de documentação, permanece vulnerável a inconsistências. A dependência de plataforma proprietária significa que atualizações do \textit{Litmaps} podem afetar a aplicabilidade do protocolo, exigindo adaptações futuras.
+    
+	Desdobramentos possíveis incluem a comparação sistemática de \textit{corpus} gerados pelo protocolo com \textit{corpus} produzidos por revisões sistemáticas tradicionais sobre os mesmos temas, permitindo avaliar empiricamente as diferenças entre abordagens relacionais e lexicais. A aplicação do protocolo por múltiplos pesquisadores independentes ao mesmo tema permitiria estimar a variabilidade introduzida pela opacidade algorítmica e pela subjetividade na triagem. A extensão do protocolo a outras plataformas de mapeamento baseadas em citação – como \textit{Connected Papers ou Inciteful} – ampliaria sua utilidade e permitiria comparações entre ferramentas.
+    
+	Pesquisadores que optem por utilizar o \textit{Litmaps} para mapeamento de literatura devem ponderar a conveniência operacional da plataforma e as limitações de auditoria que ela impõe. O protocolo aqui apresentado pode ser adaptado a contextos específicos, desde que os princípios de documentação sistemática, critérios explícitos de triagem e depósito público de materiais sejam preservados. A expectativa é que a formalização contribua para elevar o padrão de rigor metodológico em estudos que empreguem plataformas proprietárias de mapeamento bibliográfico, reconhecendo que a documentação rigorosa do procedimento não equivale à superação de suas limitações estruturais, mas constitui uma condição necessária para avaliação crítica e acumulação de conhecimento metodológico.
+
+
+\printbibliography\label{sec-bib}
+% if the text is not in Portuguese, it might be necessary to use the code below instead to print the correct ABNT abbreviations [s.n.], [s.l.]
+%\begin{portuguese}
+%\printbibliography[title={Bibliography}]
+%\end{portuguese}
+
+
+
+\begin{dataavailability}
+\txtdataavailability{dataavailable} % options: dataavailable, dataonly, databody, datanotav, nodata
+\end{dataavailability}
+
+
+\end{document}
+
