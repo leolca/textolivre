@@ -1,0 +1,892 @@
+% !TEX TS-program = XeLaTeX
+% use the following command:
+% all document files must be coded in UTF-8
+\documentclass[english]{textolivre}
+% build HTML with: make4ht -e build.lua -c textolivre.cfg -x -u article "fn-in,svg,pic-align"
+
+\journalname{Texto Livre}
+\thevolume{19}
+%\thenumber{1} % old template
+\theyear{2026}
+\receiveddate{\DTMdisplaydate{2026}{2}{25}{-1}} % YYYY MM DD
+\accepteddate{\DTMdisplaydate{2026}{3}{30}{-1}}
+\publisheddate{\DTMdisplaydate{2026}{7}{22}{-1}}
+\corrauthor{Záira Bomfante dos Santos}
+\articledoi{10.1590/1983-3652.2026.64648}
+%\articleid{NNNN} % if the article ID is not the last 5 numbers of its DOI, provide it using \articleid{} commmand 
+% list of available sesscions in the journal: articles, dossier, reports, essays, reviews, interviews, editorial
+\articlesessionname{dossier}
+\runningauthor{Santos, Paiva and Lim} 
+%\editorname{Leonardo Araújo} % old template
+\sectioneditorname{Daniervelin Pereira~\orcid{0000-0003-1861-3609}}
+\layouteditorname{Leonardo Araujo~\orcid{0000-0003-3884-2177}}
+
+\title{The Age of Artificial Intelligence and research in the educational landscapes of Brazil and Singapore}
+\othertitle{A Era da Inteligência Artificial e as pesquisas nos cenários educacionais do Brasil e de Singapura}
+% if there is a third language title, add here:
+%\othertitle{Artikelvorlage zur Einreichung beim Texto Livre Journal}
+
+\author[1]{Záira Bomfante dos Santos~\orcid{0000-0002-6162-8489}\thanks{Email: \href{mailto:zaira.santos@ufes.br}{zaira.santos@ufes.br}}}
+\author[2]{Francis Arthuso Paiva~\orcid{0000-0002-9083-. 3342}\thanks{Email: \href{mailto:francis@teiacoltec.org}{francis@teiacoltec.org}}}
+\author[3]{Fei Victor Lim~\orcid{0000-0003-3046-1011}\thanks{Email: \href{mailto:victor.lim@nie.edu.sg}{victor.lim@nie.edu.sg}}}
+\affil[1]{Federal University of Espírito Santo, Northern Espírito Santo University Center, Graduate Program in Basic Education Teaching, São Mateus, ES, Brazil.}
+\affil[2]{Federal University of Minas Gerais, Technical College, Professional Master's Program in Letters, Belo Horizonte, MG, Brazil.}
+\affil[3]{Nanyang Technological University, National Institute of Education, Singapore.}
+
+\addbibresource{article.bib}
+% use biber instead of bibtex
+% $ biber article
+
+% used to create dummy text for the template file
+\definecolor{dark-gray}{gray}{0.35} % color used to display dummy texts
+\usepackage{lipsum}
+\SetLipsumParListSurrounders{\colorlet{oldcolor}{.}\color{dark-gray}}{\color{oldcolor}}
+
+% used here only to provide the XeLaTeX and BibTeX logos
+\usepackage{hologo}
+
+% if you use multirows in a table, include the multirow package
+\usepackage{multirow}
+
+% provides sidewaysfigure environment
+\usepackage{rotating}
+
+% CUSTOM EPIGRAPH - BEGIN 
+%%% https://tex.stackexchange.com/questions/193178/specific-epigraph-style
+\usepackage{epigraph}
+\usepackage{threeparttablex}
+\renewcommand\textflush{flushright}
+\makeatletter
+\newlength\epitextskip
+\pretocmd{\@epitext}{\em}{}{}
+\apptocmd{\@epitext}{\em}{}{}
+\patchcmd{\epigraph}{\@epitext{#1}\\}{\@epitext{#1}\\[\epitextskip]}{}{}
+\makeatother
+\setlength\epigraphrule{0pt}
+\setlength\epitextskip{0.5ex}
+\setlength\epigraphwidth{.7\textwidth}
+
+\setotherlanguage{chinese}
+\newfontfamily\chinesefont{Noto Serif CJK SC}
+
+\newfontfamily\cjkfontsf{Noto Sans CJK SC}[
+    Script=CJK,
+    Language=Chinese Simplified
+]
+
+% CUSTOM EPIGRAPH - END
+
+% to use IPA symbols in unicode add
+%\usepackage{fontspec}
+%\newfontfamily\ipafont{CMU Serif}
+%\newcommand{\ipa}[1]{{\ipafont #1}}
+% and in the text you may use the \ipa{...} command passing the symbols in unicode
+
+% LANGUAGE - BEGIN
+% ARABIC
+% for languages that use special fonts, you must provide the typeface that will be used
+% \setotherlanguage{arabic}
+% \newfontfamily\arabicfont[Script=Arabic]{Amiri}
+% \newfontfamily\arabicfontsf[Script=Arabic]{Amiri}
+% \newfontfamily\arabicfonttt[Script=Arabic]{Amiri}
+%
+% in the article, to add arabic text use: \textlang{arabic}{ ... }
+%
+% RUSSIAN
+% for russian text we also need to define fonts with support for Cyrillic script
+% \usepackage{fontspec}
+% \setotherlanguage{russian}
+% \newfontfamily\cyrillicfont{Times New Roman}
+% \newfontfamily\cyrillicfontsf{Times New Roman}[Script=Cyrillic]
+% \newfontfamily\cyrillicfonttt{Times New Roman}[Script=Cyrillic]
+%
+% in the text use \begin{russian} ... \end{russian}
+% LANGUAGE - END
+
+% EMOJIS - BEGIN
+% to use emoticons in your manuscript
+% https://stackoverflow.com/questions/190145/how-to-insert-emoticons-in-latex/57076064
+% using font Symbola, which has full support
+% the font may be downloaded at:
+% https://dn-works.com/ufas/
+% add to preamble:
+% \newfontfamily\Symbola{Symbola}
+% in the text use:
+% {\Symbola }
+% EMOJIS - END
+
+% LABEL REFERENCE TO DESCRIPTIVE LIST - BEGIN
+% reference itens in a descriptive list using their labels instead of numbers
+% insert the code below in the preambule:
+%\makeatletter
+%\let\orgdescriptionlabel\descriptionlabel
+%\renewcommand*{\descriptionlabel}[1]{%
+%  \let\orglabel\label
+%  \let\label\@gobble
+%  \phantomsection
+%  \edef\@currentlabel{#1\unskip}%
+%  \let\label\orglabel
+%  \orgdescriptionlabel{#1}%
+%}
+%\makeatother
+%
+% in your document, use as illustraded here:
+%\begin{description}
+%  \item[first\label{itm1}] this is only an example;
+%  % ...  add more items
+%\end{description}
+% LABEL REFERENCE TO DESCRIPTIVE LIST - END
+
+
+% add line numbers for submission
+%\usepackage{lineno}
+%\linenumbers
+
+\begin{document}
+\maketitle
+
+\begin{polyabstract}
+\begin{abstract}
+Generative Artificial Intelligence (GAI) and algorithms have become increasingly present in our lives, impacting our social relationships, democratic life, and consequently, educational contexts. In this sense, this work presents an overview of how research on GAI, more specifically in the field of Letters/Languages, has developed in the Brazilian and Singaporean contexts. First, we point out how GAI has been incorporated into the Brazilian scenario in the field of Letters, mapping research collected from the virtual databases of the Coordination for the Improvement of Higher Education Personnel (CAPES) and the Scientific Electronic Library Online (SciELO). Second, we present contributions on how the use of GAI has occurred in the Singaporean context. Regarding the Brazilian context, the results indicate an effort in initial works with different perspectives and themes, but with gaps in the focus on the use of AI with students and the mobilization of discussions and results on Literacy, Language Education, Semiotics, Assessment, among other aspects. Regarding research in Singapore, AI in education is represented by the publications and projects from the National Institute of Education through the AI@NIE initiative. Themes emerging from this body of work point to a solid foundation, with opportunities to deepen impact through longitudinal research, broader disciplinary engagement, strengthened teacher professional learning, and further explorations into multimodal learning.
+
+\keywords{Artificial Intelligence \sep Research \sep Language}
+\end{abstract}
+
+\begin{portuguese}
+\begin{abstract}
+A Inteligência Artificial Generativa (IAG) e os algoritmos têm estado cada vez mais presentes em nossas vidas, impactando nossas relações sociais, a vida democrática e, consequentemente, os contextos educacionais. Nesse sentido, este trabalho apresenta um panorama de como a pesquisa em IAG, mais especificamente na área de Letras/Línguas, tem se desenvolvido nos contextos brasileiro e de Singapura. Primeiramente, apontamos como a IAG tem sido incorporada ao cenário brasileiro da área de Letras, mapeando pesquisas coletadas nas bases de dados virtuais da Coordenação de Aperfeiçoamento de Pessoal de Nível Superior (CAPES) e da Biblioteca Eletrônica Científica Online (SciELO). Em segundo lugar, apresentamos contribuições sobre como o uso da IAG tem ocorrido no contexto de Singapura. Em relação ao contexto brasileiro, os resultados indicam um esforço dos trabalhos iniciais com diferentes perspectivas e temáticas, mas com lacunas no enfoque no uso de IA com os alunos e na mobilização de discussões e resultados sobre Letramentos, Educação Linguística, Semiótica, Avaliação, dentre outros aspectos. Em relação à pesquisa em Singapura, a IA na educação está representada pelas publicações e projetos do Instituto Nacional de Educação por meio da iniciativa AI@NIE. Os temas que emergem desse conjunto de trabalhos apontam para uma base sólida, com oportunidades para aprofundar o impacto por meio de pesquisas longitudinais, maior engajamento disciplinar, fortalecimento da formação profissional de professores e novas explorações em aprendizagem multimodal.
+
+\keywords{Inteligência Artificial \sep Pesquisas \sep Linguagem}
+\end{abstract}
+\end{portuguese}
+% if there is another abstract, insert it here using the same scheme
+\end{polyabstract}
+
+\section{Introduction}\label{sec-intro}
+We live in times when the popularization of the term Artificial Intelligence (hereinafter AI) has gained great prominence and unimaginable dimensions in society. Beyond this popularization, we know that it is omnipresent; according to \textcite[p. 1-2]{Webb2020}, “it is the technology upon which our future is being built, because it permeates all aspects of our lives: health and medicine, transport and housing, agriculture, sport, and even love, sex, and death”.
+
+Virtually everything that reaches us is permeated by algorithms, from a simple search for information on platforms or applications to locate oneself spatially, to a parsimonious analysis of highly complex medical exams. We live and interact with algorithms more than we imagine; that is, we live with the effects of algorithms, since their performances are invisible. A good paraphrase, based on the words of \textcite[p. 12]{Halliday2004}, is that “there can be no social man without language”; therefore, in our times, there seems to be no social man without algorithms.
+
+Given the omnipresence of AI in the most varied social spheres, it gives rise to different value judgments. In some spheres, there are salvationist visions of solutions to all problems, while in others, gloomy views and the end of human relationships predominate. In the educational sphere, there are those who understand new technologies as instruments of application and those who defend them as a metalanguage for processes of constructing meaning and social practices. In this perspective, an important part of the teaching-learning process in the age of Artificial Intelligence lies in the relational process. It resides in how we learn and teach how to ask the right questions to the systems and how to produce better prompts to obtain better answers from different AI technologies.
+
+Thus, with tasks ranging from simple to complex, such as producing texts and videos, speaking, conversing, revising written texts, and other linguistic activities, these computer systems are gaining increasing acceptance and popularity. Consequently, they are being used by people from the most varied social segments, not always with critical or discursive awareness. Because of this, many debates have arisen in education regarding their impact on teaching, learning, teachers’ work, issues involving authorship, creativity, the development of critical awareness, the dissemination of prejudices, mastery of technologies, understanding of the languages used, and possible multimodal transpositions.
+
+From this perspective, this work focuses on Brazilian and Singaporean contexts. In the Brazilian scenario, we focus on research that has addressed AI in the fields of Literature/Languages and Arts and Multidisciplinary studies, seeking to understand how AI has been received and understood within the Brazilian context of language and multidisciplinary research. To this end, we initially aimed to map the research produced and accessible in the SciELO and CAPES databases for the short period of 2023 to 2025, in order to get a cartographic overview of the works that have been produced and how the topic has been approached. However, we do not intend to present a robust and concise state-of-the-art review. We will primarily reflect on the challenges facing research in the fields of Literature, Languages, and Multidisciplinary studies, particularly within universities. To this end, we sought to (i) investigate the productions (articles and dossiers) in these areas; and (ii) map the predominant thematic areas of the research in order to reveal the dominant approaches in the field, as well as to observe how perspectives of Multimodality, Semiotics, and Literacies are mobilized in these works.
+
+Regarding research in Singapore, AI in education is represented through the publications and projects at the National Institute of Education (NIE), Nanyang Technological University. To identify themes and research gaps in the emerging field of AI in Education (AIEd) in Singapore for this paper, we analyzed the AI@NIE Resource List hosted on the LibGuides platform maintained by the NIE Library.
+
+\section{Overview of Research in Brazil}\label{sec-normas}
+\subsection{Data from SciELO}
+When observing the contributions of research on Artificial Intelligence in the context of Brazilian research, we see one recurring aspect in the problematization and discussion of its principles, history, and impact on the realization of many works. In this study, we chose to inventory a set of data from recent years (2023-2025), more specifically articles published in Portuguese, and took the initiative to propose a special issue in order to understand and answer our questions about what has been problematized and the recurring themes in the areas of Letters, Languages and Arts\footnote{Research in the CAPES database is organized into broad areas. Thus, we have the Arts component as a broad area of language.} and Multidisciplinary studies in Brazil.
+
+The biggest challenge in mapping the studies was creating a rigorous database from the extracted data, considering the chosen platforms Scientific Electronic Library Online (SciELO)\footnote{\url{https://www.scielo.br/}} and Portal CAPES\footnote{\url{https://www.periodicos.capes.gov.br/}}. No tool proved entirely efficient and reliable in identifying duplicate studies, or even studies already produced that did not appear in the database. Therefore, it was necessary to verify each publication individually, filtering and cross-referencing the results obtained from the search and storage platforms. Regarding the choice of the SciELO and CAPES platforms, they were selected because they constitute important sources of reference in scientific production, as they allow researchers open access to their publications, making them widely used in the academic community in Brazil. The \cref{tab1} summarizes the filters used.
+
+\begin{table}[htbp]
+\centering
+\caption{Selection and exclusion criteria.}
+\label{tab1}
+\begin{threeparttable}
+\begin{tabular}{clp{8cm}}
+\hline
+Criterion number & Criterion & Description of the criterion \\
+\hline
+1 & Search descriptors & Search using the term `Artificial Intelligence' \\
+2 & Area & The review was restricted to articles in the fields of Literature/Languages and Arts and Multidisciplinary studies \\
+3 & Filter & Only articles with the `Artificial Intelligence' filter were included \\
+4 & Publication Source & Only articles published in Brazilian scientific journals \\
+5 & Period & 2023--2025 \\
+6 & Language & Portuguese Language \\
+\hline
+\end{tabular}
+\source{Elaborated by the authors.}
+\end{threeparttable}
+\end{table}
+
+When we inventoried the data on articles in the SciELO database using the criteria indicated in Table 1, we found only 30 publications. Despite the filters, we manually checked each publication and found one publication dated 2019, one from 2021, and another from 2022, which were ruled out. Regarding the language, even with the filter set to Portuguese, articles appeared in other languages with only the abstract in Portuguese, as summarized in the \Cref{fig1}.
+
+\begin{figure}[htbp]
+\centering
+\begin{minipage}{.8\textwidth}
+ \includegraphics[width=\textwidth]{Fig1.png}
+ \caption{Mapping of productions by language.}
+ \label{fig1}
+ \source{Elaborated by the authors.}
+\end{minipage}
+\end{figure}
+
+Regarding the productions found, the main topics addressed were: (a) Generative AI and Text Production \& Creativity (4 texts); (b) AI in Education and Critical Literacy (6 texts); (c) AI and the Teaching of Additional Languages (5 texts); (d) AI and Translation: Training and Ethical Critique (7 texts); (e) AI and Human Sciences/Discourse \& Media (5 texts). More specifically, regarding the productions related to topic (b) AI in Education and Critical Literacy, the articles emphasize the following in \Cref{tab2}.
+
+\begin{table}[htbp]
+\centering
+\begin{threeparttable}
+\caption{Summary of article topics in SciELO.}
+\label{tab2}
+\begin{tabular}{
+  >{\raggedright\arraybackslash}p{7cm}
+  >{\raggedright\arraybackslash}p{7cm}
+  }
+\toprule
+Article & Focus \\
+\midrule
+
+RUIZ MENDOZA, Karla Karina; PEDROZA ZÚÑIGA, Luis Horacio; LÓPEZ GARCÍA, Alma Yadhira. Creación y jueceo de ítems: ChatGPT como diseñador y juez. \textit{Linguagem e Tecnologia}, v. 17, e51222, 2024. DOI: 10.1590/1983-3652.2024.51222.
+&
+Evaluating the effectiveness of ChatGPT 4.0 compared to human designers in creating and judging items for university entrance exams.\\
+\\[-10pt]
+RODRIGUES, Olira Saraiva; RODRIGUES, Karoline Santos. A inteligência artificial na educação: os desafios do ChatGPT. \textit{Texto Livre}, v. 16, e45997, 2023. DOI: 10.1590/1983-3652.2023.45997.
+&
+Study on the impacts of generative AI (ChatGPT) on higher education (plagiarism, critical development), proposing the enhancement of AI use from the perspective of augmented intelligence.
+\\
+\\[-10pt]
+ROCHA, Lucio Agostinho. An evaluation of machine learning approaches in educational environments: a systematic literature review. \textit{Linguagem e Tecnologia}, v. 18, e54910, 2025. DOI: 10.1590/1983-3652.2025.54910.
+&
+A systematic review on the application of machine learning-based methodologies in educational environments, highlighting challenges regarding the accuracy, reliability, and quality of information, and the need for legal and ethical considerations.
+\\
+\\[-10pt]
+GIL QUINTANA, Javier; GARCÍA BLÁZQUEZ, Eduardo; HUESO ROMERO, José Javier; ROMERO RODRÍGUEZ, Luis Miguel. Redes comunicativas universitarias sNOOC por la educación mediática de la tercera edad. \textit{Linguagem e Tecnologia}, v. 18, e53823, 2024. DOI: 10.1590/1983-3652.2025.53823.
+&
+Analysis of a Nano Open Online Massive (NOOC) communication network project to promote inclusive media literacy among the elderly population, integrating resources generated with AI and Metaverse.
+\\
+\\[-10pt]
+BUZATO, Marcelo El Khouri; GONSALES, Priscila. Dimensões e enfoques alternativos para um modelo de letramentos críticos de inteligência artificial. \textit{Revista Brasileira de Linguística Aplicada}, v. 25, n. 2, e44436, 2025. DOI: 10.1590/1984-6398202544436.
+&
+It proposes a multidimensional model of critical AI literacies based on a post-humanist approach (AI as cognitive assemblage) to support research agendas and educational policies in Brazil.
+\\
+\\[-10pt]
+SACHETE, Andréia dos Santos; LOIOLA, Alba Valéria de Sant'Anna de Freitas; PEREIRA, Anderson Martins; ROSSI, Fábio Diniz; GOMES, Raquel Salcedo. EnemIA: correção de redações do Enem com Inteligência Artificial. \textit{Linguagem e Tecnologia}, v. 18, e58426, 2025. DOI: 10.1590/1983-3652.2025.58426.
+&
+Introducing EnemIA, an AI tool to assist in grading Enem essays, offering detailed and personalized feedback, and evaluating its impact on the accuracy and speed of corrections.
+\\
+\bottomrule
+\end{tabular}
+\source{Elaborated by the authors.}
+\end{threeparttable}
+\end{table}
+
+These works indicate the challenges and understanding of the dimensions of AI use in the educational field and in language studies, with theoretical reflections. The productions related to topic (c), AI and Additional Language Teaching, emphasize the perceptions, beliefs, and acceptance of foreign language teachers regarding the use of AI; ethical concerns and the risk of redundancy in the teacher’s work; and the need for teacher training, among others.
+
+We highlight these two topics because they bring forward research more closely linked to issues of language teaching and literacy. Despite a rich discussion of these aspects, few studies within these topics emphasize looking at the results of experiences with students in the teaching context, at the agency of the forms of interaction in the use of languages, and at the unfolding of the results of these experiences of use. The data indicate that we are still at the beginning of a long road in the integration of this technology into language teaching to think about new forms of literacy, agency, and learning.
+
+\subsection{Data from the CAPES Portal}\label{sec-conduta}
+Regarding the data inventoried from a search in the CAPES Portal database, using the filters described in \Cref{fig2}, we found the following results:
+
+\begin{figure}[htbp]
+\centering
+\begin{minipage}{.8\textwidth}
+ \includegraphics[width=\textwidth]{Fig2.png}
+ \caption{Survey of articles on the CAPES platform.}
+ \label{fig2}
+ \source{Elaborated by the authors.}
+\end{minipage}
+\end{figure}
+
+The data represented in \Cref{fig2} indicate that of the 51 productions found, only 5 are related to the area of language; the others are articulated across various areas. Although we used the “Multidisciplinary” study area filter in the expectation of finding more works in the area of languages in dialogue with other areas, what was recurrent were works in diverse areas, with themes in health, environmental issues, engineering, education, agriculture, economics, among others.
+
+\subsection{Special issues in the Brazilian context}\label{sec-fmt-manuscrito}
+Given the challenges characteristic of the academic environment and the need to focus on the theme of AI in Brazilian research, especially in the area of languages, several researchers have organized special issues in recent years with a view to bringing together, disseminating, and strengthening research that has AI as a central point. Thus, we have mapped some dossiers produced in the national context, namely (\Cref{tab3}).
+
+\begin{table}[htbp]
+\centering
+\caption{Mapping of special issues in the Brazilian context.}
+\label{tab3}
+\begin{threeparttable}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{p{1cm}X}
+\hline
+Year & Special issues \\
+\hline
+
+2024 &
+\vspace{-0.75em}
+\begin{itemize}\setlength\itemsep{0.2em}
+\item \textit{Linguagem em Foco} -- v. 16, n. 2 (2024): \textit{Multimodalidade e Tecnologia digital: desafios e impactos em tempos de IA para a pesquisa e ensino}
+
+Link: \url{https://revistas.uece.br/index.php/linguagememfoco/issue/view/618}
+
+Results: 7 articles, 1 essay, 1 interview.
+\end{itemize}
+\\
+\hline
+
+2025 &
+\vspace{-0.75em}
+\begin{itemize}\setlength\itemsep{0.8em}
+
+\item \textit{Texto Livre Journal} -- v. 18 (2025): \textit{Linguagem e Tecnologia}
+
+Link: \url{https://periodicos.ufmg.br/index.php/textolivre/issue/view/2344}
+
+Results: 18 articles about AI, 1 essay.
+
+\item \textit{Revista de Estudos da Cultura (REVEC)} -- v. 11, n. 27 (2025): \textit{Inteligência Artificial}
+
+Link: \url{https://periodicos.ufs.br/revec/issue/view/1407}
+
+Results: 18 articles.
+
+\item \textit{Domínios da Linguagem} -- v. 18, n. 1 (2024): \textit{Algoritmos e sistemas de inteligência artificial e(m) processos de produção de sentidos}
+
+Link: \url{https://seer.ufu.br/index.php/dominiosdelinguagem/issue/view/2389}
+
+Results: 11 articles.
+
+\item \textit{Revista Texto Digital} -- v. 21, n. 1 (2025): \textit{Interfaces entre Linguística e Computação}
+
+Link: \url{https://periodicos.ufsc.br/index.php/textodigital/issue/view/3937}
+
+Results: 9 articles.
+
+\item \textit{Linguagem em Foco} -- Dossiê Temático, v. 17, n. 3 (2025): \textit{Inteligência Artificial, racismo algorítmico e outras exclusões}
+
+Link: \url{https://revistas.uece.br/index.php/linguagememfoco}
+
+Results: 15 articles.
+
+\medskip
+
+In addition to these special issues, others are being conducted for publication in 2026 with a thematic scope related to AI:
+
+\begin{itemize}
+\item \textit{Texto Livre Journal} -- \textit{Artificial intelligence and its interfaces with social life, language education, multimodality, and discourse}
+
+Link: \url{https://periodicos.ufmg.br/index.php/textolivre/announcement}
+
+\item \textit{Revista Linha D'Água} -- Dossiê temático, v. 39, n. 2: \textit{Repensando a educação linguística do Sul Global na era da Inteligência Artificial}
+
+Link: \url{https://revistas.usp.br/linhadagua/announcement/view/1883}
+\end{itemize}
+
+\end{itemize}
+\\
+\hline
+
+\end{tabularx}
+\source{Elaborated by the authors.}
+\end{threeparttable}
+\end{table}
+
+A review of several special issues organized by our peers in the national context reveals an effort to bring together research that focuses on AI as a topic of discussion. Some of the works in these special issues appear in the SciELO and CAPES databases; however, with low frequency. We could list what each production in each special issue indicates, but that is not our focus at this moment. A careful reading of the productions, grouped by main themes, shows that they are articulated around the following themes:
+
+\begin{enumerate}
+    \item AI, Interaction, Media, Disinformation, Racism, Ethics;
+    \item Literacy, Teaching, Digital Genres, Professional Training;
+    \item AI, Planning and Methodology of Language Teaching;
+    \item Translation, Digital Culture, Intermediality;
+    \item Critical View and Historical Trajectory of AI.
+\end{enumerate}
+
+The works found in the special issues on the SciELO and CAPES platforms, besides revealing an important and challenging movement of initial work in the Brazilian context on AI with different perspectives and themes, reiterate one aspect: we still have little production or dissemination of research that focuses on the use of AI by students, especially in the area of language, and that mobilizes discussions and results on Literacies, Semiotics, Language Education, teaching-learning processes, AI and processes of evaluation and engagement, multimodal transpositions, among other topics.
+
+In this way, this brief mapping of the Brazilian scenario points to the challenges we have as teachers and researchers and the paths we will need to take.
+
+\section{Overview of AI in Education Research in Singapore}\label{sec-formato}
+\subsection{National Institute of Education, Nanyang Technological University, Singapore}
+The National Institute of Education (NIE) at Nanyang Technological University (NTU) in Singapore is the country’s sole national teacher education institute and serves as a cornerstone of Singapore’s highly regarded education system. As an autonomous institute within NTU, one of the world’s top young universities, NIE combines the advantages of a research-intensive technological university with deep, longstanding responsibilities to the nation’s education ecosystem. It maintains a close, collaborative partnership with Singapore’s Ministry of Education (MOE) and public schools, ensuring that teacher preparation remains tightly aligned with national education priorities and classroom realities.
+
+In terms of AI research, NTU has been ranked first in the world in the 2025 Global Ranking of Academic Subjects (GRAS) published by ShanghaiRanking Consultancy\footnote{\url{https://www.shanghairanking.com/institution/nanyang-technological-university}}. NIE has also positioned itself as a leading hub for AI in Education (AIEd) research and practice in Singapore, particularly through its strategic AI@NIE initiative. Launched in 2022 as a five-year plan, AI@NIE represents NIE’s deliberate, long-term commitment to harnessing Artificial Intelligence, including generative AI, machine learning, and learning analytics, to transform teaching, learning, assessment, and teacher preparation\footnote{\url{https://www.ntu.edu.sg/nie/news-events/news/detail/the-nie-ntu-singapore-launches-ai@nie-to-transform-teaching-and-learning-for-21st-century-education}}.
+
+As a way to identify the themes and research gaps from the initial work in the area of AIEd in Singapore for this paper, we examine the database in the AI@NIE Resource List, situated in the LibGuides maintained by the NIE Library. The site is publicly accessible at \textcite{NIE2026}.
+
+While clearly not intended to be exhaustive of the AI in Education work in Singapore, given that there are other organizations in Singapore engaging in AIEd work—for example, the AI Centre for Educational Technologies established by Singapore’s MOE with the Smart Nation and Digital Government Office (SNDGO) at the National University of Singapore (NUS) School of Computing—the spotlight in this paper on NIE’s AIEd work offers a quick snapshot of the forays into the exploration of AI for teaching and learning in Singapore rather than attempting to provide a comprehensive state of affairs.
+
+
+\subsection{AI@NIE Publications}\label{sec-modelo}
+As of January 2026, the AI@NIE site lists 143 journal articles from NIE researchers working in this area since 2019 (Appendix \ref{apx-longtable}). Notably, 122 (85\%) of these journal articles were published since 2023, indicating a clear surge in research interest and output in AIEd since the release of ChatGPT and, with it, other publicly accessible GAI models in November 2022. The increase in recent years reflects a collective response to the recent technological advancements, such as large language models (LLMs) and GAI. Overall, the publications on AIEd center on five interconnected themes spanning GAI in pedagogy and assessment, human–AI collaboration, data-driven personalization, language and multimodal learning, and ethical and inclusive considerations.
+
+\textbf{GAI and LLM in Teaching, Learning, and Assessment}
+
+    This is the most prominent theme, encompassing the integration of tools such as ChatGPT, GPT-4V, and other generative models into educational processes. Publications explore applications ranging from personalized vocabulary learning and oral proficiency enhancement for young learners to automated item generation in STEM subjects, essay scoring, feedback provision, and multimodal assessment (e.g., visual question answering). A recurring topic is the tension between efficiency gains (scalability, immediacy of feedback) and pedagogical risks (over-reliance, erosion of critical thinking, authenticity of student work). Examples include studies on how interactions with GAI influence second-language speaking and summarization skills, as well as human–AI collaborative scoring comparisons. Publications also point to implications such as redefining teacher roles from content deliverers to designers of AI-augmented learning experiences and environments.
+
+\textbf{Human–AI Collaboration, Agency, and Hybrid Intelligence}
+
+    A significant cluster of work emphasizes collaborative rather than substitutive relationships between humans (students, teachers, pre-service teachers) and AI systems. This includes teacher professional agency when using GAI knowledge-building companions, pre-service teachers’ reflection and lesson planning supported by AI critiques or dashboards, and hybrid intelligence models that measure synergy in learning interactions. Many papers center on preserving human agency, ethical co-creation, and the augmentation of human capabilities (intelligence amplification) rather than replacement. Publications also offer implications for teacher education programs, suggesting a future where AI enhances rather than diminishes professional judgement and student autonomy by serving as a pedagogical aide for teachers and a learning companion for students.
+
+\textbf{Machine Learning for Prediction, Personalization, and Learning Analytics}
+
+    This theme focuses on data-driven approaches that predict student outcomes, burnout, intervention responsiveness, cognitive load, or performance using machine learning models, often integrating physiological data (EEG, eye-tracking, wearables) or learning analytics dashboards. Applications span literacy and numeracy interventions, special educational needs, blended learning engagement, and even the identification of predictors of national reading achievement. A key topic is the increasing sophistication of combining multimodal data sources for more accurate predictions. Implications reported in the publications include the potential for proactive, equitable interventions in high-stakes systems, but also raise privacy, bias, and equity concerns when models are trained predominantly on local (e.g., Singapore) datasets.
+
+\textbf{AI in Language, Literacy, and Multimodal Learning}
+
+    Language learning and literacy development, particularly in second-language (L2) and multilingual settings with AI, is another theme identified. Publications address AI-powered vocabulary tools, chatbot-assisted speaking/listening practice, GAI for literacy, digital multimodal composing, and automated written feedback in English and other languages (including Chinese). Papers investigated the role of AI in fostering agency, self-determination, and intercultural competencies, alongside risks of plagiarism and reduced authenticity, with some exploring the use of AI to support learners with dyslexia, aphasia, or special needs. This theme highlights Singapore’s multilingual education landscape and positions AI as a powerful scaffold for linguistic diversity, with wider implications for global English-medium instruction contexts.
+
+\textbf{Ethical, Social, Psychological, and Inclusive Dimensions of AI Use}
+
+    This final theme that emerged relates to broader societal and human consequences of AI adoption in education, including plagiarism risks, student reliance behaviors, critical thinking impacts, burnout moderation, mental health applications (e.g., AI as a “digital therapist”), and inclusive support for learners with disabilities. Publications frequently adopt cautionary tones, stressing the need for ethical frameworks, bias mitigation, equity considerations, and preservation of human values. The theme implies that technological enthusiasm must be tempered by rigorous ethical scrutiny and inclusive design, influencing both policy development and the framing of responsible AI integration in schools.
+
+\subsection{AI@NIE Research Projects}\label{sec-organizacao}
+Twelve research projects on AIEd are listed on the AI@NIE site as of January 2026 (Appendix \ref{apx-longtable2}). The projects are predominantly exploratory or proof-of-concept in nature, with a strong emphasis on GAI, machine learning analytics, and human–AI interactions. As in the earlier analysis of the journal publications, the same five themes from the projects are discussed.
+
+\textbf{GAI and LLM in Teaching, Learning, and Assessment}
+
+    This theme, mirroring the dominant publication cluster, centers on projects leveraging GAI to create educational tools, assessments, and personalized interactions. Examples include the “NIE x RI collab on generative AI for STEM assessment”, which evaluates LLMs for high-school STEM item generation, and “An Investigation on the Efficacy of Redesigning Learning Assessments with Gen AI”, which focuses on formative assessments with critiquing opportunities. The project “LLMs Chatbot Proof-of-Concepts” explores teaching from, with, about, and beyond AI and emphasizes the importance of the teacher’s role and pedagogy. Implications reinforce the publication theme’s call for ethical integration, suggesting NIE’s work could inform the development of scalable AI tools that can improve teaching, learning, and assessment in Singapore.
+
+\textbf{Human–AI Collaboration, Agency, and Hybrid Intelligence}
+
+    This theme examines AI as a partner enhancing human agency, reflection, and interaction. Key projects include “TeacherGAIA”, a chatbot for student-centered learning in MOE schools, and “Does the Teacher Matter?”, which compares physiological responses to AI versus human teachers. These projects point to the importance of fostering teacher agency, as in AI-supported lesson critiques, and exploring hybrid models where AI augments rather than replaces humans. Implications extend the publication insights, advocating for designs that preserve human judgment, with broader potential to reshape pre-service teacher training.
+
+\textbf{Machine Learning for Prediction, Personalization, and Learning Analytics}
+
+    This theme speaks to a data-driven focus in the projects, using Machine Learning to predict behaviors, personalize learning, and analyze multimodal data. Projects like “AI-Empowered Analytics on Gesture” and “AI-Empowered Analytics on Joint Attention” employ models (e.g., MediaPipe, YOLOv7) to track bodily engagement and gaze in collaborative settings. “Open emotion learner modeling” refines emotional predictions via human feedback. These projects emphasize proactive interventions and highlight the need for more representative and robust datasets to avoid biases in diverse learner populations.
+
+\textbf{AI in Language, Literacy, and Multimodal Learning}
+
+    This theme focuses on the use of AI for literacy and multimodal learning, particularly for young or multilingual learners. “ARCHE 2.0” exemplifies an AI-powered seamless Chinese vocabulary system, while multimodal learning features in the other projects, “AI-Empowered Analytics on Gesture” and “AI-Empowered Analytics on Joint Attention”.
+
+\textbf{Ethical, Social, Psychological, and Inclusive Dimensions of AI Use}
+
+    The final theme relates to AI’s impacts on inclusion, emotions, and well-being. Projects such as “AARA-DA” (VR avatar for dyscalculia remediation) and “Students’ AI-Augmented Thinking” probe AI-augmented cognition and emotions. “Embodied Learning Companions” evokes trust through realistic avatars. The projects point to the need for ethical frameworks to ensure AI promotes equity and metacognition in inclusive settings.
+
+
+\subsection{Research Gap and Implications}\label{sec-organizacao-latex}
+Reflecting on the snapshot of publications and research projects on AIEd from NIE in Singapore, there are discernible implications and opportunities for further research that can inform strategic priorities in this area. At present, long-term longitudinal studies, disciplinary breadth beyond language/STEM, teacher readiness/adoption barriers, and integration with emerging multimodal technologies remain relatively underexplored.
+
+\textbf{Long-term Impact and Longitudinal Studies}
+
+    Despite a growing body of short-term efficacy studies, perception surveys, and proof-of-concept evaluations, there is a paucity of longitudinal research examining the sustained impact of AI interventions on learning and teaching over time. Most studies capture immediate or short-cycle outcomes, such as shifts in learner perceptions following ChatGPT use or short-term gains associated with AI-supported tasks, leaving open critical questions about durability and transfer. In particular, there is limited evidence on whether early AI scaffolding supports the development of independent, critical, and ethical thinking, or whether patterns of over-reliance and surface engagement emerge over extended periods. Similarly, many projects prioritize short-term indicators, such as emotional arousal or immediate tool effectiveness, without tracing how AI-mediated practices shape learner dispositions, academic integrity, or teacher identity across multiple years. Addressing this gap would be helpful for understanding the use of AI in education as a sustained pedagogical presence.
+
+\textbf{Subject and Disciplinary Breadth Beyond Language and STEM}
+
+    Current AIEd research at NIE exhibits a strong concentration in language education and STEM-related domains, with comparatively limited attention to the humanities, social sciences, arts, vocational and technical education, physical education, or values and character education. While this focus is understandable, it may narrow conceptions of where and how AI can meaningfully contribute to learning. Both publications and projects tend to foreground discrete skills (e.g., vocabulary acquisition or mathematical reasoning), with fewer studies exploring AI’s potential in interpretive, creative, ethical, or culturally situated forms of learning. Expanding disciplinary coverage would enable broader accounts of how AI can support learning in a range of subject domains.
+
+\textbf{Teacher Professional Learning, Readiness, and Adoption Barriers}
+
+    Although several studies acknowledge the crucial role of teachers in AI integration, systematic investigation into in-service teachers’ professional learning trajectories, readiness levels, and adoption challenges remains limited. Existing publications largely prioritize student-facing applications, while projects that develop teacher-oriented tools tend to focus on functionality rather than the organizational, workload, and identity-related implications of sustained use. Issues such as resistance, professional trust in AI systems, time constraints, and alignment with school-level structures are seldom examined in depth. There is therefore a need for research that positions teachers not simply as users of AI tools, but as designers of learning whose professional judgment, values, and working conditions fundamentally shape the impact of AIEd.
+
+\textbf{Integration with Emerging Technologies and Multimodal Learning}
+
+    Finally, there is limited empirical exploration of how AI intersects with other emerging educational technologies, including extended reality, robotics, blockchain-based credentialing, or advanced immersive and embodied environments. As education moves towards increasingly multimodal and hybrid learning ecologies, deeper theorization and design-based research will be needed to examine how AI participates in complex assemblages of modes, media, and technologies.
+
+
+Notwithstanding the gaps surfaced, the current body of AIEd research at NIE demonstrates the institute’s interest and commitment to understanding the use and effect of new and emerging technologies for teaching, learning, and assessment. At the same time, the relative underexploration of long-term longitudinal effects, disciplinary diversity beyond language and STEM, teacher professional readiness and adoption barriers, and deep integration with emerging multimodal and immersive technologies offers uncharted waters for further exploration.
+
+\printbibliography\label{sec-bib}
+% if the text is not in Portuguese, it might be necessary to use the code below instead to print the correct ABNT abbreviations [s.n.], [s.l.]
+%\begin{portuguese}
+%\printbibliography[title={Bibliography}]
+%\end{portuguese}
+
+
+%full list: conceptualization,datacuration,formalanalysis,funding,investigation,methodology,projadm,resources,software,supervision,validation,visualization,writing,review
+\begin{contributors}[sec-contributors]
+\authorcontribution{Záira Bomfante dos Santos}[conceptualization,datacuration,formalanalysis,investigation,writing,review]
+\authorcontribution{Francis Arthuso Paiva}[conceptualization,formalanalysis,investigation,writing,review]
+\authorcontribution{Fei Victor Lim}[conceptualization,datacuration,formalanalysis,investigation,writing,review]
+\end{contributors}
+
+
+
+\begin{dataavailability}
+\txtdataavailability{databody} % options: dataavailable, dataonly, databody, datanotav, nodata
+\end{dataavailability}
+
+\begin{funding}
+The first author acknowledges the Espírito Santo State Research Foundation (FAPES) for the FAPES/CNPq productivity grant awarded under Call for Proposals No. 18/2024 – 2025 CNPq/FAPES Productivity Grant Program.
+\end{funding}
+
+%Mudar para inglês
+
+\appendix 
+\section{Appendix A – Articles from NIE researchers}\label{apx-longtable}
+
+\begin{itemize}
+\item[] GAO, Y.; ZHAI, X.; LI, M.; LEE, G.; LIU, X. A multimodal interactive framework for science assessment in the era of generative artificial intelligence. \textit{Journal of Research in Science Teaching}, 2025. Disponível em: https://\url{hdl.handle.net/10497/29683}.
+
+\item[] XU, C.; LOO, S. A review of artificial intelligence applications in libraries in Southeast Asia: Where are we now? \textit{Reference Services Review}, v. 53, n. 1, 2025. Disponível em: \url{https://hdl.handle.net/10497/29185}.
+
+\item[] RAJAMANICKAM, Y.; MITTAL, R.; PRINCE, A. A.; HUANG, J. S. Affective computing for learning in education: a systematic review and bibliometric analysis. \textit{Education Sciences}, v. 15, n. 1, 2025. Disponível em: \url{https://hdl.handle.net/10497/29101}.
+
+\item[] BOJIC, I. et al. AI-empowered health coaching for university students: a mixed-method process evaluation. \textit{Computers in Biology and Medicine}, v. 194, art. 110271, 2025. Disponível em: \url{https://hdl.handle.net/10497/29767}.
+
+\item[] WEN, Y.; CHIU, M.; GUO, X.; WANG, Z. AI-powered vocabulary learning for lower primary school students. \textit{British Journal of Educational Technology}, v. 56, n. 2, 2025. Disponível em: https://hdl.handle.net/10497/28916.
+
+\item[] HOH, Y. K. Applications of artificial intelligence in life sciences. \textit{The American Biology Teacher}, v. 87, n. 3, 2025. Disponível em: \url{https://hdl.handle.net/10497/29383}.
+
+\item[] YAP, J. R.; ARUTHANAN, T.; CHIN, M. Artificial intelligence in dyslexia research and education: a scoping review. \textit{IEEE Access}, v. 13, 2025. DOI: 10.1109/ACCESS.2025.3526189.
+
+\item[] LEE, G.; YUN, M.; ZHAI, X.; CRIPPEN, K. Artificial intelligence in science education research: current states and challenges. \textit{Journal of Science Education and Technology}, 2025. Disponível em: \url{https://hdl.handle.net/10497/29821}.
+
+\item[] FLORIS, F. D.; RENANDYA, W. A. Artificial Intelligence tools for research writing: practical tips for teachers. \textit{TESL-EJ}, v. 29, n. 1, 2025. DOI: 10.55593/ej.29113int2.
+
+\item[] CHAN, K. W.; ALI, Farhan; PARK, J.; SHAM, K. S. B.; TAN, E. Y. T.; CHONG, F. W. C.; QIAN, K.; SZE, G. K. Automatic item generation in various STEM subjects using large language model prompting. \textit{Computers and Education: Artificial Intelligence}, v. 8, art. 100344, 2025. Disponível em: \url{https://hdl.handle.net/10497/28988}. Acesso em: 17 jul. 2026.
+
+\item[] SINHA, T. Beyond good AI: The need for sound learning theories in AIED. \textit{Technology, Knowledge and Learning}, 2025. Disponível em: \url{https://hdl.handle.net/10497/29312}. Acesso em: 17 jul. 2026.
+
+\item[] ALI, F.; TAN, A. S.; WANG, S. J. Can machine learning help accelerate article screening for systematic reviews? Yes, when article separability in embedding space is high. \textit{Research Synthesis Methods}, v. 16, n. 1, 2025. Disponível em: \url{https://hdl.handle.net/10497/29701}. Acesso em: 17 jul. 2026.
+
+\item[] GOH, C. C. M.; ARYADOUST, V. Developing and assessing second language listening and speaking: Does AI make it better? \textit{Annual Review of Applied Linguistics}, 2025. Disponível em: \url{https://hdl.handle.net/10497/29902}. Acesso em: 17 jul. 2026.
+
+\item[] SOK, S.; SHIN, H. W. Do Interactions with ChatGPT Influence L2 Learners' Oral Speaking Ability, Summarization Ability, and Perceptions of Generative AI Tasks? \textit{TESOL Quarterly}, 2025. DOI: 10.1002/tesq.70001. Acesso em: 17 jul. 2026.
+
+\item[] ZOU, M.; KONG, D.; LEE, I. Doctoral student's strategy use in GAI chatbot-assisted L2 writing: An activity theory perspective. \textit{Journal of English for Academic Purposes}, v. 76, art. 101521, 2025. Disponível em: \url{https://hdl.handle.net/10497/29651}. Acesso em: 17 jul. 2026.
+
+\item[] LIM, F. V.; GILJE, Ø.; DJONOV, E. Editorial for special issue: Digital multimodal composing in the era of artificial intelligence. \textit{Computers \& Composition}, 2025. DOI: 10.1016/j.compcom.2024.102911. Acesso em: 17 jul. 2026.
+
+\item[] LAU, C.; KHOR, E. T. Educational chatbots for personalised learning: A systematic review. \textit{International Journal of Technology Enhanced Learning}, v. 17, n. 2, 2025. Disponível em: \url{https://hdl.handle.net/10497/29384}. Acesso em: 17 jul. 2026.
+
+\item[] WANG, F.; JAMALUDIN, A.; TAN, A. L. Employing a dimensional framework and machine learning to empower research on dyslexia and dyscalculia. \textit{Learning: Research and Practice}, 2025. Disponível em: \url{https://hdl.handle.net/10497/29310}. Acesso em: 17 jul. 2026.
+
+\item[] ATAN, S.; AW, G. P.; ANWAR, K.; SUNDARARAJ, D.; RAVI, D. K.; LIM, K. Y.; EZAT, M. H. M. Enhancing primary students' oral proficiency with AI-powered chatbots: Introducing Learn. \textit{International Journal of Environmental Sciences}, v. 11, n. 15, 2025. Disponível em: \url{https://hdl.handle.net/10497/29890}. Acesso em: 17 jul. 2026.
+
+\item[] KONG, X.; FANG, H.; CHEN, W.; XIAO, J.; ZHANG, M. Examining human--AI collaboration in hybrid intelligence learning environments: Insight from the Synergy Degree Model. \textit{Humanities and Social Sciences Communications}, v. 12, n. 1, 2025. Disponível em: \url{https://hdl.handle.net/10497/29773}. Acesso em: 17 jul. 2026.
+
+\item[] YETER, I. H.; PENG, W.; LE FERRAND, H. Exploring the synergistic interactions between artificial intelligence and biomimicry for sustainable solutions. \textit{Sustainable Futures}, v. 10, art. 101261, 2025. Disponível em: \url{https://hdl.handle.net/10497/30078}. Acesso em: 17 jul. 2026.
+
+\item[] LYU, Q.; CHEN, W.; LIU, S.; HENG, K. H. J. G.; SU, J.; WANG, Y.Hands-on consensus building: Leveraging deep learning models to unveil hand gestures in consensus-building discourses. \textit{Cognition and Instruction}, 2025. Disponível em: \url{https://hdl.handle.net/10497/29150}. Acesso em: 17 jul. 2026.
+
+\item[] CAI, H.; HAN, B.; SUN, J.; LI, X.; WONG, L. Harnessing AI for teacher education to promote inclusive education: Investigating the effects of ChatGPT-supported lesson plan critiques on the development of pre-service teachers' lesson planning skills. \textit{The Internet and Higher Education}, v. 67, 2025. Disponível em: \url{https://hdl.handle.net/10497/29708}. Acesso em: 17 jul. 2026.
+
+\item[] HUANG, C.; TU, Y.; WANG, Q.; LI, M.; HE, T.; ZHANG, D. How does social support detected automatically in discussion forums relate to online learning burnout? The moderating role of students' self-regulated learning. \textit{Computers \& Education}, v. 227, art. 105213, 2025. Disponível em: \url{https://hdl.handle.net/10497/28934}. Acesso em: 17 jul. 2026.
+
+\item[] NGUYEN, D. M. A.; NGUYEN, T. M. T.; LIM, K. Y. T.; POSADA-QUINTERO, H. F. Investigating effects of microclimate on stress and affect using low-cost wearables in quasi-formal academic contexts. \textit{AI, Brain and Child}, v. 1, n. 1, 2025. Disponível em: \url{https://hdl.handle.net/10497/29750}. Acesso em: 17 jul. 2026.
+
+\item[] CHEN, W.; LIN, Z.; ZHENG, L.; HO, M.-Y. M.; ALI, Farhan; TEO, W. P. Machine learning models to predict individual cognitive load in collaborative learning: Combining fNIRS and eye-tracking data. \textit{Machine Learning and Knowledge Extraction}, v. 7, n. 2, 2025. Disponível em: \url{https://hdl.handle.net/10497/29752}. Acesso em: 17 jul. 2026.
+
+\item[] LEE, G.; ZHAI, X. Realizing visual question answering for education: GPT-4V as a multimodal AI. \textit{TechTrends}, v. 69, 2025. Disponível em: \url{https://hdl.handle.net/10497/29152}. Acesso em: 23 jun. 2026.
+
+\item[] LUO, X.; GHOSH, S.; TILLEY, J. L.; BESADA, P.; WANG, J.; XIANG, Y. “Shaping ChatGPT into my digital therapist”: A thematic analysis of social media discourse on using generative artificial intelligence for mental health. \textit{Digital Health}, v. 11, 2025. Disponível em: \url{https://hdl.handle.net/10497/29872}. Acesso em: 23 jun. 2026.
+
+\item[] REN, T.; WU, X.; WANG, D.; MA, X.; CAI, B.; BASKORO, F.; ZOU, B.; KIM, J.; GE, B.; ZHANG, Q.; SUMBOJA, A.; SONG, X.; ANG, E. H. Sustainable recovery progress of ternary cathodes in lithium-ion batteries in the artificial intelligence era. \textit{Materials Today Energy}, v. 49, art. 101844, 2025. Disponível em: \url{https://hdl.handle.net/10497/29247}. Acesso em: 23 jun. 2026.
+
+\item[] TAN, S. C.; TAN, Y. Y.; TEO, C. L.; YUAN, G. Teachers’ professional agency in learning with AI: A case study of a generative AI-based knowledge building learning companion for teachers. \textit{British Journal of Educational Technology}, 2025. Disponível em: \url{https://hdl.handle.net/10497/30077}. Acesso em: 23 jun. 2026.
+
+\item[] CHEN, S.; DING, Y. The feasibility of using machine learning to predict COVID-19 cases. \textit{International Journal of Medical Informatics}, v. 196, art. 105786, 2025. DOI: 10.1016/j.ijmedinf.2025.105786.
+
+\item[] SIM, J. J. The GALL of it all: Grading and teaching in the age of GenAI-assisted language learning. \textit{Language Teaching}, 2025. DOI: 10.1017/S0261444825100785.
+
+\item[] LYU, Q.; CHEN, W.; HENG, K. H. J. G. The impact of peer feedback features on feedback receivers’ implementation in university classrooms. \textit{Interactive Learning Environments}, 2025. Disponível em: \url{https://hdl.handle.net/10497/29766}. Acesso em: 23 jun. 2026.
+
+\item[] HOU, C.; ZHU, G.; VIDYA SUDARSHAN. The role of critical thinking on undergraduates’ reliance behaviours on generative AI in problem-solving. \textit{British Journal of Educational Technology}, v. 56, n. 5, 2025. Disponível em: \url{https://hdl.handle.net/10497/29953}. Acesso em: 23 jun. 2026.
+
+\item[] WONG, L.-H.; KING, R. B.; HAW, J. The secret behind Singapore’s success: Identifying the top predictors of student reading achievement using machine learning. \textit{Journal for the Study of Education and Development: Infancia y Aprendizaje}, 2025. Disponível em: \url{https://hdl.handle.net/10497/29439}. Acesso em: 23 jun. 2026.
+
+\item[] WEN, Y.; WANG, Z.; GUO, X. Trends and applications of AI in immersive learning environments: A systematic review of empirical research. \textit{Interactive Learning Environments}, 2025. Disponível em: \url{https://hdl.handle.net/10497/29852}. Acesso em: 23 jun. 2026.
+
+\item[] WU, X.; SARAF, P. P.; LEE, G.; LATIF, E.; LIU, N.; ZHAI, X. Unveiling scoring processes: Dissecting the differences between LLMs and human graders in automatic scoring. \textit{Technology, Knowledge and Learning}, 2025. Disponível em: \url{https://hdl.handle.net/10497/29317}. Acesso em: 23 jun. 2026.
+
+\item[] CAI, H.; HAN, B.; LU, L.; WONG, L.-H.; GU, X. When AI joins the conversation: The impact of AI-powered teacher dashboard on pre-service teachers’ collaborative interaction in the video-based professional learning communities. \textit{Interactive Learning Environments}, 2025. Disponível em: \url{https://hdl.handle.net/10497/30086}. Acesso em: 23 jun. 2026.
+
+\item[] WU, X.; LI, R.; QUEK, C. L. G. When GenAI chatbots meet self-determination: Unpacking Chinese EFL learners’ engagement in chatbot-assisted language learning. \textit{Interactive Learning Environments}, 2025. Disponível em: \url{https://hdl.handle.net/10497/29954}. Acesso em: 23 jun. 2026.
+
+\item[] KUMAR, S.; PARK, E.; TRAN, D. D.; WANG, J.; HO, H. L.; FENG, L.; KANTOUSH, S. A.; DOAN, V. B.; LI, D.; SWITZER, A. D. A deep learning framework to map riverbed sand mining budgets in large tropical deltas. \textit{GIScience \& Remote Sensing}, v. 61, n. 1, 2024. Disponível em: \url{https://hdl.handle.net/10497/27247}. Acesso em: 23 jun. 2026.
+
+\item[] YUVARAJ, R.; CHADHA, S.; PRINCE, A. A.; MURUGAPPAN, M.; ISLAM, Md. Sakib; SUMON, Md. Shaheenur Islam; CHOWDHURY, M. E. H. A machine learning framework for classroom EEG recording classification: Unveiling learning-style patterns. \textit{Algorithms}, v. 17, n. 11, 2024. Disponível em: \url{https://hdl.handle.net/10497/28786}. Acesso em: 23 jun. 2026.
+
+\item[] SHI, H.; ARYADOUST, V. A systematic review of automated writing evaluation systems. \textit{Education and Information Technologies}, v. 28, n. 1, p. 771--795, 2023. DOI: 10.1007/s10639-022-11200-7.
+
+\item[] CAI, C.; ZHU, G.; MA, M. A systemic review of AI for interdisciplinary learning: Application contexts, roles, and influences. \textit{Education and Information Technologies}, v. 30, 2024. DOI: 10.1007/s10639-024-13193-x.
+
+\item[] WONG, L. H.; LOOI, C. K. Advancing the generative AI in education research agenda: Insights from the Asia-Pacific region. \textit{Asia Pacific Journal of Education}, v. 44, n. 1, 2024. Disponível em: \url{https://ntu-sp.primo.exlibrisgroup.com/permalink/65NTU_INST/1boq0q4/cdi_informaworld_taylorfrancis_310_1080_02188791_2024_2315704}. Acesso em: 23 jun. 2026.
+
+\item[] PRIVITERA, A. J.; NG, S. H.; KONG, A. P.-H.; WEEKES, B. S. AI and aphasia in the digital age: A critical review. \textit{Brain Sciences}, v. 14, n. 4, 2024. Disponível em: \url{https://hdl.handle.net/10497/30054}. Acesso em: 23 jun. 2026.
+
+\item[] DAS, D.; KWEK, B. AI and data-driven urbanism: The Singapore experience. \textit{Digital Geography and Society}, v. 7, 2024. Disponível em: \url{https://hdl.handle.net/10497/28781}. Acesso em: 23 jun. 2026.
+
+\item[] HEATON, R.; LOW, J. H.; CHEN, V. AI art education: Artificial or intelligent? Transformative pedagogic reflections from three art educators in Singapore. \textit{Pedagogies: An International Journal}, v. 19, n. 4, 2024. Disponível em: \url{https://hdl.handle.net/10497/28094}. Acesso em: 23 jun. 2026.
+
+\item[] TAY, H. Y. AI feedback: Moving beyond the hype to integrating it into a coherent feedback pedagogy. \textit{Routledge Open Research}, v. 3, n. 26, 2024. DOI: 10.12688/routledgeopenres.18443.1.
+
+\item[] LIM, K. Y. T.; NGUYEN, T. M. T.; NGUYEN, D. M. A.; POSADA-QUINTERO, H. F. Application of DIY electrodermal activity wristband in detecting stress and affective responses of students. \textit{Bioengineering}, v. 11, n. 3, 2024. Disponível em: \url{https://hdl.handle.net/10497/27368}. Acesso em: 23 jun. 2026.
+
+\item[] ALI, F.; OW-YEONG, Y. K.; TILLEY, J. L. Are schools becoming more unequal? Insights from exploratory data mining of international large-scale assessment, TIMSS 2003--2019. \textit{Studies in Educational Evaluation}, v. 81, art. 101330, 2024. Disponível em: \url{https://hdl.handle.net/10497/27259}. Acesso em: 23 jun. 2026.
+
+\item[] FLORIS, F. D.; WIDIATI, U.; RENANDYA, W. A.; BASTHOMI, Y. Artificial Intelligence in English language teaching: Fostering joint enterprise in online communities. \textit{JEES (Journal of English Educators Society)}, v. 9, n. 1, 2024. Disponível em: \url{https://hdl.handle.net/10497/27363}. Acesso em: 23 jun. 2026.
+
+\item[] JIA, F.; SUN, D.; LOOI, C. K. Artificial intelligence in science education (2013--2023): Research trends in ten years. \textit{Journal of Science Education and Technology}, v. 33, n. 1, 2024. Disponível em: \url{https://ntu-sp.primo.exlibrisgroup.com/permalink/65NTU_INST/1boq0q4/cdi_webofscience_primary_001079844000001CitationCount}. Acesso em: 23 jun. 2026.
+
+\item[] KONG, P. W.; MA, C. M. S. Assessing table tennis technical proficiency in individuals with disabilities: A scoping review. \textit{Applied Sciences}, v. 14, n. 11, 2024. Disponível em: \url{https://hdl.handle.net/10497/27700}. Acesso em: 23 jun. 2026.
+
+\item[] ABIRAMI, S.; TIKARAM; KATHIRAVAN, M.; RAJAMANICKAM, Y.; MENON, R. N.; THOMAS, J.; KARTHICK, P. A.; PRINCE, A. A.; RONICKOM, J. F. A. Automated multi-class seizure-type classification system using EEG signals and machine learning algorithms. \textit{IEEE Access}, v. 12, 2024. Disponível em: \url{https://hdl.handle.net/10497/28192}. Acesso em: 23 jun. 2026.
+
+\item[] YUVARAJ, R.; PRINCE, A. A.; MURUGAPPAN, M. Automated recognition of teacher and student activities in the classroom environment: A deep learning framework. \textit{IEEE Access}, v. 12, 2024. Disponível em: \url{https://hdl.handle.net/10497/29008}. Acesso em: 23 jun. 2026.
+
+\item[] LOOI, C. K. Charting the uncertain future of AI and education: Promises, challenges and opportunities. \textit{Pedagogies: An International Journal}, v. 19, n. 3, 2024. Disponível em: \url{https://ntu-sp.primo.exlibrisgroup.com/permalink/65NTU_INST/1boq0q4/cdi_informaworld_taylorfrancis_310_1080_1554480X_2024_2379776}. Acesso em: 23 jun. 2026.
+
+\item[] ZHANG, X.; HAN, S. Z. H.; LIM, K. Y. T. Designing and prototyping of AI-based real-time mobile detectors for calisthenic push-up exercise. \textit{Procedia Computer Science}, v. 239, 2024. Disponível em: \url{https://hdl.handle.net/10497/28073}. Acesso em: 23 jun. 2026.
+
+\item[] LOW, E. L. Emerging trends in Singapore English research: A commentary. \textit{Asian Englishes}, v. 26, n. 3, 2024. Disponível em: \url{https://hdl.handle.net/10497/28734}. Acesso em: 23 jun. 2026.
+
+\item[] LEE, M.; TAN, R. J. Y.; CHEN, D.-T.; HUANG, J. S.; HUNG, W. L. D. Exploring interactions between learners and ChatGPT from a learner agency perspective: A multiple case study on historical inquiry. \textit{Education and Information Technologies}, 2024. Disponível em: \url{https://hdl.handle.net/10497/28738}. Acesso em: 23 jun. 2026.
+
+\item[] CAI, H.; LU, L.; HAN, B.; WONG, L.-H.; GU, X. Exploring pre-service teachers’ reflection mediated by an AI-powered teacher dashboard in video-based professional learning. \textit{Educational Technology Research and Development}, v. 73, 2024. Disponível em: \url{https://hdl.handle.net/10497/28938}. Acesso em: 23 jun. 2026.
+
+\item[] YETER, I. H.; LE FERRAND, H. Exploring the potential of ChatGPT for finding engineering biomimetic solutions: A theoretical framework and practical insights. \textit{Journal of Bionic Engineering}, v. 21, 2024. Disponível em: \url{https://hdl.handle.net/10497/28874}. Acesso em: 23 jun. 2026.
+
+\item[] WONG, L.-H.; PARK, H.; LOOI, C.-K. From hype to insight: Exploring ChatGPT’s early footprint in education via altmetrics and bibliometrics. \textit{Journal of Computer Assisted Learning}, v. 40, n. 4, 2024. Disponível em: \url{https://hdl.handle.net/10497/27300}. Acesso em: 23 jun. 2026.
+
+\item[] CHANDEL, P.; LIM, F. V. Generative AI and literacy development in the language classroom: A systematic review of literature. \textit{Ubiquitous Learning: An International Journal}, v. 18, n. 2, 2024. Disponível em: \url{https://hdl.handle.net/10497/28870}. Acesso em: 23 jun. 2026.
+
+\item[] YETER, I. H.; YANG, W.; STURGESS, J. B. Global initiatives and challenges in integrating artificial intelligence literacy in elementary education: Mapping policies and empirical literature. \textit{Future in Educational Research}, 2024. Disponível em: \url{https://hdl.handle.net/10497/28736}. Acesso em: 23 jun. 2026.
+
+\item[] TAN, S. C.; WIJEKUMAR, K.; HONG, H. Q.; OLMANSON, J.; TWOMEY, R.; SINHA, T. Guest editorial: Education in the world of ChatGPT and generative AI. \textit{IEEE Transactions on Learning Technologies}, v. 17, 2024. DOI: 10.1109/TLT.2024.3451050.
+
+\item[] ARYADOUST, V.; ZAKARIA, A.; JIA, Y. Investigating the affordances of OpenAI’s large language model in developing listening assessments. \textit{Computers and Education: Artificial Intelligence}, v. 6, art. 100204, 2024. Disponível em: \url{https://hdl.handle.net/10497/27328}. Acesso em: 23 jun. 2026.
+
+\item[] CHEN, L.; WENINGER, C. Knowledge structures for knowledge communication: Dominant semantic frames in research articles. \textit{Lingua}, v. 309, art. 103795, 2024. Disponível em: \url{https://hdl.handle.net/10497/28131}. Acesso em: 23 jun. 2026.
+
+\item[] ARAÚJO, A. D.; GUALBERTO, C.; PINHEIRO, M. S.; LIM, F. V. Multimodality, AI, and Education: An interview with Professor Fei Victor Lim. \textit{Linguagem em Foco (Language in Focus) Journal}, v. 16, n. 2, 2024. DOI: 10.46230/lef.v16i2.13856.
+
+\item[] TU, Y.; HUANG, C.; WANG, Q.; ZHOU, Y.; HAN, Z.; HUANG, Q. Predicting student burnout in blended environments: A complementary PLS-SEM and machine learning approach. \textit{Interactive Learning Environments}, 2024. Disponível em: \url{https://hdl.handle.net/10497/28232}. Acesso em: 23 jun. 2026.
+
+\item[] QUEK, M. S.; OEI, C. W.; ONG, P. L.; CHUNG, C. L. H.; KONG, P. W.; ZHANG, X.; LEO, K. H. Prognosticating prosthetic ambulation ability in people with lower limb amputation in early post-operative phase. \textit{Archives of Physical Medicine and Rehabilitation}, v. 105, n. 7, 2024. Disponível em: \url{https://hdl.handle.net/10497/27459}. Acesso em: 23 jun. 2026.
+
+\item[] LEE, A. V. Y.; TEO, C. L.; TAN, S. C. Prompt engineering for knowledge creation: Using chain-of-thought to support students’ improvable ideas. \textit{AI}, v. 5, n. 3, 2024. Disponível em: \url{https://www.mdpi.com/2914878}. Acesso em: 23 jun. 2026.
+
+\item[] ZHU, H.; LIN, H.; WU, S.; LUO, W.; ZHANG, H.; ZHAN, Y.; WANG, X.; LIU, A.; KWEK, L. C. Quantum computing and machine learning on an integrated photonics platform. \textit{Information}, v. 15, n. 2, 2024. Disponível em: \url{https://hdl.handle.net/10497/27233}. Acesso em: 23 jun. 2026.
+
+\item[] SUN, Y.; ZHANG, X.; HUANG, R.; YANG, D.; KIM, J.; CHEN, J.; ANG, E. H.; LI, M.; LI, L.; SONG, X. Revealing microscopic dynamics: In situ liquid-phase TEM for live observations of soft materials and quantitative analysis via deep learning. \textit{Nanoscale}, v. 16, n. 6, 2024. Disponível em: \url{https://hdl.handle.net/10497/27170}. Acesso em: 23 jun. 2026.
+
+\item[] KOH, E.; ZHANG, L.; LEE, A. V. Y.; WANG, H. Revolutionizing word clouds for teaching and learning with generative artificial intelligence: Cases from China and Singapore. \textit{IEEE Transactions on Learning Technologies}, v. 17, 2024. Disponível em: \url{https://hdl.handle.net/10497/27487}. Acesso em: 23 jun. 2026.
+
+\item[] LEE, A. V. Y. Staying ahead with generative artificial intelligence for learning: Navigating challenges and opportunities with 5Ts and 3Rs. \textit{Asia Pacific Journal of Education}, v. 44, n. 1, 2024. Disponível em: \url{https://hdl.handle.net/10497/27165}. Acesso em: 23 jun. 2026.
+
+\item[] TAN, A. S.-C.; ALI, F.; POON, K. K. Subjective well-being of children with special educational needs: Longitudinal predictors using machine learning. \textit{Applied Psychology: Health and Well-Being}, v. 17, n. 1, 2024. Disponível em: \url{https://hdl.handle.net/10497/28854}. Acesso em: 23 jun. 2026.
+
+\item[] ZHONG, T.; ZHU, G.; HOU, C.; WANG, Y.; FAN, X. The influences of ChatGPT on undergraduate students’ demonstrated and perceived interdisciplinary learning. \textit{Education and Information Technologies}, 2024. Disponível em: \url{https://hdl.handle.net/10497/27697}. Acesso em: 23 jun. 2026.
+
+\item[] TAN, J. Q. J.; CHOW, J. Y.; KOMAR, J. The utility of markerless motion capture for performance analysis in racket sports. \textit{Proceedings of the Institution of Mechanical Engineers, Part P: Journal of Sports Engineering and Technology}, 2024. Disponível em: \url{https://hdl.handle.net/10497/27257}. Acesso em: 23 jun. 2026.
+
+\item[] TOH, T. L. Three phases of technology in Singapore mathematics education. \textit{Educational Sciences: Natural Science}, v. 69, n. 5B, 2024. Disponível em: \url{https://hdl.handle.net/10497/28943}. Acesso em: 23 jun. 2026.
+
+\item[] MAKOWSKI, D.; TE, A. S.; NEVES, A.; KIRK, S.; LIANG, N. Z.; MAVROS, P.; CHEN, S. H. A. Too beautiful to be fake: Attractive faces are less likely to be judged as artificially generated. \textit{Acta Psychologica}, v. 252, 2024. DOI: 10.1016/j.actpsy.2024.104670.
+
+\item[] MOOTOOSAMY, K.; ARYADOUST, V. Transitioning from communicative competence to multimodal and intercultural competencies: A systematic review. \textit{Societies}, v. 14, n. 7, 2024. Disponível em: \url{https://hdl.handle.net/10497/27778}. Acesso em: 23 jun. 2026.
+
+\item[] YANG, D.; HUANG, R.; ZOU, B.; WANG, R.; WANG, Y.; ANG, E. H.; SONG, X. Unraveling nanosprings: Morphology control and mechanical characterization. \textit{Materials Horizons}, v. 11, 2024. Disponível em: \url{https://hdl.handle.net/10497/27724}. Acesso em: 23 jun. 2026.
+
+\item[] LEE, A. V. Y.; LUCO, A. C.; TAN, S. C. A human-centric automated essay scoring and feedback system for the development of ethical reasoning. \textit{Educational Technology \& Society}, v. 26, n. 1, 2023. Disponível em: \url{https://hdl.handle.net/10497/24836}. Acesso em: 23 jun. 2026.
+
+\item[] HE, Q.; ARAÚJO, D.; DAVIDS, K.; KEE, Y. H.; KOMAR, J. Adaptability of performance to different contextual constraints as a predictor of development and success in competitive football: A systematic review. \textit{Movement \& Sport Sciences/Science \& Motricité}, n. 121, 2023. Disponível em: \url{https://hdl.handle.net/10497/26255}. Acesso em: 23 jun. 2026.
+
+\item[] LEE, A. V. Y.; KOH, E.; LOOI, C. K. AI in education and learning analytics in Singapore: An overview of key projects and initiatives. \textit{Information and Technology in Education and Learning}, v. 3, n. 1, 2023. Disponível em: \url{https://hdl.handle.net/10497/26667}. Acesso em: 23 jun. 2026.
+
+\item[] YANG, W.; HU, X.; YETER, I. H.; SU, J.; YANG, Y.; LEE, J. C. Artificial intelligence education for young children: A case study of technology-enhanced embodied learning. \textit{Journal of Computer Assisted Learning}, v. 40, n. 2, 2023. DOI: 10.1111/jcal.12892.
+
+\item[] GOH, G. L.; GOH, G. D.; PAN, J. W.; TENG, P. S. P.; KONG, P. W. Automated service height fault detection using computer vision and machine learning for badminton matches. \textit{Sensors}, v. 23, n. 24, 2023. Disponível em: \url{https://hdl.handle.net/10497/26781}. Acesso em: 23 jun. 2026.
+
+\item[] YUVARAJ, R.; THAGAVEL, P.; THOMAS, J.; FOGARTY, J.; ALI, F. Comprehensive analysis of feature extraction methods for emotion recognition from multichannel EEG recordings. \textit{Sensors}, v. 23, n. 2, 2023. Disponível em: \url{https://hdl.handle.net/10497/24860}. Acesso em: 23 jun. 2026.
+
+\item[] LEE, A. V. Y.; TAN, S. C.; TEO, C. L. Designs and practices using generative AI for sustainable student discourse and knowledge creation. \textit{Smart Learning Environments}, v. 10, art. 59, 2023. Disponível em: \url{https://hdl.handle.net/10497/26669}. Acesso em: 23 jun. 2026.
+
+\item[] ANI, A.; KHOR, E. T. Development and evaluation of predictive models for predicting students performance in MOOCs. \textit{Education and Information Technologies}, v. 29, 2023. Disponível em: \url{https://hdl.handle.net/10497/26864}. Acesso em: 23 jun. 2026.
+
+\item[] ZHI, X.; WANG, J. Editorial: AI-based prediction of high-impact weather and climate extremes under global warming: A perspective from the large-scale circulations and teleconnections. \textit{Frontiers in Earth Science}, v. 11, 2023. DOI: 10.3389/feart.2023.1126381.
+
+\item[] ZHU, G.; FAN, X.; HOU, C.; ZHONG, T.; SEOW, P.; SHEN-HSING, A. C.; RAJALINGAM, P.; YEW, L. K.; POH, T. L. Embrace opportunities and face challenges: Using ChatGPT in undergraduate students’ collaborative interdisciplinary learning. \textit{arXiv}, arXiv:2305.18616v1 [cs.CY], 2023. Disponível em: \url{https://arxiv.org/abs/2305.18616}. Acesso em: 23 jun. 2026.
+
+\item[] RAJAMANICKAM, Y.; BARANWAL, A.; PRINCE, A. A.; MURUGAPPAN, M.; MOHAMMED, J. S. Emotion recognition from spatio-temporal representation of EEG signals via 3D-CNN with ensemble learning techniques. \textit{Brain Sciences}, v. 13, n. 4, 2023. Disponível em: \url{https://hdl.handle.net/10497/25169}. Acesso em: 23 jun. 2026.
+
+\item[] CHNG, E.; TAN, A.-L.; TAN, S. C. Examining the use of emerging technologies in schools: A review of artificial intelligence and immersive technologies in STEM education. \textit{Journal for STEM Education Research}, v. 6, n. 3, 2023. Disponível em: \url{https://hdl.handle.net/10497/25171}. Acesso em: 23 jun. 2026.
+
+\item[] RENANDYA, W. A.; IVONE, F. M.; HIDAYATI, M. Harnessing the power of technology in ELT. \textit{Journal of Studies in the English Language}, v. 18, n. 2, 2023. Disponível em: \url{https://hdl.handle.net/10497/26861}. Acesso em: 23 jun. 2026.
+
+\item[] PARK, J.; TEO, T. W.; TEO, A.; CHANG, J.; HUANG, J. S.; KOO, S. Integrating artificial intelligence into science lessons: Teachers’ experiences and views. \textit{International Journal of STEM Education}, v. 10, 2023. Disponível em: \url{https://hdl.handle.net/10497/26310}. Acesso em: 23 jun. 2026.
+
+\item[] WANG, J.; ZHENG, Y.; REN, W.; ANG, E. H.; SONG, L.; ZHU, J.; HU, Y. Intrinsic ionic confinement dynamic engineering of ionomers with low dielectric-k, high healing and stretchability for electronic device reconfiguration. \textit{Chemical Engineering Journal}, v. 453, n. 1, 2023. Disponível em: \url{https://hdl.handle.net/10497/24666}. Acesso em: 23 jun. 2026.
+
+\item[] NG, P. T. Learning in an era of uncertainty in Singapore: Diversity, lifelong learning, inspiration and paradigm shift. \textit{Educational Research for Policy and Practice}, 2023. Disponível em: \url{https://hdl.handle.net/10497/25212}. Acesso em: 23 jun. 2026.
+
+\item[] KOH, E.; DOROUDI, S. Learning, teaching, and assessment with generative artificial intelligence: Towards a plateau of productivity. \textit{Learning: Research and Practice}, v. 9, n. 2, 2023. Disponível em: \url{https://ntu-sp.primo.exlibrisgroup.com/permalink/65NTU_INST/1boq0q4/cdi_informaworld_taylorfrancis_310_1080_23735082_2023_2264086}. Acesso em: 23 jun. 2026.
+
+\item[] TAN, S. C.; CHEN, W.; CHUA, B. L. Leveraging generative artificial intelligence based on large language models for collaborative learning. \textit{Learning: Research and Practice}, v. 9, n. 2, 2023. Disponível em: \url{https://ntu-sp.primo.exlibrisgroup.com/permalink/65NTU_INST/1boq0q4/cdi_crossref_primary_10_1080_23735082_2023_2258895}. Acesso em: 23 jun. 2026.
+
+\item[] LIN, X.; FAN, J.; HOU, Z. J.; WANG, J. Machine learning of key variables impacting extreme precipitation in various regions of the contiguous United States. \textit{Journal of Advances in Modeling Earth Systems}, v. 15, n. 3, 2023. Disponível em: \url{https://hdl.handle.net/10497/24993}. Acesso em: 23 jun. 2026.
+
+\item[] ALI, F.; ANG, R. P. Many-dimensional model of adolescent school enjoyment: A test using machine learning from behavioral and social-emotional problems. \textit{Education Sciences}, v. 13, n. 11, 2023. Disponível em: \url{https://hdl.handle.net/10497/26739}. Acesso em: 23 jun. 2026.
+
+\item[] ZHANG, H.; LAU, J. W. Z.; WAN, L.; SHI, L.; SHI, Y.; CAI, H.; LUO, X.; LO, G.-Q.; LEE, C.-K.; KWEK, L. C.; LIU, A. Q. Molecular property prediction with photonic chip-based machine learning. \textit{Laser and Photonics Reviews}, v. 17, n. 3, 2023. Disponível em: \url{https://hdl.handle.net/10497/24808}. Acesso em: 23 jun. 2026.
+
+\item[] WANG, X.; LI, L.; TAN, S. C.; YANG, L.; LEI, J. Preparing for AI-enhanced education: Conceptualizing and empirically examining teachers’ AI readiness. \textit{Computers in Human Behavior}, v. 146, art. 107798, 2023. Disponível em: \url{https://hdl.handle.net/10497/25192}. Acesso em: 23 jun. 2026.
+
+\item[] NG, D.; KU, D. School reform: New future-ready quality outcomes and proposed measures. \textit{Education Sciences}, v. 13, n. 12, 2023. Disponível em: \url{https://hdl.handle.net/10497/27244}. Acesso em: 23 jun. 2026.
+
+\item[] ALI, F.; CHOY, D.; DIVAHARAN, S.; TAY, H. Y.; CHEN, W. Supporting self-directed learning and self-assessment using TeacherGAIA, a generative AI chatbot application: Learning approaches and prompt engineering. \textit{Learning: Research and Practice}, v. 9, n. 2, 2023. Disponível em: \url{https://ntu-sp.primo.exlibrisgroup.com/permalink/65NTU_INST/1boq0q4/cdi_crossref_primary_10_1080_23735082_2023_2258886}. Acesso em: 23 jun. 2026.
+
+\item[] LEE, A. V. Y. Supporting students’ generation of feedback in large-scale online course with artificial intelligence-enabled evaluation. \textit{Studies in Educational Evaluation}, v. 77, art. 101250, 2023. Disponível em: \url{https://hdl.handle.net/10497/25062}. Acesso em: 23 jun. 2026.
+
+\item[] ARYADOUST, V. The vexing problem of validity and the future of second language assessment. \textit{Language Testing}, v. 40, n. 1, 2023. Disponível em: \url{https://hdl.handle.net/10497/24861}. Acesso em: 23 jun. 2026.
+
+\item[] ARYADOUST, V. Topic and accent coverage in a commercialized L2 listening test: Implications for test-takers’ identity. \textit{Applied Linguistics}, v. 45, n. 5, 2023. DOI: 10.1093/applin/amad062.
+
+\item[] CHANG, J.; PARK, J.; PARK, J. Using an artificial intelligence chatbot in scientific inquiry: Focusing on a guided-inquiry activity using InquiryBot. \textit{Asia-Pacific Science Education}, v. 9, n. 1, 2023. DOI: 10.1163/23641177-bja10062.
+
+\item[] XING, W.; ZHU, G.; ARSLAN, O.; SHIM, J.; POPOV, V. Using learning analytics to explore the multifaceted engagement in collaborative learning. \textit{Journal of Computing in Higher Education}, v. 35, 2023. Disponível em: \url{https://hdl.handle.net/10497/24807}. Acesso em: 23 jun. 2026.
+
+\item[] WANG, X.; LIU, Q.; PANG, H.; TAN, S. C.; LEI, J.; WALLACE, M. P.; LI, L. What matters in AI-supported learning: A study of human-AI interactions in language learning using cluster analysis and epistemic network analysis. \textit{Computers \& Education}, v. 194, 2023. Disponível em: \url{https://ntu-sp.primo.exlibrisgroup.com/permalink/65NTU_INST/1boq0q4/cdi_webofscience_primary_000901496100003CitationCount}. Acesso em: 23 jun. 2026.
+
+\item[] \begin{otherlanguage}{chinese}林容婵; 高丽云. 运用人工智能促进教学与评价: 以新加坡中小学华文课程为例\end{otherlanguage} (Using AI to enhance teaching, learning and assessment: With illustrative examples from Singapore primary and secondary Chinese language curriculum). \begin{otherlanguage}{chinese}华文老师\end{otherlanguage} (Chinese Language Teaching in Singapore), n. 67, 2023. Disponível em: \url{https://hdl.handle.net/10497/26859}. Acesso em: 23 jun. 2026.
+
+\item[] KHOR, E. T. A data mining approach using machine learning algorithms for early detection of low-performing students. \textit{International Journal of Information and Learning Technology}, v. 39, n. 2, 2022. Disponível em: \url{https://hdl.handle.net/10497/23897}. Acesso em: 23 jun. 2026.
+
+\item[] KHOR, E. T.; DARSHAN, D. A learning analytics approach using social network analysis and binary classifiers on virtual resource interactions for learner performance prediction. \textit{The International Review of Research in Open and Distributed Learning}, v. 23, n. 4, 2022. Disponível em: \url{https://hdl.handle.net/10497/24655}. Acesso em: 23 jun. 2026.
+
+\item[] TAN, S. C.; LEE, A. V. Y.; LEE, M. A systematic review of artificial intelligence techniques for collaborative learning over the past two decades. \textit{Computers and Education: Artificial Intelligence}, v. 3, 2022. Disponível em: \url{https://ntu-sp.primo.exlibrisgroup.com/permalink/65NTU_INST/1boq0q4/cdi_doaj_primary_oai_doaj_org_article_d5cb9585312e4f3eb4a99d2691244f55}. Acesso em: 23 jun. 2026.
+
+\item[] SHI, H.; ARYADOUST, V. A systematic review of automated writing evaluation systems. \textit{Education and Information Technologies}, v. 28, 2022. Disponível em: \url{https://hdl.handle.net/10497/24305}. Acesso em: 23 jun. 2026.
+
+\item[] SHIRAHIGE, L.; LEIMIG, B.; BALTAR, A.; BEZERRA, A.; DE BRITO, C. V. F.; DO NASCIMENTO, Y. S. O.; GOMES, J. C.; TEO, W.-P.; DOS SANTOS, W. P.; CAIRRÃO, M.; FONSECA, A.; MONTE-SILVA, K. Classification of Parkinson’s disease motor phenotype: A machine learning approach. \textit{Journal of Neural Transmission}, v. 129, n. 12, 2022. Disponível em: \url{https://hdl.handle.net/10497/24671}. Acesso em: 23 jun. 2026.
+
+\item[] DU, G.; ZHOU, C.; KWEK, L.-C. Compression and reduction of N*1 states by unitary matrices. \textit{Quantum Information Processing}, v. 21, n. 2, 2022. Disponível em: \url{https://hdl.handle.net/10497/23803}. Acesso em: 23 jun. 2026.
+
+\item[] JIA, F.; SUN, D.; MA, Q.; LOOI, C. K. Developing an AI-based learning system for L2 learners’ authentic and ubiquitous learning in English language. \textit{Sustainability}, v. 14, n. 23, 2022. Disponível em: \url{https://hdl.handle.net/10497/24829}. Acesso em: 23 jun. 2026.
+
+\item[] LIM, K. Y. T.; NGUYEN DUC, M. A.; NGUYEN THIEN, M. T.; YUVARAJ, R.; FOGARTY, J. S. Investigating the effects of microclimate on physiological stress and brain function with Data Science and wearables. \textit{Sustainability}, v. 14, n. 17, 2022. DOI: 10.3390/su141710769.
+
+\item[] WANG, X.; PANG, H.; WALLACE, M. P.; WANG, Q.; CHEN, W. Learners’ perceived AI presences in AI-supported language learning: A study of AI as a humanized agent from community of inquiry. \textit{Computer Assisted Language Learning}, v. 37, n. 4, 2022. Disponível em: \url{https://hdl.handle.net/10497/24014}. Acesso em: 23 jun. 2026.
+
+\item[] BHARTI, K.; CERVERA-LIERTA, A.; KYAW, T. H.; HAUG, T.; ALPERIN-LEA, S.; ANAND, A.; DEGROOTE, M.; HEIMONEN, H.; KOTTMANN, J. S.; MENKE, T.; MOK, W.-K.; SIM, S.; KWEK, L.-C.; ASPURU-GUZIK, A. Noisy intermediate-scale quantum algorithms. \textit{Reviews of Modern Physics}, v. 94, n. 1, 2022. Disponível em: \url{https://hdl.handle.net/10497/23754}. Acesso em: 23 jun. 2026.
+
+\item[] ALI, F.; ANG, R. P. Predicting how well adolescents get along with peers and teachers: A machine learning approach. \textit{Journal of Youth and Adolescence}, v. 51, n. 7, 2022. Disponível em: \url{https://hdl.handle.net/10497/23997}. Acesso em: 23 jun. 2026.
+
+\item[] ZHANG, H.; WAN, L.; HAUG, T.; MOK, W.-K.; PAESANI, S.; SHI, Y.; CAI, H.; CHIN, L. K.; KARIM, M. F.; XIAO, L.; LUO, X.; GAO, F.; DONG, B.; ASSAD, S.; KIM, M. S.; LAING, A.; KWEK, L. C.; LIU, A. Q. Resource-efficient high-dimensional subspace teleportation with a quantum autoencoder. \textit{Science Advances}, v. 8, n. 40, 2022. Disponível em: \url{https://hdl.handle.net/10497/24626}. Acesso em: 23 jun. 2026.
+
+\item[] VON WANGENHEIM, C. G.; CRUZ ALVES, N. da; RAUBER, M. F.; HAUCK, J. C. R.; YETER, I. H. A proposal for performance-based assessment of the learning of machine learning concepts and practices in K-12. \textit{Informatics in Education}, v. 21, n. 3, 2021. Disponível em: \url{https://hdl.handle.net/10497/23420}. Acesso em: 23 jun. 2026.
+
+\item[] LEE, A. V. Y. Determining quality and distribution of ideas in online classroom talk using learning analytics and machine learning. \textit{Educational Technology \& Society}, v. 24, n. 1, 2021. Disponível em: \url{https://hdl.handle.net/10497/22815}. Acesso em: 23 jun. 2026.
+
+\item[] ZHANG, H.; THOMPSON, J.; GU, M.; JIANG, X. D.; CAI, H.; LIU, P. Y.; SHI, Y.; ZHANG, Y.; KARIM, M. F.; LO, G. Q.; LUO, X.; DONG, B.; KWEK, L. C.; LIU, A. Q. Efficient on-chip training of optical neural networks using genetic algorithm. \textit{ACS Photonics}, v. 8, n. 6, 2021. Disponível em: \url{https://hdl.handle.net/10497/22920}. Acesso em: 23 jun. 2026.
+
+\item[] SUPPIAH, H. T.; NG, E. L.; WEE, J.; TAIM, B. C.; HUYNH, M.; GASTIN, P. B.; CHIA, M.; LOW, C. Y.; LEE, J. K. Hydration status and fluid replacement strategies of high-performance adolescent athletes: An application of machine learning to distinguish hydration characteristics. \textit{Nutrients}, v. 13, n. 11, 2021. Disponível em: \url{https://hdl.handle.net/10497/23517}. Acesso em: 23 jun. 2026.
+
+\item[] HOW, M. L.; CHEAH, S. M.; CHAN, Y. J.; KHOR, A. C.; SAY, E. M. P. Artificial intelligence-enhanced decision support for informing global sustainable development: A human-centric AI-thinking approach. \textit{Information}, v. 11, n. 1, 2020. Disponível em: \url{https://hdl.handle.net/10497/21920}. Acesso em: 23 jun. 2026.
+
+\item[] HOW, M. L.; CHEAH, S.-M.; KHOR, A. C.; CHAN, Y. J. Artificial intelligence-enhanced predictive insights for advancing financial inclusion: A human-centric AI-thinking approach. \textit{Big Data and Cognitive Computing}, v. 4, n. 2, 2020. Disponível em: \url{https://hdl.handle.net/10497/22128}. Acesso em: 23 jun. 2026.
+
+\item[] SONG, P. V.; HOANG, M. L.; DAT, V. T.; THANH, D. D.; HO, H. L.; DUONG, T. A. Deep learning convolutional neural network in rainfall-runoff modelling. \textit{Journal of Hydroinformatics}, v. 22, n. 3, 2020. Disponível em: \url{https://hdl.handle.net/10497/22412}. Acesso em: 23 jun. 2026.
+
+\item[] TAN, C. Digital Confucius? Exploring the implications of artificial intelligence in spiritual education. \textit{Connection Science}, v. 32, n. 3, 2020. Disponível em: \url{https://hdl.handle.net/10497/22226}. Acesso em: 23 jun. 2026.
+
+\item[] GREEN, C. A multilevel description of textbook linguistic complexity across disciplines: Leveraging NLP to support disciplinary literacy. \textit{Linguistics and Education}, v. 53, art. 100748, 2019. Disponível em: \url{https://hdl.handle.net/10497/21670}. Acesso em: 23 jun. 2026.
+
+\end{itemize}
+
+\section{Appendix B – Projects on AIEd}\label{apx-longtable2}
+
+%\begin{ThreePartTable}
+\begin{small}
+\begin{longtable}{>{\raggedright\arraybackslash}p{3.2cm}
+                  >{\raggedright\arraybackslash}p{2.8cm}
+                  >{\raggedright\arraybackslash}p{7.5cm}}
+\label{tab:appendix_projects_aied}\\
+\toprule
+Project Name &
+Project Developer/PI &
+Project Description \\
+\midrule
+\endfirsthead
+
+\multicolumn{3}{l}{\textit{Table \thetable\ (continued)}}\\
+\toprule
+Project Name &
+Project Developer/PI &
+Project Description \\
+\midrule
+\endhead
+
+\href{https://www.ntu.edu.sg/nie/aied/nie-x-ri-collab-on-generative-ai-for-stem-assessment}{NIE x RI collab on generative AI for STEM assessment}
+&
+Ast/P Farhan Ali
+
+Ast/P Joonhyeong Park
+
+Mr Kuang-Wen Chan
+&
+This project comprehensively assesses large language models for their capabilities in generating advanced high school assessment items in various STEM subjects.
+\\
+
+\href{https://teachergaia.rdc.nie.edu.sg/v2}{TeacherGAIA}
+&
+Ast/P Farhan Ali
+&
+TeacherGAIA is a generative-AI chatbot developed by LSA to support diverse forms of student-centered learning. It is currently in use in numerous MOE schools with free accounts for teachers and students.
+\\
+
+\href{https://www.ntu.edu.sg/nie/aied/ai-empowered-analytics-on-gesture}{AI-Empowered Analytics on Gesture}
+&
+A/P Chen Wenli
+
+Ms Lyu Qianru
+&
+This research explores how students apply bodily engagement for computer-supported collaborative learning (CSCL). We have utilized MediaPipe, a machine learning model, to analyze video files and extract moment-by-moment body landmarks. This approach allows us to understand and visualize how students use hand movements and body gestures during collaborative learning activities.
+\\
+
+\href{https://www.ntu.edu.sg/nie/aied/ai-empowered-analytics-on-gesture}{AI-Empowered Analytics on Joint Attention}
+&
+A/P Chen Wenli
+
+Ms Lyu Qianru
+&
+This research examines how students apply joint attention, specifically synchronized gazing detection, for collaborative learning. By using machine learning models such as YOLOv7 for gazing detection and object detection, we analyze video files to capture moment-by-moment gazing and object detection. This method provides a precision level of 60\% to 89\%.
+\\
+
+\href{https://www.canva.com/design/DAGEqaxYY_Y/ill1ZYKdIKqkP4YJQoSPLA/edit}{LLMs Chatbot Proof-of-Concepts}
+&
+A/P Tan Seng Chee
+
+Ms Tan Yee Yin
+&
+Six different proof-of-concepts chatbots that explore and exemplify teaching and learning from, with, about, and beyond AI.
+\\
+
+ARCHE 2.0
+&
+Ast/P Wen Yun
+&
+An AI-powered seamless Chinese vocabulary learning system for young learners.
+\\
+
+\href{https://www.ntu.edu.sg/nie/aied/thinking-students'-ai-augmented-thinking}{Students' AI-Augmented Thinking, Academic Performance and Emotions During Problem Solving}
+&
+Ast/P Zhu Gaoxia
+&
+This project aims to understand students' thinking processes when programming with the support of generative AI or not; and examine what factors will impact AI-augmented thinking.
+\\
+\href{https://www.ntu.edu.sg/nie/aied/embodied-learning-companions}{Embodied Learning Companions as an Experimentation Platform for Scaffolding in the Learning Sciences}
+&
+Ast/P Tanmay Sinha
+&
+Learning companions, implemented as 2-D/3-D virtual characters, can evoke trust with human-like shape and form (appearance realism) and provide multimodal adaptive support based on inferred multimodal student behaviors (behavior realism).
+\\
+
+\href{https://forms.office.com/pages/responsepage.aspx?id=SJPOFSq-K0aPwOF2WpsgSlA8cUiAHXFHgasz6DS5w9dUMkI4RzBLTURDRlgwRkQxTzVHUk9WQUJQTi4u&route=shorturl}{AARA-DA: AI-Powered Avatar, Adaptive Progression and Remediation Analytics for Dyscalculia}
+&
+Ast/P Azilawati Jamaludin
+
+Dr Lim Choon Guan
+&
+AARA-DA is a neuroscience-informed mathematics Fractions games powered by a VR teacher/caregiver avatar that is trained to provide personalized cognitive and affective care for learners between the ages of 7 and 13.
+\\
+
+An Investigation on the Efficacy of Redesigning Learning Assessments with Gen AI
+&
+Dr. Kumaran Rajaram
+
+Ast/P Tanmay Sinha
+&
+The project aims to develop innovative formative assessments that use GenAI to provide deliberate critiquing opportunities for students and assess their impact on learning across interdisciplinary courses at NBS and NIE.
+\\
+
+Does the Teacher Matter? University Students' Physiological Responses in Online Interactions with an AI-Chatbot and a Human Teacher
+&
+Ast/P Victor Lim Fei
+&
+The study aims to explore how students respond to the use of generative AI by examining potential differences in students' levels of interest, measured through emotional arousal, when communicating with an AI bot versus a human to learn about a new topic. The findings will inform effective AI integration in educational settings to enhance learning outcomes.
+\\
+
+Open emotion learner modeling to improve machine predictions and improve human metacognition
+&
+Ast/P Tanmay Sinha
+
+Ast/P Toh Wei Xing
+
+Dr. Elizabeth Koh
+&
+The project aims to kill two birds with one stone---improve emotionally aware AI as well as students' self-regulated learning---by creating open learner models (OLMs) where emotional predictions can be refined with human feedback. Different interaction designs for OLMs to enhance emotional awareness and regulation in education will be tested.
+\\
+\bottomrule
+\source{Elaborated by the authors.}
+\end{longtable}
+\end{small}
+%\end{ThreePartTable}
+
+\end{document}
+
