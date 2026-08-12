@@ -1,0 +1,778 @@
+% !TEX TS-program = XeLaTeX
+% use the following command:
+% all document files must be coded in UTF-8
+\documentclass[english]{textolivre}
+% build HTML with: make4ht -e build.lua -c textolivre.cfg -x -u article "fn-in,svg,pic-align"
+
+\journalname{Texto Livre}
+\thevolume{19}
+%\thenumber{1} % old template
+\theyear{2026}
+\receiveddate{\DTMdisplaydate{2025}{12}{12}{-1}} % YYYY MM DD
+\accepteddate{\DTMdisplaydate{2026}{2}{13}{-1}}
+\publisheddate{\DTMdisplaydate{2026}{8}{10}{-1}}
+\corrauthor{Renato Miguel de Moraes}
+\articledoi{10.1590/1983-3652.2026.63442}
+%\articleid{NNNN} % if the article ID is not the last 5 numbers of its DOI, provide it using \articleid{} commmand 
+% list of available sesscions in the journal: articles, dossier, reports, essays, reviews, interviews, editorial
+\articlesessionname{articles}
+\runningauthor{Moraes, Santos and Pedro} 
+%\editorname{Leonardo Araújo} % old template
+\sectioneditorname{Daniervelin Pereira~\orcid{0000-0003-1861-3609}}
+\layouteditorname{Leonardo Araujo~\orcid{0000-0003-3884-2177}}
+
+\title{Teachers’ digital competences assessment resources in online higher education: a systematic literature review}
+\othertitle{Recursos avaliativos de competência digital docente no ensino superior online: uma revisão sistemática da literatura}
+% if there is a third language title, add here:
+%\othertitle{Artikelvorlage zur Einreichung beim Texto Livre Journal}
+
+\author[1]{Renato Miguel de Moraes~\orcid{0000-0002-3982-431X}\thanks{Email: \href{mailto:renatomoraes@edu.ulisboa.pt}{renatomoraes@edu.ulisboa.pt}}}
+\author[2]{Cassio Santos~\orcid{0000-0002-1402-2978}\thanks{Email: \href{mailto:cassio.santos@ese.ipsantarem.pt}{cassio.santos@ese.ipsantarem.pt}}}
+\author[1]{Neuza Pedro~\orcid{0000-0001-9571-8602}\thanks{Email: \href{mailto:nspedro@ie.ulisboa.pt}{nspedro@ie.ulisboa.pt}}}
+\affil[1]{Universidade de Lisboa, Instituto de Educação, UIDEF, Lisboa, Portugal.}
+\affil[2]{Instituto Politécnico de Santarém, Centro de Investigação em Artes e Comunicação (CIAC), Pólo Literacia Digital e Inclusão Social (PLDIS), Santarém, Portugal.}
+
+\addbibresource{article.bib}
+% use biber instead of bibtex
+% $ biber article
+
+% used to create dummy text for the template file
+\definecolor{dark-gray}{gray}{0.35} % color used to display dummy texts
+\usepackage{lipsum}
+\SetLipsumParListSurrounders{\colorlet{oldcolor}{.}\color{dark-gray}}{\color{oldcolor}}
+
+% used here only to provide the XeLaTeX and BibTeX logos
+\usepackage{hologo}
+
+% if you use multirows in a table, include the multirow package
+\usepackage{multirow}
+
+% provides sidewaysfigure environment
+\usepackage{rotating}
+
+% CUSTOM EPIGRAPH - BEGIN 
+%%% https://tex.stackexchange.com/questions/193178/specific-epigraph-style
+\usepackage{epigraph}
+\renewcommand\textflush{flushright}
+\makeatletter
+\newlength\epitextskip
+\pretocmd{\@epitext}{\em}{}{}
+\apptocmd{\@epitext}{\em}{}{}
+\patchcmd{\epigraph}{\@epitext{#1}\\}{\@epitext{#1}\\[\epitextskip]}{}{}
+\makeatother
+\setlength\epigraphrule{0pt}
+\setlength\epitextskip{0.5ex}
+\setlength\epigraphwidth{.7\textwidth}
+% CUSTOM EPIGRAPH - END
+
+% to use IPA symbols in unicode add
+%\usepackage{fontspec}
+%\newfontfamily\ipafont{CMU Serif}
+%\newcommand{\ipa}[1]{{\ipafont #1}}
+% and in the text you may use the \ipa{...} command passing the symbols in unicode
+
+% LANGUAGE - BEGIN
+% ARABIC
+% for languages that use special fonts, you must provide the typeface that will be used
+% \setotherlanguage{arabic}
+% \newfontfamily\arabicfont[Script=Arabic]{Amiri}
+% \newfontfamily\arabicfontsf[Script=Arabic]{Amiri}
+% \newfontfamily\arabicfonttt[Script=Arabic]{Amiri}
+%
+% in the article, to add arabic text use: \textlang{arabic}{ ... }
+%
+% RUSSIAN
+% for russian text we also need to define fonts with support for Cyrillic script
+% \usepackage{fontspec}
+% \setotherlanguage{russian}
+% \newfontfamily\cyrillicfont{Times New Roman}
+% \newfontfamily\cyrillicfontsf{Times New Roman}[Script=Cyrillic]
+% \newfontfamily\cyrillicfonttt{Times New Roman}[Script=Cyrillic]
+%
+% in the text use \begin{russian} ... \end{russian}
+% LANGUAGE - END
+
+% EMOJIS - BEGIN
+% to use emoticons in your manuscript
+% https://stackoverflow.com/questions/190145/how-to-insert-emoticons-in-latex/57076064
+% using font Symbola, which has full support
+% the font may be downloaded at:
+% https://dn-works.com/ufas/
+% add to preamble:
+% \newfontfamily\Symbola{Symbola}
+% in the text use:
+% {\Symbola }
+% EMOJIS - END
+
+% LABEL REFERENCE TO DESCRIPTIVE LIST - BEGIN
+% reference itens in a descriptive list using their labels instead of numbers
+% insert the code below in the preambule:
+%\makeatletter
+%\let\orgdescriptionlabel\descriptionlabel
+%\renewcommand*{\descriptionlabel}[1]{%
+%  \let\orglabel\label
+%  \let\label\@gobble
+%  \phantomsection
+%  \edef\@currentlabel{#1\unskip}%
+%  \let\label\orglabel
+%  \orgdescriptionlabel{#1}%
+%}
+%\makeatother
+%
+% in your document, use as illustraded here:
+%\begin{description}
+%  \item[first\label{itm1}] this is only an example;
+%  % ...  add more items
+%\end{description}
+% LABEL REFERENCE TO DESCRIPTIVE LIST - END
+
+
+% add line numbers for submission
+%\usepackage{lineno}
+%\linenumbers
+
+\begin{document}
+\maketitle
+
+\begin{polyabstract}
+\begin{abstract}
+This systematic literature review (SLR) explores how contemporary academic studies (2020–2025) have addressed the assessment of professors’ digital competences in the context of online higher education. Guided by Okoli’s procedures and the PRISMA protocol, 25 peer-reviewed articles were selected and synthesised using bibliometric, textual, and thematic analyses, and subsequently classified according to the typology of instruments proposed by \textcite{mattar2022digcomp}. Findings identified 56 theoretical references and models, along with 18 instruments, revealing a diverse, globally distributed methodological landscape. Regarding the instruments, the predominance of quantitative methodologies and self-assessment instruments was exposed. The DigCompEdu Check-In stands out as a widely applied tool in different educational and cultural contexts. The analysis further identified a lack of transparency in how instruments were described and shared, frequently unnamed, lacking appendices, or methodologically underreported, as well as the susceptibility to cognitive biases inherent in the self-assessment instruments that dominate the \textit{corpus}, and the use of \textit{ad hoc} instruments without adequate validation or dissemination. Conclusions highlight that the field of digital skills assessment requires greater contextualisation, methodological diversification, and scientific rigour to support better educational practices in a digital transformation context.
+
+\keywords{Teachers’ digital competence \sep Higher education \sep Online teaching \sep Evaluation \sep Systematic literature review}
+\end{abstract}
+
+\begin{portuguese}
+\begin{abstract}
+Esta revisão sistemática da literatura (RSL) explora como estudos acadêmicos contemporâneos (2020-2025) têm abordado a avaliação de competências digitais docentes no contexto do ensino superior online. Seguindo o procedimento de Okoli e o protocolo PRISMA, 25 artigos revisados por pares foram selecionados e sintetizados utilizando as análises bibliométrica, textual e temática, sendo, posteriormente, classificados segundo a tipologia de instrumentos proposta por \textcite{mattar2022digcomp}. Os resultados identificaram 56 referenciais teóricos e modelos, além de 18 instrumentos, revelando um cenário metodológico diverso e globalmente distribuído. Registrou-se a predominância de metodologias quantitativas e de instrumentos autoavaliativos, sobressaindo-se entre eles o DigCompEdu Check-In, amplamente aplicado a diferentes contextos educacionais e culturais. A análise evidenciou ainda a falta de transparência na descrição e partilha dos instrumentos, frequentemente sem nome, sem apêndices ou com exposição metodológica insuficiente, a suscetibilidade a vieses cognitivos característica dos instrumentos de autoavaliação dominantes no \textit{corpus}, e o recurso a instrumentos \textit{ad hoc} sem validação nem partilha adequadas. Conclui-se que o campo da avaliação de competências digitais requer maior contextualização, diversificação metodológica e rigor científico para apoiar melhores práticas educacionais no atual contexto de transformação digital.
+
+\keywords{Competência digital docente \sep Educação superior \sep Ensino online \sep Avaliação \sep Revisão sistemática de literatura}
+\end{abstract}
+\end{portuguese}
+% if there is another abstract, insert it here using the same scheme
+\end{polyabstract}
+
+\section{Introduction}\label{sec-intro}
+In an era defined by rapid technological change and widespread digital transition, societal interactions have been fundamentally transformed. The pervasive presence of digital tools has reshaped how people access information, communicate, construct knowledge, and develop skills. As societies shift toward digital ecosystems, cultivating robust teachers’ digital competences (TDC) has become essential for equitable participation in social, professional, and educational contexts \cite{moraes2022avaliacao}.
+
+While digital transformation is global, evaluating online programmes requires a nuanced consideration of the unique characteristics of digital learning environments, as traditional pedagogical strategies often prove insufficient in distance education settings \cite{GarcesBastias2024}.
+
+Consequently, there is an urgent need to understand and map the evolving landscape of digital competence assessment within the specific context of online higher education. This systematic literature review (SLR) aims to achieve a thorough and nuanced grasp of how contemporary scholars engage with teaching digital competences’ assessment in the online higher education context. This ranges from the theoretical frameworks to the methodological approaches and the tools used for its assessment. These insights should contribute to a more profound understanding of the evolving landscape of digital competence assessment in online higher education.
+
+\section{Theoretical Framework}\label{sec-normas}
+To provide a robust foundation for the ensuing analysis, discussion, and nuanced understanding of the topics under consideration, it is essential to briefly delineate key conceptual distinctions and theoretical frameworks that inform contemporary conceptions of digital competence in educational contexts.
+
+\subsection{Conceptual Foundations: digital competence versus digital literacy}\label{sec-conduta}
+\textit{Digital competence} is widely acknowledged as a multifaceted construct encompassing knowledge, skills, and attitudes necessary for the effective, critical, and creative use of digital technologies across various life domains, including education, work, leisure, and social participation, especially to respond to the demands posed by the digital age \cite{CouncilEU2018,Ferrari2013,redecker2017digcompedu}. It integrates cognitive, attitudinal, and technical abilities that enable individuals to address complex challenges in a knowledge-based society by performing tasks such as problem-solving, communication, information management, collaboration, content creation, and ethical knowledge building. This involves not only technical proficiency but also the ability to navigate digital environments thoughtfully, ethically, and creatively \cite{Falloon2020,sales2019cartografia,vuorikari2022digcomp22}.
+
+\textit{Digital competence} and \textit{digital literacy} are frequently used interchangeably, but the latter usually focuses on the fundamentals of using computers, laptops, tablets, smartphones, and other digital gadgets independently to interpret, manage, and create meaning within digital environments. This calls for both technical proficiency and the ability to find resources, share ideas, and collaborate across boundaries \cite{EsteveMon2020,Falloon2020,pegrum2022digitalliteracies}. Digital competence, in contrast, extends beyond basic usage to include aspects such as digital safety, legal and ethical considerations, and problem-solving in technologically mediated environments \cite{CouncilEU2018,EsteveMon2020,Falloon2020,redecker2017digcompedu}.
+
+The concept of digital competence has evolved from a narrow focus on technical skills to a multidimensional concept encompassing cognitive, ethical, social, and pedagogical aspects \cite{santos2023edigcompedu}. This broader understanding recognises that, today, digital competence involves adaptability, critical thinking, and the ability to navigate complex digital environments. In higher education, where learning is increasingly developed online, educators must improve these competences to effectively support students in the digital academic landscape. As technology advances and more students opt for some form of online learning, there is a growing need for effective teaching methods specifically tailored for online education. In order to design and evaluate such competencies and online programs, it is necessary to take into account the distinctive characteristics of digital learning environments, despite the fact that digital and in-person settings are both intended to promote education \cite{GarcesBastias2024}.
+
+
+\subsection{Teachers’ digital competence}\label{sec-fmt-manuscrito}
+In the educational context, teachers’ digital competence (TDC) represents a specialised application of digital competence tailored to educators, involving the acquisition and integration of technological, pedagogical, and didactic knowledge to enhance teaching-learning processes and foster students’ digital development \cite{DiasTrindade2020,EsteveMon2020,Falloon2020,santos2024applicability}. This concept is underpinned by the TPACK model, which posits that effective technology integration in educational practices arises from the interplay of technological, pedagogical, and content knowledge \cite{DiasTrindade2021,koehler2013tpack}.
+
+\textcite{santos2023edigcompedu} argues that TDC should not be viewed as a static trait, but as a set of dynamic capabilities shaped by evolving technologies and contexts. This perspective calls for rethinking teaching staff training through continuous professional development that values adaptability, reflection, and lifelong learning. Embedding critical thinking, active collaboration, and problem-solving into digital education empowers educators to succeed. After all, achieving educational goals effectively requires strategically aligning teaching methods with appropriate learning contexts \cite{GarcesBastias2024}, whether in the digital or the analogue world.
+
+
+\subsection{Theoretical frameworks and models}\label{sec-formato}
+The assessment of TDC is frequently influenced and grounded by a broad array of theoretical frameworks and models specifically developed for the field of Education. Among the most prominent are the following:
+
+\begin{itemize}
+    \item \textit{DigCompEdu} \cite{redecker2017digcompedu}: The European Framework for the Digital Competence of Educators serves as the pre-eminent global benchmark. It articulates a comprehensive structure comprising six competence areas and 22 specific competences, with a primary emphasis on the pedagogical integration of digital technologies, prioritising pedagogical application over mere operational skill. It includes six proficiency levels, ranging from basic to most advanced: newcomer, explorer, integrator, expert, leader, and pioneer. Notably, it is not tied to any specific educational level or phase, making it applicable across diverse teaching contexts.
+    \item \textit{SFDCT} \cite{INTEF2022}: The Spanish Framework for the Digital Competence of Teachers features six areas and 23 competences in its third version. It aligns more closely with DigCompEdu than its earlier iterations and is frequently used to assess TDC and identify professional development needs within Ibero-American contexts. It was developed by Spain’s National Institute for Educational Technologies and Teacher Training (INTEF) for all educational stages regulated by Spain’s Organic Law of Education (from Early Childhood to Adult Education). It has six proficiency levels: A1, A2, B1, B2, C1, and C2.
+    \item \textit{ISTE Standards for Educators} \cite{ISTE2024}: The International Society for Technology in Education Standards for Educators, in its version 4.02, structures seven core standards—two more than the \textcite{ISTE2008} version—and emphasises technology-enhanced pedagogical practices. Each standard includes several performance descriptions and indicators, but there are no explicit levels of progression. It focuses on innovation across the entire school ecosystem and is traditionally applied within the basic education context (K–12), from kindergarten through to the end of secondary school.
+    \item \textit{ICT CFT} \cite{unesco2018ict}: The UNESCO’s Information and Communication Technologies Competency Framework for Teachers, in its third version, collectively informs policy-oriented and cross-national approaches to digital competence development. It proposes a comprehensive international framework designed to be applied transversally and adapted flexibly across all levels of a national education system. It is structured around a curricular matrix that intersects three approaches to educational reform (knowledge acquisition, knowledge deepening, and knowledge creation) with six aspects of a teacher’s work (Understanding ICT in Education Policy; Curriculum and Assessment; Pedagogy; Application of Digital Skills; Organisation and Administration; and Teacher Professional Learning), resulting in 18 competences. This version incorporates advances such as Artificial Intelligence, Internet of Things, mobile tech, and Open Educational Resources, while emphasising inclusion and focus on digital skills for equity and lifelong learning. It also aligns with Sustainable Development Goal 4 and Knowledge Societies.
+    \item \textit{e-DigCompEdu} \cite{santos2026edigcompedu}: The Digital Competence Framework for Online Higher Education Teaching constitutes a scholarly and methodologically grounded response to the need to extend the European DigCompEdu framework to address the specificities of online higher education contexts. The resulting framework, validated through a Delphi panel, expands the original framework to encompass a total of 34 competences, 12 of which are newly introduced. Six of these new competencies were distributed among the four existing areas. The remaining six competences were allocated to two newly established areas, Scientific Digital Literacy and Management of Online Teaching and Learning, thereby extending the framework from six to eight areas in total \cite{santos2025validation}.
+\end{itemize}
+
+Other frameworks, which were not initially designed with education in mind, have also been embraced by the academic community:
+
+\begin{itemize}
+    \item \textit{DigComp} \cite{Cosgrove2025}: The European Digital Competence Framework, developed for European citizens, is currently in its third edition. It is divided into five competence areas, encompassing a total of 21 specific competences, including four proficiency levels: basic, intermediate, advanced, and highly advanced.
+    \item Behavioural Theories: It is not uncommon to come across studies that draw on behavioural models to examine teachers’ technology acceptance, notably \posscite{Davis1989} Technology Acceptance Model (TAM) and \posscite{Ajzen1991} Theory of Planned Behaviour (TPB). Both provide explanatory mechanisms for intention and usage behaviour regarding digital tools. While TAM posits that perceived usefulness and perceived ease of use are the primary determinants of an individual’s intention to adopt new technology, TPB suggests that social norms and behavioural intentions shape the actual use of digital systems.
+\end{itemize}
+
+These frameworks collectively constitute a pluralistic yet interrelated theoretical landscape that shapes current research and practice in educators’ digital competence.
+
+\subsection{Typology of assessment instruments}\label{sec-modelo}
+To enhance methodological rigour and enable a more refined qualitative synthesis, this study adopts the four-category typology proposed by \textcite{mattar2022digcomp}. This framework not only strengthens the analytical examination of digital competence assessment instruments but also facilitates systematic comparison across diverse research contexts. Given its integration into the review’s methodological design, the typology will be discussed in greater detail in the corresponding section.
+
+\section{Methodology}\label{sec-organizacao}
+SLR is a structured way to review literature by systematically and critically collecting, evaluating, integrating, and presenting findings from various scientific sources that address a specific research question or topic \cite{sarmento2024revisao,smela2023rapid}. By organising and synthesising updated knowledge about a specific theme, SLRs help identify patterns, research directions, and resolve paradoxes. This, in turn, assists in establishing most relevant theoretical frameworks as well as guiding more targeted research \cite{snyder2019literature}.
+
+In pursuit of heightened methodological standards, procedural transparency, and to ensure the integrity of the findings, this research embraced the Preferred Reporting Items for Systematic Reviews and Meta-Analyses framework (PRISMA) \cite{page2024prisma}. This globally acknowledged standard offers comprehensive guidance for executing systematic reviews and meta-analyses in many scientific fields. By adhering to this internationally adopted protocol, the study was able to standardise the procedures carried out, to guarantee the quality of the selected studies, and to increase the reliability of the results. This, thereby, promotes the reproducibility and credibility of this study.
+
+To further ensure robust methodological rigour, the SLR followed the eight-step process delineated by \textcite{okoli2019guia}: (i) identification of the research objective; (ii) development of a structured review protocol; (iii) execution of the search strategy; (iv) comprehensive literature retrieval; (v) systematic data extraction; (vi) inclusion and exclusion criteria application; (vii) thematic synthesis of selected studies; and (viii) elaborate description and interpretation of the outcomes. Each step will be presented in detail.
+
+This dual adherence to \posscite{okoli2019guia} methodological sequence and PRISMA protocol aims to ensure a cohesive, transparent, and rigorous approach throughout all review phases. While the first organises a sequential methodological process, the latter provides both visual (diagram) and writing support (checklist).
+
+Beyond that, this review adopted \posscite{mattar2022digcomp} typology framework for digital competence assessment instruments, comprising four categories: a) \textit{Direct Knowledge}, which includes questions designed to directly measure the respondents’ level of digital competence based on their explicit knowledge; b) \textit{Self-Assessment}, which incorporates statements or questions that prompt respondents to reflect and make evaluative judgments about their own digital competencies using Likert-type agreement scales; c) \textit{Scenarios}, which encompass questions requiring respondents to indicate what would happen or what they would do in specific situations; and d) \textit{Performance}, which involves tasks where respondents must perform practical actions, aiming to assess their competences in practice, potentially involving the use of web browsers, spreadsheets, and other tools.
+
+This SLR aimed to identify and analyse the theoretical frameworks, methodologies, and assessment instruments to evaluate TDC among educators in online higher education contexts, in the most recent studies (published between 2020 and 2025). The primary objectives were to map existing approaches, uncover gaps, and highlight opportunities for future research. To enhance the rigour of this analysis, the typology framework proposed by \textcite{mattar2022digcomp} was applied during the qualitative synthesis phase, enabling a clear categorisation of the data.
+
+\subsection{Search execution}\label{sec-organizacao-latex}
+The PRISMA protocol delineates a three-phase workflow structure: identification, screening, and inclusion (\Cref{fig1}). The identification phase outlines an extensive search strategy which was conducted across multiple academic databases, employing Boolean logic and structured search strings (\Cref{tab1}). To enhance precision and reduce redundancy, duplicate records were eliminated at this stage, ensuring both operational efficiency and data integrity.
+
+\begin{table}[htbp]
+\centering
+\caption{Search strategies used on databases.}
+\label{tab1}
+\small
+\begin{tabular}{r | p{0.76\linewidth}}
+%\toprule
+Database & Scopus \\
+Fields & Article, Abstract, and Keywords \\
+String &
+(“digital literacy” OR “computer literacy” OR “technological literacy” OR
+“digital skills” OR “competências digitais” OR “literacia digital” OR
+“digital competence” OR “digital competences”) AND
+(“higher education” OR college OR university OR “post-secondary” OR
+postsecondary OR undergraduate OR graduate) AND
+(“distance learning” OR “distance education” OR “online learning” OR
+“on-line learning” OR “online education” OR “on line learning” OR
+“on line education” OR e-learning) AND
+(educator OR instructor OR teacher OR lecturer OR academic OR professor) AND
+(instruments OR tools OR measures OR questionnaires OR scales OR framework)
+AND NOT (review OR meta-analysis OR revisão) \\
+Database & Web of Science \\
+Fields & Topic \\
+String &
+(“digital literacy” OR “computer literacy” OR “technological literacy” OR
+“digital skills” OR “competências digitais” OR “literacia digital” OR
+“digital competence” OR “digital competences”) AND
+(“higher education” OR college OR university OR “post-secondary” OR
+postsecondary OR undergraduate OR graduate) AND
+(“distance learning” OR “distance education” OR “online learning” OR
+“on-line learning” OR “online education” OR “on line learning” OR
+“on line education” OR e-learning) AND
+(educator OR instructor OR teacher OR lecturer OR academic OR professor) AND
+(instruments OR tools OR measures OR questionnaires OR scales OR framework)
+NOT (review OR meta-analysis OR revisão) \\
+%\bottomrule
+\end{tabular}
+\source{The authors.}
+\end{table}
+
+The identification phase consisted of searches conducted on Scopus and Web of Science (WoS) databases on December 15th, 2025. Due to variations in syntactic structures across platforms, two distinct search strategies were implemented, as detailed previously in \Cref{tab1}.
+
+The screening phase unfolds in two sequential steps. Initially, titles and abstracts of the identified records undergo a preliminary evaluation, during which those failing to meet the pre-established inclusion criteria (\Cref{tab2}) and those that fall into the exclusion criteria (\Cref{tab3}) are discarded. In the subsequent step, full-text versions of the remaining studies are subjected to detailed scrutiny to further assess their eligibility against the same predefined criteria. Throughout this iterative process, meticulous documentation and clear justification are required for every decision regarding inclusion or exclusion, promoting traceability and minimising selection bias.
+
+\begin{table}[htbp]
+\centering
+\caption{Inclusion criteria.}
+\label{tab2}
+\small
+\begin{tabular}{p{0.10\linewidth} p{0.20\linewidth} p{0.32\linewidth} p{0.30\linewidth}}
+\toprule
+Code & Criterion & Parameter & Justification \\
+\midrule
+IC-1 &
+Publication Period &
+After 2020 (inclusive) and before 2026 &
+Focuses on recent studies within an approximate six-year timeframe \\
+IC-2 &
+Work Type &
+Articles published in scientific journals &
+Ensures quality by including only peer-reviewed journal articles \\
+IC-3 &
+Access &
+Full Text &
+Ensures completeness of data \\
+IC-4 &
+Language &
+Portuguese, English, or Spanish &
+Researchers’ language alignment \\
+IC-5 &
+Uniqueness &
+Unique Articles &
+Enhancement of precision and redundancy reduction \\
+\bottomrule
+\end{tabular}
+\source{The authors.}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{Exclusion criteria.}
+\label{tab3}
+\small
+\begin{tabular}{p{0.10\linewidth} p{0.28\linewidth} p{0.54\linewidth}}
+\toprule 
+Code & Criterion & Description \\
+\midrule
+EC-1 &
+Lack of Teaching staff participation &
+The study must explicitly involve higher education professors, lecturers, instructors, tutors, clinical or practice faculty, teaching assistants, etc. \\
+EC-2 &
+Out of Higher Education scope &
+The research must be situated within the higher education context. \\
+EC-3 &
+No Focus on Online Teaching &
+The article should specifically address distance or online teaching modalities. \\
+EC-4 &
+No assessments conducted &
+The article should present empirical data, as the review seeks to register studies with tangible evidence collected in real contexts. \\
+EC-5 &
+Unrelated to Digital Competences &
+The work must directly engage with the measurement, evaluation, or development of digital competences. \\
+\bottomrule
+\end{tabular}
+\source{The authors.}
+\end{table}
+
+
+Ultimately, only those studies that satisfy all parameters proceed to the final phase, where they collectively constitute the documentary \textit{corpus} of this review (see \Cref{tab4}, provided in Appendix A). From these selected works, data are extracted, paving the way for bibliometric analysis, thematic and comprehensive synthesis, as well as further analytical exploration.
+
+A set of predefined inclusion and exclusion criteria was established (\Cref{tab2} and  \Cref{tab3}) and applied in the screening phase to maintain thematic and methodological coherence. The inclusion criteria limited results to unique (IC-5) peer-reviewed journal articles (IC-2) published within 6 years (IC-1) and full-text access publications (IC-3) in Portuguese, English, or Spanish (IC-4), aligning with the researchers’ linguistic capabilities.
+
+Exclusion criteria were equally strict: studies without a clear focus on teaching staff (EC-1), not involving higher education settings (EC-2) and online contexts (EC-3), lacking empirical data (EC-4), or unrelated to the measurement or evaluation of digital competences (EC-5) were eliminated.
+
+
+\section{Results}\label{sec-titulo}
+\subsection{Literature search}
+A comprehensive search strategy initially yielded a total of 1,000 scholarly articles, 585 from Scopus and 415 retrieved from the Web of Science database. Following an initial screening round guided by the predefined inclusion criteria (IC), previously outlined in \Cref{tab2}, this pool was systematically narrowed down to 460 publications, comprising 254 from Scopus and 206 from Web of Science (\Cref{fig1}).
+
+Subsequently, both datasets were merged into a unified data sheet to facilitate duplicate detection and subsequent removal. The duplicates’ exclusion process prioritised retention of Scopus records while eliminating overlapping entries from Web of Science. Note that this decision was purely operational, with no gains or losses from choosing one primary platform over the other. Thereafter, each remaining article was individually downloaded and subjected to a preliminary qualitative analysis. At this stage, the inclusion criteria were reapplied manually to ensure methodological rigour and precision, resulting in a refined \textit{corpus} of 324 eligible studies.
+
+Finally, the exclusion criteria, stated previously in \Cref{tab3}, were rigorously enforced to further delimit the scope of the review. This iterative elimination process culminated in the selection of 25 fully aligned articles for the final synthesis. The workflow previously described is visually represented in \Cref{fig1}.
+
+\begin{figure}[htbp]
+\centering
+\begin{minipage}{.7\textwidth}
+ \includegraphics[width=\textwidth]{fig-001.png}
+ \caption{PRISMA 2020 diagram flow.}
+ \label{fig1}
+ \source{Adapted from \textcite{page2024prisma}.}
+\end{minipage}
+\end{figure}
+
+\subsection{Data extraction}\label{sec-autores}
+After the identification of eligible studies, a structured data extraction process was implemented to acquire pertinent information. The 25 articles retained for analysis are thoroughly delineated in \Cref{tab4} (Appendix A), systematically organised in alphabetical order (by title). \Cref{tab4} further encapsulates essential metadata, encompassing title, contributing author(s), year of publication, academic journal, and publication language. Additionally, it delineates the geographical context of each study, which derived from the methodology sections of the respective studies.
+
+\subsection{Bibliometric analysis}\label{sec-idioma}
+This research used descriptive statistics to synthesise key patterns within the dataset, while concurrently applying textual, thematic, and interpretative analysis \cite{Braun2022} to extract and interpret recurring conceptual motifs from qualitative inputs. The integration of these complementary analytical strategies enabled a multidimensional comprehension of the phenomenon under scrutiny.
+
+As indicated in \Cref{tab4} - SLR Documentary Corpus (Appendix A), the 25 selected articles were published in 24 distinct journals, with \textit{Education Sciences} accounting for two publications. Among the articles’ authors, only Álvaro Antón-Sancho, from Spain, appears twice, in two distinct papers (codes 12 and 23). Of the total, the majority (n=19) were published in English, while three were in Spanish and three in Portuguese, reflecting a notable linguistic predominance of the first. Furthermore, the geographical distribution of where the studies have been run reveals a broad international reach, spanning three continents: Europe (n=10 articles), the Americas (n=8), and Asia (n=7). Spain emerged as the most represented country, serving as the setting for three studies (12\%), followed by Brazil, Colombia, Germany, and Portugal, which featured in two research papers (8\% each). It should be noted that the counting criterion was to assign the paper to the continent that contained the majority of the country’s territory in cases where the study was conducted on a transcontinental country (Russia) or multiple countries (Hungary and Armenia).
+
+To further elucidate temporal trends, the publication years of the included studies, as formerly detailed in \Cref{tab4} (Appendix A), were graphically represented in \Cref{fig2}. This visual depiction underscores a notable concentration of scholarly output, with 2024 emerging as the year of highest productivity, accounting for seven publications.
+
+\begin{figure}[htbp]
+\centering
+\begin{minipage}{.7\textwidth}
+ \includegraphics[width=\textwidth]{fig-002.png}
+ \caption{Timeframe distribution of included studies.}
+ \label{fig2}
+ \source{The authors.}
+\end{minipage}
+\end{figure}
+
+\subsection{Qualitative analysis}\label{sec-resumo}
+\Cref{tab5} - Frameworks, models, and instruments mapped across included studies, which is provided in Appendix A, supplies a non-exhaustive list of resources (frameworks, models, and instruments) which were mapped across the included studies for understanding the theoretical and methodological underpinnings of digital competence research within the context of TDC’s assessment. The table is structured into three main key columns, each designed to elucidate distinct aspects of the research: Article, which identifies the source publication; \textit{Theoretical Basis}, detailing the \textit{Titles} and \textit{Author(s)} of the foundational studies employed on the articles’ questionnaires construction; and \textit{Instrument}, specifying the tools used for data collection. The last aspect subdivides itself into four columns, detailing the instruments’ \textit{Title} and \textit{Authors} to facilitate their identification; \textit{Dimensions}, outlining the instruments’ specific areas or constructs assessed; \textit{Collected Data Type(s)}, indicating the kind of data dealt; and \textit{Instrument Type}, categorising the assessment methods according to \posscite{mattar2022digcomp} classification (Direct Knowledge, Self-Assessment, Scenarios, Performance).
+
+The type of data column was developed by examining the methodologies of the articles, as well as their instruments, when available, and the items in their results or discussion sections. It aims to determine the type of data that the authors intended to obtain and the research approach that was actually employed. The following categories were considered: quantitative, qualitative, or both types. Qualitative methodologies (QL) emphasise the acquisition of a comprehensive view of the experiences, perspectives, and meanings of individuals, relying on the subjective and interpretive analysis of the researcher. In contrast, quantitative methodologies (QT) rely on the description, inference, and exploration of numerical data and statistical analysis. Mixed methods (QT/QL) aim to make use of both strategies to hold a holistic view of the research process and the object of study. In cases where the study type was not explicitly stated by the authors, qualitative studies were identified by their use of the following data collection/analysis techniques: individual or focus group interviews, observations, open-ended questions presented in questionnaires, and content analysis procedures application. Quantitative studies were classified based on their use of numerical data and statistical techniques.
+
+The systematic organisation facilitates a nuanced comparison of how different studies operationalised digital competencies and their associated assessment strategies. The inclusion of seminal works such as the European Framework for the Digital Competence of Educators \cite{redecker2017digcompedu}, Marco Común de Competencia Digital Docente \cite{INTEF2017}, European Digital Competence Framework for Citizens \cite{Ferrari2013}, and Standards for Educators \cite{ISTE2008} underscores the global relevance and applicability of these frameworks. The diversity of instruments, ranging from \textit{ad hoc} tools to standardised assessments, highlights the multifaceted approaches adopted in the field. Furthermore, the detailed breakdown of dimensions and data types enables researchers to discern patterns and gaps in current practices, offering valuable insights into the evolving landscape of TDC evaluation.
+
+The theoretical bases for the development of the questionnaires used in the studies were established by 56 distinct cited sources, as observed in \Cref{tab5} (Appendix A). The European Framework for the Digital Competence of Educators (DigCompEdu) was the most used resource, specifically in seven studies. Marco Común de Competencia Digital Docente \cite{INTEF2017} and TPACK \cite{koehler2013tpack} were tied in second place, with two articles. All remaining resources were applied only once, including the Standards for Educators from the International Society for Technology in Education \cite{ISTE2008}. Whereas DigCompEdu appears seven times, the remaining 47 citations are distributed across at least 45 different authors (including the ISTE standard and TPACK). This reflects the relevance of \posscite{redecker2017digcompedu} work, which was used approximately seven times more frequently than the average of all other contributors combined, which is visually represented by \Cref{fig3}.
+
+\begin{figure}[htbp]
+\centering
+\begin{minipage}{.7\textwidth}
+ \includegraphics[width=\textwidth]{fig-003.png}
+ \caption{DigCompEdu versus other theoretical bases’ total of mentions.}
+ \label{fig3}
+ \source{The authors.}
+\end{minipage}
+\end{figure}
+
+Further investigation revealed 18 distinct questionnaires, 14 of which were classified as \textit{ad hoc} due to their lack of a clear denomination. Although three questionnaires were designated, they have been employed only once. Additionally, DigCompEdu Check-In, the assessment tool associated with DigCompEdu, has been used in six articles, accounting for 33.33\% of the questionnaires employed. Two instruments were designated as Not Available (N/A) due to the absence of access to the questionnaires or their items, as well as a lack of information in the methodology and discussion sections. The utilisation of quantitative data among all instruments is significantly more prevalent than qualitative or mixed methods approaches, as demonstrated in \Cref{fig4}.
+
+\begin{figure}[htbp]
+\centering
+\begin{minipage}{.7\textwidth}
+ \includegraphics[width=\textwidth]{fig-004.png}
+ \caption{Distribution of data types in studies.}
+ \label{fig4}
+ \source{The authors.}
+\end{minipage}
+\end{figure}
+
+\Cref{fig5} illustrates the predominance of Self-Assessment (SA, n=21) instruments, despite the presence of some questionnaires that contained items targeting Direct Knowledge (DK, n=3) or Scenario-based (SC, n=2) assessment methods. There was not a single performance item discovered. Two articles were labelled as Not Available (N/A, n=2) due to their lack of information regarding the instruments or used items. This analysis corroborates the over-reliance on self-assessment based measures. Note that the same instrument can be of more than a single type simultaneously, so the total of percentages surpasses 100\% (112\%); this occurred due to the non-mutually exclusive classifications proposed by \textcite{mattar2022digcomp}.
+
+\begin{figure}[htbp]
+\centering
+\begin{minipage}{.7\textwidth}
+ \includegraphics[width=\textwidth]{fig-005.png}
+ \caption{Distribution of instruments considering \textcite{mattar2022digcomp} questionnaires’ types.}
+ \label{fig5}
+ \source{The authors.}
+\end{minipage}
+\end{figure}
+
+\section{Discussion}\label{sec-secoes}
+The analysis of the digital competence-related frameworks found on the documentary \textit{corpus} reveals that a diverse array of conceptual models, referentials, and tools are employed to address the topic under study. A systematic review of 25 articles highlights how researchers have used a total of 56 frameworks or models, and 18 distinct instruments, such as DigCompEdu and Marco Común de Competencia Digital Docente, among others. These themes range from digital competences to polimedia video systems’ acceptance. The \textit{corpus} included studies from three continents (Europe, Asia, and the Americas), ensuring a wide geopolitical perspective of the field in the most recent years, considering these last six years, which integrated studies before, during, and after the COVID-19 pandemic. These frameworks serve as theoretical and practical anchors for understanding and measuring educators’ digital competencies, teaching practices, and technology adoption behaviours. They provide a robust yet insufficient foundation for addressing the challenges and opportunities presented by the digital transformation of higher education. This diversity was also found in the methodological approaches, which highlight the importance of using varied and robust methods to thoroughly explore these multifaceted phenomena, respecting the complexity of issues surrounding digital competences and online education.
+
+This SLR stated the prominence of the DigCompEdu (initially developed by Redecker, in 2017) which provides a structured approach for assessing educators’ digital competences. This framework has been extensively applied in many studies, not only in the European context, as shown by \textcite{moreira2023digital,santos2024applicability}) but also in other geographies \cite{DiasTrindade2021,muammar2023evaluation,pulgarinrodriguez2025digital}: two from the Americas, Brazil and Colombia, and one from Asia, the United Arab Emirates. Even though it is a European framework, its significant relevance has made its way outside of the ‘old continent’.
+
+DigCompEdu has been widely recognised as a robust background and reference model that can inform policy-making and institutional strategies in contexts where specific standards for teachers’ digital competence are still emerging, thanks to its clear organisation into six areas and 22 competences and its emphasis on the pedagogical use of digital technologies rather than merely operational skills \cite{redecker2017digcompedu}. Conceived as a generic and adaptable framework, it can be aligned, translated, and contextualised to different countries, regions, and education sectors, thereby functioning as a shared language for understanding digital competence while accommodating local curricula, cultural specificities, and institutional priorities, as seen in the studies (coded as 7, 8, and 19). This growing body of empirical applications across diverse geographical settings might be progressively transforming DigCompEdu from a predominantly European initiative into a global reference for researching, assessing, and developing educators’ digital competence.
+
+The core argument underscores the imperative of implementing digital competence frameworks within specific educational environments. One of the most salient insights is the need for contextualisation. While global frameworks offer valuable benchmarks, their implementation must consider specificities, since their effectiveness can vary based on context \cite{muammar2023evaluation,silva2024fipad}. While DigCompEdu provides a robust conceptual foundation, its efficacy may depend on deliberate adaptation to specific contexts. Cultural, geographical, and educational settings influence which digital competences are most important, particularly in online higher education settings. \textcite{santos2024applicability} highlighted the lack of validated instruments for that specific context in the European level, though it is also not solved outside of Europe. The authors noted that although the DigCompEdu framework has been the subject of numerous studies, none have attempted to ensure the applicability of each of its competences to the reality of online higher education. This is corroborated by \textcite{moreira2023digital}, who found it necessary to adjust the DigCompEdu Check-In’s items to the context of online teaching, demonstrating the importance of such contextualisation.
+
+The DigCompEdu Check-In was one of the 18 questionnaires found among the literature and the only one used more than once, appearing in five studies. It is a validated self-assessment tool that evaluates TDC through a self-reflection process, considering DigCompEdu as its theoretical basis. It has also been used to evaluate educators’ proficiency in digital teaching practices. Several works, including \textcite{EsteveMon2022,moreira2023digital,muammar2023evaluation,nunezcanal2022new}, were evidently impacted by the framework and the questionnaire to create new instruments for faculty professional development actions that aim to identify areas of strength and those that could be further developed. Through the provision of a clear and pragmatic framework, DigCompEdu and DigCompEdu Check-In have established themselves as fundamental resources for research and practice in digital education, both in Europe and globally.
+
+The DigCompEdu Check-In employs a widely adopted data collection and assessment strategy, namely a self-assessment questionnaire. According to \posscite{mattar2022digcomp} typology, it gathers quantitative data by requiring respondents to rate a single statement corresponding to each of the DigCompEdu competences scale. This approach is notably prevalent, as evidenced by the finding that 84\% (n=21) of studies used self-assessment methods, and 76\% (n=19) relied exclusively on quantitative data. Consequently, there is a discernible gap in the employment of alternative questionnaire formats, such as those measuring direct knowledge, real-world scenarios solving, or performance, none of which were identified in the literature.
+
+Whilst self-assessment strategy facilitates data collection and analysis, allowing quick, scalable administration with low operational costs, self-assessment-based tools are highly susceptible to biases and distortions, such as the Dunning-Kruger effect, as stated by \textcite{mahmood2016dunning}, including the overestimation or underestimation of one’s abilities, which are highly influenced by factors such as self-confidence, mood, and expectations, as well as contextual access to ICT. Additionally, individuals may disproportionately weigh recent events over a more ample evaluation period, potentially leading to imprecise assessments of their actual performance. Cognitive biases can adversely affect judgement by leading to suboptimal evaluation. Only comprehension and awareness of various biases can help to mitigate their impact, which is not controlled in self-report instruments \cite{Friedman2017}.
+
+The Direct Knowledge category, as proposed by \textcite{mattar2022digcomp}, evaluates individuals’ factual understanding of digital tools, concepts, and procedures through objective tests, offering standardised metrics that facilitate comparative analysis across populations and timeframes while reducing subjective bias through correct/incorrect answer evaluations. However, this category primarily captures theoretical knowledge, often failing to assess the practical application of skills, critical thinking, and problem-solving abilities within real-world digital contexts. It may not adequately reflect the context-specific nature of digital skills development. In contrast, the ‘scenarios’ approach presents respondents with context-rich situations requiring decision-making, assessing applied knowledge and situational judgement more effectively but demanding considerable effort in scenario design and posing challenges in scoring due to potential ambiguity and cultural biases. Lastly, the Performance category involves direct demonstration of digital skills via practical tasks or simulations, providing the most authentic evidence of competence and a closer alignment with real-world application, though it is resource-intensive to implement, may necessitate specific technologies, and can be influenced by users’ unfamiliarity with the assessment environment. These categories collectively highlight different strengths and limitations in assessing digital competence, balancing between knowledge, context application, and practical proficiency \cite{redecker2017digcompedu}.
+
+The classification framework proposed by \textcite{mattar2022digcomp} accommodates the complexity of digital competence instruments by allowing for the categorisation of hybrid tools that contain multiple item types. Rather than categorising an entire instrument under a single classification, an alternative method could be to categorise individual items based on their specific assessment type. This item-level approach acknowledges that a questionnaire may predominantly consist of one type of item but still include others. Therefore, applying the \posscite{mattar2022digcomp} framework with granularity at the item level could enhance the accuracy and explanatory power of instrument classification, offering a better understanding of the instrument’s composition and of the digital competencies it assesses.
+
+It is evident from recent research that despite the numerous instruments developed to assess digital competence, many remain unpublished or insufficiently described (codes 4 and 13) and often lack clear naming (codes 1, 4, 5, 9, 12, 13, 15, 16, 17, 20, 22, 23, 24, and 25). This opacity, often due to the absence of appendices, URLs, or comprehensive methodological exposition, undermines transparency, reproducibility, and scholarly rigour, raising concerns about the scientific validity of the findings. This situation suggests that instruments may be considered tools to achieve specific research objectives, rather than scholarly artefacts deserving full integration into scientific communication and preservation processes. The lack of transparent sharing, comprehensive methodological detail, and rationale for instrument selection raises concerns about the reproducibility of findings and the possibility of any comparison of the results. Properly naming, citing, and sharing of the applied version of the instruments are essential for enhancing research integrity and facilitating comparative and longitudinal studies that accurately capture educators’ digital competences in diverse contexts \cite{Creswell2021}. Thus, improving these practices within the TDC research community would strengthen the scientific foundation of this field.
+
+Meanwhile, other behavioural theories were also found as theoretical backgrounds, specifically the Technology Acceptance Model (TAM) by Davis, in 1989 (code 18), and the Theory of Planned Behaviour (TPB) brought by Ajzen in 1991 (code 13). They have also been used as frameworks for understanding educators’ acceptance and use of digital technologies, particularly during the rapid transition to remote teaching required by the COVID-19 pandemic. These models provide insights into the factors influencing technology adoption, such as perceived usefulness, ease of use, and social norms, enabling researchers to design interventions that address barriers to effective technology integration \cite{mashroofa2020moderating,palaciosrodriguez2022production}. Such factors are considered relevant for promoting professors’ digital competence.
+
+Other notable contributions found include the Marco Común de Competencia Digital Docente, developed by the Spanish Instituto Nacional de Tecnologías Educativas y de Formación del Profesorado \cite{INTEF2017}, with an update in 2022 \cite{INTEF2022}, which serves as a foundation for identifying training needs among educators in digital competence for primary and secondary school teachers. This framework has been referenced in studies such as \textcite{perezlopez2023teachers}. Furthermore, instruments like the Questionnaire Designed for Teaching Staff in Higher Education, developed by \textcite{taquez2017diseno}, and the Tool for Self-Diagnosis of Digital Competences, by \textcite{lopez2019liderazgo}, have provided valuable insights into educators’ self-perceptions and for the identification of skill gaps in teachers’ digital literacy.
+
+Collectively, these frameworks and instruments underscore the multifaceted nature of educators’ digital competence research in education. They not only foster the standardisation of digital competence’s evaluation practices, facilitating context-specific assessment and its comparability, but also enable nuanced explorations of how educators adapt to technological advancements. Despite all frameworks, models, and their instruments addressing various contexts and aspects of TDC assessment, including primary and higher education levels, none encompass online higher education, as noted by \textcite{moreira2023digital,santos2024applicability}.
+
+The continued refinement and application of these frameworks will undoubtedly play a critical role in shaping the future of education in an increasingly digital world. As educational systems worldwide strive to prepare learners for the complexities of the 21st century, these models provide essential guidance for navigating the intersection of pedagogy, technology, and innovation.
+
+\section{Conclusion}\label{sec-format-simple}
+The synthesis of the 25 selected studies reveals a rich and evolving attention towards digital competence among university educators, particularly within the context of online higher education. The analysis of the theoretical, educational, and digital competence frameworks and models reveals a diverse and complex landscape of instruments used to explore educators’ digital competencies and technology adoption behaviours.
+
+The prominence of DigCompEdu, with its clear structure and adaptability, exemplifies how certain frameworks provide a robust foundation for global applications, despite their European origins. However, the critical insight is the imperative for contextualisation in implementation, highlighting the nuanced needs of various educational and cultural settings, particularly for online higher education contexts where validated instruments remain scarce.
+
+Assessment strategies predominantly rely on self-assessment questionnaires, raising concerns about biases and calling for broader methodological diversification, including direct knowledge, scenario-based, and/or performance assessments, as proposed by \textcite{mattar2022digcomp}. This may highlight an opportunity for future works related to such types of instruments. Furthermore, the hybrid nature of many instruments may require a classification approach that considers item-level granularity, thus improving the precision of classification process. Moreover, challenges in instrument transparency and access point to a pressing need for rigorous citation, sharing, and validation practices to enhance research integrity in this field.
+
+This systematic review is subject to several methodological limitations. It was confined to studies published in Portuguese, English, and Spanish, potentially excluding relevant research in other languages, and the search strategy was limited to Scopus and Web of Science, thereby overlooking additional academic sources. Moreover, it did not examine the use of Artificial Intelligence, a rapidly advancing and highly pertinent field, which warrants consideration in future investigations.
+
+Finally, the integration of behavioural theories such as TAM and TPB underscores the multifaceted dimensions influencing technology adoption and digital competence development among educators.
+
+Collectively, these findings accentuate the evolving and multifaceted nature of digital competence research, advocating for methodologically rigorous, context-sensitive, and transparent approaches to effectively support educators in navigating the digital transformation of education.
+
+\printbibliography\label{sec-bib}
+% if the text is not in Portuguese, it might be necessary to use the code below instead to print the correct ABNT abbreviations [s.n.], [s.l.]
+%\begin{portuguese}
+%\printbibliography[title={Bibliography}]
+%\end{portuguese}
+
+
+%full list: conceptualization,datacuration,formalanalysis,funding,investigation,methodology,projadm,resources,software,supervision,validation,visualization,writing,review
+\begin{contributors}[sec-contributors]
+\authorcontribution{Renato Miguel de Moraes}[conceptualization,datacuration,investigation,methodology,visualization,writing]
+\authorcontribution{Cassio Santos}[conceptualization,methodology,investigation,supervision,review]
+\authorcontribution{Neuza Pedro}[conceptualization,methodology,investigation,supervision,review]
+\end{contributors}
+
+
+\begin{dataavailability}
+\txtdataavailability{databody} % options: dataavailable, dataonly, databody, datanotav, nodata
+\end{dataavailability}
+
+\begin{funding}
+This work was supported by National Funds through FCT-Portuguese Foundation for Science and Technology, I.P., under the scope of:  UIDEF - Unidade de Investigação e Desenvolvimento em Educação e Formação, UIDB/04107/2025, https://doi.org/10.54499/UID/04107/2025, and CIAC - Research Centre for Arts and Communication, UID/04019/2025, https://doi.org/10.54499/UID/04019/2025. 
+\end{funding}
+
+\appendix
+
+\section*{Appendix}\label{apx-longtable}
+
+{\footnotesize
+\begin{longtable}[]{@{}
+  >{\centering\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.0544}}
+  >{\centering\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.4005}}
+  >{\centering\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1637}}
+  >{\centering\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1481}}
+  >{\centering\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.0928}}
+  >{\centering\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1404}}@{}}
+\caption{SLR Documentary Corpus (alphabetically ordered by titles).}
+\label{tab4}
+\\
+\toprule
+Code & Title & Author(s) and Date &
+Journal & Language & Context \\
+\midrule
+1 & An investigation of EAP teachers' views and experiences of
+E-learning technology & \textcite{Dhillon2021} & Education Sciences &
+English & United Kingdom \\
+2 & COVID-19 accelerating academic teachers' digital competence in
+distance teaching & \textcite{myyry2022covid} & Frontiers in Education
+& English & Finland \\
+3 & Digital competence of higher education teachers at a distance
+learning university in Portugal & \textcite{moreira2023digital} &
+Computers & English & Portugal \\
+4 & Digital literacy and online course design: Study of Indonesian
+educators & \textcite{stefany2024digital} & Jurnal Cakrawala Pendidikan &
+English & Indonesia \\
+5 & Digital literacy of teachers within COVID-19 & \textcite{Ibatova2021} & Revista Tempos e Espaços em Educação & English & Russia \\
+6 & Digital teaching competence of university teachers: levels and
+teaching typologies & \textcite{EsteveMon2022} & International
+Journal of Emerging Technologies in Learning & English & Spain \\
+7 & Digital teaching competencies in a Colombian university &
+\textcite{pulgarinrodriguez2025digital} & Atenas Revista Científico
+Pedagógica & Spanish & Colombia \\
+8 & Evaluation of digital competence level among educators in UAE Higher
+education institutions using Digital Competence of Educators (DigComEdu)
+framework & \textcite{muammar2023evaluation} & Education and
+Information Technologies & English & United Arab Emirates \\
+9 & Experiences of virtual teaching during COVID-19 in medical
+institutes of Karachi, Pakistan: teachers' perspective & \textcite{Azim2022} & Journal of the Pakistan Medical Association & English &
+Pakistan \\
+10 & Faculty readiness for a digital education model: A self-assessment
+from health sciences educators & \textcite{olivares2021faculty} &
+Australasian Journal of Educational Technology & English & Mexico \\
+11 & FIPAD-TCD curriculum: initial guidelines for curricular
+restructuring of initial distance teacher training based on the
+transversalization of digital skills & \textcite{silva2024fipad} & Revista
+Iberoamericana de Educación & Portuguese & Brazil \\
+12 & Influence of knowledge area on the use of digital tools during the
+COVID-19 pandemic among Latin American professors & \textcite{AntonSancho2022} & Education Sciences & English & Latin
+America\textsuperscript{1} \\
+13 & Moderating effects of academic position and computer literacy
+skills on E-learning portal usage: SEM application on theory of planned
+behaviour & \textcite{mashroofa2020moderating} & Rupkatha Journal on
+Interdisciplinary Studies in Humanities & English & Sri Lanka \\
+14 & New challenges in higher education: a study of the digital
+competence of educators in COVID times & \textcite{nunezcanal2022new} & Technological Forecasting and Social Change &
+English & Spain \\
+15 & On powerpointers, clickerers, and digital pros: Investigating the
+initiation of digital learning activities by teachers in higher
+education & \textcite{lohr2021powerpointers} & Computers in Human Behavior &
+English & Germany \\
+16 & Online education in Hungary and Armenia during the pandemic and its
+aftermath & \textcite{varga2024online} & International
+Journal of Instruction & English & Hungary and Armenia \\
+17 & Perceptions of novice and experienced instructors of translation at
+selected Saudi universities toward technological pedagogical content
+knowledge for teaching professional development & \textcite{Alian2024}
+& Theory and Practice in Language Studies & English & Saudi Arabia \\
+18 & Production of polimedia by university professors and degree of
+acceptance in the Dominican Republic & \textcite{palaciosrodriguez2022production} & Revista Electrónica de
+Investigación Educativa & English & Dominican Republic \\
+19 & Professor's digital competences in pandemic times: Digcompedu
+self-assessment analysis & \textcite{DiasTrindade2021} & Práxis
+Educacional & Portuguese & Brazil \\
+20 & The impact of gender and years of teaching experience on college
+teachers' digital competence: an empirical study on teachers in Gansu
+Agricultural University & \textcite{zhao2021impact} & Sustainability &
+English & China \\
+21 & The scale of digital competence and utilization of open educational
+resources (CD-REA): factors associated with competence in bimodal
+university teachers & \textcite{sarangolapo2020cdrea} & Revista
+Ibérica de Sistemas e Tecnologias de Informação & Spanish & Ecuador \\
+22 & The university teachers' digital competence during the transition
+to emergency remote teaching & \textcite{perezlopez2023teachers} & Revista
+de Educación a Distancia & Spanish & Spain \\
+23 & The use of virtual reality in the countries of the Central American
+Bank for Economic Integration (CABEI) & \textcite{AntonSancho2024} & Future Internet & English & Colombia \\
+24 & Veterinary teaching in COVID-19 times: perspectives of university
+teaching staff & \textcite{kanwischer2024veterinary} & Frontiers in
+Veterinary Science & English & Germany \\
+25 & What is the applicability of the DigCompEdu Framework for online
+higher education? A study with Portuguese teachers & \textcite{santos2024applicability} & Revista Digital de Investigación en Docencia Universitaria &
+Portuguese & Portugal \\
+\notes{{[}1{]} In this article, Latin America includes the following
+countries: Argentina, Bolivia, Brazil, Chile, Colombia, Ecuador,
+Honduras, Mexico, Nicaragua, Panama, Peru, Puerto Rico, Dominican
+Republic, Uruguay, and Venezuela.}
+\end{longtable}
+
+
+\setlength\LTleft{-1in}
+\setlength\LTright{-1in}
+\begin{longtable}[]{@{}
+  >{\centering\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.0585}}
+  >{\centering\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.3547}}
+  >{\centering\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.2569}}
+  >{\centering\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.2670}}
+  >{\centering\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.0916}}
+  >{\centering\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.0813}}
+  >{\centering\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.0900}}@{}}
+\caption{Frameworks, models, and instruments mapped across included studies.}
+\label{tab5}\\
+\toprule\noalign{}
+Article & \multicolumn{2}{c}{Theoretical Basis} & \multicolumn{4}{c}{Instrument} \\
+Code & Title & Author(s) & Title & Author(s) & Collected Data Type(s) & Instru\-ment Type \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\arrayrulecolor[gray]{.7}
+\multirow{6}{=}{\centering\arraybackslash 1} & Digital Literacies:
+Research and Resources in Language Teaching & \textcite{pegrum2014digitalliteracies} & \multirow{6}{=}{\centering\arraybackslash Ad hoc} &
+\multirow{6}{=}{\centering\arraybackslash \textcite{Dhillon2021}} &
+\multirow{6}{=}{\centering\arraybackslash QT/QL} &
+\multirow{6}{=}{\centering\arraybackslash SA} \\
+& Corpus Linguistics for ELT Research and Practice & \textcite{timmis2015corpus} \\
+& Introducing English for Academic Purposes & \textcite{Charles2015} \\
+& Teachers in transition: The road to EAP & \textcite{martin2014teachers} \\
+& The learning never ends: Exploring teachers' views on the transition
+from General English to EAP & \textcite{Campion2016} \\
+& The English for Academic Purposes Practitioner: Operating on Edge of
+Academia & \textcite{Ding2017} \\
+\midrule
+\multirow{5}{=}{\centering\arraybackslash 2} & Technological,
+Pedagogical, Content, Knowledge (TPACK) & \textcite{koehler2013tpack} & \multirow{5}{=}{\centering\arraybackslash Teachers' use of and
+need for electronic learning environment} &
+\multirow{5}{=}{\centering\arraybackslash \textcite{myyry2022covid}} &
+\multirow{5}{=}{\centering\arraybackslash QT} &
+\multirow{5}{=}{\centering\arraybackslash SA} \\
+& Shared and Personal Learning Spaces: Challenges for Pedagogical Design
+& \textcite{HakkinenHamalainen2012} \\
+& From Moodle to Facebook: Exploring Students' Motivation and
+Experiences in Online Communities & \textcite{Deng2013} \\
+& A Review of Generic Program Visualization Systems for Introductory
+Programming Education & \textcite{sorva2013review} \\
+& Open-book, Open-Web Online Examinations: Developing Examination
+Practices to Support University Students' Learning and Self-Efficacy &
+\textcite{myyry2015openbook} \\
+\midrule
+3 & European Framework for the Digital Competence of Educators
+(DigCompEdu) & \textcite{redecker2017digcompedu} & DigCompEdu Check-In (Portuguese
+Version) & \textcite{DiasTrindade2019} & QT & SA \\
+\midrule
+4 & Digital Literacy Professional Development Resource & \textcite{payton2010digital} & Ad hoc & \textcite{stefany2024digital} & QT & N/A \\
+\midrule
+\multirow{2}{=}{\centering\arraybackslash 5} & COVID-19 Chronicles in
+Education: Overcoming Global Pandemic Challenges in Turkey by Empowering
+Educators to Become Digitally Literate & \textcite{kaban2021covid} &
+\multirow{2}{=}{\centering\arraybackslash Ad hoc} &
+\multirow{2}{=}{\centering\arraybackslash \textcite{Ibatova2021}} &
+\multirow{2}{=}{\centering\arraybackslash QT/QL} &
+\multirow{2}{=}{\centering\arraybackslash SA} \\
+& E-readiness of Senior School Learners to Online Learning Transition
+amid COVID-19 Lockdown. Asian Journal of Distance Education &
+\textcite{priyadarshini2020ereadiness} \\
+\midrule
+6, 7, 8, 14, and 19 & European Framework for the Digital Competence of
+Educators (DigCompEdu) & \textcite{redecker2017digcompedu} & DigCompEdu Check-In & \textcite{GhomiRedecker2019} & QT & SA \\
+\midrule
+\multirow{4}{=}{\centering\arraybackslash 9} & Online university
+teaching during and after the COVID-19 crisis: Refocusing teacher
+presence and learning activity & \textcite{rapanta2020online} &
+\multirow{4}{=}{\centering\arraybackslash Ad hoc} &
+\multirow{4}{=}{\centering\arraybackslash \textcite{Azim2022}} &
+\multirow{4}{=}{\centering\arraybackslash QT} &
+\multirow{4}{=}{\centering\arraybackslash SA} \\
+& Adapting to online teaching during COVID-19 school closure: teacher
+education and teacher competence effects among early career teachers in
+Germany & \textcite{konig2020adapting} \\
+& COVID-19 and teacher education: a literature review of online teaching
+and learning practices & \textcite{Carrillo2020} \\
+& Teaching in virtual classroom: Challenges and opportunities & \textcite{Biswas2020} \\
+\midrule
+10 & Digital Education Model & \textcite{olivares2021faculty} & Survey to
+assess educators preparedness for a digital education model & \textcite{olivares2021faculty} & QT & SA \\
+\midrule
+11 & Matriz de Competências Digitais CIEB & \textcite[p. 12]{CIEB2019} &
+Questionário de pesquisa sobre a Formação Inicial de Professores na
+modalidade a distância realizada na UAB/UFSC & \textcite{silva2024fipad} &
+QT/QL & SA \\
+\midrule
+\multirow{2}{=}{\centering\arraybackslash 12} & International Standard
+Classification of Education (ISCED) & \textcite{unesco2012isced} &
+\multirow{2}{=}{\centering\arraybackslash Ad hoc} &
+\multirow{2}{=}{\centering\arraybackslash \textcite{AntonSancho2022}} & \multirow{2}{=}{\centering\arraybackslash QT} &
+\multirow{2}{=}{\centering\arraybackslash SC/DK} \\
+& Taxonomy of Yot-Domínguez and Marcelo & \textcite{yotdominguez2017selfregulated} \\
+\midrule
+\multirow{3}{=}{\centering\arraybackslash 13} & Theory of Planned
+Behaviour (TPB) & \textcite{Ajzen1991} &
+\multirow{3}{=}{\centering\arraybackslash Ad hoc} &
+\multirow{3}{=}{\centering\arraybackslash \textcite{mashroofa2020moderating}} & \multirow{3}{=}{\centering\arraybackslash QT} &
+\multirow{3}{=}{\centering\arraybackslash N/A} \\
+& A Multidisciplinary study on the relationship between ICT literacy
+level and academic performance of e-learners in an e-learning setting & \textcite{Aboderin2019} \\
+& Planned e--learning adoption and occupational socialization in
+Brazilian higher education & \textcite{santos2015planned} \\
+\midrule
+\multirow{2}{=}{\centering\arraybackslash 15} & Technology-related
+teaching skills and attitudes: Validation of a scenario-based
+self-assessment instrument for teachers (C♭-model) & \textcite{sailer2021technology} & \multirow{2}{=}{\centering\arraybackslash Ad hoc} &
+\multirow{2}{=}{\centering\arraybackslash \textcite{lohr2021powerpointers}} &
+\multirow{2}{=}{\centering\arraybackslash QT} &
+\multirow{2}{=}{\centering\arraybackslash SC} \\
+& The ICAP Framework: Linking cognitive engagement to active learning
+outcomes (ICAP framework) & \textcite{Chi2014} \\
+\midrule
+\multirow{3}{=}{\centering\arraybackslash 16} & Council Recommendation
+of 22 May 2018 on key competences for lifelong learning & \textcite{CouncilEU2018} & \multirow{3}{=}{\centering\arraybackslash Ad
+hoc} & \multirow{3}{=}{\centering\arraybackslash \textcite{varga2024online}} & \multirow{3}{=}{\centering\arraybackslash QT} &
+\multirow{3}{=}{\centering\arraybackslash SA/DK} \\
+& Understanding social and cultural aspects of teachers' digital
+competences & \textcite{Engen2019} \\
+& Skills Outlook & \textcite{oecd2019skills} \\
+\midrule
+17 & Technological Pedagogical Content Knowledge (TPACK) Model &
+\textcite{koehler2013tpack} & Ad hoc & \textcite{Alian2024} & QT
+& SA \\
+\midrule
+\multirow{2}{=}{\centering\arraybackslash 18} & Technology Acceptance
+Model (TAM) & \textcite{Davis1989} &
+\multirow{2}{=}{\centering\arraybackslash Grado de Aceptación Sistema
+Polimedia} &
+\multirow{2}{=}{\centering\arraybackslash \textcite{palaciosrodriguez2022production}} &
+\multirow{2}{=}{\centering\arraybackslash QT} &
+\multirow{2}{=}{\centering\arraybackslash SA} \\
+& Incorporating Polimedia productions into university education & \textcite{AgueraGarcia2018} \\
+\midrule
+\multirow{2}{=}{\centering\arraybackslash 20} & Análisis del Liderazgo
+Electrónico y la Competencia Digital del Profesorado de Cooperativas
+Educativas de Andalucía (España) & \textcite{lopez2019liderazgo} &
+\multirow{2}{=}{\centering\arraybackslash Ad hoc} &
+\multirow{2}{=}{\centering\arraybackslash \textcite{zhao2021impact}} &
+\multirow{2}{=}{\centering\arraybackslash QT/QL} &
+\multirow{2}{=}{\centering\arraybackslash SA} \\
+& Diseño de un instrumento para evaluar el nivel de uso y apropiación de
+las TIC en una institución de educación superior (SABER-TIC) & \textcite{taquez2017diseno} \\
+\midrule
+\multirow{9}{=}{\centering\arraybackslash 21} & Information Literacy
+Competency Standards for Higher Education & \textcite{ACRL2000} &
+\multirow{9}{=}{\centering\arraybackslash The scale of Digital
+Competence and utilization of Open Educational Resources (CD-REA)} &
+\multirow{9}{=}{\centering\arraybackslash \textcite{sarangolapo2020cdrea}} & \multirow{9}{=}{\centering\arraybackslash QT} &
+\multirow{9}{=}{\centering\arraybackslash SA} \\
+& Marco Común de Competencia Digital Docente & \textcite{INTEF2017} \\
+& Mapping digital competence: towards a conceptual understanding. &
+\textcite{AlaMutka2011} \\
+& DIGCOMP: A Framework for Developing and Understanding Digital
+Competence in Europe & \textcite{Ferrari2013} \\
+& Standards for Educators & \textcite{ISTE2008} \\
+& Estándares de competencias en TIC para Docentes & \textcite{unesco2008ict} \\
+& Grado de alfabetización informacional del profesorado de Secundaria en
+España: Creencias y autopercepciones & \textcite{Alvarez2015} \\
+& Evaluación de las competencias digitales autopercibidas del
+profesorado de Educación Primaria en Castilla y León (España) & \textcite{perezescoda2016competencias} \\
+& Propiedades métricas y estructura dimensional de la adaptación
+española de una escala de evaluación de competencia informacional
+autopercibida (IL-HUMASS) & \textcite{rodriguezconde2012propiedades} \\
+\midrule
+22 & Marco Común de Competencia Digital Docente & \textcite{INTEF2017} & Ad hoc
+& \textcite{perezlopez2023teachers} & QT & SA \\
+\midrule
+23 & Virtual reality as a didactic resource from the perspective of
+engineering teachers & \textcite{vergara2022virtual} & Ad hoc &
+\textcite{Alian2024} & QT & SA \\
+\midrule
+\multirow{3}{=}{\centering\arraybackslash 24} & Ordinance on the
+Licensing of Veterinarians (TAppV) & \textcite{tappv2016} &
+\multirow{3}{=}{\centering\arraybackslash Ad hoc} &
+\multirow{3}{=}{\centering\arraybackslash \textcite{kanwischer2024veterinary}} & \multirow{3}{=}{\centering\arraybackslash QT/QL} &
+\multirow{3}{=}{\centering\arraybackslash SA/DK} \\
+& European system of evaluation of veterinary training (ESEVT) --
+standard operating procedure (SOP) 2023 & \textcite{EAEVEFVE2023} \\
+& 2005/36/EC of the European Parliament and of the Council & \textcite{Directive2005_36_EC} \\
+\midrule
+25 & European Framework for the Digital Competence of Educators
+(DigCompEdu) & \textcite{redecker2017digcompedu} & Ad hoc & \textcite{santos2024applicability} & QL &
+SA \\
+%\notes{{[}1{]} QT Quantitative; QL Qualitative; DK Direct Knowledge; SA Self-Assessment; SC Scenarios; PE Performance \cite{mattar2022digcomp}; N/A Not Available.}
+\source{The authors.}
+\end{longtable}
+\noindent{}Note: QT Quantitative; QL Qualitative; DK Direct Knowledge; SA Self-Assessment; SC Scenarios; PE Performance \cite{mattar2022digcomp}; N/A Not Available.
+}
+
+\end{document}
+
